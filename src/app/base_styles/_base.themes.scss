@@ -1,9 +1,13 @@
-/** General */
+//
+// Base Themes
+//
+
+// General
 body {
     font-family: 'Poppins', sans-serif;
 }
 
-/** Light Mode Theme */
+// Light mode theme
 html {
     background: $white;
 
@@ -25,7 +29,7 @@ html {
     }
 }
 
-/** Dark Mode Theme */
+// Dark mode theme
 html[theme='dark'] {
     background: $black;
 
