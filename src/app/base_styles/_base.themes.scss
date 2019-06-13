@@ -1,0 +1,39 @@
+/** General */
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/** Light Mode Theme */
+html {
+    background: $white;
+
+    p {
+        color: $black;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: $black;
+    }
+
+    a {
+        color: $navyblue;
+        text-decoration: none;
+
+        &:hover, &:focus {
+            color: $blueivy;
+        }
+    }
+}
+
+/** Dark Mode Theme */
+html[theme='dark'] {
+    background: $black;
+
+    p {
+        color: $white;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: $white;
+    }
+}
