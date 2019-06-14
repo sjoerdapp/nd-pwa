@@ -1,0 +1,79 @@
+@import '../../base_styles/base';
+
+nav {
+
+    display: grid;
+    grid-template-columns: 2fr 12fr 2fr 2fr 2fr;
+    height: $navHeight;
+
+    .nav-hamburger {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+
+        fa-icon {
+            font-size: $font-large;
+        }
+
+        &:hover {
+            background: $navyblue;
+
+            fa-icon {
+                color: $white;
+            }
+        }
+    }
+
+    .nav-home {
+        img {
+            display: block;
+            margin-top: ($navHeight - $spacing-xlarge) / 2;
+            margin-bottom: ($navHeight - $spacing-xlarge) / 2;
+            height: $spacing-xlarge;
+        }
+    }
+
+    .nav-profile {
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: $darkblue;
+
+        fa-icon {
+            font-size: $font-large;
+        }
+
+        & > a:hover {
+            color: $blueivy;
+        }
+    }
+
+    .nav-icon {
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: $darkblue;
+
+        fa-icon {
+            font-size: $font-large;
+        }
+
+        &:hover {
+            color: $blueivy;
+        }
+    }
+
+    .blueLine {
+        background: $darkblue;
+        height: 1px;
+        grid-column: 1/20;
+    }
+
+    .greenLine {
+        background: $green;
+        height: 1px;
+        width: 100vw;
+        grid-column: 1/20;
+    }
+
+}
