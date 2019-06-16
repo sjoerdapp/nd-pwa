@@ -1,0 +1,75 @@
+@import '../../base_styles/base';
+
+footer {
+
+    display: grid;
+    grid-template-columns: 8fr 3fr 3fr 3fr 3fr;
+    grid-template-rows: 5px 95px;
+    height: $footerHeight;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background: $black;
+
+    .footer-logo {
+        height: $spacing-xlarge;
+        margin-left: $spacing-small;
+        align-self: center;
+    }
+
+    button {
+        background: transparent;
+        font-size: $font-small;
+        border: none;
+        align-self: center;
+
+        a {
+            color: $white;
+            cursor: pointer;
+            @include vendor(transition, $transition-fast ease-in-out);
+
+            &:hover {
+                color: $blueivy;
+            }
+        }
+    }
+
+    //double line
+    section {
+        grid-column: 1/6;
+    }
+
+    .instagram-btn {
+        grid-column: 3/4;
+
+        &:hover, :focus {
+            color: #e1306c;
+        }
+    }
+
+    .facebook-btn {
+        grid-column: 4/5;
+
+        &:hover, :focus {
+            color: #3c5a99;
+        }
+    }
+
+    .twitter-btn {
+        grid-column: 5/6;
+
+        &:hover, :focus {
+            color: #38A1F3;
+        }
+    }
+
+    .social {
+        font-size: $font-xlarge;
+        color: $white;
+        align-self: baseline;
+        cursor: pointer;
+
+        @include vendor(transition, $transition-normal ease-in-out);
+    }
+
+}

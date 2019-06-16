@@ -1,22 +1,113 @@
 @import '../../base_styles/base';
 
-nav {
-
+.col-4 {
     display: grid;
-    grid-template-columns: 2fr 12fr 2fr 2fr 2fr;
+    grid-template-columns: 2fr 9fr 9fr;
     height: $navHeight;
+}
+
+.col-5 {
+    display: grid;
+    grid-template-columns: 2fr 12fr 6fr;
+    height: $navHeight;
+}
+
+.slide-menu {
+    @include vendor(transition, all 0.5s);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100vh;
+    z-index: 5;
+    overflow-x: hidden;
+    background: $black;
+
+    .menu-header {
+        display: grid;
+        grid-template-columns: 2fr 18fr;
+        grid-template-rows: 59px 2.5px 2.5px;
+        height: $navHeight;
+        align-items: center;
+        position: relative;
+
+        img {
+            height: $spacing-xlarge;
+        }
+    
+        fa-icon {
+            color: $white;
+            font-size: $font-large;
+            justify-self: center;
+            @include vendor(transition, 500ms ease-in-out);
+
+            &:hover {
+                color: $blueivy;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .menu-content {
+        text-align: center;
+        position: relative;
+        
+        & > ul li {
+            list-style-type: none;
+            
+            a {
+                color: $white;
+                font-size: $font-xxlarge;
+                font-weight: $weight-black;
+                line-height: $spacing-xlarge;
+
+                &:hover {
+                    color: $blueivy;
+                }
+            }
+        }
+
+        .main-menus {
+            margin-top: 50px;
+        }
+
+        .bottom-menus {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            margin-top: 50px;
+
+            & > li a {
+                font-size: $font-normal;
+            }
+        }
+    }
+
+}
+
+nav {
+    
+    .nav-icons {
+        grid-column: 3/6;
+        display: grid;
+        grid-template-columns: 2fr 2fr 2fr;
+    }
+
+    .nav-btns {
+        grid-column: 3/6;
+        display: grid;
+        grid-template-columns: 3fr 3fr;
+    }
 
     .nav-hamburger {
-        border: none;
-        background: transparent;
-        cursor: pointer;
+        @include navbarItems;
+        @include vendor(transition, $transition-normal ease-in-out);
 
         fa-icon {
             font-size: $font-large;
         }
 
         &:hover {
-            background: $navyblue;
+            background: $matteblue;
 
             fa-icon {
                 color: $white;
@@ -34,24 +125,24 @@ nav {
     }
 
     .nav-profile {
-        cursor: pointer;
-        border: none;
-        background: transparent;
+        @include navbarItems;
         color: $darkblue;
 
         fa-icon {
             font-size: $font-large;
         }
 
-        & > a:hover {
-            color: $blueivy;
+        &:hover {
+            a {
+                @include vendor(transition, $transition-xslow ease-in-out);
+                color: $blueivy;
+            }
         }
     }
 
     .nav-icon {
-        cursor: pointer;
-        border: none;
-        background: transparent;
+        @include vendor(transition, $transition-normal ease-in-out);
+        @include navbarItems;
         color: $darkblue;
 
         fa-icon {
@@ -63,17 +154,20 @@ nav {
         }
     }
 
-    .blueLine {
+    .nav-signup, .nav-login {
+        font-size: $font-small;
+        font-weight: $weight-black;
+        letter-spacing: 1.8px;
         background: $darkblue;
-        height: 1px;
-        grid-column: 1/20;
-    }
+        color: $white;
+        border: none;
+        margin: 15px 2.5px;
+        border-radius: 8px;
+        cursor: pointer;
 
-    .greenLine {
-        background: $green;
-        height: 1px;
-        width: 100vw;
-        grid-column: 1/20;
+        &:hover {
+            background: $matteblue;
+        }
     }
 
 }

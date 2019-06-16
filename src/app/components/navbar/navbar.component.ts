@@ -7,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
+  connected = true;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  openMenu() {
+    // console.log('open');
+    const element = document.getElementById('slide-menu');
+    element.style.width = '100vw';
+  }
+
+  closeMenu() {
+    // console.log('work');
+    const element = document.getElementById('slide-menu');
+    element.style.width = '0vw';
   }
 
 }

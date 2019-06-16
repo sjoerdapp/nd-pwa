@@ -1,3 +1,17 @@
 //
 // Base Mixins
 //
+
+@mixin vendor($property, $value) {
+    #{$property}: $value!important;
+    -moz-#{$property}: $value!important;
+    -webkit-#{$property}: $value!important;
+    -moz-#{$property}: $value!important;
+}
+
+// Navbar
+@mixin navbarItems {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}

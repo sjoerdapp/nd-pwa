@@ -16,6 +16,7 @@ $spacing-xlarge: $base-spacing-unit * 2;
 $spacing-xxlarge: $base-spacing-unit * 3;
 
 // font sizes
+$font-xxsmall: $base-font-size * 0.5;
 $font-xsmall: $base-font-size * 0.7;
 $font-small: $base-font-size * 0.8;
 $font-normal: $base-font-size;
@@ -33,5 +34,11 @@ $header-size-6: $base-font-size * 0.8;
 
 // weights
 $weight-normal: 200;
-$weight-bold: 500;
+$weight-bold: 400;
 $weight-black: 700;
+
+// transition
+$transition-fast: 250ms;
+$transition-normal: 500ms;
+$transition-slow: 750ms;
+$transition-xslow: 1s;

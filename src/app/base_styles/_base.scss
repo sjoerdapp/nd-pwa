@@ -10,3 +10,19 @@
 
 //nav
 $navHeight: 64px;
+
+//footer
+$footerHeight: 150px;
+
+//double line
+.blueLine {
+    background: $darkblue;
+    height: 2.5px;
+    grid-column: 1/6;
+}
+
+.greenLine {
+    background: $green;
+    height: 2.5px;
+    grid-column: 1/6;
+}
