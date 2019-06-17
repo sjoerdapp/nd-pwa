@@ -1,0 +1,135 @@
+@import '../../base_styles/base';
+
+section {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background: $black;
+
+    .signup-card {
+        background: $green;
+        width: 90vw;
+        margin: 28px auto;
+        padding: 8px;
+        border-radius: 16px;
+        background: linear-gradient(-50.23deg, $darkblue 65%, $green 95%);
+
+        img {
+            display: block;
+            height: 40px;
+            margin: 2.5px auto;
+        }
+
+        button {
+            display: block;
+            padding: 5px;
+            border: none;
+            border-radius: 8px;
+            font-size: $font-small;
+            font-weight: $weight-black;
+            margin: 5px auto;
+            cursor: pointer;
+            @include vendor(transition, all 0.25s ease-in-out);
+
+            fa-icon {
+                float: left;
+                margin-left: 10px;
+                font-size: $font-normal;
+            }
+        }
+
+        input {
+            display: block;
+            margin: 5px auto;
+            height: 25px;
+            width: 90%;
+            border: none;
+            border-radius: 5px;
+            padding: 8px;
+        }
+
+        p {
+            color: $white;
+            font-size: $font-xsmall;
+            text-align: center;
+        }
+
+        .facebook-signup {
+            height: 30px;
+            width: 90%;
+            padding: 5px;
+            color: $blueivy;
+            background: $white;
+
+            &:hover {
+                color: $white;
+                background: $blueivy;
+            }
+        }
+
+        .google-signup {
+            height: 30px;
+            width: 90%;
+            padding: 5px;
+            color: $black;
+            background: $white;
+
+            &:hover {
+                color: $white;
+                background: $googleRed;
+            }
+        }
+
+        .signup-divider {
+            h2 {
+                overflow: hidden;
+                text-align: center;
+                color: $white;
+                font-size: $header-size-6;
+
+                &:before, &:after {
+                    background-color: $white;
+                    content: "";
+                    display: inline-block;
+                    height: 1.5px;
+                    position: relative;
+                    vertical-align: middle;
+                    width: 30%;
+                }
+
+                &:before {
+                    right: 0.5em;
+                    margin-left: -50%;
+                }
+
+                &:after {
+                    left: 0.5em;
+                    margin-right: -50%;
+                }
+            }
+        }
+
+        .signup-btn {
+            height: 30px;
+            margin: 8px auto;
+            width: 50vw;
+            cursor: pointer;
+
+            &:hover {
+                background: $white;
+                color: $navyblue;
+            }
+        }
+
+        .login-btn {
+            height: 30px;
+            width: 80vw;
+            color: $black;
+
+            &:hover {
+                background: $navyblue;
+                color: $white;
+            }
+        }
+    }
+}

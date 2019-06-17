@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,14 +20,15 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 /** Icons imports */
 import { faBell, faTimes, faShoppingCart, faUserCircle, faBars } from '@fortawesome/free-solid-svg-icons';
-import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -50,5 +52,6 @@ export class AppModule {
     library.add(faInstagram);
     library.add(faTwitter);
     library.add(faTimes);
+    library.add(faGoogle);
   }
 }

@@ -27,6 +27,12 @@ html {
             color: $blueivy;
         }
     }
+
+    .btn {
+        background: $navyblue;
+        color: $white;
+        border-radius: 8px;
+    }
 }
 
 // Dark mode theme
@@ -39,5 +45,10 @@ html[theme='dark'] {
 
     h1, h2, h3, h4, h5, h6 {
         color: $white;
+    }
+
+    .btn {
+        background: $white;
+        color: $darkblue;
     }
 }
