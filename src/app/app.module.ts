@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { LoginComponent } from './components/login/login.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,7 +29,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
     HomeComponent,
     NavbarComponent,
     FooterComponent,
-    SignUpComponent
+    SignUpComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -44,14 +46,6 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
 export class AppModule {
   constructor() {
     // add icon to library to be used in components
-    library.add(faBell);
-    library.add(faBars);
-    library.add(faShoppingCart);
-    library.add(faUserCircle);
-    library.add(faFacebook);
-    library.add(faInstagram);
-    library.add(faTwitter);
-    library.add(faTimes);
-    library.add(faGoogle);
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle);
   }
 }

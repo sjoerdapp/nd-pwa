@@ -6,9 +6,9 @@ section {
     width: 100vw;
     background: $black;
 
-    .signup-card {
+    .login-card {
         width: 90vw;
-        margin: 28px auto;
+        margin: 60px auto;
         padding: 8px;
         border-radius: 16px;
         background: linear-gradient(-50.23deg, $darkblue 65%, $green 95%);
@@ -53,10 +53,10 @@ section {
             text-align: center;
         }
 
-        .signup-btn {
-            height: 30px;
-            margin: 8px auto;
-            width: 50vw;
+        .login-btn {
+            height: 40px;
+            margin: 16px auto;
+            width: 60vw;
             cursor: pointer;
 
             &:hover {
@@ -65,15 +65,25 @@ section {
             }
         }
 
-        .login-btn {
-            height: 30px;
+        .signup-btn {
+            height: 40px;
             width: 80vw;
             color: $black;
+            margin-top: 16px;
 
             &:hover {
                 background: $navyblue;
                 color: $white;
             }
+        }
+
+        .forgotpwd-btn {
+            @extend .signup-btn;
+            width: 35vw;
+            background: $white;
+            height: 30px;
+            font-size: $font-xsmall;
+            margin-bottom: 16px;
         }
     }
 }

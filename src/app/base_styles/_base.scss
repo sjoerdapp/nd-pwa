@@ -26,3 +26,60 @@ $footerHeight: 150px;
     height: 2.5px;
     grid-column: 1/6;
 }
+
+// Line on both sides of text
+.divider {
+    h2 {
+        overflow: hidden;
+        text-align: center;
+        color: $white;
+        font-size: $header-size-6;
+
+        &:before, &:after {
+            background-color: $white;
+            content: "";
+            display: inline-block;
+            height: 1.5px;
+            position: relative;
+            vertical-align: middle;
+            width: 30%;
+        }
+
+        &:before {
+            right: 0.5em;
+            margin-left: -50%;
+        }
+
+        &:after {
+            left: 0.5em;
+            margin-right: -50%;
+        }
+    }
+}
+
+// FB & GOOG Btn
+.facebook-btn {
+    height: 30px;
+    width: 90%;
+    padding: 5px;
+    color: $blueivy;
+    background: $white;
+
+    &:hover {
+        color: $white;
+        background: $blueivy;
+    }
+}
+
+.google-btn {
+    height: 30px;
+    width: 90%;
+    padding: 5px;
+    color: $black;
+    background: $white;
+
+    &:hover {
+        color: $white;
+        background: $googleRed;
+    }
+}

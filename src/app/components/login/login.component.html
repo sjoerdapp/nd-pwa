@@ -1,0 +1,31 @@
+<section class="login-body">
+  <div class="login-card">
+      <a routerLink="/"><img src="../../../assets/Negativepng.png" alt="NXTDROP, Inc. Logo Negative Symbol"></a>
+
+      <form>
+        <input type="text" placeholder="Email or Username">
+        <input type="password" placeholder="Password">
+        <button class="btn login-btn">Log in</button>
+      </form>
+
+      <button class="forgotpwd-btn" routerLink="/forgotpassword">Forgot my password</button>
+
+      <div class="divider">
+        <h2>OR</h2>
+      </div>
+
+      <button class="btn facebook-btn">
+        <fa-icon [icon]="['fab', 'facebook']"></fa-icon>
+            Sign in with Facebook
+      </button>
+      
+      <button class="google-btn">
+          <fa-icon [icon]="['fab', 'google']"></fa-icon>
+            Sign in with Google
+      </button>
+
+      <a routerLink="/login"><button class="signup-btn">Don&apos;t have an account? Sign up</button></a>
+  </div>
+
+  <app-footer></app-footer>
+</section>
