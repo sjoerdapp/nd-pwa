@@ -10,6 +10,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LoginComponent } from './components/login/login.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { TrendingComponent } from './components/trending/trending.component';
+import { NewReleasesComponent } from './components/new-releases/new-releases.component';
+import { DiscoveryComponent } from './components/discovery/discovery.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,7 +24,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 /** Icons imports */
-import { faBell, faTimes, faShoppingCart, faUserCircle, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
@@ -30,7 +34,11 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
     NavbarComponent,
     FooterComponent,
     SignUpComponent,
-    LoginComponent
+    LoginComponent,
+    CarouselComponent,
+    TrendingComponent,
+    NewReleasesComponent,
+    DiscoveryComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +54,6 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
 export class AppModule {
   constructor() {
     // add icon to library to be used in components
-    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle);
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch);
   }
 }

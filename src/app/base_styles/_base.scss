@@ -83,3 +83,59 @@ $footerHeight: 150px;
         background: $googleRed;
     }
 }
+
+// Showcase Settings
+.showcase-container {
+    margin-top: $spacing-large;
+
+    h2 {
+        text-align: center;
+    }
+
+    .showcase-windows {
+        height: 250px;
+        width: 100vw;
+        max-width: 100%;
+        border: 0.5px solid $lightgrey;
+        border-left: none;
+        border-right: none;
+        margin: $spacing-small auto;
+        padding: 5px 0;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+
+        .showcase-window {
+            width: 219px;
+            height: 100%;
+            border-right: 1px solid $lightgrey;
+            text-align: center;
+            cursor: pointer;
+            display: inline-block;
+
+            &:hover, &:focus {
+                h6, h3 {
+                    color: $matteblue;
+                }
+            }
+
+            img {
+                height: 100px;
+                margin-bottom: $spacing-xlarge;
+            }
+
+            h6 {
+                text-align: right;
+                margin-right: $spacing-small;
+                margin-bottom: $spacing-normal;
+            }
+
+            h3 {
+                font-size: $header-size-6;
+                font-weight: $weight-bold;
+            }
+
+        }
+    }
+}

@@ -1,0 +1,48 @@
+@import '../../base_styles/base';
+
+.carousel {
+    height: 200px;
+    width: 100vw;
+    max-width: 100%;
+    position: relative;
+    background-color: $matteblue;
+    overflow-x: visible;
+    margin-bottom: 20px;
+
+    .search-bar {
+        position: absolute;
+        display: grid;
+        grid-template-columns: 90% 10%;
+
+        width: 60vw;
+        height: 35px;
+        background: $white;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        bottom: -20px;
+        align-items: center;
+        padding: 2px;
+        border-radius: 8px;
+        border: 0.5px solid $lightgrey;
+
+        &:hover, &:focus-within {
+            @include vendor(box-shadow, 0px 0px 5px 0px rgba(0,0,0,0.75));
+        }
+
+        #search-field {
+            height: inherit;
+            border: none;
+            background: inherit;
+            padding-left: 5px;
+            border-right: none;
+        }
+
+        fa-icon {
+            margin-left: 2px;
+            color: $black;
+            opacity: 0.9;
+            align-self: center;
+        }
+    }
+}

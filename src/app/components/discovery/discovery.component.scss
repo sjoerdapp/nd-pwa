@@ -1,0 +1,63 @@
+@import '../../base_styles/base';
+
+.showcase-discovery {
+    min-height: 250px;
+    width: 100vw;
+    max-width: calc(100% - 10px);
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+
+    & .discovery-card:nth-child(even) {
+        margin-top: $spacing-large;
+    }
+
+    .discovery-card {
+        width: 148px;
+        height: 250px;
+        text-align: center;
+        border: 1px solid $lightgrey;
+        border-radius: $spacing-xsmall;
+        padding: $spacing-xsmall;
+        margin: 0 $spacing-xsmall;
+        cursor: pointer;
+
+        &:hover {
+            border-color: $matteblue;
+            h6, h3 {
+                color: $matteblue;
+            }
+        }
+
+        img {
+            height: 100px;
+            margin-bottom: $spacing-xlarge;
+        }
+
+        h6 {
+            text-align: right;
+            margin-bottom: $spacing-large;
+        }
+
+        h3 {
+            font-size: $font-small;
+            font-weight: $weight-bold;
+        }
+    }
+}
+
+.discovery-btn {
+    width: 50%;
+    height: 35px;
+    margin: $spacing-small 25%;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: $weight-black;
+    
+    &:hover {
+        background: $matteblue;
+    }
+}

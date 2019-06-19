@@ -42,7 +42,7 @@
             @include vendor(transition, 500ms ease-in-out);
 
             &:hover {
-                color: $blueivy;
+                color: $matteblue;
                 cursor: pointer;
             }
         }
@@ -62,7 +62,7 @@
                 line-height: $spacing-xlarge;
 
                 &:hover {
-                    color: $blueivy;
+                    color: $matteblue;
                 }
             }
         }
@@ -85,6 +85,7 @@
 }
 
 nav {
+    margin-bottom: 5px;
     
     .nav-icons {
         grid-column: 3/6;
@@ -135,7 +136,7 @@ nav {
         &:hover {
             a {
                 @include vendor(transition, $transition-xslow ease-in-out);
-                color: $blueivy;
+                color: $matteblue;
             }
         }
     }
@@ -150,18 +151,18 @@ nav {
         }
 
         &:hover {
-            color: $blueivy;
+            color: $matteblue;
         }
     }
 
     .nav-signup, .nav-login {
         font-size: $font-small;
         font-weight: $weight-black;
-        letter-spacing: 1.8px;
+        letter-spacing: 2px;
         background: $darkblue;
         border: none;
         margin: 15px 2.5px;
-        border-radius: 8px;
+        border-radius: $spacing-xsmall;
         cursor: pointer;
         color: $white;
 

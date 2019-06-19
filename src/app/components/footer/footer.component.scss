@@ -6,10 +6,9 @@ footer {
     grid-template-columns: 8fr 3fr 3fr 3fr 3fr;
     grid-template-rows: 5px 95px;
     height: $footerHeight;
-    position: absolute;
     width: 100%;
-    bottom: 0;
     background: $black;
+    margin-top: $spacing-large;
 
     .footer-logo {
         height: $spacing-xlarge;

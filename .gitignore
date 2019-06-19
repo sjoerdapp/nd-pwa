@@ -44,3 +44,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Assets Dev
+src/assets/Air-Force-1-Low-Off-White-Volt.jpg
+src/assets/Jordan-4-Retro-Black-Laser.jpg
+src/assets/Nike-Air-Force-1-Low-All-Over-Logo-Red.jpg
+src/assets/Yeezy-Boost-350-V2-Zebra.jpg

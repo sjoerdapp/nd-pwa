@@ -1,0 +1,5 @@
+@import '../../base_styles/base';
+
+.main-container {
+    min-height: calc(100vh - #{$footerHeight});
+}
