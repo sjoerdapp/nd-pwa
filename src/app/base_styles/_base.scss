@@ -8,11 +8,10 @@
 @import 'base.settings';
 @import 'base.themes';
 
-//nav
+// variables
 $navHeight: 64px;
-
-//footer
 $footerHeight: 150px;
+$productContainerHeight: 650px;
 
 //double line
 .blueLine {
@@ -138,4 +137,9 @@ $footerHeight: 150px;
 
         }
     }
+}
+
+// Separate Header & Footer
+.main-container {
+    min-height: calc(100vh - #{$footerHeight});
 }

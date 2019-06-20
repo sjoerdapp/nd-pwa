@@ -32,6 +32,7 @@ html {
         background: $navyblue;
         color: $white;
         border-radius: 8px;
+        cursor: pointer;
     }
 }
 
@@ -50,5 +51,7 @@ html[theme='dark'] {
     .btn {
         background: $white;
         color: $darkblue;
+        border-radius: 8px;
+        cursor: pointer;
     }
 }

@@ -1,0 +1,90 @@
+@import '../../base_styles/base';
+
+.product-container {
+    width: 95vw;
+    max-width: 95%;
+    display: grid;
+    grid-template-columns: 1fr;
+    border: 1px solid $lightgrey;
+    margin: $spacing-large auto;
+
+    .product-info {
+        text-align: center;
+        border-bottom: 1px solid $lightgrey;
+
+        img {
+            display: block;
+            margin: $spacing-normal auto;
+            width: 75%;
+        }
+
+        .product-specs {
+            margin: $spacing-normal auto;
+            background: $black;
+            width: 80%;
+            border-radius: $spacing-xsmall;
+            padding: $spacing-xxsmall;
+
+            h4 {
+                font-weight: $weight-bold;
+                font-size: $font-xsmall;
+                letter-spacing: 1.5px;
+                line-height: $spacing-normal;
+                color:  $white;
+            }
+        }
+    }
+
+    .product-offers {
+        overflow-y: auto;
+        max-height: $productContainerHeight;
+        
+        
+        .product-offer {
+            border-bottom: 1px solid $lightgrey;
+            text-align: center;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            h6, .offer-specs, button {
+                margin: $spacing-xsmall 0;
+            }
+
+            h6 {
+                font-size: $header-size-6;
+            }
+
+            .offer-specs {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+
+                #offer-size {
+                    justify-self: start;
+                    margin-left: $spacing-xsmall;
+                }
+
+                #offer-price {
+                    justify-self: end;
+                    margin-right: $spacing-xsmall;
+                }
+            }
+
+            button {
+                padding: $spacing-xsmall;
+                border: none;
+                width: 60%;
+                text-justify: auto;
+                letter-spacing: 2px;
+                font-size: $font-small;
+                font-weight: $weight-bold;
+                background: $black;
+
+                &:hover {
+                    background: $matteblack;
+                }
+            }
+        }
+    }
+}
