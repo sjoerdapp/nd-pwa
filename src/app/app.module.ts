@@ -16,6 +16,7 @@ import { NewReleasesComponent } from './components/new-releases/new-releases.com
 import { DiscoveryComponent } from './components/discovery/discovery.component';
 import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,7 +43,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
     NewReleasesComponent,
     DiscoveryComponent,
     ProductComponent,
-    CartComponent
+    CartComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
