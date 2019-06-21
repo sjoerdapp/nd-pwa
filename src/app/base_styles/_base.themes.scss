@@ -30,9 +30,15 @@ html {
 
     .btn {
         background: $navyblue;
+        border: none;
         color: $white;
         border-radius: 8px;
         cursor: pointer;
+        text-transform: uppercase;
+        font-size: $font-xsmall;
+        font-weight: $weight-black;
+        letter-spacing: 2px;
+        padding: $spacing-xxsmall;
     }
 }
 
@@ -51,7 +57,13 @@ html[theme='dark'] {
     .btn {
         background: $white;
         color: $darkblue;
+        border: none;
         border-radius: 8px;
         cursor: pointer;
+        text-transform: uppercase;
+        font-size: $font-xsmall;
+        font-weight: $weight-black;
+        letter-spacing: 2px;
+        padding: $spacing-xxsmall;
     }
 }

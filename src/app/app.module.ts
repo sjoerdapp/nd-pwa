@@ -15,6 +15,7 @@ import { TrendingComponent } from './components/trending/trending.component';
 import { NewReleasesComponent } from './components/new-releases/new-releases.component';
 import { DiscoveryComponent } from './components/discovery/discovery.component';
 import { ProductComponent } from './components/product/product.component';
+import { CartComponent } from './components/cart/cart.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -40,7 +41,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
     TrendingComponent,
     NewReleasesComponent,
     DiscoveryComponent,
-    ProductComponent
+    ProductComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
