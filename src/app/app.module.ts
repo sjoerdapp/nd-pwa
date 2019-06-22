@@ -29,6 +29,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 /** Icons imports */
 import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
     DiscoveryComponent,
     ProductComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
