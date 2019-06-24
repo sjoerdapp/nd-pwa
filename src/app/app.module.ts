@@ -21,6 +21,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
 import { SettingsPasswordComponent } from './components/settings-password/settings-password.component';
+import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -52,7 +53,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
     ProfileComponent,
     SettingsComponent,
     SettingsProfileComponent,
-    SettingsPasswordComponent
+    SettingsPasswordComponent,
+    SettingsBuyingComponent
   ],
   imports: [
     BrowserModule,

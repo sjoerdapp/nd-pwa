@@ -12,6 +12,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
 import { SettingsPasswordComponent } from './components/settings-password/settings-password.component';
+import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'settings/profile', component: SettingsProfileComponent },
-  { path: 'settings/password', component: SettingsPasswordComponent }
+  { path: 'settings/password', component: SettingsPasswordComponent },
+  { path: 'settings/buying', component: SettingsBuyingComponent }
 ];
 
 @NgModule({
