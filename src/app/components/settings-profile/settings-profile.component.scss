@@ -1,0 +1,33 @@
+@import '../../base_styles/base';
+
+h2 {
+    text-align: center;
+    margin: $spacing-normal;
+}
+
+input {
+    display: block;
+    padding: $spacing-xsmall;
+    margin-bottom: $spacing-small;
+    border-radius: $spacing-xsmall;
+    border: 1px solid $lightgrey;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+label {
+    display: block;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: $font-small;
+}
+
+.settings-btn {
+    width: 70%;
+    margin: $spacing-normal auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 5px;
+}

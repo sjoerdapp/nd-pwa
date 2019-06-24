@@ -19,6 +19,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,7 +49,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
     CartComponent,
     CheckoutComponent,
     ProfileComponent,
-    SettingsComponent
+    SettingsComponent,
+    SettingsProfileComponent
   ],
   imports: [
     BrowserModule,

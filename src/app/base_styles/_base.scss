@@ -143,3 +143,34 @@ $productContainerHeight: 650px;
 .main-container {
     min-height: calc(100vh - #{$footerHeight});
 }
+
+// Settings btns
+.settings-back-btn, .settings-save-btn {
+    padding: $spacing-small;
+    border: none;
+    border-radius: $spacing-xsmall;
+    background: $black;
+    color: $white;
+    font-size: $font-xsmall;
+    font-weight: $weight-black;
+    letter-spacing: 2px;
+    cursor: pointer;
+    @include vendor(transition, 0.25s ease-in-out);
+
+    &:hover {
+        background: $matteblack;
+    }
+}
+
+.settings-back-btn {
+    background: transparent;
+    color: $black;
+
+    &:hover {
+        color: $white;
+    }
+}
+
+.settings-save-btn {
+
+}
