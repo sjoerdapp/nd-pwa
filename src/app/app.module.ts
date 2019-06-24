@@ -17,6 +17,8 @@ import { DiscoveryComponent } from './components/discovery/discovery.component';
 import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,7 +31,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 /** Icons imports */
 import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     ProductComponent,
     CartComponent,
     CheckoutComponent,
-    ProfileComponent
+    ProfileComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

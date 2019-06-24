@@ -1,0 +1,26 @@
+@import '../../base_styles/base';
+
+h2 {
+    text-align: center;
+    margin: $spacing-normal;
+}
+
+button {
+    display: block;
+    border: none;
+    width: 80%;
+    margin: $spacing-small auto;
+    padding: $spacing-small;
+    border-radius: $spacing-xsmall;
+    cursor: pointer;
+    font-size: $font-large;
+    font-weight: $weight-black;
+    letter-spacing: 2px;
+    background: $black;
+    color: $white;
+    @include vendor(transition, 0.25s ease-in-out);
+
+    &:hover {
+        background: $matteblack;
+    }
+}
