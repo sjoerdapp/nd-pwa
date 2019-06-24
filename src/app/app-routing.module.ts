@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Components
@@ -13,6 +13,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
 import { SettingsPasswordComponent } from './components/settings-password/settings-password.component';
 import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
+import { SettingsSellingComponent } from './components/settings-selling/settings-selling.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'settings/profile', component: SettingsProfileComponent },
   { path: 'settings/password', component: SettingsPasswordComponent },
-  { path: 'settings/buying', component: SettingsBuyingComponent }
+  { path: 'settings/buying', component: SettingsBuyingComponent },
+  { path: 'settings/selling', component: SettingsSellingComponent }
 ];
 
 @NgModule({
