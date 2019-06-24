@@ -20,6 +20,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
+import { SettingsPasswordComponent } from './components/settings-password/settings-password.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -50,7 +51,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
     CheckoutComponent,
     ProfileComponent,
     SettingsComponent,
-    SettingsProfileComponent
+    SettingsProfileComponent,
+    SettingsPasswordComponent
   ],
   imports: [
     BrowserModule,
