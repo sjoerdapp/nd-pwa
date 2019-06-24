@@ -1,5 +1,9 @@
 @import '../../base_styles/base';
 
+h2 {
+    text-align: center;
+}
+
 .stats-btn {
     width: 80px;
     height: 80px;
@@ -43,7 +47,6 @@
 
         .profile-name {
             margin-top: $spacing-xsmall;
-            text-align: center;
         }
 
         .profile-btns {
@@ -59,6 +62,7 @@
                 font-size: $font-xxsmall;
                 padding: $spacing-xsmall;
                 height: $spacing-large;
+                @include vendor(transition, 0.25s ease-in-out);
 
                 &:hover {
                     background: $matteblack;
@@ -87,7 +91,57 @@
 }
 
 .profile-items {
-    .profile-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 5px;
+    padding: $spacing-normal;
 
+    .profile-item {
+        text-align: center;
+        padding: $spacing-xxsmall;
+        margin-bottom: $spacing-normal;
+
+        &:nth-child(odd) {
+            border-right: 1px solid $lightgrey;
+        }
+
+        .item-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+
+            h6 {
+                justify-self: left;
+                font-weight: $weight-bold;
+            }
+
+            h5 {
+                justify-self: right;
+                font-weight: $weight-black;
+                font-size: $font-small;
+            }
+        }
+
+        img {
+            height: 75px;
+            vertical-align: middle;
+        }
+
+        h5 {
+            font-weight: $weight-bold;
+            font-size: $font-xsmall;
+        }
+    }
+}
+
+.show-more-btn {
+    width: 50%;
+    margin: $spacing-xsmall 25%;
+    padding: $spacing-xsmall;
+    @include vendor(transition, 0.25s ease-in-out);
+    background: $black;
+
+    &:hover {
+        background: $matteblack;
     }
 }
