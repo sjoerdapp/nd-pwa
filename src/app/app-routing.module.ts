@@ -15,6 +15,7 @@ import { SettingsPasswordComponent } from './components/settings-password/settin
 import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
 import { SettingsSellingComponent } from './components/settings-selling/settings-selling.component';
 import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';
+import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'settings/password', component: SettingsPasswordComponent },
   { path: 'settings/buying', component: SettingsBuyingComponent },
   { path: 'settings/selling', component: SettingsSellingComponent },
-  { path: 'settings/shipping', component: SettingsShippingComponent }
+  { path: 'settings/shipping', component: SettingsShippingComponent },
+  { path: 'settings/payout', component: SettingsPayoutComponent }
 ];
 
 @NgModule({
