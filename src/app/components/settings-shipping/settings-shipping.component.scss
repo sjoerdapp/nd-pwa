@@ -1,0 +1,38 @@
+@import '../../base_styles/base';
+
+h2, h6 {
+    text-align: center;
+    margin: $spacing-normal;
+}
+
+input {
+    display: block;
+    padding: $spacing-xsmall;
+    margin-bottom: $spacing-small;
+    border-radius: $spacing-xsmall;
+    border: 1px solid $lightgrey;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+
+    &:focus {
+        border-color: $matteblack;
+    }
+}
+
+.settings-btn {
+    width: 70%;
+    margin: $spacing-normal auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 5px;
+}
+
+#ship-state, #ship-country {
+    display: block;
+    border: none;
+    width: 60%;
+    margin: 0 auto;
+    padding: $spacing-xsmall;
+    margin-bottom: $spacing-xsmall;
+}

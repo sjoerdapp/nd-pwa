@@ -23,6 +23,7 @@ import { SettingsProfileComponent } from './components/settings-profile/settings
 import { SettingsPasswordComponent } from './components/settings-password/settings-password.component';
 import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
 import { SettingsSellingComponent } from './components/settings-selling/settings-selling.component';
+import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,7 +57,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle } from '@fortawesome/free-
     SettingsProfileComponent,
     SettingsPasswordComponent,
     SettingsBuyingComponent,
-    SettingsSellingComponent
+    SettingsSellingComponent,
+    SettingsShippingComponent
   ],
   imports: [
     BrowserModule,

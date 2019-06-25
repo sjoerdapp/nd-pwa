@@ -1,0 +1,36 @@
+<div class="main-container">
+  <app-navbar></app-navbar>
+      
+  <h2>Edit your shipping address</h2>
+  
+  <input type="text" id="ship-street" placeholder="Street Address">
+  <input type="text" id="ship-street2" placeholder="Address Line 2">
+  <input type="text" id="ship-city" placeholder="City">
+  <select name="state" id="ship-state">
+    <option value="AB" selected>Alberta</option>
+    <option value="BC">British Columbia</option>
+    <option value="MB">Manitoba</option>
+    <option value="NB">New Brunswick</option>
+    <option value="NL">Newfoundland and Labrador</option>
+    <option value="NS">Nova Scotia</option>
+    <option value="ON">Ontario</option>
+    <option value="PE">Prince Edward Island</option>
+    <option value="QC">Quebec</option>
+    <option value="SK">Saskatchewan</option>
+    <option value="NT">Northwest Territories</option>
+    <option value="NU">Nunavut</option>
+    <option value="YT">Yukon</option>
+  </select>
+  <input type="text" id="ship-zip" placeholder="Zip Code">
+  <select name="country" id="ship-country">
+    <option value="CA" selected>Canada</option>
+    <option value="US">United States</option>
+  </select>
+    
+  <div class="settings-btn">
+    <button class="settings-back-btn" routerLink="..">Back</button>
+    <button class="settings-save-btn">Save Changes</button>
+  </div>
+</div>
+      
+<app-footer></app-footer>
