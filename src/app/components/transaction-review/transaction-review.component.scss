@@ -1,0 +1,98 @@
+@import '../../base_styles/base';
+
+.review-container {
+    width: 95%;
+    min-height: calc(100vh - #{$navHeight} - #{$footerHeight});
+    margin: 0 auto;
+    border: 1px solid $lightgrey;
+    margin-top: $spacing-normal;
+    margin-bottom: $spacing-normal;
+    border-radius: $spacing-xsmall;
+    padding: $spacing-xxsmall;
+    padding-top: $spacing-small;
+
+    h2 {
+        text-align: center;
+        font-size: $font-small;
+    }
+
+    .review-items {
+        margin: $spacing-normal 0;
+        .review-item {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            align-items: center;
+            min-height: 60px;
+
+            img {
+                width: 80%;
+                justify-self: start;
+            }
+
+            h5 {
+                font-size: $font-xsmall;
+                font-weight: $weight-bold;
+                justify-self: center;
+                text-align: center;
+
+                &:last-child {
+                    font-weight: $weight-black;
+                    justify-self: end;
+                    margin-right: $spacing-xsmall;
+                }
+            }
+        }
+    }
+
+    .review-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+
+        .review-summary, .review-shipment {
+            margin: $spacing-normal 0;
+        }
+
+        .review-summary {
+            div {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                margin: $spacing-small;
+
+                h5:last-child {
+                    justify-self: end;
+                }
+            }
+
+            .subtotal, .shipping, .tax {
+                h5 {
+                    font-weight: $weight-bold;
+                }
+            }
+        }
+
+        .review-shipment {
+            text-align: center;
+
+            h5:first-child {
+                font-weight: $weight-bold;
+            }
+
+            h5 {
+                font-size: $font-small;
+            }
+        }
+    }
+
+    button {
+        width: 50%;
+        margin: $spacing-normal auto;
+        padding: $spacing-small;
+        display: block;
+        background: $black;
+
+        &:hover {
+            background: $matteblack;
+        }
+    }
+}

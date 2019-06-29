@@ -32,7 +32,7 @@ html {
         background: $navyblue;
         border: none;
         color: $white;
-        border-radius: 8px;
+        border-radius: $spacing-xxsmall;
         cursor: pointer;
         text-transform: uppercase;
         font-size: $font-xsmall;
@@ -58,7 +58,7 @@ html[theme='dark'] {
         background: $white;
         color: $darkblue;
         border: none;
-        border-radius: 8px;
+        border-radius: $spacing-xxsmall;
         cursor: pointer;
         text-transform: uppercase;
         font-size: $font-xsmall;

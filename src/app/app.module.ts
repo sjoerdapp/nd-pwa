@@ -25,6 +25,7 @@ import { SettingsBuyingComponent } from './components/settings-buying/settings-b
 import { SettingsSellingComponent } from './components/settings-selling/settings-selling.component';
 import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';
 import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';
+import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -60,7 +61,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawe
     SettingsBuyingComponent,
     SettingsSellingComponent,
     SettingsShippingComponent,
-    SettingsPayoutComponent
+    SettingsPayoutComponent,
+    TransactionReviewComponent
   ],
   imports: [
     BrowserModule,
