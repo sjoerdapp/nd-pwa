@@ -13,6 +13,7 @@
         position: absolute;
         display: grid;
         grid-template-columns: 90% 10%;
+        @include vendor(transition, 0.50s ease-in-out);
 
         width: 60vw;
         height: 35px;

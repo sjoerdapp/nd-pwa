@@ -39,6 +39,7 @@ html {
         font-weight: $weight-black;
         letter-spacing: 2px;
         padding: $spacing-xxsmall;
+        @include vendor(transition, 0.25s ease-in-out);
     }
 }
 
@@ -65,5 +66,6 @@ html[theme='dark'] {
         font-weight: $weight-black;
         letter-spacing: 2px;
         padding: $spacing-xxsmall;
+        @include vendor(transition, 0.25s ease-in-out);
     }
 }

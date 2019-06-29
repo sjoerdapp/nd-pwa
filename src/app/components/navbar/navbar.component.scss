@@ -162,12 +162,24 @@ nav {
         background: $darkblue;
         border: none;
         margin: 15px 2.5px;
-        border-radius: $spacing-xsmall;
         cursor: pointer;
         color: $white;
 
         &:hover {
             background: $matteblue;
+        }
+    }
+
+    .nav-signup {
+        @include vendor(box-shadow,  2px 8px 10px -5px rgba(94,94,94,0.75));;
+    }
+
+    .nav-login {
+        background: none;
+        color: $darkblue;
+
+        &:hover {
+            color: $white;
         }
     }
 
