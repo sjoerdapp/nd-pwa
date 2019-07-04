@@ -26,6 +26,7 @@ import { SettingsSellingComponent } from './components/settings-selling/settings
 import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';
 import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';
 import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
+import { SellComponent } from './components/sell/sell.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,7 +37,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 /** Icons imports */
-import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
@@ -62,7 +63,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawe
     SettingsSellingComponent,
     SettingsShippingComponent,
     SettingsPayoutComponent,
-    TransactionReviewComponent
+    TransactionReviewComponent,
+    SellComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +80,6 @@ import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawe
 export class AppModule {
   constructor() {
     // add icon to library to be used in components
-    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal);
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign);
   }
 }

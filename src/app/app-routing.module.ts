@@ -17,6 +17,7 @@ import { SettingsSellingComponent } from './components/settings-selling/settings
 import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';
 import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';
 import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
+import { SellComponent } from './components/sell/sell.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -34,7 +35,8 @@ const routes: Routes = [
   { path: 'settings/selling', component: SettingsSellingComponent },
   { path: 'settings/shipping', component: SettingsShippingComponent },
   { path: 'settings/payout', component: SettingsPayoutComponent },
-  { path: 'transaction', component: TransactionReviewComponent }
+  { path: 'transaction', component: TransactionReviewComponent },
+  { path: 'sell', component: SellComponent }
 ];
 
 @NgModule({

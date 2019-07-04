@@ -1,0 +1,63 @@
+<div class="main-container">
+  <app-navbar></app-navbar>
+
+  <section class="sell-container">
+    <ol>
+      <li>You&apos;ll be notified via email when a buyer purchases your item.</li>
+      <li>Once you confirm the order, you&apos;ll have 48 hours to ship the item and confirm that you shipped it.</li>
+      <li>We&apos;ll verify the item and you&apos;ll get paid when it passes our verification process.</li>
+      <li>If it doesn&apos;t pass our verification process, we&apos;ll charge you 15% of the item price. Please, do not make us take your money.</li>
+      <li>We&apos;ll take a 12% consignment fee on all sales.</li>
+    </ol>
+
+    <input type="text" id="sell-search" placeholder="What do you want to sell?">
+
+    <div class="sell-radios">
+      <div>
+        <input type="radio" name="sell" id="">
+        <label for="sell">New</label>
+      </div>
+      
+      <div>
+        <input type="radio" name="sell" id="">
+        <label for="sell">Used</label>
+      </div>
+    </div>
+
+    <div class="sell-price-input">
+      <button><fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
+      <input type="text" placeholder="Enter Price">
+      <button>.00</button>
+    </div>
+
+    <select name="size" id="item-size">
+      <option value="none" selected>Select Size</option>
+      <option value="US6">US 6</option>
+      <option value="US6.5">US 6.5</option>
+      <option value="US7">US 7</option>
+      <option value="US7.5">US 7.5</option>
+      <option value="US8">US 8</option>
+      <option value="US8.5">US 8.5</option>
+      <option value="US9">US 9</option>
+      <option value="US9.5">US 9.5</option>
+      <option value="US10">US 10</option>
+      <option value="US10.5">US 10.5</option>
+      <option value="US11">US 11</option>
+      <option value="US11.5">US 11.5</option>
+      <option value="US12">US 12</option>
+      <option value="US12.5">US 12.5</option>
+      <option value="US13">US 13</option>
+      <option value="US13.5">US 13.5</option>
+      <option value="US14">US 14</option>
+      <option value="US14.5">US 14.5</option>
+      <option value="US15">US 15</option>
+    </select>
+
+    <div class="sell-btns">
+      <button class="btn" routerLink="..">Back</button>
+      <button class="btn">Sell</button>
+    </div>
+  </section>
+</div>
+
+<app-footer></app-footer>
