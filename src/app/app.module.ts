@@ -27,6 +27,7 @@ import { SettingsShippingComponent } from './components/settings-shipping/settin
 import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';
 import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
 import { SellComponent } from './components/sell/sell.component';
+import { SearchComponent } from './components/search/search.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -64,7 +65,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawe
     SettingsShippingComponent,
     SettingsPayoutComponent,
     TransactionReviewComponent,
-    SellComponent
+    SellComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +82,7 @@ import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawe
 export class AppModule {
   constructor() {
     // add icon to library to be used in components
+// tslint:disable-next-line: max-line-length
     library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign);
   }
 }
