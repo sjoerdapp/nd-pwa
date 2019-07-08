@@ -28,6 +28,7 @@ import { SettingsPayoutComponent } from './components/settings-payout/settings-p
 import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
 import { SellComponent } from './components/sell/sell.component';
 import { SearchComponent } from './components/search/search.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -66,7 +67,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawe
     SettingsPayoutComponent,
     TransactionReviewComponent,
     SellComponent,
-    SearchComponent
+    SearchComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

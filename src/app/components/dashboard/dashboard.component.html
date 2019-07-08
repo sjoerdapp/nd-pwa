@@ -1,0 +1,55 @@
+<div class="main-container">
+  <app-navbar></app-navbar>
+
+  <section class="dashboard-nav">
+    <a routerLink="/pending" active><button class="btn">Pending</button></a>
+    <a routerLink="/purchases"><button class="btn">Purchases</button></a>
+    <a routerLink="/sales"><button class="btn">Sales</button></a>
+  </section>
+
+  <section class="dashboard-stats">
+    <div class="dashboard-counter-offer">
+      <h6>Counter-Offer</h6>
+      <h5>2</h5>
+    </div>
+
+    <div class="dashboard-sales">
+      <h6>Sales</h6>
+      <h5>1</h5>
+    </div>
+
+    <div class="dashboard-purchases">
+      <h6>Purchases</h6>
+      <h5>1</h5>
+    </div>
+  </section>
+
+  <table>
+    <tr>
+      <th>Item</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+
+    <tr class="counter-offer-row">
+      <td>adidas Yeezy 350 Zebra, US9</td>
+      <td>No Answer Yet</td>
+      <td>Cancel</td>
+    </tr>
+
+    <tr class="sales-row">
+      <td>Nike x OFF--WHITE AF1 Low Volt, US9</td>
+      <td>No Answer Yet</td>
+      <td>Cancel</td>
+    </tr>
+
+    <tr class="purchases-row">
+      <td>Jordan 4 Retro Black Laser, US9</td>
+      <td>Complete</td>
+      <td>View</td>
+    </tr>
+  </table>
+
+  <button class="btn dashboard-btn">See More</button>
+</div>
+<app-footer></app-footer>

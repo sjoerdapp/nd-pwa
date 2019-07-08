@@ -19,6 +19,7 @@ import { SettingsPayoutComponent } from './components/settings-payout/settings-p
 import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
 import { SellComponent } from './components/sell/sell.component';
 import { SearchComponent } from './components/search/search.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -38,7 +39,8 @@ const routes: Routes = [
   { path: 'settings/payout', component: SettingsPayoutComponent },
   { path: 'transaction', component: TransactionReviewComponent },
   { path: 'sell', component: SellComponent },
-  { path: 'search', component: SearchComponent }
+  { path: 'search', component: SearchComponent },
+  { path: 'dashboard', component: DashboardComponent }
 ];
 
 @NgModule({

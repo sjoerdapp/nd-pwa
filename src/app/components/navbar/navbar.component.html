@@ -80,14 +80,18 @@
 
   <section class="nav-icons" *ngIf="connected; else navBtns">
     <button class="nav-notifications nav-icon">
-      <fa-icon [icon]="['fas', 'bell']"></fa-icon>
+      <a routerLink="/">
+        <fa-icon [icon]="['fas', 'bell']"></fa-icon>
+      </a>
     </button>
         
     <button class="nav-cart nav-icon">
-      <fa-icon [icon]="['fas', 'shopping-cart']"></fa-icon>
+      <a routerLink="/cart">
+        <fa-icon [icon]="['fas', 'shopping-cart']"></fa-icon>
+      </a>
     </button>
       
-    <button class="nav-profile">
+    <button class="nav-profile nav-icon">
       <a routerLink="/profile">
         <fa-icon [icon]="['fas', 'user-circle']"></fa-icon>
       </a>

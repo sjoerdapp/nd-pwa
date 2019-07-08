@@ -125,7 +125,8 @@ nav {
         }
     }
 
-    .nav-profile {
+    .nav-icon {
+        @include vendor(transition, $transition-fast ease-in-out);
         @include navbarItems;
         color: $darkblue;
 
@@ -135,23 +136,9 @@ nav {
 
         &:hover {
             a {
-                @include vendor(transition, $transition-xslow ease-in-out);
+                @include vendor(transition, $transition-fast ease-in-out);
                 color: $matteblue;
             }
-        }
-    }
-
-    .nav-icon {
-        @include vendor(transition, $transition-normal ease-in-out);
-        @include navbarItems;
-        color: $darkblue;
-
-        fa-icon {
-            font-size: $font-large;
-        }
-
-        &:hover {
-            color: $matteblue;
         }
     }
 
