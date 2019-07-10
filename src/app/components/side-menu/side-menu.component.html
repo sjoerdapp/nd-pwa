@@ -1,0 +1,70 @@
+<div class="slide-menu" id="slide-menu">
+  <section class="menu-header">
+    <fa-icon [icon]="['fas', 'times']" (click)="closeMenu()"></fa-icon>
+    <img src="../../../assets/Negative w- letterspng.png" alt="NXTDROP, Inc. Logo Negative">
+    <div class="blueLine"></div>
+    <div class="greenLine"></div>
+  </section>
+
+  <section class="menu-content">
+    <ul class="main-menus" *ngIf="connected; else altMenu">
+      <li>
+        <a routerLink="/">Home</a>
+      </li>
+  
+      <li>
+          <a routerLink="/sell">Sell</a>
+      </li>
+      
+      <li>
+          <a routerLink="/dashboard">Dashboard</a>
+      </li>
+  
+      <li>
+          <a routerLink="/profile">Profile</a>
+      </li>
+  
+      <li>
+          <a routerLink="/settings">Settings</a>
+      </li>
+  
+      <li>
+          <a routerLink="/blog">Blog</a>
+      </li>
+  
+      <li>
+          <a routerLink="/logout">Log out</a>
+      </li>
+    </ul>
+  
+    <ng-template #altMenu>
+      <ul class="main-menus">
+        <li>
+          <a routerLink="/">Home</a>
+        </li>
+      
+        <li>
+          <a routerLink="/blog">Blog</a>
+        </li>
+  
+        <li>
+          <a routerLink="/signin">Sign in</a>
+        </li>
+      </ul>
+    </ng-template>
+  
+    <ul class="bottom-menus">
+      <li>
+        <a routerLink="/terms">Terms</a>
+      </li>
+  
+      <li>
+          <a routerLink="/support">Support</a>
+      </li>
+  
+      <li>
+          <a routerLink="/privacy">Privacy</a>
+      </li>
+    </ul>
+  </section>
+</div>

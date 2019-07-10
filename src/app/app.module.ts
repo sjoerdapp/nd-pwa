@@ -29,6 +29,8 @@ import { TransactionReviewComponent } from './components/transaction-review/tran
 import { SellComponent } from './components/sell/sell.component';
 import { SearchComponent } from './components/search/search.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -68,7 +70,9 @@ import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawe
     TransactionReviewComponent,
     SellComponent,
     SearchComponent,
-    DashboardComponent
+    DashboardComponent,
+    NotificationsComponent,
+    SideMenuComponent
   ],
   imports: [
     BrowserModule,

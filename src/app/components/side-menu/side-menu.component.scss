@@ -1,0 +1,72 @@
+@import '../../base_styles/base';
+
+.slide-menu {
+    @include vendor(transition, all 0.5s);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100vh;
+    z-index: 5;
+    overflow-x: hidden;
+    background: $black;
+
+    .menu-header {
+        display: grid;
+        grid-template-columns: 2fr 18fr;
+        grid-template-rows: 59px 2.5px 2.5px;
+        height: $navHeight;
+        align-items: center;
+        position: relative;
+
+        img {
+            height: $spacing-xlarge;
+        }
+    
+        fa-icon {
+            color: $white;
+            font-size: $font-large;
+            justify-self: center;
+            @include vendor(transition, 500ms ease-in-out);
+
+            &:hover {
+                color: $matteblue;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .menu-content {
+        text-align: center;
+        position: relative;
+        
+        & > ul li {
+            list-style-type: none;
+            
+            a {
+                color: $white;
+                font-size: $font-xxlarge;
+                font-weight: $weight-black;
+                line-height: $spacing-xlarge;
+    
+                &:hover {
+                    color: $matteblue;
+                }
+            }
+        }
+    
+        .main-menus {
+            margin-top: 50px;
+        }
+    
+        .bottom-menus {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            margin-top: 50px;
+    
+            & > li a {
+                font-size: $font-normal;
+            }
+        }
+    }
+}

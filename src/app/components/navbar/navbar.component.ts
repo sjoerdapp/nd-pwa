@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
+  providers: [NotificationsComponent],
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
@@ -9,7 +11,9 @@ export class NavbarComponent implements OnInit {
 
   connected = true;
 
-  constructor() { }
+  constructor(
+    private notification: NotificationsComponent
+  ) { }
 
   ngOnInit() {
   }
@@ -20,10 +24,8 @@ export class NavbarComponent implements OnInit {
     element.style.width = '100vw';
   }
 
-  closeMenu() {
-    // console.log('work');
-    const element = document.getElementById('slide-menu');
-    element.style.width = '0vw';
+  public openNotificationTab(): void {
+    // console.log('open');
+    this.notification.notificationDisplay();
   }
-
 }

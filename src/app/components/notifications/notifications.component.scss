@@ -1,0 +1,66 @@
+@import '../../base_styles/base';
+
+.notification-tab {
+    position: fixed;
+    top: calc(#{$navHeight} + 5px);
+    right: -100vw;
+    z-index: 2;
+    height: calc(100vh - #{$navHeight});
+    width: 100vw;
+    max-width: 100%;
+    border-radius: $spacing-xxsmall;
+    @include vendor(transition, all 0.5s ease-in-out);
+
+    .notifications-container {
+        width: 100%;
+        height: 100%;
+        background: $black;
+        border-radius: $spacing-xxsmall;
+        @include vendor(box-shadow, 2px 5px 21px 0px rgba(50,50,50,1));
+        @include vendor(transition, all 0.5s ease-in-out);
+        overflow-y: auto;
+
+        .notification-card {
+            height: 69px;
+            border-bottom: 1px solid $white;
+            display: grid;
+            grid-template-columns: 5fr 1fr;
+            cursor: pointer;
+            @include vendor(transition, all 0.15s ease-in-out);
+
+            &:hover {
+                background: $matteblack;
+            }
+
+            .notification-description {
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+
+                h5 {
+                    align-self: end;
+                    font-size: $font-small;
+                }
+
+                h6 {
+                    font-weight: $weight-bold;
+                    font-size: $font-xxsmall;
+                }
+                
+                h5, h6 {
+                    color: $white;
+                    margin-left: $spacing-small;
+                }
+            }
+
+            .notification-img {
+                background: $white;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+        }
+    }
+}
