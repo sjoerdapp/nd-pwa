@@ -1,0 +1,57 @@
+<div class="main-container">
+  <app-navbar></app-navbar>
+
+  <section class="edit-container">
+    <h3>Nike x OFF--WHITE AF1 Low Volt</h3>
+
+    <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Air-Force-1-Low-Off-White-Volt">
+
+    <div class="edit-radios">
+      <div>
+        <input type="radio" name="edit-offer">
+        <label for="sell">New</label>
+      </div>
+      
+      <div>
+        <input type="radio" name="edit-offer">
+        <label for="sell">Used</label>
+      </div>
+    </div>
+
+    <div class="edit-price-input">
+      <button><fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
+      <input type="text" placeholder="Enter Price">
+      <button>.00</button>
+    </div>
+
+    <select name="size" id="item-size">
+      <option value="none" selected>Select Size</option>
+      <option value="US6">US 6</option>
+      <option value="US6.5">US 6.5</option>
+      <option value="US7">US 7</option>
+      <option value="US7.5">US 7.5</option>
+      <option value="US8">US 8</option>
+      <option value="US8.5">US 8.5</option>
+      <option value="US9">US 9</option>
+      <option value="US9.5">US 9.5</option>
+      <option value="US10">US 10</option>
+      <option value="US10.5">US 10.5</option>
+      <option value="US11">US 11</option>
+      <option value="US11.5">US 11.5</option>
+      <option value="US12">US 12</option>
+      <option value="US12.5">US 12.5</option>
+      <option value="US13">US 13</option>
+      <option value="US13.5">US 13.5</option>
+      <option value="US14">US 14</option>
+      <option value="US14.5">US 14.5</option>
+      <option value="US15">US 15</option>
+    </select>
+
+    <div class="edit-btns">
+      <button class="btn" routerLink="..">Back</button>
+      <button class="btn">Save Changes</button>
+    </div>
+  </section>
+</div>
+
+<app-footer></app-footer>

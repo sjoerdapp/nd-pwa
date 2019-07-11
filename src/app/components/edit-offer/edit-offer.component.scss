@@ -1,0 +1,104 @@
+@import '../../base_styles/base';
+
+.edit-container {
+    h3 {
+        text-align: center;
+        margin: $spacing-normal 0;
+        letter-spacing: 1px;
+    }
+
+    img {
+        display: block;
+        width: 80%;
+        height: 150px;
+        background: $white;
+        object-fit: contain;
+        margin: $spacing-normal auto;
+    }
+
+    .edit-radios {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: $spacing-normal auto;
+        align-items: center;
+        justify-items: center;
+
+        div {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+
+            label {
+               font-size: $font-small; 
+            }
+        }
+    }
+
+    .edit-price-input {
+        width: 90%;
+        margin: $spacing-large auto;
+        display: grid;
+        grid-template-columns: 10% 80% 10%;
+        background: $white;
+        border: 1px solid $lightgrey;
+        border-radius: $spacing-xxsmall;
+
+        input {
+            border: none;
+            height: inherit;
+            padding: $spacing-small;
+            font-size: $font-normal;
+            letter-spacing: 2px;
+            font-weight: $weight-black;
+        }
+
+        button {
+            border: none;
+            height: inherit;
+            background: $matteblack;
+            color: $white;
+
+            &:first-child {
+                border-top-left-radius: $spacing-xxsmall;
+                border-bottom-left-radius: $spacing-xxsmall;
+            }
+
+            &:last-child {
+                border-top-right-radius: $spacing-xxsmall;
+                border-bottom-right-radius: $spacing-xxsmall;
+            }
+        }
+    }
+
+    #item-size {
+        display: block;
+        width: 50%;
+        height: 35px;
+        margin: $spacing-normal auto;
+    }
+
+    .edit-btns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: $spacing-normal;
+        width: 90%;
+        margin: $spacing-large auto;
+        margin-top: $spacing-xlarge;
+
+        button {
+            padding: $spacing-small;
+
+            &:first-child {
+                background: $black;
+
+                &:hover {
+                    background: $matteblack;
+                }
+            }
+
+            &:last-child:hover {
+                background: $matteblue;
+            }
+        }
+    }
+}
