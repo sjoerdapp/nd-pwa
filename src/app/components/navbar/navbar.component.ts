@@ -9,7 +9,7 @@ import { NotificationsComponent } from '../notifications/notifications.component
 })
 export class NavbarComponent implements OnInit {
 
-  connected = true;
+  connected = false;
 
   constructor(
     private notification: NotificationsComponent

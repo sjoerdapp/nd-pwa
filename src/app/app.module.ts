@@ -33,6 +33,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
 import { RequestComponent } from './components/request/request.component';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -76,7 +77,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawe
     NotificationsComponent,
     SideMenuComponent,
     EditOfferComponent,
-    RequestComponent
+    RequestComponent,
+    ForgetPasswordComponent
   ],
   imports: [
     BrowserModule,
