@@ -1,0 +1,33 @@
+@import '../../base_styles/base';
+
+.request-container {
+    h3 {
+        text-align: center;
+        margin: $spacing-normal 0;
+    }
+
+    textarea {
+        resize: none;
+        width: 90%;
+        height: 300px;
+        border: 1px solid $lightgrey;
+        border-radius: $spacing-xsmall;
+        margin: $spacing-large auto;
+        display: block;
+        padding: $spacing-xsmall;
+        font-size: $font-small;
+        letter-spacing: 0.8px;
+    }
+
+    .request-btn {
+        width: 75%;
+        margin: $spacing-large auto;
+        background: $black;
+        display: block;
+        padding: $spacing-small;
+
+        &:hover {
+            background: $matteblack;
+        }
+    }
+}

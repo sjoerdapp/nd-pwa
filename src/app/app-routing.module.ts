@@ -21,6 +21,7 @@ import { SellComponent } from './components/sell/sell.component';
 import { SearchComponent } from './components/search/search.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+import { RequestComponent } from './components/request/request.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -42,7 +43,8 @@ const routes: Routes = [
   { path: 'sell', component: SellComponent },
   { path: 'search', component: SearchComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'edit-offer', component: EditOfferComponent }
+  { path: 'edit-offer', component: EditOfferComponent },
+  { path: 'request', component: RequestComponent }
 ];
 
 @NgModule({
