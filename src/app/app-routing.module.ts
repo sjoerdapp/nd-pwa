@@ -24,6 +24,7 @@ import { EditOfferComponent } from './components/edit-offer/edit-offer.component
 import { RequestComponent } from './components/request/request.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -48,7 +49,8 @@ const routes: Routes = [
   { path: 'edit-offer', component: EditOfferComponent },
   { path: 'request', component: RequestComponent },
   { path: 'forgot-password', component: ForgetPasswordComponent },
-  { path: 'activate-account', component: ActivateAccountComponent }
+  { path: 'activate-account', component: ActivateAccountComponent },
+  { path: 'support', component: ContactUsComponent }
 ];
 
 @NgModule({

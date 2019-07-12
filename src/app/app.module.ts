@@ -34,6 +34,8 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
 import { RequestComponent } from './components/request/request.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 
 /** Material Design */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -45,9 +47,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 /** Icons imports */
 // tslint:disable-next-line: max-line-length
-import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawesome/free-brands-svg-icons';
-import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
+
 
 @NgModule({
   declarations: [
@@ -81,7 +83,8 @@ import { ActivateAccountComponent } from './components/activate-account/activate
     EditOfferComponent,
     RequestComponent,
     ForgetPasswordComponent,
-    ActivateAccountComponent
+    ActivateAccountComponent,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,
@@ -98,6 +101,6 @@ export class AppModule {
   constructor() {
     // add icon to library to be used in components
 // tslint:disable-next-line: max-line-length
-    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle);
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle);
   }
 }

@@ -27,7 +27,7 @@ footer {
             @include vendor(transition, $transition-fast ease-in-out);
 
             &:hover {
-                color: $blueivy;
+                color: $matteblue;
             }
         }
     }
