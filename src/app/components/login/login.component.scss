@@ -29,6 +29,7 @@ section {
             margin: 5px auto;
             cursor: pointer;
             @include vendor(transition, all 0.25s ease-in-out);
+            border-radius: $spacing-xxsmall;
 
             fa-icon {
                 float: left;
@@ -43,8 +44,9 @@ section {
             height: 25px;
             width: 90%;
             border: none;
-            border-radius: 5px;
-            padding: 8px;
+            padding: $spacing-xsmall;
+            letter-spacing: 0.8px;
+            border-radius: $spacing-xxsmall;
         }
 
         p {
@@ -58,6 +60,7 @@ section {
             margin: 16px auto;
             width: 60vw;
             cursor: pointer;
+            border-radius: $spacing-xxsmall;
 
             &:hover {
                 background: $white;
@@ -70,6 +73,8 @@ section {
             width: 80vw;
             color: $black;
             margin-top: 16px;
+            border-radius: $spacing-xxsmall;
+            background: $white;
 
             &:hover {
                 background: $navyblue;

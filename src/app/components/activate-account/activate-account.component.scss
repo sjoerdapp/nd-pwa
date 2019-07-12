@@ -1,0 +1,15 @@
+@import '../../base_styles/base';
+
+.content-container {
+    h3, h6 {
+        text-align: center;
+    }
+
+    fa-icon {
+        color: $green;
+        display: block;
+        width: 10%;
+        font-size: $font-large;
+        margin: $spacing-xlarge * 4 auto 0 auto;
+    }
+}

@@ -44,8 +44,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 /** Icons imports */
-import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+// tslint:disable-next-line: max-line-length
+import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawesome/free-brands-svg-icons';
+import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,8 @@ import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawe
     SideMenuComponent,
     EditOfferComponent,
     RequestComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    ActivateAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -95,6 +98,6 @@ export class AppModule {
   constructor() {
     // add icon to library to be used in components
 // tslint:disable-next-line: max-line-length
-    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign);
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle);
   }
 }

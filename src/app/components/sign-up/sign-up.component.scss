@@ -23,7 +23,7 @@ section {
             display: block;
             padding: 5px;
             border: none;
-            border-radius: 8px;
+            border-radius: $spacing-xxsmall;
             font-size: $font-small;
             font-weight: $weight-black;
             margin: 5px auto;
@@ -43,8 +43,9 @@ section {
             height: 25px;
             width: 90%;
             border: none;
-            border-radius: 5px;
-            padding: 8px;
+            border-radius: $spacing-xxsmall;
+            padding: $spacing-xsmall;
+            letter-spacing: 0.5px;
         }
 
         p {
@@ -54,10 +55,10 @@ section {
         }
 
         .signup-btn {
-            height: 30px;
-            margin: 8px auto;
+            margin: $spacing-xsmall auto;
             width: 50vw;
             cursor: pointer;
+            padding: $spacing-xsmall;
 
             &:hover {
                 background: $white;
