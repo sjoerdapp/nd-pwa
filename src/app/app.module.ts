@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
+import { environment } from 'src/environments/environment';
 
 /** Components */
 import { AppComponent } from './app.component';
@@ -50,6 +51,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawesome/free-brands-svg-icons';
 
+// Firebase Setup
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 @NgModule({
   declarations: [
@@ -92,7 +98,11 @@ import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawe
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AngularFireModule.initializeApp(environment.firebase, 'nxtdrop-app-test'),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireMessagingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

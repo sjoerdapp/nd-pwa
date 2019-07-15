@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyDADaJvBOsSuyZz0ytTKiwh8c1mFYQJKYE',
+    authDomain: 'nxtdrop-app.firebaseapp.com',
+    databaseURL: 'https://nxtdrop-app.firebaseio.com',
+    projectId: 'nxtdrop-app',
+    storageBucket: 'nxtdrop-app.appspot.com',
+    messagingSenderId: '155742053339',
+    appId: '1:155742053339:web:50f644112ac6b92b'
+  }
 };
 
 /*
