@@ -1,16 +1,9 @@
-export class User {
-    uid: number;
-    fullName: string;
-    username: string;
+export interface User {
+    uid: string;
     email: string;
-    lastConnected: Date;
-    accountCreated: Date;
-    country: string;
-    stripeID: string;
-    customerID: string;
-    activeAccount: boolean;
-    lastActivity: Date;
-    blocked: boolean;
+
+    // Optional
+    username?: string;
 
     /* Payment Properties */
     firstName?: string;

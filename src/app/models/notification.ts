@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export class notification {
+export class Notification {
     notificationID: number;
     context: any;
     generator: User;

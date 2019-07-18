@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationsComponent } from '../notifications/notifications.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   providers: [NotificationsComponent],
@@ -9,13 +10,15 @@ import { NotificationsComponent } from '../notifications/notifications.component
 })
 export class NavbarComponent implements OnInit {
 
-  connected = false;
+  connected: boolean;
 
   constructor(
-    private notification: NotificationsComponent
+    private notification: NotificationsComponent,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
+    this.connected = this.auth.isConnected();
   }
 
   openMenu() {
