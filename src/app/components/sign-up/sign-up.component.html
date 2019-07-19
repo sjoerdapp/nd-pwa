@@ -1,8 +1,8 @@
 <section class="signup-body">
   <div class="signup-card">
-    <a routerLink="/"><img src="../../../assets/Negativepng.png" alt="NXTDROP, Inc. Logo Negative Symbol"></a>
+    <a routerLink=".."><img src="../../../assets/Negativepng.png" alt="NXTDROP, Inc. Logo Negative Symbol"></a>
 
-    <button class="facebook-btn">
+    <button class="facebook-btn" (click)="auth.facebookSignIn()">
       <fa-icon [icon]="['fab', 'facebook']"></fa-icon>
       <h3>Sign in with Facebook</h3>
     </button>
@@ -16,13 +16,13 @@
       <h2>OR</h2>
     </div>
 
-    <form>
-      <input type="text" placeholder="First Name">
-      <input type="text" placeholder="Last Name">
-      <input type="text" placeholder="Username">
-      <input type="email" placeholder="Email">
-      <input type="password" placeholder="Password">
-      <button class="btn signup-btn">Sign Up</button>
+    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+      <input type="text" placeholder="First Name" formControlName="firstName" [className]="firstName.invalid && firstName.dirty ? 'input-error' : ''">
+      <input type="text" placeholder="Last Name" formControlName="lastName" [className]="lastName.invalid && lastName.dirty ? 'input-error' : ''">
+      <input type="text" placeholder="Username" formControlName="username" [className]="username.invalid && username.dirty ? 'input-error' : ''">
+      <input type="email" placeholder="Email" formControlName="email" [className]="email.invalid && email.dirty ? 'input-error' : ''">
+      <input type="password" placeholder="Password" formControlName="password" [className]="password.invalid && password.dirty ? 'input-error' : ''">
+      <button type="submit" class="btn signup-btn">Sign Up</button>
     </form>
 
     <p>By signing up, you agree to our Terms and Privacy Policy.</p>

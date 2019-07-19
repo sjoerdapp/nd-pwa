@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Components
@@ -25,6 +25,7 @@ import { RequestComponent } from './components/request/request.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { LoggedOutComponent } from './components/logged-out/logged-out.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -50,7 +51,8 @@ const routes: Routes = [
   { path: 'request', component: RequestComponent },
   { path: 'forgot-password', component: ForgetPasswordComponent },
   { path: 'activate-account', component: ActivateAccountComponent },
-  { path: 'support', component: ContactUsComponent }
+  { path: 'support', component: ContactUsComponent },
+  { path: 'bye', component: LoggedOutComponent }
 ];
 
 @NgModule({

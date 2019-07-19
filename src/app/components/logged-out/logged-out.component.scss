@@ -1,0 +1,12 @@
+@import '../../base_styles/base';
+
+.content-container {
+    text-align: center;
+
+    fa-icon {
+        margin: $spacing-xlarge * 3.5 auto 0 auto;
+        font-size: $font-large;
+        color: $green;
+        display: block;
+    }
+}

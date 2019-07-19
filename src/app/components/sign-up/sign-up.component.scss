@@ -37,6 +37,10 @@ section {
             }
         }
 
+        .input-error {
+            background: $inputError;
+        }
+
         input {
             display: block;
             margin: 5px auto;

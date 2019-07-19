@@ -37,10 +37,7 @@ import { RequestComponent } from './components/request/request.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
-
-/** Material Design */
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { LoggedOutComponent } from './components/logged-out/logged-out.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -56,6 +53,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
+
+// Reactive Forms
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -90,19 +90,19 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
     RequestComponent,
     ForgetPasswordComponent,
     ActivateAccountComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    LoggedOutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCheckboxModule,
     FontAwesomeModule,
     AngularFireModule.initializeApp(environment.firebase, 'nxtdrop-app-test'),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireMessagingModule
+    AngularFireMessagingModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
