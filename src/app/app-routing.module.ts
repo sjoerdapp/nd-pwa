@@ -26,6 +26,7 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { LoggedOutComponent } from './components/logged-out/logged-out.component';
+import { SignupInformationComponent } from './components/signup-information/signup-information.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -52,7 +53,8 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgetPasswordComponent },
   { path: 'activate-account', component: ActivateAccountComponent },
   { path: 'support', component: ContactUsComponent },
-  { path: 'bye', component: LoggedOutComponent }
+  { path: 'bye', component: LoggedOutComponent },
+  { path: 'additional-information', component: SignupInformationComponent }
 ];
 
 @NgModule({

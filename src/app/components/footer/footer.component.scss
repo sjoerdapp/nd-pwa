@@ -20,15 +20,12 @@ footer {
         font-size: $font-small;
         border: none;
         align-self: center;
+        color: $white;
+        cursor: pointer;
+        @include vendor(transition, $transition-fast ease-in-out);
 
-        a {
-            color: $white;
-            cursor: pointer;
-            @include vendor(transition, $transition-fast ease-in-out);
-
-            &:hover {
-                color: $matteblue;
-            }
+        &:hover {
+            color: $matteblue;
         }
     }
 

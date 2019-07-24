@@ -38,6 +38,7 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { LoggedOutComponent } from './components/logged-out/logged-out.component';
+import { SignupInformationComponent } from './components/signup-information/signup-information.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -91,7 +92,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ForgetPasswordComponent,
     ActivateAccountComponent,
     ContactUsComponent,
-    LoggedOutComponent
+    LoggedOutComponent,
+    SignupInformationComponent
   ],
   imports: [
     BrowserModule,

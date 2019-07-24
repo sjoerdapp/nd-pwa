@@ -1,11 +1,9 @@
 @import '../../base_styles/base';
 
 section {
-    padding: $spacing-small 0 0 0;
     height: calc(100vh - #{$footerHeight});
-    width: 100vw;
-    max-width: 100%;
     background: $black;
+    padding-top: $spacing-xlarge * 2;
 
     .signup-card {
         width: 90%;
@@ -44,7 +42,7 @@ section {
 
         input {
             display: block;
-            margin: 5px auto;
+            margin: $spacing-small auto;
             height: 25px;
             width: 90%;
             border: none;
@@ -53,14 +51,8 @@ section {
             letter-spacing: 0.5px;
         }
 
-        p {
-            color: $white;
-            font-size: $font-xsmall;
-            text-align: center;
-        }
-
         .signup-btn {
-            margin: $spacing-xsmall auto;
+            margin: $spacing-normal auto;
             width: 50vw;
             cursor: pointer;
             padding: $spacing-xsmall;
@@ -68,17 +60,6 @@ section {
             &:hover {
                 background: $white;
                 color: $navyblue;
-            }
-        }
-
-        .login-btn {
-            height: 30px;
-            width: 80vw;
-            color: $black;
-
-            &:hover {
-                background: $navyblue;
-                color: $white;
             }
         }
     }
