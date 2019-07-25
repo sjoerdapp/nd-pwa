@@ -20,7 +20,6 @@ import { switchMap } from 'rxjs/operators';
 })
 export class AuthService {
   user: Observable<User>;
-  usernameAvailable: any = { usernameAvailable: false };
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -39,22 +38,24 @@ export class AuthService {
     );
   }
 
-  async signOut() {
+  async signOut(redirect: boolean) {
     await this.afAuth.auth.signOut()
-    .then(() => {
-      console.log('Signed Out');
-      return this.ngZone.run(() => {
-        return this.router.navigate(['/bye']);
+      .then(() => {
+        console.log('Signed Out');
+        if (redirect) {
+          return this.ngZone.run(() => {
+            return this.router.navigate(['/bye']);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error('Sign out error', error);
       });
-    })
-    .catch((error) => {
-      console.error('Sign out error', error);
-    });
   }
 
   async googleSignIn() {
     const provider = new auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider);
+    this.oAuthLogin(provider);
   }
 
   async facebookSignIn() {
@@ -77,41 +78,51 @@ export class AuthService {
       });
   }
 
+  async emailLogin(email: string, password: string) {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        return this.ngZone.run(() => {
+          return this.router.navigate(['/home']);
+        });
+      })
+      .catch(error => {
+        console.error('Error Login: ', error);
+      });
+  }
+
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
-        this.updateUserData(credential.user);
+        if (this.handleAuthToken(credential.user)) {
+          console.log('does exist');
+          // console.log(this.handleAuthToken(credential.user));
+        } else {
+          console.log('does not exist');
+        }
       })
       .catch(error => {
         console.error('Error: ', error);
       });
   }
 
+  private handleAuthToken(user) {
+    return this.checkEmail(user.email).get().subscribe((snapshot) => {
+      if (snapshot.empty) {
+        return this.ngZone.run(() => {
+          return this.router.navigate(['/additional-information']);
+        });
+      } else {
+        return this.ngZone.run(() => {
+          return this.router.navigate(['/home']);
+        });
+      }
+    });
+  }
+
   private createUserData(user: User) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 
     return userRef.set(user, { merge: true })
-      .then(() => {
-        console.log('User information updated');
-        return this.ngZone.run(() => {
-          return this.router.navigate(['/home']);
-        });
-      })
-      .catch((error) => {
-        console.error('Error: ', error);
-      });
-  }
-
-  private updateUserData(user) {
-    // set user data to firestore on login
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-
-    const data: User = {
-      uid: user.uid,
-      email: user.email
-    };
-
-    return userRef.set(data, { merge: true })
       .then(() => {
         console.log('User information updated');
         return this.ngZone.run(() => {
@@ -133,11 +144,34 @@ export class AuthService {
     }
   }
 
+  public addInformationUser(firstName: string, lastName: string, username: string, password: string) {
+    const credential = auth.EmailAuthProvider.credential(this.afAuth.auth.currentUser.email, password);
+
+    return this.afAuth.auth.currentUser.linkWithCredential(credential)
+      .then((userCredential) => {
+        const userData = {
+          firstName,
+          lastName,
+          username,
+          email: userCredential.user.email,
+          uid: userCredential.user.uid
+        };
+
+        this.createUserData(userData);
+        console.log('Account linked');
+      })
+      .catch((error) => {
+        console.error('Account linking error', error);
+      });
+  }
+
   checkUsername(username) {
-    return this.afs.collection('users', ref => ref.where('username', '==', username)).valueChanges();
+    console.log('checkUsername() called');
+    return this.afs.collection('users', ref => ref.where('username', '==', username));
   }
 
   checkEmail(email) {
-    return this.afs.collection('users', ref => ref.where('email', '==', email)).valueChanges();
+    console.log('checkEmail() called');
+    return this.afs.collection('users', ref => ref.where('email', '==', email));
   }
 }

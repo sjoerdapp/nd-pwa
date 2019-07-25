@@ -2,11 +2,15 @@
   <div class="signup-card">
       <img src="../../../assets/Negativepng.png" alt="NXTDROP, Inc. Logo Negative Symbol">
 
-      <form>
-        <input type="text" placeholder="First Name">
-        <input type="text" placeholder="Last Name">
-        <input type="text" placeholder="Username">
-        <input type="password" placeholder="Password">
+      <form [formGroup]="signupForm" (ngSubmit)="createUser()">
+        <input type="text" placeholder="First Name" formControlName="firstName" [className]="firstName.invalid && firstName.dirty ? 'input-error' : ''">
+
+        <input type="text" placeholder="Last Name" formControlName="lastName" [className]="lastName.invalid && lastName.dirty ? 'input-error' : ''">
+
+        <input type="text" placeholder="Username" formControlName="username" [className]="username.invalid && username.dirty ? 'input-error' : ''">
+
+        <input type="password" placeholder="Password" formControlName="password" [className]="password.invalid && password.dirty ? 'input-error' : ''">
+        
         <button type="submit" class="btn signup-btn">Done</button>
       </form>
   </div>

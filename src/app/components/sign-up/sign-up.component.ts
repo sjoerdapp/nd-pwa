@@ -7,7 +7,7 @@ export class CustomValidators {
 
   static username( auth: AuthService ) {
     return (control: AbstractControl) => {
-      return auth.checkUsername(control.value.toLowerCase()).pipe(
+      return auth.checkUsername(control.value.toLowerCase()).valueChanges().pipe(
         debounceTime(500),
         take(1),
         map(arr => arr.length ? { usernameAvailable: false } : null)
@@ -17,7 +17,7 @@ export class CustomValidators {
 
   static email( auth: AuthService ) {
     return (control: AbstractControl) => {
-      return auth.checkEmail(control.value).pipe(
+      return auth.checkEmail(control.value).valueChanges().pipe(
         debounceTime(500),
         take(1),
         map(arr => arr.length ? { emailAvailable: false } : null)
