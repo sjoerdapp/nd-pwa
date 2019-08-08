@@ -1,9 +1,9 @@
 export class Product {
-    productID: number;
+    productID: string;
     brand: string;
     line: string;
     model: string;
-    assetURL: string;
+    assetURL?: string;
     colorway: string;
     yearMade: Date;
     type: string;
