@@ -7,4 +7,5 @@ export class Product {
     colorway: string;
     yearMade: Date;
     type: string;
+    lowestPrice?: number;
 }

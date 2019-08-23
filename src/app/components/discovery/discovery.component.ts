@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HomeService } from 'src/app/services/home.service';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-discovery',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DiscoveryComponent implements OnInit {
 
-  constructor() { }
+  discoveries: Product[];
+
+  constructor(
+    private homeService: HomeService
+  ) { }
 
   ngOnInit() {
+    this.homeService.getDiscovery().subscribe(data => this.discoveries = data);
   }
 
 }

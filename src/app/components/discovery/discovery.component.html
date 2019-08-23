@@ -2,36 +2,12 @@
   <h2>Discovery</h2>
 
   <div class="showcase-discovery">
-    <div class="discovery-card">
-      <h6>$300</h6>
+    <div *ngFor="let discovery of discoveries" class="discovery-card">
+      <h6>{{ discovery.lowestPrice }}</h6>
 
-      <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Air-Force-1-Low-Off-White-Volt">
+      <img src="{{ discovery.assetURL }}" alt="{{ discovery.model }}">
 
-      <h3>Nike x OFF--WHITE Volt</h3>
-    </div>
-
-    <div class="discovery-card">
-      <h6>$300</h6>
-
-      <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Air-Force-1-Low-Off-White-Volt">
-
-      <h3>Nike x OFF--WHITE Volt</h3>
-    </div>
-
-    <div class="discovery-card">
-      <h6>$300</h6>
-
-      <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Air-Force-1-Low-Off-White-Volt">
-
-      <h3>Nike x OFF--WHITE Volt</h3>
-    </div>
-
-    <div class="discovery-card">
-      <h6>$300</h6>
-
-      <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Air-Force-1-Low-Off-White-Volt">
-
-      <h3>Nike x OFF--WHITE Volt</h3>
+      <h3>{{ discovery.model }}</h3>
     </div>
   </div>
 

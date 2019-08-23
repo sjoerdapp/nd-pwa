@@ -2,28 +2,12 @@
   <h2>Trending</h2>
 
   <div class="showcase-windows">
-    <div class="showcase-window">
-      <h6>$300</h6>
-      <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Nike Air-Force-1-Low-Off-White-Volt">
-      <h3>Nike x OFF--WHITE Volt</h3>
-    </div>
-
-    <div class="showcase-window">
-      <h6>$300</h6>
-      <img src="../../../assets/Jordan-4-Retro-Black-Laser.jpg" alt="Jordan-4-Retro-Black-Laser">
-      <h3>Air Jordan 4 Retro Black Laser</h3>
-    </div>
-
-    <div class="showcase-window">
-      <h6>$300</h6>
-      <img src="../../../assets/Nike-Air-Force-1-Low-All-Over-Logo-Red.jpg" alt="Nike-Air-Force-1-Low-All-Over-Logo-Red">
-      <h3>Nike AF1 Low All Over Logo Red</h3>
-    </div>
-
-    <div class="showcase-window">
-      <h6>$300</h6>
-      <img src="../../../assets/Yeezy-Boost-350-V2-Zebra.jpg" alt="Yeezy-Boost-350-V2-Zebra">
-      <h3>Yeezy Boost 350 V2 Zebra</h3>
+    <div *ngFor="let trend of trends" class="showcase-window">
+      <section>
+          <h6 id="window-price">{{ trend.lowestPrice }}</h6>
+          <div id="window-image"><img src="{{ trend.assetURL }}" alt="{{ trend.model }}"></div>
+          <h3 id="window-model">{{ trend.model }}</h3>
+      </section>
     </div>
   </div>
 </div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HomeService } from '../../services/home.service';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-new-releases',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewReleasesComponent implements OnInit {
 
-  constructor() { }
+  newReleases: Product[];
+
+  constructor(
+    private homeService: HomeService
+  ) { }
 
   ngOnInit() {
+    this.homeService.getNewReleases().subscribe(data => this.newReleases = data);
   }
 
 }

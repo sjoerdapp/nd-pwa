@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../../services/home.service';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-trending',
@@ -8,11 +9,14 @@ import { HomeService } from '../../services/home.service';
 })
 export class TrendingComponent implements OnInit {
 
-  data;
+  trends: Product[];
 
-  constructor(private home: HomeService) { }
+  constructor(
+    private homeService: HomeService
+  ) { }
 
   ngOnInit() {
+    this.homeService.getTrending().subscribe(data => this.trends = data);
   }
 
 }
