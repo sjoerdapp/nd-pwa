@@ -1,32 +1,91 @@
 <div class="main-container">
   <app-navbar></app-navbar>
 
-  <section class="sell-container">
-    <ol>
+  <section class="sell-container" id="sell-page-1">
+    <h3>How It Works</h3>
+
+    <div id="how-it-works-content">
+      <div>
+        <fa-icon [icon]="['fas', 'tag']"></fa-icon>
+        <h6>List an item for sale</h6>
+      </div>
+
+      <div>
+        <fa-icon [icon]="['fas', 'box']"></fa-icon>
+        <h6>Ship the item within 2 business days. We'll authenticate it and ship it to the buyer.</h6>
+      </div>
+
+      <div>
+        <fa-icon [icon]="['fas', 'money-bill-wave']"></fa-icon>
+        <h6>Ship the item within 2 business days. We'll authenticate it and ship it to the buyer.</h6>
+      </div>
+    </div>
+
+    <div class="sell-btns">
+      <button class="btn" routerLink="..">Back</button>
+      <button class="btn" (click)="goToPage2(true)">Next</button>
+    </div>    
+  </section>
+
+  <section class="sell-container" id="sell-page-2">
+    <h3>Select a product</h3>
+    <ais-instantsearch [config]="searchConfig">
+
+      <ais-search-box [autofocus]="true" (change)="searchChanged($event)" placeholder="Search for product"></ais-search-box>
+
+      <ais-hits *ngIf="showResults">
+        <ng-template let-hits="hits">
+          <div class="search-results">
+            <div *ngFor="let hit of hits">
+
+              <div class="hit" (click)="selectPair(hit)">
+                <img src="{{ hit.assetURL }}">
+
+                <div class="hit-info">
+                  <h3>{{ hit.model }}</h3>
+                  <h6>{{ hit.colorway }}</h6>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </ng-template>
+      </ais-hits>
+
+    </ais-instantsearch>
+  </section>
+
+  <section class="sell-container" id="sell-page-3">
+    <!--<ol>
       <li>You&apos;ll be notified via email when a buyer purchases your item.</li>
       <li>Once you confirm the order, you&apos;ll have 48 hours to ship the item and confirm that you shipped it.</li>
       <li>We&apos;ll verify the item and you&apos;ll get paid when it passes our verification process.</li>
       <li>If it doesn&apos;t pass our verification process, we&apos;ll charge you 15% of the item price. Please, do not make us take your money.</li>
       <li>We&apos;ll take a 12% consignment fee on all sales.</li>
-    </ol>
+    </ol>-->
 
-    <input type="text" id="sell-search" placeholder="What do you want to sell?">
+    <h3>Almost Done...</h3>
+
+    <ol>
+      <li>If your item does not pass our verification process, we will charge you 15% of the item price.</li>
+      <li>We take a 12% consignment fee on all sales.</li>
+    </ol>
 
     <div class="sell-radios">
       <div>
-        <input type="radio" name="sell" id="">
-        <label for="sell">New</label>
+        <input type="radio" name="condition" value="new" (change)="radioHandler($event)">
+        <label for="condition">New</label>
       </div>
       
       <div>
-        <input type="radio" name="sell" id="">
-        <label for="sell">Used</label>
+        <input type="radio" name="condition" value="used" (change)="radioHandler($event)">
+        <label for="condition">Used</label>
       </div>
     </div>
 
     <div class="sell-price-input">
       <button><fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
-      <input type="text" placeholder="Enter Price">
+      <input type="text" placeholder="Enter Price" id="sell-price-input">
       <button>.00</button>
     </div>
 
@@ -54,8 +113,8 @@
     </select>
 
     <div class="sell-btns">
-      <button class="btn" routerLink="..">Back</button>
-      <button class="btn">Sell</button>
+      <button class="btn" (click)="goToPage2(false)">Back</button>
+      <button class="btn" (click)="submitListing()">Finish</button>
     </div>
   </section>
 </div>

@@ -144,6 +144,10 @@ export class AuthService {
     }
   }
 
+  public getUID(): string {
+    return this.afAuth.auth.currentUser.uid;
+  }
+
   public addInformationUser(firstName: string, lastName: string, username: string, password: string) {
     const credential = auth.EmailAuthProvider.credential(this.afAuth.auth.currentUser.email, password);
 

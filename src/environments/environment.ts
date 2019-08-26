@@ -12,6 +12,10 @@ export const environment = {
     storageBucket: 'nxtdrop-app.appspot.com',
     messagingSenderId: '155742053339',
     appId: '1:155742053339:web:50f644112ac6b92b'
+  },
+  algolia: {
+    appId: 'UYSPT0956N',
+    apiKey: '093ee2e4c80544d65228982af60e459f'
   }
 };
 

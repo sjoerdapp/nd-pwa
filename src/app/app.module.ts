@@ -46,7 +46,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 /** Icons imports */
 // tslint:disable-next-line: max-line-length
-import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawesome/free-brands-svg-icons';
 
 // Firebase Setup
@@ -58,6 +58,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 // Reactive Forms
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+// Algolia
+import { NgAisModule } from 'angular-instantsearch';
 
 @NgModule({
   declarations: [
@@ -106,7 +109,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AngularFireMessagingModule,
     AngularFireStorageModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgAisModule
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -115,6 +119,6 @@ export class AppModule {
   constructor() {
     // add icon to library to be used in components
 // tslint:disable-next-line: max-line-length
-    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle);
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave);
   }
 }

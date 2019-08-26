@@ -1,7 +1,46 @@
 @import '../../base_styles/base';
 
+#sell-page-1 {
+    h3 {
+        text-align: center;
+        margin: $spacing-large 0 $spacing-large 0;
+    }
+
+    #how-it-works-content {
+        div {
+            display: grid;
+            grid-template-columns: 1fr 8fr;
+            align-items: center;
+            margin: $spacing-large 0;
+
+            fa-icon {
+                justify-self: center;
+                color: $black;
+            }
+        }
+    }
+
+    .sell-btns {
+        margin: $spacing-xxlarge auto;
+    }
+}
+
+#sell-page-2, #sell-page-3 {
+    display: none;
+}
+
+#sell-page-3 {
+    h3 {
+        margin: $spacing-large auto;
+    }
+}
+
 .sell-container {
     padding: $spacing-small;
+
+    h3 {
+        text-align: center;
+    }
 
     ol {
         list-style-type: decimal;
@@ -10,17 +49,73 @@
         margin-top: $spacing-xsmall;
     }
 
-    #sell-search {
-        @include vendor(transition, 0.25s ease-in-out);
-        display: block;
-        padding: $spacing-small;
-        width: 90%;
-        margin: $spacing-normal auto;
-        border-radius: $spacing-xxsmall;
-        border: 1px solid $lightgrey;
+    ::ng-deep .ais-SearchBox {
+        input {
+            @include vendor(transition, 0.25s ease-in-out);
+            display: block;
+            padding: $spacing-small;
+            width: 90%;
+            margin: $spacing-normal auto;
+            border-radius: $spacing-xxsmall;
+            border: 1px solid $lightgrey;
 
-        &:focus, &:hover {
-            border-color: $matteblack;
+            &:focus, &:hover {
+                border-color: $matteblack;
+            }
+        }
+
+        button {
+            display: none;
+        }
+    }
+
+    .search-results {
+        width: 90%;
+        margin: $spacing-small auto;
+        border-radius: $spacing-xxsmall;
+        height: 300px;
+        overflow-y: auto;
+
+        .hit {
+            @include vendor(transition, 0.25s ease-in-out);
+            height: 60px;
+            display: grid;
+            grid-template-columns: 1fr 5fr;
+            align-items: center;
+            padding: $spacing-xxsmall;
+
+            &:hover {
+                cursor: pointer;
+                
+                .hit-info {
+                    h3 {
+                        color: $green;
+                    }
+                }
+            }
+
+            img {
+                height: inherit;
+                width: 100%;
+                object-fit: contain;
+            }
+
+            .hit-info {
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+                padding-left: $spacing-xxsmall;
+
+                h3 {
+                    text-align: left;
+                    color: $black;
+                    font-size: $font-xsmall;
+                }
+
+                h6 {
+                    color: $matteblack;
+                    font-size: $font-xxsmall;
+                }
+            }
         }
     }
 
