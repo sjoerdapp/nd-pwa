@@ -18,7 +18,9 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.connected = this.auth.isConnected();
+    this.auth.checkStatus().then(value => {
+      this.connected = value;
+    });
   }
 
   openMenu() {

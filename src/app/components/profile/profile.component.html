@@ -3,14 +3,14 @@
 
   <div class="profile-header">
     <div class="profile-stats">
-      <button class="stats-btn"><p>0</p>Sold</button>
-      <button class="stats-btn"><p>0</p>Ordered</button>
+      <button class="stats-btn"><p>{{ dashInfo.sold }}</p>Sold</button>
+      <button class="stats-btn"><p>{{ dashInfo.ordered }}</p>Ordered</button>
     </div>
 
     <div class="profile-info">
       <div class="profile-name">
-        <h4>John Doe</h4>
-        <h6>@johndoe</h6>
+        <h4>{{ dashInfo.firstName }} {{ dashInfo.lastName }}</h4>
+        <h6>{{ dashInfo.username }}</h6>
       </div>
 
       <div class="profile-btns">
@@ -20,7 +20,7 @@
     </div>
 
     <div class="profile-item-listed">
-      <button class="stats-btn"><p>4</p>Listed</button>
+      <button class="stats-btn"><p>{{ dashInfo.listed }}</p>Listed</button>
     </div>
 
     <div class="profile-divider"></div>
@@ -28,44 +28,17 @@
 
   <h2>Listed Items</h2>
   <div class="profile-items">
-    <div class="profile-item">
+    <div class="profile-item" *ngFor="let listing of listings" routerLink="/edit-offer/{{ listing.listingID }}">
       <section class="item-specs">
-        <h6>US9</h6>
-        <h5>$300</h5>
+        <h6>{{ listing.size }}</h6>
+        <h5>{{ listing.price | currency: 'CAD' }}</h5>
       </section>
-      <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Air-Force-1-Low-Off-White-Volt">
-      <h5>Nike x OFF--WHITE AF1 Low Volt</h5>
-    </div>
-
-    <div class="profile-item">
-      <section class="item-specs">
-        <h6>US11</h6>
-        <h5>$300</h5>
-      </section>
-      <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Jordan-4-Retro-Black-Laser">
-      <h5>Nike x OFF--WHITE AF1 Low Volt</h5>
-    </div>
-
-    <div class="profile-item">
-      <section class="item-specs">
-        <h6>US9</h6>
-        <h5>$300</h5>
-      </section>
-      <img src="../../../assets/Nike-Air-Force-1-Low-All-Over-Logo-Red.jpg" alt="Air-Force-1-Low-Off-White-Volt">
-      <h5>AF1 Low All Over Logo Red</h5>
-    </div>
-
-    <div class="profile-item">
-      <section class="item-specs">
-        <h6>US9</h6>
-        <h5>$300</h5>
-      </section>
-      <img src="../../../assets/Yeezy-Boost-350-V2-Zebra.jpg" alt="Jordan-4-Retro-Black-Laser">
-      <h5>Yeezy Boost 350 V2 Zebra</h5>
+      <img src="{{ listing.assetURL }}" alt="{{ listing.productID }}">
+      <h5>{{ listing.model }}</h5>
     </div>
   </div>
 
-  <button class="btn show-more-btn">More</button>
+  <button *ngIf="dashInfo.listed > 6" class="btn show-more-btn">More</button>
 </div>
 
 <app-footer></app-footer>

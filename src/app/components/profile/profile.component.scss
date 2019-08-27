@@ -100,6 +100,15 @@ h2 {
         text-align: center;
         padding: $spacing-xxsmall;
         margin-bottom: $spacing-normal;
+        @include vendor(transition, 0.25s ease-in-out);
+
+        &:hover {
+            cursor: pointer;
+
+            h5, h6 {
+                color: $coolgrey;
+            }
+        }
 
         &:nth-child(odd) {
             border-right: 1px solid $lightgrey;
@@ -124,7 +133,9 @@ h2 {
 
         img {
             height: 75px;
+            width: 75px;
             vertical-align: middle;
+            object-fit: contain;
         }
 
         h5 {

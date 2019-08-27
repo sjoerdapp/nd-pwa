@@ -11,32 +11,22 @@ import {
   AngularFirestoreDocument
 } from '@angular/fire/firestore';
 
-import { Observable, of } from 'rxjs';
 import { User } from '../models/user';
-import { switchMap } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user: Observable<User>;
+  user;
+  userStatus: boolean;
 
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
     private ngZone: NgZone
-  ) {
-    this.user = this.afAuth.authState.pipe(
-      switchMap(user => {
-        if (user) {
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );
-  }
+  ) { }
 
   async signOut(redirect: boolean) {
     await this.afAuth.auth.signOut()
@@ -71,7 +61,11 @@ export class AuthService {
           lastName,
           username,
           email: user.user.email,
-          uid: user.user.uid
+          uid: user.user.uid,
+          listed: 0,
+          sold: 0,
+          ordered: 0,
+          counterOffer: 0
         };
 
         return this.createUserData(userData);
@@ -134,18 +128,18 @@ export class AuthService {
       });
   }
 
-  public isConnected(): boolean {
-    const userStatus = this.afAuth.auth.currentUser;
+  public isConnected(): Promise<firebase.User> {
+    return this.afAuth.authState.pipe(first()).toPromise();
+  }
 
-    if (userStatus) {
+  public async checkStatus() {
+    const user = await this.isConnected();
+
+    if (user) {
       return true;
     } else {
       return false;
     }
-  }
-
-  public getUID(): string {
-    return this.afAuth.auth.currentUser.uid;
   }
 
   public addInformationUser(firstName: string, lastName: string, username: string, password: string) {
@@ -153,12 +147,16 @@ export class AuthService {
 
     return this.afAuth.auth.currentUser.linkWithCredential(credential)
       .then((userCredential) => {
-        const userData = {
+        const userData: User = {
           firstName,
           lastName,
           username,
           email: userCredential.user.email,
-          uid: userCredential.user.uid
+          uid: userCredential.user.uid,
+          listed: 0,
+          sold: 0,
+          ordered: 0,
+          counterOffer: 0
         };
 
         this.createUserData(userData);

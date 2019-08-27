@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: 'sell', component: SellComponent },
   { path: 'search', component: SearchComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'edit-offer', component: EditOfferComponent },
+  { path: 'edit-offer/:id', component: EditOfferComponent },
   { path: 'request', component: RequestComponent },
   { path: 'forgot-password', component: ForgetPasswordComponent },
   { path: 'activate-account', component: ActivateAccountComponent },

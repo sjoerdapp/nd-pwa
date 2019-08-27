@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Product } from '../models/product';
 import { AuthService } from './auth.service';
+import * as firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,13 @@ export class SellService {
     private auth: AuthService
   ) { }
 
-    addListing(pair: Product, condition: string, price: number, size: string) {
-      const UID = this.auth.getUID();
+    async addListing(pair: Product, condition: string, price: number, size: string) {
+      let UID: string;
+      await this.auth.isConnected()
+        .then(data => {
+          UID = data.uid;
+        });
+
       const timestamp = Date.now();
 
       const listingID = UID + '-' + timestamp;
@@ -47,9 +53,13 @@ export class SellService {
 
       const userDocRef = this.afs.firestore.collection(`users/${UID}/listings`).doc(`${listingID}`);
       const prodDocRef = this.afs.firestore.collection(`products/${pair.productID}/listings`).doc(`${listingID}`);
+      const listedValRef = this.afs.firestore.doc(`users/${UID}`);
 
       batch.set(userDocRef, this.userListing);
       batch.set(prodDocRef, this.productListing);
+      batch.update(listedValRef, {
+        listed: firebase.firestore.FieldValue.increment(1)
+      });
 
       batch.commit()
         .then(() => {

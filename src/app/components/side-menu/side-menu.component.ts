@@ -15,7 +15,9 @@ export class SideMenuComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.connected = this.auth.isConnected();
+    this.auth.checkStatus().then(value => {
+      this.connected = value;
+    });
   }
 
   closeMenu() {

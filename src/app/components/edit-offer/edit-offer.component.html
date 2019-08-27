@@ -2,25 +2,25 @@
   <app-navbar></app-navbar>
 
   <section class="edit-container">
-    <h3>Nike x OFF--WHITE AF1 Low Volt</h3>
+    <h3>{{ offerInfo.model }}</h3>
 
-    <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Air-Force-1-Low-Off-White-Volt">
+    <img src="{{ offerInfo.assetURL }}" alt="{{ offerInfo.productID }}">
 
     <div class="edit-radios">
       <div>
-        <input type="radio" name="edit-offer">
+        <input type="radio" name="edit-offer" id="radio-new">
         <label for="edit-offer">New</label>
       </div>
       
       <div>
-        <input type="radio" name="edit-offer">
+        <input type="radio" name="edit-offer" id="radio-used">
         <label for="edit-offer">Used</label>
       </div>
     </div>
 
     <div class="edit-price-input">
       <button><fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
-      <input type="text" placeholder="Enter Price">
+      <input type="text" placeholder="{{ offerInfo.price }}">
       <button>.00</button>
     </div>
 
@@ -48,7 +48,7 @@
     </select>
 
     <div class="edit-btns">
-      <button class="btn" routerLink="..">Back</button>
+      <button class="btn" routerLink="../../profile">Back</button>
       <button class="btn">Save Changes</button>
     </div>
   </section>
