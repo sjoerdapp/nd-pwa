@@ -3,17 +3,17 @@
 .edit-container {
     h3 {
         text-align: center;
-        margin: $spacing-normal 0;
+        margin: $spacing-large 0;
         letter-spacing: 1px;
     }
 
     img {
         display: block;
-        width: 80%;
-        height: 150px;
+        width: 175px;
+        height: 175px;
         background: $white;
         object-fit: contain;
-        margin: $spacing-normal auto;
+        margin: $spacing-large auto;
     }
 
     .edit-radios {
@@ -99,6 +99,31 @@
             &:last-child:hover {
                 background: $matteblue;
             }
+        }
+
+        .disabled-btn {
+            background: $lightgrey;
+            cursor: not-allowed;
+
+            &:hover {
+                background: $lightgrey!important;
+            }
+        }
+    }
+
+    #delete-btn {
+        color: $googleRed;
+        display: block;
+        margin: auto;
+        background: none;
+        font-size: $font-normal;
+        font-weight: $weight-black;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
         }
     }
 }

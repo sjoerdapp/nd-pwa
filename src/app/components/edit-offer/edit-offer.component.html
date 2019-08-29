@@ -8,23 +8,23 @@
 
     <div class="edit-radios">
       <div>
-        <input type="radio" name="edit-offer" id="radio-new">
+        <input type="radio" name="edit-offer" id="radio-new" (change)="conditionChanges($event)" value="new">
         <label for="edit-offer">New</label>
       </div>
       
       <div>
-        <input type="radio" name="edit-offer" id="radio-used">
+        <input type="radio" name="edit-offer" id="radio-used" (change)="conditionChanges($event)" value="used">
         <label for="edit-offer">Used</label>
       </div>
     </div>
 
     <div class="edit-price-input">
       <button><fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
-      <input type="text" placeholder="{{ offerInfo.price }}">
+      <input type="text" value="{{ offerInfo.price }}" (keyup)="priceChanges($event)" id="priceInput">
       <button>.00</button>
     </div>
 
-    <select name="size" id="item-size">
+    <select name="size" id="item-size" (change)="sizeChanges($event)">
       <option value="none" selected>Select Size</option>
       <option value="US6">US 6</option>
       <option value="US6.5">US 6.5</option>
@@ -49,8 +49,10 @@
 
     <div class="edit-btns">
       <button class="btn" routerLink="../../profile">Back</button>
-      <button class="btn">Save Changes</button>
+      <button id="save-changes-btn" [className]="conditionChanged || priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'" (click)="updateListing()">Save Changes</button>
     </div>
+
+    <button id="delete-btn" (click)="deleteListing()">Delete</button>
   </section>
 </div>
 
