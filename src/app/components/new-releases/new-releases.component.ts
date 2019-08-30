@@ -9,7 +9,7 @@ import { Product } from 'src/app/models/product';
 })
 export class NewReleasesComponent implements OnInit {
 
-  newReleases: Product[];
+  newReleases;
 
   constructor(
     private homeService: HomeService

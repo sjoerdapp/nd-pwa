@@ -73,7 +73,6 @@ export class SellComponent implements OnInit {
   }
 
   selectPair(pair) {
-    console.log(pair);
     this.selectedPair = {
       productID: pair.productID,
       brand: pair.brand,
@@ -84,6 +83,10 @@ export class SellComponent implements OnInit {
       yearMade: pair.yearMade,
       type: pair.type
     };
+
+    this.sellService.getLowestPrice(pair.productID).then(val => {
+      val.subscribe(data => { this.selectedPair.lowestPrice = data.data().lowestPrice });
+    });
 
     let element = document.getElementById('sell-page-2');
     element.style.display = 'none';

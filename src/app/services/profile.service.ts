@@ -66,6 +66,22 @@ export class ProfileService {
     const offerRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
     const prodRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
 
+    const productRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
+
+    let listingSize;
+
+    await productRef.collection(`listings`).get().then(snap => {
+      listingSize = snap.size;
+    });
+
+    await productRef.get().then(snap => {
+      if (snap.data().lowestPrice > price || listingSize == 1) {
+        batch.update(productRef, {
+          lowestPrice: price
+        });
+      }
+    });
+
     batch.update(offerRef, {
       condition: condition,
       price: price,
@@ -89,7 +105,7 @@ export class ProfileService {
       });
   }
 
-  public async deleteOffer(listingID, productID): Promise<boolean> {
+  public async deleteOffer(listingID, productID, price): Promise<boolean> {
     let UID: string;
     await this.auth.isConnected().then(data => {
       UID = data.uid;
@@ -106,6 +122,30 @@ export class ProfileService {
     batch.update(userRef, {
       listed: firebase.firestore.FieldValue.increment(-1)
     });
+
+    let prices = [];
+
+    await this.afs.firestore.collection('products').doc(`${productID}`).collection(`listings`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
+      snap.forEach(data => {
+        prices.push(data.data().price);
+      });
+    });
+
+    console.log(`length: ${prices.length}; price1: ${prices[0]}; price2: ${prices[1]}`);
+    console.log(prices);
+
+    const prodRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
+
+    if (price >= prices[0] && price < prices[1]) {
+      batch.set(prodRef, {
+        lowestPrice: prices[1]
+      }, { merge: true });
+    } else if (prices.length == 1) {
+      console.log('working');
+      batch.update(prodRef, {
+        lowestPrice: firebase.firestore.FieldValue.delete()
+      });
+    }
 
     return batch.commit()
       .then(() => {

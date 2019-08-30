@@ -9,7 +9,7 @@ import { Product } from 'src/app/models/product';
 })
 export class TrendingComponent implements OnInit {
 
-  trends: Product[];
+  trends;
 
   constructor(
     private homeService: HomeService

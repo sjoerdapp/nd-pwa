@@ -68,6 +68,11 @@ nav {
             font-size: $font-large;
         }
 
+        fa-layers-counter {
+            font-size: $font-xxxlarge;
+            margin-bottom: $spacing-xlarge;
+        }
+
         &:hover {
             a {
                 @include vendor(transition, $transition-fast ease-in-out);

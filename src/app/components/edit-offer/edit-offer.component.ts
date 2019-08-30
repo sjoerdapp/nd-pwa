@@ -100,8 +100,9 @@ export class EditOfferComponent implements OnInit {
   }
 
   deleteListing() {
-    this.profileService.deleteOffer(this.offerInfo.listingID, this.offerInfo.productID)
+    this.profileService.deleteOffer(this.offerInfo.listingID, this.offerInfo.productID, this.offerInfo.price)
       .then((res) => {
+        this.offerInfo = [];
         if (res) {
           return this.ngZone.run(() => {
             return this.router.navigate(['../../profile']);

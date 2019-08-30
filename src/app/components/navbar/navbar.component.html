@@ -16,7 +16,10 @@
         
     <button class="nav-cart nav-icon">
       <a routerLink="/cart">
-        <fa-icon [icon]="['fas', 'shopping-cart']"></fa-icon>
+        <fa-layers>
+          <fa-icon [icon]="['fas', 'shopping-cart']"></fa-icon>
+          <fa-layers-counter content="{{ userInfo.cartItems }}"></fa-layers-counter>
+        </fa-layers>
       </a>
     </button>
       

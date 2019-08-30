@@ -9,7 +9,7 @@ import { Product } from 'src/app/models/product';
 })
 export class DiscoveryComponent implements OnInit {
 
-  discoveries: Product[];
+  discoveries;
 
   constructor(
     private homeService: HomeService
