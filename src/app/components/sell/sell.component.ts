@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { SellService } from 'src/app/services/sell.service';
 import { environment } from '../../../environments/environment';
 import { Product } from 'src/app/models/product';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sell',
@@ -25,8 +26,14 @@ export class SellComponent implements OnInit {
   pairPrice: number;
   pairSize: string;
 
+  loading = false;
+  listed = false;
+  error = false;
+
   constructor(
-    private sellService: SellService
+    private sellService: SellService,
+    private ngZone: NgZone,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -35,8 +42,21 @@ export class SellComponent implements OnInit {
   submitListing() {
     this.pairPrice = this.getPrice();
     this.pairSize = this.getSize();
+    this.loading = true;
 
-    this.sellService.addListing(this.selectedPair, this.pairCondition, this.pairPrice, this.pairSize);
+    if (isNaN(this.pairPrice)) {
+      this.addError();
+      return;
+    }
+
+    this.sellService.addListing(this.selectedPair, this.pairCondition, this.pairPrice, this.pairSize)
+      .then((res) => {
+        if (res) {
+          this.addListed();
+        } else {
+          this.addError();
+        }
+      });
   }
 
   radioHandler(event: any) {
@@ -98,6 +118,26 @@ export class SellComponent implements OnInit {
     } else {
       this.showResults = false;
     }
+  }
+
+  addError() {
+    this.loading = false;
+    this.error = true;
+
+    setTimeout(() => {
+      this.error = false;
+    }, 2500);
+  }
+
+  addListed() {
+    this.loading = false;
+    this.listed = true;
+
+    setTimeout(() => {
+      return this.ngZone.run(() => {
+        return this.router.navigate(['../profile']);
+      });
+    }, 2500);
   }
 
 }

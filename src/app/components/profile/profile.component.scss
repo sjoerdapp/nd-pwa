@@ -147,7 +147,7 @@ h2 {
 
 .show-more-btn {
     width: 50%;
-    margin: $spacing-xsmall 25%;
+    margin: $spacing-normal 25%;
     padding: $spacing-xsmall;
     @include vendor(transition, 0.25s ease-in-out);
     background: $black;

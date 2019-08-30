@@ -2,7 +2,7 @@
   <h2>Discovery</h2>
 
   <div class="showcase-discovery">
-    <div *ngFor="let discovery of discoveries" class="discovery-card">
+    <div *ngFor="let discovery of discoveries" class="discovery-card" routerLink="/product/{{ discovery.productID }}">
       <h6>{{ discovery.lowestPrice }}</h6>
 
       <img src="{{ discovery.assetURL }}" alt="{{ discovery.model }}">

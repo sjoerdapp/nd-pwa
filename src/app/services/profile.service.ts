@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
+import { isUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +26,22 @@ export class ProfileService {
     return userRef.valueChanges();
   }
 
-  public async getUserListings(): Promise<Observable<any>> {
+  public async getUserListings(startAfter?): Promise<Observable<any>> {
     let UID: string;
     await this.auth.isConnected().then(data => {
       UID = data.uid;
     });
 
-    // tslint:disable-next-line: max-line-length
-    const userRef: AngularFirestoreCollection<any> = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('timestamp', 'desc'));
+    let userRef: AngularFirestoreCollection<any>;
+
+    if (isUndefined(startAfter)) {
+      // tslint:disable-next-line: max-line-length
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('timestamp', 'desc').limit(6));
+    } else {
+      // tslint:disable-next-line: max-line-length
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('timestamp', 'desc').startAfter(startAfter).limit(6));
+    }
+
     return userRef.valueChanges();
   }
 
@@ -89,11 +98,11 @@ export class ProfileService {
     const batch = this.afs.firestore.batch();
 
     const offerRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
-    const prodRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
+    const listingRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
     const userRef = this.afs.firestore.collection('users').doc(`${UID}`);
 
     batch.delete(offerRef);
-    batch.delete(prodRef);
+    batch.delete(listingRef);
     batch.update(userRef, {
       listed: firebase.firestore.FieldValue.increment(-1)
     });

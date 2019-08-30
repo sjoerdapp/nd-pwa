@@ -38,7 +38,8 @@
     </div>
   </div>
 
-  <button *ngIf="dashInfo.listed > 6" class="btn show-more-btn">More</button>
+  <button *ngIf="dashInfo.listed > listings.length && !loading" class="btn show-more-btn" (click)="moreListings()">More</button>
+  <button *ngIf="loading" class="btn show-more-btn"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
 </div>
 
 <app-footer></app-footer>

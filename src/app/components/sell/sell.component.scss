@@ -203,4 +203,20 @@
             }
         }
     }
+
+    .error-btn {
+        background: $inputError;
+
+        &:hover {
+            background: $inputError!important;
+        }
+    }
+
+    .listed-btn {
+        background: $green;
+
+        &:hover {
+            background: $green!important;
+        }
+    }
 }

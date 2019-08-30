@@ -49,7 +49,10 @@
 
     <div class="edit-btns">
       <button class="btn" routerLink="../../profile">Back</button>
-      <button id="save-changes-btn" [className]="conditionChanged || priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'" (click)="updateListing()">Save Changes</button>
+      <button id="save-changes-btn" *ngIf="!loading && !error && !updated" [className]="conditionChanged || priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'" (click)="updateListing()">Save Changes</button>
+      <button id="save-changes-btn" class="btn" *ngIf="loading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
+      <button id="save-changes-btn" class="btn error-btn" *ngIf="error">Error</button>
+      <button id="save-changes-btn" class="btn updated-btn" *ngIf="updated">Updated</button>
     </div>
 
     <button id="delete-btn" (click)="deleteListing()">Delete</button>

@@ -114,7 +114,10 @@
 
     <div class="sell-btns">
       <button class="btn" (click)="goToPage2(false)">Back</button>
-      <button class="btn" (click)="submitListing()">Finish</button>
+      <button class="btn" id="add-btn" (click)="submitListing()" *ngIf="!error && !listed && !loading">Finish</button>
+      <button class="btn error-btn" *ngIf="error">Error</button>
+      <button class="btn listed-btn" *ngIf="listed">Listed</button>
+      <button class="btn" *ngIf="loading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
     </div>
   </section>
 </div>

@@ -18,7 +18,10 @@ export class ProfileComponent implements OnInit {
     email: ''
   };
 
-  listings;
+  listings = [];
+  count = 6;
+
+  loading = false;
 
   constructor(
     private profileService: ProfileService
@@ -37,6 +40,18 @@ export class ProfileComponent implements OnInit {
         console.log(this.listings);
       });
     });
+  }
+
+  moreListings() {
+    this.profileService.getUserListings(this.listings[this.listings.length - 1].timestamp)
+      .then(val => {
+        val.subscribe(data => {
+          data.forEach(element => {
+            this.listings.push(element);
+          });
+          console.log(this.listings);
+        });
+      });
   }
 
 }

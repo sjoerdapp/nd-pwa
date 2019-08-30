@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Product } from '../models/product';
 import { AuthService } from './auth.service';
 import * as firebase from 'firebase/app';
+import { isUndefined } from 'util';
+import { merge } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -61,12 +63,14 @@ export class SellService {
         listed: firebase.firestore.FieldValue.increment(1)
       });
 
-      batch.commit()
+      return batch.commit()
         .then(() => {
           console.log('New Listing Added');
+          return true;
         })
         .catch((err) => {
           console.error(err);
+          return false;
         });
     }
 

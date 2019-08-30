@@ -1,7 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-offer',
@@ -13,6 +12,10 @@ export class EditOfferComponent implements OnInit {
   listingID: string;
 
   offerInfo;
+
+  loading = false;
+  error = false;
+  updated = false;
 
   conditionChanged = false;
   priceChanged = false;
@@ -60,7 +63,7 @@ export class EditOfferComponent implements OnInit {
       this.priceChanged = false;
     }
 
-    this.curPrice = $event.target.value;
+    this.curPrice = +$event.target.value;
   }
 
   sizeChanges($event) {
@@ -79,11 +82,18 @@ export class EditOfferComponent implements OnInit {
     const size = this.curSize;
 
     if (this.conditionChanged || this.priceChanged || this.sizeChanged) {
+      this.loading = true;
+
+      if (isNaN(price)) {
+        this.updateError();
+        return;
+      }
+
       this.profileService.updateOffer(this.offerInfo.listingID, this.offerInfo.productID, condition, price, size).then((res) => {
         if (res) {
-          return this.ngZone.run(() => {
-            return this.router.navigate(['../../profile']);
-          });
+          this.udpateSuccessful();
+        } else {
+          this.updateError();
         }
       });
     }
@@ -98,6 +108,27 @@ export class EditOfferComponent implements OnInit {
           });
         }
       });
+  }
+
+  updateError() {
+    this.loading = false;
+    this.error = true;
+
+    setTimeout(() => {
+      this.error = false;
+    }, 2500);
+  }
+
+  udpateSuccessful() {
+    this.loading = false;
+    this.updated = true;
+
+    setTimeout(() => {
+      this.updated = false;
+      this.conditionChanged = false;
+      this.priceChanged = false;
+      this.sizeChanged = false;
+    }, 2500);
   }
 
 }

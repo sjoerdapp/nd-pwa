@@ -3,44 +3,22 @@
 
   <section class="product-container">
     <div class="product-info">
-      <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Air-Force-1-Low-Off-White-Volt">
+      <img src="{{ productInfo.assetURL }}" alt="{{ productInfo.productInfo }}">
 
       <div class="product-specs">
-        <h4>Nike x OFF--WHITE AF1 Low Volt</h4>
-        <h4>Colorway: Volt/Hyper Jade-Cone-Black</h4>
-        <h4>Release Date: 2018-12-18</h4>
+        <h4>{{ productInfo.model }}</h4>
+        <h4>Colorway: {{ productInfo.colorway }}</h4>
+        <h4>Release Date: {{ productInfo.yearMade }}</h4>
       </div>
     </div>
 
-    <div class="product-offers">
+    <div class="product-offers" *ngFor="let listing of listings">
       <div class="product-offer">
-        <h6>New</h6>
+        <h6>{{ listing.condition }}</h6>
 
         <div class="offer-specs">
-          <h2 id="offer-size">US9</h2>
-          <h2 id="offer-price">$200</h2>
-        </div>
-
-        <button class="btn">Add to cart</button>
-      </div>
-
-      <div class="product-offer">
-        <h6>New</h6>
-
-        <div class="offer-specs">
-          <h2 id="offer-size">US10</h2>
-          <h2 id="offer-price">$200</h2>
-        </div>
-
-        <button class="btn">Add to cart</button>
-      </div>
-
-      <div class="product-offer">
-        <h6>New</h6>
-
-        <div class="offer-specs">
-          <h2 id="offer-size">US11</h2>
-          <h2 id="offer-price">$200</h2>
+          <h2 id="offer-size">{{ listing.size }}</h2>
+          <h2 id="offer-price">{{ listing.price | currency: 'CAD' }}</h2>
         </div>
 
         <button class="btn">Add to cart</button>
