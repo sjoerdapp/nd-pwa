@@ -5,35 +5,35 @@
     <div class="checkout-summary">
       <h4>Summary</h4>
 
-      <div class="summary-items">
+      <div class="summary-items" *ngFor="let summaryItem of cartItems">
         <div class="summary-item">
-          <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Air-Force-1-Low-Off-White-Volt">
+          <img src="{{ summaryItem.assetURL }}" alt="{{ summaryItem.model }}">
 
-          <h6>Nike x OFF--WHITE AF1 Low Volt, US9</h6>
+          <h6>{{ summaryItem.model }}, {{ summaryItem.size }}</h6>
 
-          <h6>$200</h6>
+          <h6>{{ summaryItem.price | currency: 'CAD' }}</h6>
         </div>
       </div>
 
       <div class="summary-numbers">
         <div class="summary-subtotal">
           <h5>Subtotal</h5>
-          <h5>$800</h5>
+          <h5>{{ subtotal() | currency: 'CAD' }}</h5>
         </div>
 
         <div class="summary-shipping">
           <h5>Shipping</h5>
-          <h5>Free</h5>
+          <h5>{{ shipping | currency: 'CAD' }}</h5>
         </div>
 
         <div class="summary-tax">
           <h5>Tax</h5>
-          <h5>$0</h5>
+          <h5>{{ tax | currency: 'CAD' }}</h5>
         </div>
 
         <div class="summary-total">
           <h5>Total</h5>
-          <h5>$800</h5>
+          <h5>{{ subtotal() + shipping + tax | currency: 'CAD' }}</h5>
         </div>
       </div>
     </div>

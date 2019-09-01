@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CheckoutService } from 'src/app/services/checkout.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -7,9 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor() { }
+  cartItems;
+
+  shipping = 0;
+  tax = 0;
+
+  constructor(
+    private checkoutService: CheckoutService
+  ) { }
 
   ngOnInit() {
+    this.checkoutService.getCartItems().then(res => {
+      res.subscribe(data => {
+        this.cartItems = data;
+      });
+    });
+  }
+
+  subtotal() {
+    let subtotal = 0;
+    this.cartItems.forEach(ele => {
+      subtotal = subtotal + ele.price;
+    });
+
+    return subtotal;
   }
 
 }

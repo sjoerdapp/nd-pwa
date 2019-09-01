@@ -27,15 +27,23 @@ export class ProductService {
       UID = data.uid;
     });
 
+    const data = {
+      assetURL: listing.assetURL,
+      model: listing.model,
+      price: listing.price,
+      condition: listing.condition,
+      size: listing.size,
+      listingID: listing.listingID,
+      timestamp: Date.now()
+    }
+
     const batch = this.afs.firestore.batch();
     const cartRef = this.afs.firestore.collection(`users`).doc(`${UID}`).collection(`cart`).doc(`${listing.listingID}`);
     const userRef = this.afs.firestore.collection(`users`).doc(`${UID}`);
 
     return cartRef.get().then(snap => {
       if (!snap.exists) {
-        batch.set(cartRef, {
-          listing
-        });
+        batch.set(cartRef, data);
     
         batch.set(userRef, {
           cartItems: firebase.firestore.FieldValue.increment(1)

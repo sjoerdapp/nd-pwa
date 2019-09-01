@@ -3,7 +3,7 @@
   <img src="../../../assets/CarouselDuplicata 2.png" alt="Carousel">
 
   <div class="search-bar">
-    <input type="text" name="search-field" id="search-field" placeholder="Search for brand, model, etc.">
+    <input type="text" name="search-field" id="search-field" placeholder="Search for brand, model, etc." (keyup)="search($event)">
     <fa-icon [icon]="['fas', 'search']" routerLink="/search"></fa-icon>
   </div>
 </div>

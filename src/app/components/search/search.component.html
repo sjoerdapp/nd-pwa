@@ -2,45 +2,18 @@
   <app-navbar></app-navbar>
 
   <div class="search-bar-container">
-    <button><fa-icon [icon]="['fas', 'times']" routerLink=".."></fa-icon></button>
-    <input type="text" id="search-input" placeholder="Search">
+    <button routerLink=".."><fa-icon [icon]="['fas', 'times']"></fa-icon></button>
+    <input type="text" id="search-input" placeholder="Search" autofocus (keyup)="search($event)">
   </div>
 
   <div class="search-items">
-    <div class="search-item">
+    <div class="search-item" *ngFor="let result of results" routerLink="/product/{{ result.productID }}">
       <section class="item-specs">
-        <h6>US9</h6>
-        <h5>$300</h5>
+        <h6>{{ result.size }}</h6>
+        <h5>{{ result.price | currency: 'CAD' }}</h5>
       </section>
-      <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Air-Force-1-Low-Off-White-Volt">
-      <h5>Nike x OFF--WHITE AF1 Low Volt</h5>
-    </div>
-
-    <div class="search-item">
-      <section class="item-specs">
-        <h6>US11</h6>
-        <h5>$300</h5>
-      </section>
-      <img src="../../../assets/Air-Force-1-Low-Off-White-Volt.jpg" alt="Jordan-4-Retro-Black-Laser">
-      <h5>Nike x OFF--WHITE AF1 Low Volt</h5>
-    </div>
-
-    <div class="search-item">
-      <section class="item-specs">
-        <h6>US9</h6>
-        <h5>$300</h5>
-      </section>
-      <img src="../../../assets/Nike-Air-Force-1-Low-All-Over-Logo-Red.jpg" alt="Air-Force-1-Low-Off-White-Volt">
-      <h5>AF1 Low All Over Logo Red</h5>
-    </div>
-
-    <div class="search-item">
-      <section class="item-specs">
-        <h6>US9</h6>
-        <h5>$300</h5>
-      </section>
-      <img src="../../../assets/Yeezy-Boost-350-V2-Zebra.jpg" alt="Jordan-4-Retro-Black-Laser">
-      <h5>Yeezy Boost 350 V2 Zebra</h5>
+      <img src="{{ result.assetURL }}" alt="{{ result.productID }}">
+      <h5>{{ result.model }}</h5>
     </div>
   </div>
 </div>

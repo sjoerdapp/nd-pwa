@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import * as algoliasearch from 'algoliasearch';
+import { environment } from 'src/environments/environment';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-search',
@@ -7,9 +11,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
+  algoliaClient = algoliasearch(environment.algolia.appId, environment.algolia.apiKey);
+  index;
+
+  queryParam: string;
+
+  results;
+
+  constructor(
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    const element = document.getElementById('search-input');
+    element.focus();
+    this.activatedRoute.queryParams.subscribe(data => {
+      this.queryParam = data.q;
+      (element as HTMLInputElement).value = this.queryParam;
+    });
+    this.index = this.algoliaClient.initIndex('test_PRODUCTS');
+    this.index.search({
+      query: this.queryParam
+    }, (err, hits = {}) => {
+      if (err) throw err;
+
+      this.results = hits.hits;
+      console.log(hits);
+    });
+  }
+
+  search(event) {
+    console.log(event.target.value);
+    this.index.search({
+      query: event.target.value
+    }, (err, hits = {}) => {
+      if (err) throw err;
+
+      this.results = hits.hits;
+      console.log(hits);
+    });
   }
 
 }

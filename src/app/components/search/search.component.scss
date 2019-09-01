@@ -21,6 +21,9 @@
     }
 
     input {
+        width: inherit;
+        justify-self: center;
+        background: inherit;
         border: none;
         text-align: center;
         padding: $spacing-large;
@@ -41,6 +44,10 @@
         text-align: center;
         padding: $spacing-xxsmall;
         margin-bottom: $spacing-normal;
+
+        &:hover {
+            cursor: pointer;
+        }
 
         &:nth-child(odd) {
             border-right: 1px solid $lightgrey;

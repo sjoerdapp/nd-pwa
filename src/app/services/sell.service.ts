@@ -41,7 +41,8 @@ export class SellService {
     };
 
     this.productListing = {
-      sellerID: UID,
+      assetURL: pair.assetURL,
+      model: pair.model,
       price,
       condition,
       size,
