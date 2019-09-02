@@ -6,8 +6,11 @@ section {
     width: 100vw;
     max-width: 100%;
     background: $black;
+    display: grid;
 
     .signup-card {
+        justify-content: center;
+        align-self: center;
         width: 90%;
         margin: 0 auto;
         padding: 8px;
@@ -68,6 +71,28 @@ section {
             &:hover {
                 background: $white;
                 color: $navyblue;
+            }
+        }
+
+        .loading {
+            @extend .signup-btn;
+            display: grid;
+            background: $white;
+            color: $navyblue;
+
+            fa-icon {
+                justify-self: center;
+                align-self: center;
+            }
+        }
+
+        .error {
+            @extend .signup-btn;
+            background: $inputError;
+            
+            &:hover {
+                background: $inputError;
+                color: $white;
             }
         }
 

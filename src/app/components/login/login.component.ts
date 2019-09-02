@@ -11,6 +11,9 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
+  loading = false;
+  error = false;
+
   constructor(
     private auth: AuthService,
     private fb: FormBuilder
@@ -28,10 +31,27 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log('login() called');
-    return this.auth.emailLogin(this.email.value, this.password.value);
+    this.loading = true;
+    // console.log('login() called');
+    
+    if (this.email.value || this.password.value) {
+      return this.auth.emailLogin(this.email.value, this.password.value).then(res => {
+        if (!res) {
+          this.showError();
+        }
+      });
+    } else {
+      this.showError();
+    }
   }
 
+  private showError() {
+    this.loading = false;
+    this.error = true;
+    setTimeout(() => {
+      this.error = false;
+    }, 2500);
+  }
 
   // GETTER
   get email() {

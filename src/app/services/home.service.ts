@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Product } from '../models/product';
 import { of } from 'rxjs';
 import { retry } from 'rxjs/operators';
+import { isUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +29,11 @@ export class HomeService {
 
     return of(newReleaseData);*/
 
-    const newReleaseRef = this.afs.collection(`products`, ref => ref.orderBy(`yearMade`, `asc`).limit(10));
+    const newReleaseRef = this.afs.collection(`products`, ref => ref.orderBy(`yearMade`, `desc`).limit(10));
     return newReleaseRef.valueChanges();
   }
 
-  public getDiscovery() {
+  public getDiscovery(after?) {
     /*let discoveryData = [];
 
     this.afs.firestore.collection('products').orderBy('discoveryRank', 'asc').limit(10).get().then(snap => {
@@ -47,7 +48,11 @@ export class HomeService {
 
     return of(discoveryData);*/
 
-    const discoveryRef = this.afs.collection(`products`, ref => ref.orderBy(`discoveryRank`, `asc`).limit(10));
+    if (isUndefined(after)) {
+      after = 0;
+    }
+
+    const discoveryRef = this.afs.collection(`products`, ref => ref.orderBy(`discoveryRank`, `asc`).startAfter(after).limit(10));
     return discoveryRef.valueChanges();
   }
 

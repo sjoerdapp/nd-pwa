@@ -1,12 +1,15 @@
 @import '../../base_styles/base';
 
 section {
-    position: fixed;
-    height: 100vh;
+    padding: $spacing-small 0 0 0;
+    height: calc(100vh - #{$footerHeight});
     width: 100vw;
+    max-width: 100%;
     background: $black;
+    display: grid;
 
     .login-card {
+        align-self: center;
         width: 90vw;
         margin: 60px auto;
         padding: 8px;
@@ -65,6 +68,28 @@ section {
             &:hover {
                 background: $white;
                 color: $navyblue;
+            }
+        }
+
+        .loading {
+            @extend .login-btn;
+            display: grid;
+            background: $white;
+            color: $navyblue;
+
+            fa-icon {
+                justify-self: center;
+                align-self: center;
+            }
+        }
+
+        .error {
+            @extend .login-btn;
+            background: $inputError;
+            
+            &:hover {
+                background: $inputError;
+                color: $white;
             }
         }
 

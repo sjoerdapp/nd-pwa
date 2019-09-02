@@ -89,6 +89,22 @@
                     background: $matteblack;
                 }
             }
+
+            .disabled {
+                padding: $spacing-xsmall;
+                border: none;
+                width: 60%;
+                text-justify: auto;
+                letter-spacing: 2px;
+                font-size: $font-small;
+                font-weight: $weight-bold;
+                background: $lightgrey;
+                cursor: not-allowed;
+
+                &:hover {
+                    background: $lightgrey;
+                }   
+            }
         }
     }
 }

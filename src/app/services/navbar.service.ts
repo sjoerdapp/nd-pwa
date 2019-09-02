@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { isUndefined } from 'util';
+import { isUndefined, isNull } from 'util';
 import { of } from 'rxjs';
 
 @Injectable({
@@ -17,7 +17,9 @@ export class NavbarService {
   async getCartItems() {
     let UID;
     await this.auth.isConnected().then(data => {
-      UID = data.uid;
+      if (!isNull(data)) {
+        UID = data.uid;
+      }
     });
 
     if (!isUndefined(UID)) {

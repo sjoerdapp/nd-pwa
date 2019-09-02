@@ -11,12 +11,32 @@ export class DiscoveryComponent implements OnInit {
 
   discoveries;
 
+  loading;
+
+  end = false;
+
   constructor(
     private homeService: HomeService
   ) { }
 
   ngOnInit() {
     this.homeService.getDiscovery().subscribe(data => this.discoveries = data);
+  }
+
+  more() {
+    this.loading = true;
+    console.log('more() called');
+    this.homeService.getDiscovery(this.discoveries.length).subscribe(data => {
+      console.log(data.length);
+      if (data.length == 0) {
+        this.loading = false;
+        this.end = true;
+        console.log(this.end);
+      } else {
+        this.discoveries.push(data);
+        this.loading = false;
+      }
+    });
   }
 
 }

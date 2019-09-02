@@ -54,7 +54,8 @@ export class AuthService {
   }
 
   async emailSignUp(email: string, password: string, firstName: string, lastName: string, username: string) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+    if (email || password || firstName || lastName || username) {
+      return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(user => {
         const userData: User = {
           firstName,
@@ -70,6 +71,9 @@ export class AuthService {
 
         return this.createUserData(userData);
       });
+    } else {
+      return false;
+    }
   }
 
   async emailLogin(email: string, password: string) {
@@ -80,7 +84,8 @@ export class AuthService {
         });
       })
       .catch(error => {
-        console.error('Error Login: ', error);
+        console.error('Error Login: Email or Password Invalid.');
+        return false;
       });
   }
 

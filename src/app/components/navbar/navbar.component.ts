@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationsComponent } from '../notifications/notifications.component';
 import { AuthService } from '../../services/auth.service';
 import { NavbarService } from 'src/app/services/navbar.service';
-import { User } from 'src/app/models/user';
+import { isNull } from 'util';
 
 @Component({
   providers: [NotificationsComponent],
@@ -29,7 +29,9 @@ export class NavbarComponent implements OnInit {
 
     this.navbarService.getCartItems().then(res => {
       res.subscribe(data => {
-        this.userInfo = data;
+        if (!isNull(data)) {
+          this.userInfo = data;
+        }
       });
     });
   }

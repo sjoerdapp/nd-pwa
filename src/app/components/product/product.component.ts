@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { ProductService } from 'src/app/services/product.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-product',
@@ -15,13 +16,17 @@ export class ProductComponent implements OnInit {
 
   listings = [];
 
+  connected = false;
+
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
     this.productID = this.route.snapshot.params.id;
+    this.isConnected();
 
     this.productService.getOffers(this.productID).subscribe(data => {
       this.listings = data;
@@ -39,6 +44,13 @@ export class ProductComponent implements OnInit {
       } else {
         console.log('Cannot add to cart');
       }
+    });
+  }
+
+  isConnected() {
+    return this.auth.checkStatus().then(res => {
+      console.log(res);
+      this.connected = res;
     });
   }
 

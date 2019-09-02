@@ -22,12 +22,16 @@
       <input type="text" placeholder="Username" formControlName="username" [className]="username.invalid && username.dirty ? 'input-error' : ''">
       <input type="email" placeholder="Email" formControlName="email" [className]="email.invalid && email.dirty ? 'input-error' : ''">
       <input type="password" placeholder="Password" formControlName="password" [className]="password.invalid && password.dirty ? 'input-error' : ''">
-      <button type="submit" class="btn signup-btn">Sign Up</button>
+      <button type="submit" class="btn signup-btn" *ngIf="!loading && !error">Sign Up</button>
+      <button type="submit" class="btn loading" *ngIf="loading">
+        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+      </button>
+      <button type="submit" class="btn error" *ngIf="error">Error</button>
     </form>
 
     <p>By signing up, you agree to our Terms and Privacy Policy.</p>
 
-    <a routerLink="/login"><button class="login-btn">Have an account? Log in</button></a>
+    <button routerLink="/login" class="login-btn">Have an account? Log in</button>
   </div>
 </section>
 

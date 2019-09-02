@@ -36,6 +36,9 @@ export class SignUpComponent implements OnInit {
 
   signupForm: FormGroup;
 
+  loading = false;
+  error = false;
+
   constructor(
     public auth: AuthService,
     private fb: FormBuilder
@@ -67,8 +70,18 @@ export class SignUpComponent implements OnInit {
   }
 
   public signup() {
+    this.loading = true;
     console.log('signup called');
-    return this.auth.emailSignUp(this.email.value, this.password.value, this.firstName.value, this.lastName.value, this.username.value);
+
+    return this.auth.emailSignUp(this.email.value, this.password.value, this.firstName.value, this.lastName.value, this.username.value).then(res => {
+      if (!res) {
+        this.loading = false;
+        this.error = true;
+        setTimeout(() => {
+          this.error = false;
+        }, 2500);
+      }
+    });
   }
 
   // Getters

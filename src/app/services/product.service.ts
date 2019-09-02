@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
+import { isNull } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,11 @@ export class ProductService {
   async addToCart(listing) {
     let UID;
     await this.auth.isConnected().then(data => {
-      UID = data.uid;
+      if (!isNull(data)) {
+        UID = data.uid;
+      } else {
+        return false;
+      }
     });
 
     const data = {
