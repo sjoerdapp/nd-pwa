@@ -24,7 +24,8 @@
       <h5>{{ subtotal | currency: 'CAD' }}</h5>
     </div>
 
-    <button class="btn cart-checkout-btn" routerLink="/checkout">Checkout</button>
+    <button class="btn cart-checkout-btn" *ngIf="cartItems.length > 0" routerLink="/checkout">Checkout</button>
+    <button class="btn cart-checkout-btn disabled" *ngIf="cartItems.length < 1">Checkout</button>
   </section>
 </div>
 

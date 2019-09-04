@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as algoliasearch from 'algoliasearch';
 import { environment } from 'src/environments/environment';
 import { element } from 'protractor';
@@ -19,7 +19,8 @@ export class SearchComponent implements OnInit {
   results;
 
   constructor(
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -42,6 +43,12 @@ export class SearchComponent implements OnInit {
 
   search(event) {
     console.log(event.target.value);
+
+    this.router.navigate([],
+      {
+        queryParams: { q: event.target.value }
+      });
+
     this.index.search({
       query: event.target.value
     }, (err, hits = {}) => {

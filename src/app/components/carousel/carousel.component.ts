@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class CarouselComponent implements OnInit {
 
   typingTimer;
-  doneTypingInterval = 500;
+  doneTypingInterval = 250;
   myInput = document.getElementById('search-field');
 
   constructor(
