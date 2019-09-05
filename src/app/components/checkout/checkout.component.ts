@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CheckoutService } from 'src/app/services/checkout.service';
-import { CartService } from 'src/app/services/cart.service';
+import * as braintree from 'braintree-web';
 
 @Component({
   selector: 'app-checkout',
