@@ -14,9 +14,13 @@ export class ProductComponent implements OnInit {
 
   productInfo = {};
 
-  listings = [];
+  buyListings = [];
+  offersListings = [];
 
   connected = false;
+
+  showBuy = false;
+  showOffers = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,10 +31,6 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
     this.productID = this.route.snapshot.params.id;
     this.isConnected();
-
-    this.productService.getOffers(this.productID).subscribe(data => {
-      this.listings = data;
-    });
 
     this.productService.getProductInfo(this.productID).subscribe(data => {
       this.productInfo = data;
@@ -52,6 +52,33 @@ export class ProductComponent implements OnInit {
       console.log(res);
       this.connected = res;
     });
+  }
+
+  navigationBuy() {
+    document.getElementById('buy-btn').style.background = '#98fb98';
+    document.getElementById('offers-btn').style.background = '#131e3a';
+
+    this.showBuy = true;
+    this.showOffers = false;
+    if (this.buyListings.length < 1) {
+      this.productService.getBuy(this.productID).subscribe(data => {
+        this.buyListings = data;
+        console.log(this.buyListings);
+      });
+    }
+  }
+
+  navigationOffers() {
+    document.getElementById('buy-btn').style.background = '#131e3a';
+    document.getElementById('offers-btn').style.background = '#98fb98';
+
+    this.showBuy = false;
+    this.showOffers = true;
+    if (this.offersListings.length < 1) {
+      this.productService.getOffers(this.productID).subscribe(data => {
+        this.buyListings = data;
+      });
+    }
   }
 
 }

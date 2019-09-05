@@ -6,6 +6,7 @@
     display: grid;
     grid-template-columns: 1fr;
     border: 1px solid $lightgrey;
+    border-bottom: none;
     margin: $spacing-large auto;
 
     .product-info {
@@ -39,10 +40,34 @@
         }
     }
 
+    .product-navigation {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 0;
+
+        button {
+            border-radius: 0;
+            padding: $spacing-small;
+
+            &:first-child {
+                border-right: 1px solid $lightgrey;
+            }
+
+            &:hover {
+                background: $green;
+            }
+        }
+    }
+
     .product-offers {
         overflow-y: auto;
         max-height: $productContainerHeight;
-        
+        border-bottom: 1px solid $lightgrey;
+
+        p {
+            text-align: center;
+            padding: $spacing-xxsmall;
+        }
         
         .product-offer {
             border-bottom: 1px solid $lightgrey;

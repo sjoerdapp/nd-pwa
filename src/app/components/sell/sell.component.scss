@@ -25,13 +25,35 @@
     }
 }
 
-#sell-page-2, #sell-page-3 {
+#sell-page-2 {
+    align-self: baseline
+}
+
+#sell-page-2, #sell-page-3, #sell-page-4 {
     display: none;
 }
 
 #sell-page-3 {
     h3 {
         margin: $spacing-large auto;
+    }
+}
+
+#sell-page-4 {
+    .pairStats {
+        margin-top: $spacing-normal;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+    }
+}
+
+.main-container {
+    display: grid;
+
+    .sell-container {
+        align-self: center;
     }
 }
 
@@ -73,7 +95,7 @@
         width: 90%;
         margin: $spacing-small auto;
         border-radius: $spacing-xxsmall;
-        height: 350px;
+        height: 400px;
         overflow-y: auto;
 
         .hit {
@@ -217,6 +239,15 @@
 
         &:hover {
             background: $green!important;
+        }
+    }
+
+    .disabled {
+        background: $lightgrey;
+        cursor: not-allowed;
+
+        &:hover {
+            background: $lightgrey!important;
         }
     }
 }

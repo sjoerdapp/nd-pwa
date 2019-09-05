@@ -18,8 +18,12 @@ export class ProductService {
     return this.afs.collection('products').doc(`${productID}`).valueChanges();
   }
 
-  getOffers(productID) {
+  getBuy(productID) {
     return this.afs.collection('products').doc(`${productID}`).collection('listings', ref => ref.orderBy(`size`, `asc`)).valueChanges();
+  }
+
+  getOffers(productID) {
+    return this.afs.collection('products').doc(`${productID}`).collection('bid', ref => ref.orderBy(`size`, `asc`)).valueChanges();
   }
 
   async addToCart(listing) {

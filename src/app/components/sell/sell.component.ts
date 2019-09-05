@@ -3,6 +3,7 @@ import { SellService } from 'src/app/services/sell.service';
 import { environment } from '../../../environments/environment';
 import { Product } from 'src/app/models/product';
 import { Router } from '@angular/router';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-sell',
@@ -21,11 +22,18 @@ export class SellComponent implements OnInit {
 
   selectedPair: Product; // Listing Product object
 
+  highestOffer: number;
+  lowestListing: number;
+
   // Listing Information
   pairCondition: string;
   pairPrice: number;
   pairSize: string;
 
+  nextToPage4 = false;
+  priceAdded = false;
+
+  // Page 4 boolean
   loading = false;
   listed = false;
   error = false;
@@ -61,6 +69,22 @@ export class SellComponent implements OnInit {
 
   radioHandler(event: any) {
     this.pairCondition = event.target.value;
+    this.disableBtn();
+  }
+
+  sizeChanges($event) {
+    this.pairSize = (document.getElementById('item-size') as HTMLInputElement).value;
+    this.disableBtn()
+  }
+
+  priceChanges($event) {
+    if ($event.target.value != ``) {
+      this.priceAdded = true;
+      this.pairPrice = +$event.target.value;
+    } else {
+      this.priceAdded = false;
+      this.pairPrice = NaN;
+    }
   }
 
   private getPrice() {
@@ -111,6 +135,44 @@ export class SellComponent implements OnInit {
     }
   }
 
+  goToPage3() {
+    let element = document.getElementById('sell-page-3');
+    element.style.display = 'block';
+
+    element = document.getElementById('sell-page-4');
+    element.style.display = 'none';
+  }
+
+  goToPage4() {
+    let element = document.getElementById('sell-page-3');
+    element.style.display = 'none';
+
+    element = document.getElementById('sell-page-4');
+    element.style.display = 'block';
+
+    this.sellService.getHighestOffer(this.selectedPair.productID, this.pairCondition, this.pairSize).subscribe(data => {
+      if (!data.empty) {
+        data.forEach(val => {
+          this.highestOffer = val.data().price;
+        });
+      } else {
+        this.highestOffer = 0;
+      }
+    });
+
+    this.sellService.getLowestListing(this.selectedPair.productID, this.pairCondition, this.pairSize).subscribe(data => {
+      if (!data.empty) {
+        data.forEach(val => {
+          this.lowestListing = val.data().price;
+        });
+      } else {
+        this.lowestListing = 0;
+      }
+    });
+
+    console.log(`highestOffer: ${this.highestOffer} and lowestListing: ${this.lowestListing}`);
+  }
+
   searchChanged(query) {
     if (query.length !== undefined) {
       this.inputLength = query.length;
@@ -141,6 +203,15 @@ export class SellComponent implements OnInit {
         return this.router.navigate(['../profile']);
       });
     }, 2500);
+  }
+
+  disableBtn() {
+    console.log(`disableBtn() called`);
+    if (!isUndefined(this.pairCondition) && !isUndefined(this.pairSize) && this.pairSize != 'none') {
+      this.nextToPage4 = true;
+    } else {
+      this.nextToPage4 = false;
+    }
   }
 
 }

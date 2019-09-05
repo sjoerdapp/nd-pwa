@@ -86,4 +86,14 @@ export class SellService {
     return prodRef.get();
   }
 
+  getHighestOffer(productID: string, condition: string, size: string) {
+    const offerRef = this.afs.collection(`products`).doc(`${productID}`).collection(`bids`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `desc`).limit(1));
+    return offerRef.get();
+  }
+
+  getLowestListing(productID: string, condition: string, size: string) {
+    const listingRef = this.afs.collection(`products`).doc(`${productID}`).collection(`listings`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `asc`).limit(1));
+    return listingRef.get();
+  }
+
 }

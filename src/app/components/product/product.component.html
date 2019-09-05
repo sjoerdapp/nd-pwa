@@ -12,18 +12,44 @@
       </div>
     </div>
 
-    <div class="product-offers" *ngFor="let listing of listings">
-      <div class="product-offer">
-        <h6>{{ listing.condition }}</h6>
+    <div class="product-offers" *ngIf="showBuy && buyListings.length >= 1">
+      <div class="product-offer" *ngFor="let buyListing of buyListings">
+        <h6>{{ buyListing.condition }}</h6>
 
         <div class="offer-specs">
-          <h2 id="offer-size">{{ listing.size }}</h2>
-          <h2 id="offer-price">{{ listing.price | currency: 'CAD' }}</h2>
+          <h2 id="offer-size">{{ buyListing.size }}</h2>
+          <h2 id="offer-price">{{ buyListing.price | currency: 'CAD' }}</h2>
         </div>
 
-        <button class="btn" (click)="addToCart(listing)" *ngIf="connected">Add to cart</button>
+        <button class="btn" (click)="addToCart(buyListing)" *ngIf="connected">Add to cart</button>
         <button class="btn disabled" *ngIf="!connected">Add to cart</button>
       </div>
+    </div>
+    <div class="product-navigation">
+      <button class="btn" id="buy-btn" (click)="navigationBuy()">Listings</button>
+      <button class="btn" id="offers-btn" (click)="navigationOffers()">Bids</button>
+    </div>
+
+    <div class="product-offers" *ngIf="showBuy && buyListings.length < 1">
+      <p>Sorry, there is no listings at this moment.</p>
+    </div>
+
+    <div class="product-offers" *ngIf="showOffers && offersListings.length >= 1">
+      <div class="product-offer" *ngFor="let offerListing of offersListings">
+        <h6>{{ offerListing.condition }}</h6>
+
+        <div class="offer-specs">
+          <h2 id="offer-size">{{ offerListing.size }}</h2>
+          <h2 id="offer-price">{{ offerListing.price | currency: 'CAD' }}</h2>
+        </div>
+
+        <button class="btn" (click)="sell(offerListing)" *ngIf="connected">Sell</button>
+        <button class="btn disabled" *ngIf="!connected">Sell</button>
+      </div>
+    </div>
+
+    <div class="product-offers" *ngIf="showOffers && offersListings.length < 1">
+      <p>Sorry, there is no offers at this moment.</p>
     </div>
   </section>
 </div>
