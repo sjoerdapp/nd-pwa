@@ -23,7 +23,7 @@ export class ProductService {
   }
 
   getOffers(productID) {
-    return this.afs.collection('products').doc(`${productID}`).collection('bid', ref => ref.orderBy(`size`, `asc`)).valueChanges();
+    return this.afs.collection('products').doc(`${productID}`).collection('offers', ref => ref.orderBy(`size`, `asc`)).valueChanges();
   }
 
   async addToCart(listing) {

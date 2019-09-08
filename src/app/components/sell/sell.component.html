@@ -95,7 +95,8 @@
       </select>
   
       <div class="sell-btns">
-        <button class="btn" (click)="goToPage2(false)">Back</button>
+        <button class="btn" id="page-2-back-btn" (click)="goToPage2(false)">Back</button>
+        <button class="btn" id="page-2-back-btn-alt" routerLink="../">Cancel</button>
         <button class="btn" (click)="goToPage4()" id="add-btn" *ngIf="nextToPage4">Next</button>
         <button class="btn disabled" id="add-btn" *ngIf="!nextToPage4">Next</button>
       </div>

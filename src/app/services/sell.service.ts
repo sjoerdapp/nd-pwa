@@ -81,13 +81,13 @@ export class SellService {
       });
   }
 
-  async getLowestPrice(productID: string) {
+  /*async getLowestPrice(productID: string) {
     const prodRef = await this.afs.collection(`products`).doc(`${productID}`);
     return prodRef.get();
-  }
+  }*/
 
   getHighestOffer(productID: string, condition: string, size: string) {
-    const offerRef = this.afs.collection(`products`).doc(`${productID}`).collection(`bids`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `desc`).limit(1));
+    const offerRef = this.afs.collection(`products`).doc(`${productID}`).collection(`offers`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `desc`).limit(1));
     return offerRef.get();
   }
 

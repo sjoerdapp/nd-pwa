@@ -27,6 +27,7 @@ import { ActivateAccountComponent } from './components/activate-account/activate
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { LoggedOutComponent } from './components/logged-out/logged-out.component';
 import { SignupInformationComponent } from './components/signup-information/signup-information.component';
+import { MakeAnOfferComponent } from './components/make-an-offer/make-an-offer.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -54,7 +55,8 @@ const routes: Routes = [
   { path: 'activate-account', component: ActivateAccountComponent },
   { path: 'support', component: ContactUsComponent },
   { path: 'bye', component: LoggedOutComponent },
-  { path: 'additional-information', component: SignupInformationComponent }
+  { path: 'additional-information', component: SignupInformationComponent },
+  { path: 'make-an-offer', component: MakeAnOfferComponent }
 ];
 
 @NgModule({

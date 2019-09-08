@@ -2,7 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { SellService } from 'src/app/services/sell.service';
 import { environment } from '../../../environments/environment';
 import { Product } from 'src/app/models/product';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { isUndefined } from 'util';
 
 @Component({
@@ -41,10 +41,23 @@ export class SellComponent implements OnInit {
   constructor(
     private sellService: SellService,
     private ngZone: NgZone,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (!isUndefined(params.sneaker)) {
+        let element = document.getElementById('sell-page-1');
+        element.style.display = 'none';
+
+        document.getElementById('page-2-back-btn').style.display = 'none';
+        document.getElementById('page-2-back-btn-alt').style.display = 'block';
+
+        const pair = JSON.parse(params.sneaker);
+        this.selectPair(pair);
+      }
+    });
   }
 
   submitListing() {
@@ -108,10 +121,6 @@ export class SellComponent implements OnInit {
       type: pair.type
     };
 
-    this.sellService.getLowestPrice(pair.productID).then(val => {
-      val.subscribe(data => { this.selectedPair.lowestPrice = data.data().lowestPrice });
-    });
-
     let element = document.getElementById('sell-page-2');
     element.style.display = 'none';
 
@@ -170,7 +179,7 @@ export class SellComponent implements OnInit {
       }
     });
 
-    console.log(`highestOffer: ${this.highestOffer} and lowestListing: ${this.lowestListing}`);
+    // console.log(`highestOffer: ${this.highestOffer} and lowestListing: ${this.lowestListing}`);
   }
 
   searchChanged(query) {

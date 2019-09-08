@@ -38,6 +38,22 @@
                 color:  $white;
             }
         }
+
+        .product-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 80%;
+            column-gap: $spacing-xsmall;
+            margin: $spacing-xsmall auto;
+
+            button {
+                background: $black;
+
+                &:hover {
+                    background: $matteblack;
+                }
+            }
+        }
     }
 
     .product-navigation {
@@ -48,13 +64,14 @@
         button {
             border-radius: 0;
             padding: $spacing-small;
+            background: $black;
 
             &:first-child {
-                border-right: 1px solid $lightgrey;
+                border-right: 1px solid $matteblack;
             }
 
             &:hover {
-                background: $green;
+                background: $matteblack;
             }
         }
     }

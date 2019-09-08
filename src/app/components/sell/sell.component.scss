@@ -250,4 +250,13 @@
             background: $lightgrey!important;
         }
     }
+
+    #page-2-back-btn-alt {
+        display: none;
+        background: $black;
+
+        &:hover {
+            background: $matteblack;
+        }
+    }
 }

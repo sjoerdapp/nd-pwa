@@ -49,34 +49,34 @@ export class ProductComponent implements OnInit {
 
   isConnected() {
     return this.auth.checkStatus().then(res => {
-      console.log(res);
+      // console.log(res);
       this.connected = res;
     });
   }
 
   navigationBuy() {
-    document.getElementById('buy-btn').style.background = '#98fb98';
-    document.getElementById('offers-btn').style.background = '#131e3a';
+    document.getElementById('buy-btn').style.background = '#383637';
+    document.getElementById('offers-btn').style.background = '#222021';
 
     this.showBuy = true;
     this.showOffers = false;
     if (this.buyListings.length < 1) {
       this.productService.getBuy(this.productID).subscribe(data => {
         this.buyListings = data;
-        console.log(this.buyListings);
+        // console.log(this.buyListings);
       });
     }
   }
 
   navigationOffers() {
-    document.getElementById('buy-btn').style.background = '#131e3a';
-    document.getElementById('offers-btn').style.background = '#98fb98';
+    document.getElementById('buy-btn').style.background = '#222021';
+    document.getElementById('offers-btn').style.background = '#383637';
 
     this.showBuy = false;
     this.showOffers = true;
     if (this.offersListings.length < 1) {
       this.productService.getOffers(this.productID).subscribe(data => {
-        this.buyListings = data;
+        this.offersListings = data;
       });
     }
   }
