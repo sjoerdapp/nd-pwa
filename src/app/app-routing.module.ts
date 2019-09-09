@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Components
@@ -20,7 +20,7 @@ import { TransactionReviewComponent } from './components/transaction-review/tran
 import { SellComponent } from './components/sell/sell.component';
 import { SearchComponent } from './components/search/search.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+import { EditListingComponent } from './components/edit-listing/edit-listing.component';
 import { RequestComponent } from './components/request/request.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
@@ -28,6 +28,7 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { LoggedOutComponent } from './components/logged-out/logged-out.component';
 import { SignupInformationComponent } from './components/signup-information/signup-information.component';
 import { MakeAnOfferComponent } from './components/make-an-offer/make-an-offer.component';
+import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -49,14 +50,15 @@ const routes: Routes = [
   { path: 'sell', component: SellComponent },
   { path: 'search', component: SearchComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'edit-offer/:id', component: EditOfferComponent },
+  { path: 'edit-listing/:id', component: EditListingComponent },
   { path: 'request', component: RequestComponent },
   { path: 'forgot-password', component: ForgetPasswordComponent },
   { path: 'activate-account', component: ActivateAccountComponent },
   { path: 'support', component: ContactUsComponent },
   { path: 'bye', component: LoggedOutComponent },
   { path: 'additional-information', component: SignupInformationComponent },
-  { path: 'make-an-offer', component: MakeAnOfferComponent }
+  { path: 'make-an-offer', component: MakeAnOfferComponent },
+  { path: 'edit-offer/:id', component: EditOfferComponent }
 ];
 
 @NgModule({

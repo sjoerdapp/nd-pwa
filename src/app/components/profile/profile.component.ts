@@ -19,7 +19,9 @@ export class ProfileComponent implements OnInit {
   };
 
   listings = [];
-  count = 6;
+  offers = [];
+
+  listingNav = true;
 
   loading = false;
 
@@ -34,12 +36,45 @@ export class ProfileComponent implements OnInit {
       });
     });
 
-    this.profileService.getUserListings().then(val => {
-      val.subscribe(data => {
-        this.listings = data;
-        console.log(this.listings);
-      });
+    const listingElement = document.getElementById('listingsBtn');
+    const offerElement = document.getElementById('offersBtn');
+
+    listingElement.addEventListener('mouseover', () => {
+      listingElement.style.borderBottom = '4px solid #222021';
     });
+
+    offerElement.addEventListener('mouseover', () => {
+      offerElement.style.borderBottom = '4px solid #222021';
+    });
+
+    listingElement.addEventListener('mouseleave', () => {
+      if (!this.listingNav) {
+        listingElement.style.borderBottom = '2px solid #222021';
+      }
+    });
+
+    offerElement.addEventListener('mouseleave', () => {
+      if (this.listingNav) {
+        offerElement.style.borderBottom = '2px solid #222021';
+      }
+    });
+
+    this.showListings();
+  }
+
+  showListings() {
+    document.getElementById('listingsBtn').style.borderBottom = '4px solid #222021';
+    document.getElementById('offersBtn').style.borderBottom = '2px solid #222021';
+    this.listingNav = true;
+
+    if (!this.listings.length) {
+      this.profileService.getUserListings().then(val => {
+        val.subscribe(data => {
+          this.listings = data;
+          console.log(this.listings);
+        });
+      });
+    }
   }
 
   moreListings() {
@@ -52,6 +87,25 @@ export class ProfileComponent implements OnInit {
           console.log(this.listings);
         });
       });
+  }
+
+  showOffers() {
+    document.getElementById('offersBtn').style.borderBottom = '4px solid #222021';
+    document.getElementById('listingsBtn').style.borderBottom = '2px solid #222021';
+    this.listingNav = false;
+
+    if (!this.offers.length) {
+      this.profileService.getUserOffers().then(val => {
+        val.subscribe(data => {
+          this.offers = data;
+          console.log(this.offers);
+        });
+      });
+    }
+  }
+
+  moreOffers() {
+
   }
 
 }

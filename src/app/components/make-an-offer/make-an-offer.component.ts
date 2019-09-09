@@ -117,7 +117,7 @@ export class MakeAnOfferComponent implements OnInit {
   }
 
   showFinishBtn() {
-    if (this.pairPrice > this.lowestListing) {
+    if (this.pairPrice >= this.lowestListing) {
       if (this.lowestListing != -1) {
         this.showFinish = false;
       } else {

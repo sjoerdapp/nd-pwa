@@ -45,7 +45,26 @@ export class ProfileService {
     return userRef.valueChanges();
   }
 
-  public async getOffer(listingID) {
+  public async getUserOffers(startAfter?): Promise<Observable<any>> {
+    let UID: string;
+    await this.auth.isConnected().then(data => {
+      UID = data.uid;
+    });
+
+    let userRef: AngularFirestoreCollection<any>;
+
+    if (isUndefined(startAfter)) {
+      // tslint:disable-next-line: max-line-length
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`offers`, ref => ref.orderBy('timestamp', 'desc').limit(6));
+    } else {
+      // tslint:disable-next-line: max-line-length
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`offers`, ref => ref.orderBy('timestamp', 'desc').startAfter(startAfter).limit(6));
+    }
+
+    return userRef.valueChanges();
+  }
+
+  public async getListing(listingID) {
     let UID: string;
     await this.auth.isConnected().then(data => {
       UID = data.uid;
@@ -55,7 +74,7 @@ export class ProfileService {
     return offerRef.valueChanges();
   }
 
-  public async updateOffer(listingID, productID, condition, price, size): Promise<boolean> {
+  public async updateListing(listingID, productID, condition, price, size): Promise<boolean> {
     let UID: string;
     await this.auth.isConnected().then(data => {
       UID = data.uid;
@@ -63,7 +82,7 @@ export class ProfileService {
 
     const batch = this.afs.firestore.batch();
 
-    const offerRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
+    const listingRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
     const prodRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
 
     const productRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
@@ -82,7 +101,7 @@ export class ProfileService {
       }
     });
 
-    batch.update(offerRef, {
+    batch.update(listingRef, {
       condition: condition,
       price: price,
       size: size
@@ -105,7 +124,7 @@ export class ProfileService {
       });
   }
 
-  public async deleteOffer(listingID, productID, price): Promise<boolean> {
+  public async deleteListing(listingID, productID, price): Promise<boolean> {
     let UID: string;
     await this.auth.isConnected().then(data => {
       UID = data.uid;
@@ -131,8 +150,8 @@ export class ProfileService {
       });
     });
 
-    console.log(`length: ${prices.length}; price1: ${prices[0]}; price2: ${prices[1]}`);
-    console.log(prices);
+    // console.log(`length: ${prices.length}; price1: ${prices[0]}; price2: ${prices[1]}`);
+    // console.log(prices);
 
     const prodRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
 

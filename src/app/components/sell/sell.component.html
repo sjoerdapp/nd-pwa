@@ -135,7 +135,7 @@
       <button class="btn" (click)="goToPage3()">Back</button>
       <button class="btn disabled" id="add-btn" *ngIf="!error && !listed && !loading && !priceAdded">Finish</button>
       <button class="btn" id="add-btn" (click)="submitListing()" *ngIf="!error && !listed && !loading && priceAdded && pairPrice > highestOffer">Finish</button>
-      <button class="btn" id="add-btn" (click)="sellNow()" *ngIf="!error && !listed && !loading && priceAdded && pairPrice < highestOffer">Sell at {{ highestOffer | currency: 'CAD' }}</button>
+      <button class="btn" id="add-btn" (click)="sellNow()" *ngIf="!error && !listed && !loading && priceAdded && pairPrice <= highestOffer">Sell at {{ highestOffer | currency: 'CAD' }}</button>
       <button class="btn error-btn" *ngIf="error">Error</button>
       <button class="btn listed-btn" *ngIf="listed">Listed</button>
       <button class="btn" *ngIf="loading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>

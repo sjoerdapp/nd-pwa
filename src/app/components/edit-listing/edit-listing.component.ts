@@ -1,15 +1,14 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
-import { OfferService } from 'src/app/services/offer.service';
 import { SellService } from 'src/app/services/sell.service';
 
 @Component({
-  selector: 'app-edit-offer',
-  templateUrl: './edit-offer.component.html',
-  styleUrls: ['./edit-offer.component.scss']
+  selector: 'app-edit-listing',
+  templateUrl: './edit-listing.component.html',
+  styleUrls: ['./edit-listing.component.scss']
 })
-export class EditOfferComponent implements OnInit {
+export class EditListingComponent implements OnInit {
 
   listingID: string;
 
@@ -23,16 +22,15 @@ export class EditOfferComponent implements OnInit {
   priceChanged = false;
   sizeChanged = false;
 
+  highestOffer: number;
+
   curCondition;
   curPrice;
   curSize;
 
-  lowestListing: number;
-  showSaveChanges = true;
-
   constructor(
     private route: ActivatedRoute,
-    private offerService: OfferService,
+    private profileService: ProfileService,
     private ngZone: NgZone,
     private router: Router,
     private sellService: SellService
@@ -40,7 +38,7 @@ export class EditOfferComponent implements OnInit {
 
   ngOnInit() {
     this.listingID = this.route.snapshot.params.id;
-    this.offerInfo = this.offerService.getOffer(this.listingID).then(val => {
+    this.offerInfo = this.profileService.getListing(this.listingID).then(val => {
       val.subscribe(data => {
         this.offerInfo = data;
         (document.getElementById('item-size') as HTMLInputElement).value = this.offerInfo.size;
@@ -49,13 +47,13 @@ export class EditOfferComponent implements OnInit {
         this.curPrice = this.offerInfo.price;
         this.curSize = this.offerInfo.size;
 
-        this.sellService.getLowestListing(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
+        this.sellService.getHighestOffer(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
           if (!data.empty) {
             data.forEach(val => {
-              this.lowestListing = val.data().price;
+              this.highestOffer = val.data().price;
             });
           } else {
-            this.lowestListing = -1;
+            this.highestOffer = 0;
           }
         });
       });
@@ -80,8 +78,6 @@ export class EditOfferComponent implements OnInit {
     }
 
     this.curPrice = +$event.target.value;
-
-    this.showSaveChangesBtn();
   }
 
   sizeChanges($event) {
@@ -94,7 +90,7 @@ export class EditOfferComponent implements OnInit {
     this.curSize = $event.target.value;
   }
 
-  updateOffer() {
+  updateListing() {
     const condition = this.curCondition;
     const price = this.curPrice;
     const size = this.curSize;
@@ -107,18 +103,18 @@ export class EditOfferComponent implements OnInit {
         return;
       }
 
-      this.offerService.updateOffer(this.offerInfo.offerID, this.offerInfo.productID, condition, price, size).then(res => {
+      this.profileService.updateListing(this.offerInfo.listingID, this.offerInfo.productID, condition, price, size).then((res) => {
         if (res) {
           this.udpateSuccessful();
         } else {
           this.updateError();
         }
-      })
+      });
     }
   }
 
-  deleteOffer() {
-    this.offerService.deleteoffer(this.offerInfo.offerID, this.offerInfo.productID)
+  deleteListing() {
+    this.profileService.deleteListing(this.offerInfo.listingID, this.offerInfo.productID, this.offerInfo.price)
       .then((res) => {
         this.offerInfo = [];
         if (res) {
@@ -148,22 +144,6 @@ export class EditOfferComponent implements OnInit {
       this.priceChanged = false;
       this.sizeChanged = false;
     }, 2500);
-  }
-
-  showSaveChangesBtn() {
-    if (this.curPrice >= this.lowestListing) {
-      if (this.lowestListing != -1) {
-        this.showSaveChanges = false;
-      } else {
-        this.showSaveChanges = true;
-      }
-    } else {
-      if (this.lowestListing != -1) {
-        this.showSaveChanges = true;
-      } else {
-        this.showSaveChanges = true;
-      }
-    }
   }
 
 }

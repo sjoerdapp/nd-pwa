@@ -32,7 +32,7 @@ import { SearchComponent } from './components/search/search.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
-import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+import { EditListingComponent } from './components/edit-listing/edit-listing.component';
 import { RequestComponent } from './components/request/request.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
@@ -62,6 +62,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 // Algolia
 import { NgAisModule } from 'angular-instantsearch';
 import { MakeAnOfferComponent } from './components/make-an-offer/make-an-offer.component';
+import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
 
 @NgModule({
   declarations: [
@@ -92,14 +93,15 @@ import { MakeAnOfferComponent } from './components/make-an-offer/make-an-offer.c
     DashboardComponent,
     NotificationsComponent,
     SideMenuComponent,
-    EditOfferComponent,
+    EditListingComponent,
     RequestComponent,
     ForgetPasswordComponent,
     ActivateAccountComponent,
     ContactUsComponent,
     LoggedOutComponent,
     SignupInformationComponent,
-    MakeAnOfferComponent
+    MakeAnOfferComponent,
+    EditOfferComponent
   ],
   imports: [
     BrowserModule,

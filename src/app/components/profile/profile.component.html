@@ -26,17 +26,38 @@
     <div class="profile-divider"></div>
   </div>
 
-  <h2>Listed Items</h2>
-  <div class="profile-items">
-    <div class="profile-item" *ngFor="let listing of listings" routerLink="/edit-offer/{{ listing.listingID }}">
-      <section class="item-specs">
-        <h6>{{ listing.size }}</h6>
-        <h5>{{ listing.price | currency: 'CAD' }}</h5>
-      </section>
-      <img src="{{ listing.assetURL }}" alt="{{ listing.productID }}">
-      <h5>{{ listing.model }}</h5>
+  <div class="profile-navigation">
+    <button class="btn" id="listingsBtn" (click)="showListings()">Listings</button>
+    <button class="btn" id="offersBtn" (click)="showOffers()">Offers</button>
+  </div>
+
+  <div *ngIf="listingNav else showOffer">
+    <h2>Listed Items</h2>
+    <div class="profile-items">
+      <div class="profile-item" *ngFor="let listing of listings" routerLink="/edit-listing/{{ listing.listingID }}">
+        <section class="item-specs">
+          <h6>{{ listing.size }}</h6>
+          <h5>{{ listing.price | currency: 'CAD' }}</h5>
+        </section>
+        <img src="{{ listing.assetURL }}" alt="{{ listing.productID }}">
+        <h5>{{ listing.model }}</h5>
+      </div>
     </div>
   </div>
+
+  <ng-template #showOffer>
+    <h2> Your Offers</h2>
+    <div class="profile-items">
+      <div class="profile-item" *ngFor="let offer of offers" routerLink="/edit-offer/{{ offer.offerID }}">
+        <section class="item-specs">
+          <h6>{{ offer.size }}</h6>
+          <h5>{{ offer.price | currency: 'CAD' }}</h5>
+        </section>
+        <img src="{{ offer.assetURL }}" alt="{{ offer.productID }}">
+        <h5>{{ offer.model }}</h5>
+      </div>
+    </div>
+  </ng-template>
 
   <button *ngIf="dashInfo.listed > listings.length && !loading" class="btn show-more-btn" (click)="moreListings()">More</button>
   <button *ngIf="loading" class="btn show-more-btn"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
