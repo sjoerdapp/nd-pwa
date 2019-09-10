@@ -1,17 +1,20 @@
+<app-navbar></app-navbar>
+
 <div class="main-container">
-  <app-navbar></app-navbar>
-  
   <h2>Edit Profile</h2>
   
-  <input type="text" id="firstName" placeholder="First Name">
-  <input type="text" id="lastName" placeholder="Last Name">
-  <input type="text" id="username" placeholder="Username">
+  <input type="text" id="firstName" placeholder="First Name" value="{{ firstName }}" (keyup)="firstNameChanges($event)">
+  <input type="text" id="lastName" placeholder="Last Name" value="{{ lastName }}" (keyup)="lastNameChanges($event)">
+  <input type="text" id="username" placeholder="Username" value="{{ username }}" (keyup)="usernameChanges($event)">
   <label for="dob">Date of Birth:</label>
-  <input type="date" id="dob">
+  <input type="date" id="dob" value="{{ dob }}" (change)="dobChanges($event)">
 
   <div class="settings-btn">
     <button class="settings-back-btn" routerLink="..">Back</button>
-    <button class="settings-save-btn">Save Changes</button>
+    <button [className]="firstNameChanged || lastNameChanged || usernameChanged || dobChanged ? 'settings-save-btn' : 'disabled settings-save-btn'" (click)="updateProfile()" *ngIf="!loading && !error && !updated">Save Changes</button>
+    <button class="settings-save-btn" *ngIf="loading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
+    <button class="settings-save-btn" *ngIf="error">Error</button>
+    <button class="settings-save-btn" *ngIf="updated">Updated</button>
   </div>
 </div>
   

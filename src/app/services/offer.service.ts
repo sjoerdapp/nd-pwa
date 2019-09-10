@@ -25,7 +25,7 @@ export class OfferService {
       });
     
     const timestamp = Date.now();
-    const listingID = UID + '-' + timestamp;
+    const offerID = UID + '-' + timestamp;
 
     this.userListing = {
       assetURL: pair.assetURL,
@@ -34,7 +34,7 @@ export class OfferService {
       condition,
       size,
       productID: pair.productID,
-      listingID,
+      offerID,
       timestamp
     };
 
@@ -44,14 +44,14 @@ export class OfferService {
       price,
       condition,
       size,
-      listingID,
+      offerID,
       timestamp
     };
 
     const batch = this.afs.firestore.batch();
 
-    const userDocRef = this.afs.firestore.collection(`users/${UID}/offers`).doc(`${listingID}`);
-    const prodDocRef = this.afs.firestore.collection(`products/${pair.productID}/offers`).doc(`${listingID}`);
+    const userDocRef = this.afs.firestore.collection(`users/${UID}/offers`).doc(`${offerID}`);
+    const prodDocRef = this.afs.firestore.collection(`products/${pair.productID}/offers`).doc(`${offerID}`);
     const offersValRef = this.afs.firestore.doc(`users/${UID}`);
 
     batch.set(userDocRef, this.userListing);
@@ -71,13 +71,13 @@ export class OfferService {
       });
   }
 
-  public async getOffer(listingID) {
+  public async getOffer(offerID) {
     let UID: string;
     await this.auth.isConnected().then(data => {
       UID = data.uid;
     });
 
-    const offerRef: AngularFirestoreDocument<any> = this.afs.collection('users').doc(`${UID}`).collection('offers').doc(`${listingID}`);
+    const offerRef: AngularFirestoreDocument<any> = this.afs.collection('users').doc(`${UID}`).collection('offers').doc(`${offerID}`);
     return offerRef.valueChanges();
   }
 

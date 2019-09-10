@@ -66,7 +66,7 @@ export class AuthService {
           listed: 0,
           sold: 0,
           ordered: 0,
-          counterOffer: 0
+          offers: 0
         };
 
         return this.createUserData(userData);
@@ -161,7 +161,7 @@ export class AuthService {
           listed: 0,
           sold: 0,
           ordered: 0,
-          counterOffer: 0
+          offers: 0
         };
 
         this.createUserData(userData);

@@ -1,15 +1,20 @@
 @import '../../base_styles/base';
 
+.main-container {
+    display: grid;
+    align-items: center;
+}
+
 h2 {
     text-align: center;
-    margin: $spacing-normal;
+    margin: $spacing-large;
 }
 
 button {
     display: block;
     border: none;
     width: 80%;
-    margin: $spacing-small auto;
+    margin: $spacing-large auto;
     padding: $spacing-small;
     border-radius: $spacing-xsmall;
     cursor: pointer;

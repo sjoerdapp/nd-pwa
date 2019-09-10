@@ -39,6 +39,8 @@ import { ActivateAccountComponent } from './components/activate-account/activate
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { LoggedOutComponent } from './components/logged-out/logged-out.component';
 import { SignupInformationComponent } from './components/signup-information/signup-information.component';
+import { MakeAnOfferComponent } from './components/make-an-offer/make-an-offer.component';
+import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -61,8 +63,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // Algolia
 import { NgAisModule } from 'angular-instantsearch';
-import { MakeAnOfferComponent } from './components/make-an-offer/make-an-offer.component';
-import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+
+// Mask Module
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+
+export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 @NgModule({
   declarations: [
@@ -114,7 +119,8 @@ import { EditOfferComponent } from './components/edit-offer/edit-offer.component
     AngularFireStorageModule,
     ReactiveFormsModule,
     FormsModule,
-    NgAisModule
+    NgAisModule,
+    NgxMaskModule.forRoot(options)
   ],
   providers: [],
   bootstrap: [AppComponent]

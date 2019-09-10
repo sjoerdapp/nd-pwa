@@ -1,5 +1,10 @@
 @import '../../base_styles/base';
 
+.main-container {
+    display: grid;
+    align-content: center;
+}
+
 h2 {
     text-align: center;
     margin: $spacing-normal;
@@ -30,4 +35,13 @@ label {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 5px;
+}
+
+.disabled {
+    background: $lightgrey;
+
+    &:hover {
+        background: $lightgrey;
+        cursor: not-allowed;
+    }
 }

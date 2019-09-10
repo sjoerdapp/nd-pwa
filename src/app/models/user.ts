@@ -4,10 +4,11 @@ export interface User {
     listed: number;
     ordered: number;
     sold: number;
-    counterOffer: number;
+    offers: number;
 
     // Optional
     username?: string;
+    dob? : string
 
     /* Payment Properties */
     firstName?: string;

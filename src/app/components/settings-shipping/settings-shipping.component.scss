@@ -1,5 +1,10 @@
 @import '../../base_styles/base';
 
+.main-container {
+    display: grid;
+    align-content: center;
+}
+
 h2, h6 {
     text-align: center;
     margin: $spacing-normal;
@@ -35,4 +40,21 @@ input {
     margin: 0 auto;
     padding: $spacing-xsmall;
     margin-bottom: $spacing-xsmall;
+}
+
+.disabled {
+    background: $lightgrey;
+    cursor: not-allowed;
+
+    &:hover {
+        background: $lightgrey;
+    }
+}
+
+.error {
+    background: $inputError;
+}
+
+button {
+    outline: none;
 }

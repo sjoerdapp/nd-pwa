@@ -13,7 +13,7 @@ export class ProfileComponent implements OnInit {
     sold: 0,
     listed: 0,
     ordered: 0,
-    counterOffer: 0,
+    offers: 0,
     uid: '',
     email: ''
   };
