@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsPasswordService } from 'src/app/services/settings-password.service';
+import { EmailService } from 'src/app/services/email.service';
 
 @Component({
   selector: 'app-settings-password',
@@ -18,7 +19,8 @@ export class SettingsPasswordComponent implements OnInit {
   updated = false;
 
   constructor(
-    private settingsPasswordService: SettingsPasswordService
+    private settingsPasswordService: SettingsPasswordService,
+    private emailService: EmailService
   ) { }
 
   ngOnInit() {
@@ -80,6 +82,7 @@ export class SettingsPasswordComponent implements OnInit {
       this.loading = true;
       this.settingsPasswordService.updatePassword(oldPwd, pwd).then(res => {
         if (res) {
+          this.emailService.passwordChange();
           this.loading = false;
           this.updated = true;
           this.reset(res);

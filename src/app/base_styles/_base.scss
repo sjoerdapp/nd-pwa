@@ -13,6 +13,27 @@ $navHeight: 64px;
 $footerHeight: 150px;
 $productContainerHeight: 650px;
 
+* {
+    outline: none;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.ripple {
+    background-position: center;
+    transition: background 0.5s;
+    &:hover {
+        background: inherit radial-gradient(circle, transparent 1%, inherit 1%) center/15000%;
+    }
+    &:active {
+        background-color: inherit;
+        background-size: 100%;
+        transition: background 0s;
+    }
+}
+
 //double line
 .blueLine {
     background: $darkblue;

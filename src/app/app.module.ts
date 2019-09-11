@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'src/environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 /** Components */
 import { AppComponent } from './app.component';
@@ -120,7 +121,8 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     ReactiveFormsModule,
     FormsModule,
     NgAisModule,
-    NgxMaskModule.forRoot(options)
+    NgxMaskModule.forRoot(options),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

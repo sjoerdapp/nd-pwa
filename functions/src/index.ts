@@ -12,6 +12,40 @@ import * as algoliasearch from 'algoliasearch';
 const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
 const index = client.initIndex('test_PRODUCTS');
 
+// Sendgrid Setup
+const cors = require('cors')({ origin: true });
+const SENDGRID_API_TESTKEY = env.sendgrid.key_test;
+// const SENDGRID_API_KEY = env.sendgrid.key;
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(SENDGRID_API_TESTKEY);
+
+exports.changedPassword = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send('Forbidden!');
+        }
+
+        console.log(`To: ${req.body.toEmail}, Name: ${req.body.name}`);
+
+        const msg = {
+            to: req.body.toEmail,
+            from: 'notifications@nxtdrop.com',
+            templateId: 'd-0911ed5ff8ee46e3982bd3d8074ce831',
+            dynamic_template_data: {
+                name: req.body.toName,
+                subject: 'Did you change your password?',
+            },
+        };
+
+        return sgMail.send(msg).then((content: any) => {
+            return res.status(200).send(content);
+        }).catch((err: any) => {
+            return res.status(500).send(err);
+        });
+    });
+});
+
+
 exports.indexProducts = functions.firestore
     .document('products/{productID}')
     .onCreate((snap, context) => {
@@ -23,7 +57,7 @@ exports.indexProducts = functions.firestore
             objectID,
             ...data
         });
-    });
+});
 
 exports.unindexProduct = functions.firestore
     .document('products/{productID}')
@@ -32,7 +66,7 @@ exports.unindexProduct = functions.firestore
 
         // Delete an ID from the index
         return index.deleteObject(objectID);
-    });
+});
 
 exports.addFirestoreDataToAlgolia = functions.https.onRequest((req, res) => {
 
