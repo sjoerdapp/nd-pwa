@@ -29,6 +29,7 @@ import { LoggedOutComponent } from './components/logged-out/logged-out.component
 import { SignupInformationComponent } from './components/signup-information/signup-information.component';
 import { MakeAnOfferComponent } from './components/make-an-offer/make-an-offer.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -58,7 +59,8 @@ const routes: Routes = [
   { path: 'bye', component: LoggedOutComponent },
   { path: 'additional-information', component: SignupInformationComponent },
   { path: 'make-an-offer', component: MakeAnOfferComponent },
-  { path: 'edit-offer/:id', component: EditOfferComponent }
+  { path: 'edit-offer/:id', component: EditOfferComponent },
+  { path: 'reset-password', component: ResetPasswordComponent }
 ];
 
 @NgModule({

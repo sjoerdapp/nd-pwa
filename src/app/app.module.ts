@@ -66,7 +66,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgAisModule } from 'angular-instantsearch';
 
 // Mask Module
-import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -107,13 +108,14 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     LoggedOutComponent,
     SignupInformationComponent,
     MakeAnOfferComponent,
-    EditOfferComponent
+    EditOfferComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    AngularFireModule.initializeApp(environment.firebase, 'nxtdrop-app-test'),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireMessagingModule,

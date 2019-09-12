@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
+import * as firebase from 'firebase/app';
 
 
 @Injectable({
@@ -27,10 +28,32 @@ export class EmailService {
         toName: res.data().username
       };
 
-      this.http.post(endpoint, data).subscribe(
-        data => console.log('success', data),
-        error => console.log('oops', error)
-      );
+      this.http.post(endpoint, data).subscribe();
     })
+  }
+
+  sendResetLink(email: string) {
+    return this.afs.collection(`users`).ref.where(`email`, `==`, `${email}`).limit(1).get().then(res => {
+      if (!res.empty) {
+        return firebase.auth().sendPasswordResetEmail(email).then(() => {
+          return true;
+        }).catch((err) => {
+          console.error(err);
+          return false;
+        });
+      }
+
+      return false;
+    })
+  }
+
+  resetPassword(code: string, newPass: string) {
+    return firebase.auth().confirmPasswordReset(code, newPass).then(() => {
+      return true;
+    })
+    .catch((err) => {
+      console.error(err);
+      return false;
+    });
   }
 }
