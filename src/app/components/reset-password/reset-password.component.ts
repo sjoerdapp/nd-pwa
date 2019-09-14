@@ -28,7 +28,7 @@ export class ResetPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.code = this.route.snapshot.queryParams.oobCode;
+    this.code = this.route.snapshot.queryParams.code;
     console.log(this.code);
     this.pwdChanges();
   }

@@ -5,6 +5,8 @@ export interface User {
     ordered: number;
     sold: number;
     offers: number;
+    cartItems: number;
+    isActive: boolean;
 
     // Optional
     username?: string;

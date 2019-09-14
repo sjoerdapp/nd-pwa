@@ -44,7 +44,7 @@ export class EmailService {
       }
 
       return false;
-    })
+    });
   }
 
   resetPassword(code: string, newPass: string) {
@@ -55,5 +55,22 @@ export class EmailService {
       console.error(err);
       return false;
     });
+  }
+
+  activateAccount() {
+    const user = this.afAuth.auth.currentUser;
+    const endpoint = 'https://us-central1-nxtdrop-app.cloudfunctions.net/accountCreated';
+
+    this.afs.collection(`users`).doc(`${user.uid}`).get().subscribe(res => {
+      const email = res.data().email;
+
+      const data = {
+        toEmail: email,
+        toName: res.data().firstName + ' ' + res.data().lastName,
+        toUid: res.data().uid
+      };
+
+      this.http.post(endpoint, data).subscribe();
+    })
   }
 }

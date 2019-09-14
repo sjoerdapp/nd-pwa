@@ -71,7 +71,7 @@ export class ProfileService {
     });
 
     const offerRef: AngularFirestoreDocument<any> = this.afs.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
-    return offerRef.valueChanges();
+    return offerRef.get();
   }
 
   public async updateListing(listingID, productID, condition, price, size): Promise<boolean> {

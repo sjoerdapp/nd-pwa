@@ -1,9 +1,10 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { SellService } from 'src/app/services/sell.service';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { OfferService } from 'src/app/services/offer.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-make-an-offer',
@@ -35,10 +36,17 @@ export class MakeAnOfferComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private offerService: OfferService, 
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
+    this.auth.isConnected().then(res => {
+      if (isNullOrUndefined(res.phoneNumber)) {
+        this.router.navigate(['../phone-verification']);
+      }
+    });
+
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
         this.selectedPair = JSON.parse(params.sneaker); 

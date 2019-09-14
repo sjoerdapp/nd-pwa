@@ -40,7 +40,7 @@ export class EditListingComponent implements OnInit {
     this.listingID = this.route.snapshot.params.id;
     this.offerInfo = this.profileService.getListing(this.listingID).then(val => {
       val.subscribe(data => {
-        this.offerInfo = data;
+        this.offerInfo = data.data();
         (document.getElementById('item-size') as HTMLInputElement).value = this.offerInfo.size;
         (document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
         this.curCondition = this.offerInfo.condition;

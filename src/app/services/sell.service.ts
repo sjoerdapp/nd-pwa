@@ -37,7 +37,8 @@ export class SellService {
       size,
       productID: pair.productID,
       listingID,
-      timestamp
+      timestamp,
+      sellerID: UID
     };
 
     this.productListing = {
@@ -47,7 +48,8 @@ export class SellService {
       condition,
       size,
       listingID,
-      timestamp
+      timestamp,
+      sellerID: UID
     };
 
     const batch = this.afs.firestore.batch();

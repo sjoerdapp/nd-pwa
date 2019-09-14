@@ -42,6 +42,8 @@ import { LoggedOutComponent } from './components/logged-out/logged-out.component
 import { SignupInformationComponent } from './components/signup-information/signup-information.component';
 import { MakeAnOfferComponent } from './components/make-an-offer/make-an-offer.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -49,7 +51,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 /** Icons imports */
 // tslint:disable-next-line: max-line-length
-import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawesome/free-brands-svg-icons';
 
 // Firebase Setup
@@ -67,7 +69,7 @@ import { NgAisModule } from 'angular-instantsearch';
 
 // Mask Module
 import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { PhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -109,7 +111,9 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     SignupInformationComponent,
     MakeAnOfferComponent,
     EditOfferComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AuthComponent,
+    PhoneVerificationComponent
   ],
   imports: [
     BrowserModule,
@@ -133,6 +137,6 @@ export class AppModule {
   constructor() {
     // add icon to library to be used in components
 // tslint:disable-next-line: max-line-length
-    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd);
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone);
   }
 }

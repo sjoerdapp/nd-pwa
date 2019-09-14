@@ -45,6 +45,32 @@ exports.changedPassword = functions.https.onRequest((req, res) => {
     });
 });
 
+exports.accountCreated = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send('Forbidden!');
+        }
+
+        console.log(`To: ${req.body.toEmail}, Name: ${req.body.toName}`);
+
+        const msg = {
+            to: req.body.toEmail,
+            from: 'notifications@nxtdrop.com',
+            templateId: 'd-35761f77395f4395bf843c0d9d2352d8',
+            dynamic_template_data: {
+                name: req.body.toName,
+                uid: req.body.toUid
+            }
+        };
+
+        return sgMail.send(msg).then((content: any) => {
+            return res.status(200).send(content);
+        }).catch((err: any) => {
+            return res.status(500).send(err);
+        });
+    });
+});
+
 
 exports.indexProducts = functions.firestore
     .document('products/{productID}')

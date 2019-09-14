@@ -40,9 +40,9 @@ export class ProductComponent implements OnInit {
   addToCart(listing) {
     this.productService.addToCart(listing).then(res => {
       if (res) {
-        console.log('Added to cart');
+        // console.log('Added to cart');
       } else {
-        console.log('Cannot add to cart');
+        // console.log('Cannot add to cart');
       }
     });
   }

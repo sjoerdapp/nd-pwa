@@ -1,0 +1,92 @@
+@import '../../base_styles/base';
+
+section {
+    height: calc(100vh - #{$footerHeight});
+    width: 100vw;
+    max-width: 100%;
+    background: $black;
+    display: grid;
+
+    .phone-verification-card {
+        align-self: center;
+        max-width: 100%;
+
+        #inputs {
+            width: 90%;
+            margin: $spacing-small auto;
+            display: grid;
+            grid-template-columns: 1fr 7fr;
+            column-gap: $spacing-xsmall;
+
+            input {
+                display: block;
+                margin: 5px auto;
+                height: 25px;
+                width: inherit;;
+                border: none;
+                padding: $spacing-xsmall;
+                letter-spacing: 0.8px;
+                border-radius: $spacing-xxsmall;
+                text-align: center;
+            }
+        }
+
+        h3 {
+            text-align: center;
+            margin: $spacing-small 0;
+            color: $white;
+        }
+
+        p {
+            text-align: center;
+            color: $white;
+            font-size: $font-xxsmall;
+            padding: 0 10%;
+        }
+
+        button {
+            display: block;
+            padding: $spacing-small;
+            border: none;
+            border-radius: 8px;
+            font-size: $font-small;
+            font-weight: $weight-black;
+            width: 50%;
+            margin: $spacing-small auto;
+            cursor: pointer;
+            @include vendor(transition, all 0.25s ease-in-out);
+            border-radius: $spacing-xxsmall;
+
+            &:hover {
+                background: $matteblue;
+            }
+        }
+
+        input {
+            display: block;
+            margin: 5px auto;
+            height: 25px;
+            width: 50%;
+            border: none;
+            padding: $spacing-xsmall;
+            letter-spacing: 0.8px;
+            border-radius: $spacing-xxsmall;
+            text-align: center;
+        }
+
+        .disabled {
+            background: $lightgrey;
+            cursor: not-allowed;
+    
+            &:hover {
+                background: $lightgrey;
+            }
+        }
+
+        .container {
+            display: grid;
+            justify-items: center;
+            justify-content: center;
+        }
+    }
+}

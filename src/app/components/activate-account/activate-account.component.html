@@ -2,10 +2,16 @@
   <app-navbar></app-navbar>
 
   <section class="content-container">
-    <fa-icon [icon]="['fas', 'check-circle']"></fa-icon>
-    <h3>Account Activated</h3>
+    <fa-icon *ngIf="good" [icon]="['fas', 'check-circle']"></fa-icon>
+    <h3 *ngIf="good">Account Activated</h3>
 
-    <h6>Thank you for choosing NXTDROP.</h6>
+    <h6 *ngIf="good">Thank you for choosing NXTDROP.</h6>
+
+    <fa-icon *ngIf="error" class="error-icon" [icon]="['fas', 'exclamation-circle']"></fa-icon>
+
+    <h3 *ngIf="error">Error</h3>
+
+    <h6 *ngIf="error">Try later or contact our support team.</h6>
   </section>
 </div>
 

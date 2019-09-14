@@ -35,7 +35,8 @@ export class OfferService {
       size,
       productID: pair.productID,
       offerID,
-      timestamp
+      timestamp,
+      buyerID: UID
     };
 
     this.productListing = {
@@ -45,7 +46,8 @@ export class OfferService {
       condition,
       size,
       offerID,
-      timestamp
+      timestamp,
+      buyerID: UID
     };
 
     const batch = this.afs.firestore.batch();
@@ -78,7 +80,7 @@ export class OfferService {
     });
 
     const offerRef: AngularFirestoreDocument<any> = this.afs.collection('users').doc(`${UID}`).collection('offers').doc(`${offerID}`);
-    return offerRef.valueChanges();
+    return offerRef.get();
   }
 
   public async updateOffer(offerID, productID, condition, price, size): Promise<boolean> {
@@ -123,8 +125,8 @@ export class OfferService {
 
     const batch = this.afs.firestore.batch();
 
-    const offerRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${offerID}`);
-    const prodRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${offerID}`);
+    const offerRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('offers').doc(`${offerID}`);
+    const prodRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('offers').doc(`${offerID}`);
     const userRef = this.afs.firestore.collection('users').doc(`${UID}`);
 
     batch.delete(offerRef);

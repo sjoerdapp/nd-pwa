@@ -5,6 +5,18 @@
 // General
 body, * {
     font-family: 'Poppins', sans-serif;
+    outline: none;
+    -moz-outline: none;
+
+    button {
+        outline: none;
+        -moz-outline: none;
+
+        &:hover, &:active, &:focus {
+            outline: none;
+            -moz-outline: none;
+        }
+    }
 }
 
 // Light mode theme
@@ -40,6 +52,7 @@ html {
         letter-spacing: 2px;
         padding: $spacing-xxsmall;
         @include vendor(transition, 0.25s ease-in-out);
+        outline: none;
     }
 }
 
@@ -67,5 +80,6 @@ html[theme='dark'] {
         letter-spacing: 2px;
         padding: $spacing-xxsmall;
         @include vendor(transition, 0.25s ease-in-out);
+        outline: none;
     }
 }

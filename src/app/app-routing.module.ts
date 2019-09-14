@@ -30,6 +30,8 @@ import { SignupInformationComponent } from './components/signup-information/sign
 import { MakeAnOfferComponent } from './components/make-an-offer/make-an-offer.component';
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { AuthComponent } from './components/auth/auth.component';
+import { PhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -60,7 +62,9 @@ const routes: Routes = [
   { path: 'additional-information', component: SignupInformationComponent },
   { path: 'make-an-offer', component: MakeAnOfferComponent },
   { path: 'edit-offer/:id', component: EditOfferComponent },
-  { path: 'reset-password', component: ResetPasswordComponent }
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'auth', component: AuthComponent },
+  { path: 'phone-verification', component: PhoneVerificationComponent }
 ];
 
 @NgModule({

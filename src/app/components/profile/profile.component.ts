@@ -15,7 +15,9 @@ export class ProfileComponent implements OnInit {
     ordered: 0,
     offers: 0,
     uid: '',
-    email: ''
+    email: '',
+    cartItems: 0,
+    isActive: false
   };
 
   listings = [];

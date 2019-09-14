@@ -3,7 +3,8 @@ import { SellService } from 'src/app/services/sell.service';
 import { environment } from '../../../environments/environment';
 import { Product } from 'src/app/models/product';
 import { Router, ActivatedRoute } from '@angular/router';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sell',
@@ -42,10 +43,17 @@ export class SellComponent implements OnInit {
     private sellService: SellService,
     private ngZone: NgZone,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
+    this.auth.isConnected().then(res => {
+      if (isNullOrUndefined(res.phoneNumber)) {
+        this.router.navigate(['../phone-verification']);
+      }
+    });
+
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
         let element = document.getElementById('sell-page-1');

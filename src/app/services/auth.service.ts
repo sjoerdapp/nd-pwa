@@ -13,6 +13,9 @@ import {
 
 import { User } from '../models/user';
 import { first } from 'rxjs/operators';
+import * as firebase from 'firebase/app';
+import { isNullOrUndefined } from 'util';
+import { EmailService } from './email.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +28,8 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private emailService: EmailService
   ) { }
 
   async signOut(redirect: boolean) {
@@ -66,10 +70,12 @@ export class AuthService {
           listed: 0,
           sold: 0,
           ordered: 0,
-          offers: 0
+          offers: 0,
+          cartItems: 0,
+          isActive: false
         };
 
-        return this.createUserData(userData);
+        return this.createUserData(userData, user);
       });
     } else {
       return false;
@@ -78,7 +84,7 @@ export class AuthService {
 
   async emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
+      .then((res) => {
         return this.ngZone.run(() => {
           return this.router.navigate(['/home']);
         });
@@ -118,18 +124,24 @@ export class AuthService {
     });
   }
 
-  private createUserData(user: User) {
+  private createUserData(user: User, userCred: auth.UserCredential) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 
     return userRef.set(user, { merge: true })
       .then(() => {
         console.log('User information updated');
+        this.signOut(false);
+        this.emailService.activateAccount();
         return this.ngZone.run(() => {
           return this.router.navigate(['/home']);
         });
       })
       .catch((error) => {
         console.error('Error: ', error);
+        userCred.user.delete().catch(err => {
+          console.error(err);
+        });
+        return false;
       });
   }
 
@@ -161,11 +173,12 @@ export class AuthService {
           listed: 0,
           sold: 0,
           ordered: 0,
-          offers: 0
+          offers: 0,
+          cartItems: 0,
+          isActive: false
         };
 
-        this.createUserData(userData);
-        console.log('Account linked');
+        return this.createUserData(userData, userCredential);
       })
       .catch((error) => {
         console.error('Account linking error', error);

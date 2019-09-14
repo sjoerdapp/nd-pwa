@@ -14,6 +14,9 @@ export class CheckoutComponent implements OnInit {
   shipping = 0;
   tax = 0;
 
+  hostedFieldsInstance: braintree.HostedFields;
+  cardholdersName: string;
+
   constructor(
     private checkoutService: CheckoutService
   ) { }

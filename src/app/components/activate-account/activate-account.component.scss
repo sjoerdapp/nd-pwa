@@ -1,6 +1,15 @@
 @import '../../base_styles/base';
 
+.main-container {
+    display: grid;
+    align-content: center;
+}
+
 .content-container {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
     h3, h6 {
         text-align: center;
     }
@@ -8,8 +17,10 @@
     fa-icon {
         color: $green;
         display: block;
-        width: 10%;
         font-size: $font-large;
-        margin: $spacing-xlarge * 4 auto 0 auto;
+    }
+
+    .error-icon {
+        color: $inputError;
     }
 }
