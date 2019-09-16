@@ -51,7 +51,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 /** Icons imports */
 // tslint:disable-next-line: max-line-length
-import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal } from '@fortawesome/free-brands-svg-icons';
 
 // Firebase Setup
@@ -137,6 +137,6 @@ export class AppModule {
   constructor() {
     // add icon to library to be used in components
 // tslint:disable-next-line: max-line-length
-    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone);
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard);
   }
 }

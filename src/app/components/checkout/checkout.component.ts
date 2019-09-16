@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import * as braintree from 'braintree-web';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -9,16 +10,25 @@ import * as braintree from 'braintree-web';
 })
 export class CheckoutComponent implements OnInit {
 
-  cartItems;
+  shippingInfo = {
+    street: '',
+    line: '',
+    city: '',
+    postalCode: '',
+    province: '',
+    country: '',
+    firstName: '',
+    lastName: ''
+  };
 
-  shipping = 0;
+  cartItems = [];
+
+  shippingPrice = 0;
   tax = 0;
 
-  hostedFieldsInstance: braintree.HostedFields;
-  cardholdersName: string;
-
   constructor(
-    private checkoutService: CheckoutService
+    private checkoutService: CheckoutService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -27,6 +37,10 @@ export class CheckoutComponent implements OnInit {
         this.cartItems = data;
       });
     });
+
+    this.checkoutService.getShippingInfo().then(data => {
+      this.shippingInfo = data;
+    })
   }
 
   subtotal() {
@@ -36,6 +50,22 @@ export class CheckoutComponent implements OnInit {
     });
 
     return subtotal;
+  }
+
+  editShipping() {
+    this.router.navigate(['../settings/shipping'], {
+      queryParams: { redirectURI: 'checkout' }
+    });
+  }
+
+  editPayment() {
+    this.router.navigate(['../settings/buying'], {
+      queryParams: { redirectURI: 'checkout' }
+    });
+  }
+
+  goToPay() {
+
   }
 
 }

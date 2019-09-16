@@ -3,7 +3,8 @@
 <div class="main-container">
       
   <h2>Edit your shipping address</h2>
-  
+  <input type="text" id="ship-firstName" placeholder="First Name" (keyup)="firstNameChanges()" value="{{ firstName }}">
+  <input type="text" id="ship-lastName" placeholder="Last Name" (keyup)="lastNameChanges()" value="{{ lastName }}">
   <input type="text" id="ship-street" placeholder="Street Address" (keyup)="streetAddChanges()" value="{{ street }}">
   <input type="text" id="ship-street2" placeholder="Address Line 2" (keyup)="addLineChanges()" value="{{ line }}">
   <input type="text" id="ship-city" placeholder="City" (keyup)="cityChanges()" value="{{ city }}">
@@ -28,8 +29,8 @@
   </select>
     
   <div class="settings-btn">
-    <button class="settings-back-btn" routerLink="..">Back</button>
-    <button [className]="streetChanged || lineChanged || cityChanged || provinceChanged || postalCodeChanged ? 'settings-save-btn' : 'settings-save-btn disabled'" (click)="updateShipping()" *ngIf="!loading && !error && !updated">Save Changes</button>
+    <button class="settings-back-btn" (click)="backBtn()">Back</button>
+    <button [className]="streetChanged || lineChanged || cityChanged || provinceChanged || postalCodeChanged || firstNameChanged || lastNameChanged ? 'settings-save-btn' : 'settings-save-btn disabled'" (click)="updateShipping()" *ngIf="!loading && !error && !updated">Save Changes</button>
     <button class="settings-save-btn" *ngIf="loading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
     <button class="settings-save-btn" *ngIf="error">Error</button>
     <button class="settings-save-btn" *ngIf="updated">Updated</button>

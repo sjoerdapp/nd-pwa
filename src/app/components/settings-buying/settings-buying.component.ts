@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { isUndefined } from 'util';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-settings-buying',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsBuyingComponent implements OnInit {
 
-  constructor() { }
+  redirectURI: string;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.redirectURI = this.route.snapshot.queryParams.redirectURI;
+  }
+
+  backBtn() {
+    if (isUndefined(this.redirectURI)) {
+      this.router.navigate(['..']);
+    } else {
+      this.router.navigate([`../../${this.redirectURI}`]);
+    }
   }
 
 }

@@ -1,96 +1,73 @@
-<div class="main-container">
-  <app-navbar></app-navbar>
+<app-navbar></app-navbar>
 
-  <section class="checkout-container">
-    <div class="checkout-summary">
-      <h4>Summary</h4>
+<section class="main-container">
+  <div class="checkout-summary">
+    <h4>Summary</h4>
 
-      <div class="summary-items" *ngFor="let summaryItem of cartItems">
-        <div class="summary-item">
-          <img src="{{ summaryItem.assetURL }}" alt="{{ summaryItem.model }}">
+    <div class="summary-items" *ngFor="let summaryItem of cartItems">
+      <div class="summary-item">
+        <img src="{{ summaryItem.assetURL }}" alt="{{ summaryItem.model }}">
 
-          <h6>{{ summaryItem.model }}, {{ summaryItem.size }}</h6>
+        <h6>{{ summaryItem.model }}, {{ summaryItem.size }}</h6>
 
-          <h6>{{ summaryItem.price | currency: 'CAD' }}</h6>
-        </div>
-      </div>
-
-      <div class="summary-numbers">
-        <div class="summary-subtotal">
-          <h5>Subtotal</h5>
-          <h5>{{ subtotal() | currency: 'CAD' }}</h5>
-        </div>
-
-        <div class="summary-shipping">
-          <h5>Shipping</h5>
-          <h5>{{ shipping | currency: 'CAD' }}</h5>
-        </div>
-
-        <div class="summary-tax">
-          <h5>Tax</h5>
-          <h5>{{ tax | currency: 'CAD' }}</h5>
-        </div>
-
-        <div class="summary-total">
-          <h5>Total</h5>
-          <h5>{{ subtotal() + shipping + tax | currency: 'CAD' }}</h5>
-        </div>
+        <h6>{{ summaryItem.price | currency: 'CAD' }}</h6>
       </div>
     </div>
 
-    <div class="checkout-contact-info">
-      <h5>Contact Information</h5>
-
-      <h6>Shipping Information</h6>
-      <div class="checkout-shipping-info">
-        <input type="text" id="firstName" placeholder="First Name">
-        <input type="text" id="lastName" placeholder="Last Name">
-        <input type="text" id="streetAddress" placeholder="Street Address">
-        <input type="text" id="city" placeholder="City">
-        <input type="text" id="state" placeholder="State">
-        <input type="text" id="zip" placeholder="Zip">
-        <input type="text" id="country" placeholder="Country">
-        <input type="tel" id="phone" placeholder="Phone">
+    <div class="summary-numbers">
+      <div class="summary-subtotal">
+        <h5>Subtotal</h5>
+        <h5>{{ subtotal() | currency: 'CAD' }}</h5>
       </div>
 
-      <h6>Billing Information</h6>
-      <div class="checkbox">
-          <input type="checkbox" id="billing-checkbox">
-          <label for="billing-checkbox">Same as Shipping Information</label>
+      <div class="summary-auth">
+        <h5>Authentication Fee</h5>
+        <h5>{{ 0 | currency: 'CAD' }}</h5>
       </div>
-      <div class="checkout-billing-info">
-        <input type="text" id="firstName" placeholder="First Name">
-        <input type="text" id="lastName" placeholder="Last Name">
-        <input type="text" id="streetAddress" placeholder="Street Address">
-        <input type="text" id="city" placeholder="City">
-        <input type="text" id="state" placeholder="State">
-        <input type="text" id="zip" placeholder="Zip">
-        <input type="text" id="country" placeholder="Country">
-        <input type="tel" id="phone" placeholder="Phone">
+
+      <div class="summary-shipping">
+        <h5>Shipping</h5>
+        <h5>{{ shippingPrice | currency: 'CAD' }}</h5>
+      </div>
+
+      <div class="summary-tax">
+        <h5>Tax</h5>
+        <h5>{{ tax | currency: 'CAD' }}</h5>
+      </div>
+
+      <div class="summary-total">
+        <h5>Total</h5>
+        <h5>{{ subtotal() + shippingPrice + tax | currency: 'CAD' }}</h5>
       </div>
     </div>
+  </div>
 
-    <div class="checkout-payment">
-      <h5>Payment Method</h5>
+  <div class="checkout-shipping">
+    <fa-icon [icon]="['fas', 'home']"></fa-icon>
+    <h3>Shipping Information</h3>
 
-      <div class="checkbox">
-          <input type="radio" name="payment-method" id="cc-radio">
-          <label for="cc-radio">Pay with credit card</label>
-      </div>
-      
-      <div class="checkbox">
-          <input type="radio" name="payment-method" id="paypal-radio">
-          <label for="paypal-radio">Pay with PayPal</label>
-      </div>
+    <h6>First Name: <span *ngIf="shippingInfo.firstName != ''">{{ shippingInfo.firstName }}</span></h6>
+    <h6>Last Name: <span *ngIf="shippingInfo.lastName != ''">{{ shippingInfo.lastName }}</span></h6>
+    <h6>Address: <span *ngIf="shippingInfo.street != ''">{{ shippingInfo.street + ', ' + shippingInfo.city + ', ' + shippingInfo.province + ' ' + shippingInfo.postalCode + ', ' + shippingInfo.country}}</span></h6>
 
-      <div class="cc-info">
-        <input type="text" id="cc-name" placeholder="Name on Credit Card">
-        <input type="text" id="cc-number" placeholder="Credit Card Number">
-        <input type="text" id="cc-expiration" placeholder="Expiration Date (MM-YYYY)">
-        <input type="text" id="cc-cvv" placeholder="CVV">
-      </div>
+    <button class="btn edit-btn" (click)="editShipping()">Edit</button>
+  </div>
+
+  <div class="checkout-payment">
+      <fa-icon [icon]="['fas', 'credit-card']"></fa-icon>
+      <h3>Payment Information</h3>
+  
+      <h6>Payment Method: <span>Credit Card</span></h6>
+      <h6>Visa ending in 9472</h6>
+      <h6>Billing Address: <span>103 - 323 18 Ave SW, Calgary, AB T2S 0C4, CA</span></h6>
+  
+      <button class="btn edit-btn" (click)="editPayment()">Edit</button>
     </div>
-  </section>
-</div>
+
+  <div class="checkout-btns">
+    <button class="btn">Confirm Purchase</button>
+    <button class="btn back-btn">Back</button>
+  </div>
+</section>
 
 <app-footer></app-footer>

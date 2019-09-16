@@ -21,7 +21,7 @@ export class SettingsShippingService {
     });
   }
 
-  updateShippingInfo(userId: string, street: string, line: string, city: string, province: string, postalCode: string): Promise<boolean> {
+  updateShippingInfo(userId: string, firstName: string, lastName: string, street: string, line: string, city: string, province: string, postalCode: string, country: string): Promise<boolean> {
     const uid = userId;
     const userRef = this.afs.collection(`users`).doc(`${uid}`);
 
@@ -29,11 +29,14 @@ export class SettingsShippingService {
 
     return userRef.set({
     shippingAddress: {
+      firstName,
+      lastName,
       street,
       line,
       city,
       province,
-      postalCode
+      postalCode,
+      country
     }
     }, { merge: true })
     .then(() => {

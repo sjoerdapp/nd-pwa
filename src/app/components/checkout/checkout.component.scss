@@ -14,23 +14,41 @@
     }
 }
 
-.checkout-container {
-    min-height: calc(100vh - #{$navHeight} - #{$footerHeight});
-    background: $black;
+.main-container {
     width: 100vw;
     max-width: 100%;
-    padding: $spacing-xsmall 0;
+    background: $black;
+    margin-top: $spacing-xsmall;
 
-    .checkout-summary, .checkout-contact-info, .checkout-payment {
+    button {
+        padding: $spacing-xsmall;
+        width: 50%;
+        margin: $spacing-small auto;
+        display: block;
+        background: $green;
+        color: $black;
+
+        &:hover {
+            background: $mintgreen;
+        }
+    }
+
+    .back-btn {
+        background: $black;
+        color: $white;
+
+        &:hover {
+            background: $matteblack;
+        }
+    }
+
+    .checkout-summary {
+        margin-bottom: $spacing-xsmall;
         width: 95%;
         margin: 0 auto;
         background: $white;
         border-radius: $spacing-xsmall;
         text-align: center;
-    }
-
-    .checkout-summary {
-        margin-bottom: $spacing-xsmall;
 
         .summary-items {
             padding: $spacing-xsmall;
@@ -79,78 +97,45 @@
         }
     }
 
-    .checkout-contact-info {
-        margin-bottom: $spacing-xsmall;
+    .checkout-shipping {
+        background: $white;
+        border-radius: $spacing-xsmall;
+        margin: $spacing-xsmall auto;
+        text-align: center;
+        width: 95%;
+
+        fa-icon {
+            color: $black;
+        }
+
+        h3 {
+            font-size: $font-xsmall;
+        }
 
         h6 {
             text-align: left;
-            margin-left: $spacing-small;
-        }
+            font-size: $font-small;
+            margin: $spacing-xsmall;
 
-        .checkout-shipping-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-column-gap: 2px;
-            padding: 5px;
-            margin-bottom: $spacing-small;
-
-            input {
-                @extend .checkout-input;
-            }
-
-            #streetAddress {
-                grid-column: 1/3;
-            }
-        }
-
-        .checkbox {
-            text-align: left;
-            align-items: center;
-            display: grid;
-            grid-template-columns: 10% 90%;
-            input[type="checkbox"] {
-                margin: $spacing-xsmall 0;
-            }
-    
-            label {
+            span {
                 font-size: $font-xsmall;
-                font-weight: $weight-black;
-                letter-spacing: 2px;
+                color: $coolgrey;
+                margin: 0 0 0 $spacing-xsmall;
             }
         }
 
-        .checkout-billing-info {
-            @extend .checkout-shipping-info;
+        .edit-btn {
+            background: none;
+            color: $green;
+            font-size: $font-small;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 
     .checkout-payment {
-        .checkbox {
-            display: inline;
-            margin: $spacing-xxsmall;
-
-            input {
-                margin: 0 $spacing-xxsmall;
-                vertical-align: middle;
-            }
-
-            label {
-                font-size: $font-small;
-            }
-        }
-
-        .cc-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            padding: 5px;
-
-            input {
-                @extend .checkout-input;
-            }
-
-            #cc-name, #cc-number {
-                grid-column: 1/3;
-            }
-        }
+        @extend .checkout-shipping;
     }
 }

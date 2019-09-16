@@ -1,12 +1,15 @@
+// Imports
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import * as algoliasearch from 'algoliasearch';
+import * as braintree from 'braintree';
+
+// initalizations
 admin.initializeApp();
 const env = functions.config();
 
 // tslint:disable-next-line: prefer-const
 let arr: any[] = [];
-
-import * as algoliasearch from 'algoliasearch';
 
 // Initialize the Algolia Client
 const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
@@ -19,6 +22,8 @@ const SENDGRID_API_TESTKEY = env.sendgrid.key_test;
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(SENDGRID_API_TESTKEY);
 
+
+// Email when password is changed
 exports.changedPassword = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
         if (req.method !== 'POST') {
@@ -45,6 +50,8 @@ exports.changedPassword = functions.https.onRequest((req, res) => {
     });
 });
 
+
+// Email to activate account
 exports.accountCreated = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
         if (req.method !== 'POST') {
@@ -71,7 +78,7 @@ exports.accountCreated = functions.https.onRequest((req, res) => {
     });
 });
 
-
+// Algolia Update
 exports.indexProducts = functions.firestore
     .document('products/{productID}')
     .onCreate((snap, context) => {
@@ -110,5 +117,22 @@ exports.addFirestoreDataToAlgolia = functions.https.onRequest((req, res) => {
             res.status(200).send(content);
         });
 
+    });
+});
+
+// Braintree
+const gateway = new braintree.BraintreeGateway({
+    environment: braintree.Environment.Sandbox,
+    merchantId: 'wfc3644dk4yscffb',
+    publicKey: 'xq24yt5nw9wx3hbq',
+    privateKey: '9ef65f89ffe81a68e322708f2cbf3040'
+});
+
+exports.client_token = functions.https.onRequest((req, res) => {
+    gateway.clientToken.generate({}).then((token) => {
+        res.status(200).send(token);
+    }).catch((err) => {
+        console.error(err);
+        res.status(500).send('Braintree Error');
     });
 });
