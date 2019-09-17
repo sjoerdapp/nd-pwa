@@ -45,7 +45,7 @@ exports.changedPassword = functions.https.onRequest((req, res) => {
         return sgMail.send(msg).then((content: any) => {
             return res.status(200).send(content);
         }).catch((err: any) => {
-            return res.status(500).send(err);
+            return res.send(err);
         });
     });
 });
@@ -73,7 +73,7 @@ exports.accountCreated = functions.https.onRequest((req, res) => {
         return sgMail.send(msg).then((content: any) => {
             return res.status(200).send(content);
         }).catch((err: any) => {
-            return res.status(500).send(err);
+            return res.send(err);
         });
     });
 });
@@ -90,7 +90,7 @@ exports.indexProducts = functions.firestore
             objectID,
             ...data
         });
-});
+    });
 
 exports.unindexProduct = functions.firestore
     .document('products/{productID}')
@@ -99,7 +99,7 @@ exports.unindexProduct = functions.firestore
 
         // Delete an ID from the index
         return index.deleteObject(objectID);
-});
+    });
 
 exports.addFirestoreDataToAlgolia = functions.https.onRequest((req, res) => {
 
@@ -129,10 +129,92 @@ const gateway = new braintree.BraintreeGateway({
 });
 
 exports.client_token = functions.https.onRequest((req, res) => {
-    gateway.clientToken.generate({}).then((token) => {
-        res.status(200).send(token);
-    }).catch((err) => {
-        console.error(err);
-        res.status(500).send('Braintree Error');
+    return cors(req, res, () => {
+        return gateway.clientToken.generate({}).then((token) => {
+            return res.status(200).send(token);
+        }).catch((err) => {
+            console.error(err);
+            return res.send('Braintree Error');
+        });
+    });
+});
+
+exports.requestPaymentMethod = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        return admin.firestore().collection(`users`).doc(`${req.body.billing.uid}`).get().then(data => {
+            const doc = data.data();
+            if (doc) {
+                const token = doc.cc_token;
+                const email = doc.email;
+                
+                if (!token) {
+                    console.log(`uid: ${req.body.billing.uid}`);
+                    return gateway.customer.create({
+                        firstName: req.body.billing.firstName,
+                        lastName: req.body.billing.lastName,
+                        email: email,
+                        phone: req.body.billing.phoneNumber,
+                        paymentMethodNonce: req.body.paymentMethodNonce,
+                        id: req.body.billing.uid,
+                        creditCard: {
+                            billingAddress: {
+                                streetAddress: req.body.billing.street,
+                                firstName: req.body.billing.firstName,
+                                lastName: req.body.billing.lastName,
+                                countryName: req.body.billing.country,
+                                locality: req.body.billing.city,
+                                region: req.body.billing.province,
+                                extendedAddress: req.body.billing.line,
+                                postalCode: req.body.billing.postalCode
+                            },
+                            options: {
+                                failOnDuplicatePaymentMethod: true,
+                                makeDefault: true
+                            }
+                        }
+                    }).then((result: braintree.ValidatedResponse<braintree.Customer>) => {
+                        if (result.customer.paymentMethods) {
+                            return admin.firestore().collection(`users`).doc(`${req.body.billing.uid}`).set({
+                                cc_token: result.customer.paymentMethods[0].token
+                            }, { merge: true }).then(() => {
+                                return res.status(200).send('true');
+                            }).catch(err => {
+                                console.error(err);
+                                return res.send('false');
+                            });
+                        } else {
+                            return res.send('false');
+                        }
+                    }).catch(err => {
+                        console.error(err);
+                        return res.send('false');
+                    });
+                } else {
+                    return gateway.paymentMethod.update(token, {
+                        paymentMethodNonce: req.body.paymentMethodNonce,
+                        billingAddress: {
+                            streetAddress: req.body.billing.street,
+                            firstName: req.body.billing.firstName,
+                            lastName: req.body.billing.lastName,
+                            countryName: req.body.billing.country,
+                            locality: req.body.billing.city,
+                            region: req.body.billing.province,
+                            extendedAddress: req.body.billing.line,
+                            postalCode: req.body.billing.postalCode,
+                            options: {
+                                updateExisting: true
+                            }
+                        }
+                    }).then(result => {
+                        return res.status(200).send('true');
+                    }).catch(err => {
+                        console.error(err);
+                        return res.send('false');
+                    });
+                }
+            } else {
+                return res.send('false');
+            }
+        });
     });
 });

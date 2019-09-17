@@ -73,33 +73,43 @@ export class SettingsShippingComponent implements OnInit {
       const province = (document.getElementById('ship-state') as HTMLInputElement).value;
       const postalCode = (document.getElementById('ship-zip') as HTMLInputElement).value;
 
-      this.loading = true;
+      console.log(this.isEmptyOrBlank(firstName));
 
-      this.shippingService.updateShippingInfo(this.shippingInfo.uid, firstName, lastName, street, line, city, province, postalCode, 'CA').then(res => {
-        if (res) {
-          this.loading = false;
-          this.updated = true;
-        } else {
-          this.loading = false;
-          this.error = true;
-        }
+      if (!this.isEmptyOrBlank(firstName) && !this.isEmptyOrBlank(lastName) && !this.isEmptyOrBlank(street) && !this.isEmptyOrBlank(city) && !this.isEmptyOrBlank(province) && !this.isEmptyOrBlank(postalCode)) {
+        this.loading = true;
+
+        this.shippingService.updateShippingInfo(this.shippingInfo.uid, firstName, lastName, street, line, city, province, postalCode, 'CA').then(res => {
+          if (res) {
+            this.loading = false;
+            this.updated = true;
+          } else {
+            this.loading = false;
+            this.error = true;
+          }
+
+          setTimeout(() => {
+            this.error = false;
+            this.updated = false;
+            this.firstNameChanged = false;
+            this.lastNameChanged = false;
+            this.streetChanged = false;
+            this.lineChanged = false;
+            this.cityChanged = false;
+            this.provinceChanged = false;
+            this.postalCodeChanged = false;
+
+            if (!isUndefined(this.redirectURI)) {
+              this.router.navigate([`../../${this.redirectURI}`]);
+            }
+          }, 2000);
+        });
+      } else {
+        this.error = true;
 
         setTimeout(() => {
           this.error = false;
-          this.updated = false;
-          this.firstNameChanged = false;
-          this.lastNameChanged = false;
-          this.streetChanged = false;
-          this.lineChanged = false;
-          this.cityChanged = false;
-          this.provinceChanged = false;
-          this.postalCodeChanged = false;
-
-          if (!isUndefined(this.redirectURI)) {
-            this.router.navigate([`../../${this.redirectURI}`]);
-          }
-        }, 2000);
-      })
+        }, 1500);
+      }
     }
   }
 

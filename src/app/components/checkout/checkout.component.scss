@@ -19,6 +19,8 @@
     max-width: 100%;
     background: $black;
     margin-top: $spacing-xsmall;
+    display: grid;
+    align-content: center;
 
     button {
         padding: $spacing-xsmall;

@@ -1,41 +1,38 @@
-<div class="main-container">
-  <app-navbar></app-navbar>
-    
+<app-navbar></app-navbar>
+
+<form class="main-container" id="hosted-fields-form">
   <h2>Buyer Information</h2>
 
-  <input type="text" id="cc-name" placeholder="Name on card">
-  <input type="text" id="cc-number" placeholder="Credit Card Number" mask="0000 0000 0000 0000">
-  <input type="text" id="cc-expiry" placeholder="01 / 2020" mask="00 / 0000">
-  <input type="text" id="cc-cvv" placeholder="Secret Code">
+  <div class="card-accepted">
+    <fa-icon [icon]="['fab', 'cc-amex']" [className]="ccIsAmex ? 'amex-active' : ''"></fa-icon>
+    <fa-icon [icon]="['fab', 'cc-mastercard']" [className]="ccIsMastercard ? 'mastercard-active' : ''"></fa-icon>
+    <fa-icon [icon]="['fab', 'cc-visa']" [className]="ccIsVisa ? 'visa-active' : ''"></fa-icon>
+  </div>
+  <div id="cc-number"></div>
+  <div id="cc-expiry"></div>
+  <div id="cc-cvv"></div>
 
   <h6>Billing Information</h6>
-  <input type="text" id="cc-firstName" placeholder="First Name">
-  <input type="text" id="cc-lastName" placeholder="Last Name">
-  <input type="text" id="cc-streetAddress" placeholder="Street Address">
-  <input type="text" id="cc-line" placeholder="Street Address 2">
-  <input type="text" id="cc-city" placeholder="City">
-  <select name="state" id="cc-state">
-    <option value="AB" selected>Alberta</option>
-    <option value="BC">British Columbia</option>
-    <option value="MB">Manitoba</option>
-    <option value="NB">New Brunswick</option>
-    <option value="NL">Newfoundland and Labrador</option>
-    <option value="NS">Nova Scotia</option>
-    <option value="ON">Ontario</option>
-    <option value="PE">Prince Edward Island</option>
-    <option value="QC">Quebec</option>
-    <option value="SK">Saskatchewan</option>
-    <option value="NT">Northwest Territories</option>
-    <option value="NU">Nunavut</option>
-    <option value="YT">Yukon</option>
-  </select>
-  <input type="text" id="cc-zip" placeholder="Zip Code">
-  <input type="text" id="cc-country" placeholder="Country">
+  <p *ngIf="shippingInfo.street != ''" id="address"><span>Current Shipping Address: </span>{{ shippingInfo.firstName + ' ' + shippingInfo.lastName }}, {{ shippingInfo.street }}</p>
+  <div class="sameAddress" *ngIf="shippingInfo.street != ''">
+    <input type="checkbox" name="sameAddress" id="sameAddress" (change)="sameAddress()"><label for="sameAddress">Same as Shipping Address</label>
+  </div>
+  <input *ngIf="!isSameAddress" type="text" id="cc-firstName" placeholder="First Name" (keyup)="firstNameChanges()" required>
+  <input *ngIf="!isSameAddress" type="text" id="cc-lastName" placeholder="Last Name" (keyup)="lastNameChanges()" required>
+  <input *ngIf="!isSameAddress" type="text" id="cc-street" placeholder="Street Address" (keyup)="streetChanges()" required>
+  <input *ngIf="!isSameAddress" type="text" id="cc-line" placeholder="Street Address 2" (keyup)="lineChanges()">
+  <input *ngIf="!isSameAddress" type="text" id="cc-city" placeholder="City" (keyup)="cityChanges()" required>
+  <input *ngIf="!isSameAddress" type="text" id="cc-state" placeholder="State" (keyup)="provinceChanges()">
+  <input *ngIf="!isSameAddress" type="text" id="cc-zip" placeholder="Zip Code" mask="AAA AAA" (keyup)="zipChanges()">
+  <input *ngIf="!isSameAddress" type="text" id="cc-country" placeholder="Country" (keyup)="countryChanges()" required>
   
   <div class="settings-btn">
     <button class="settings-back-btn" (click)="backBtn()">Back</button>
-    <button class="settings-save-btn">Save Changes</button>
+    <button *ngIf="!error && !loading && !updated" class="settings-save-btn" id="verifyPayMethod" (click)="submitPayment()" disabled>Save Changes</button>
+    <button *ngIf="loading" class="settings-save-btn" id="verifyPayMethod"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
+    <button *ngIf="udpated" class="settings-save-btn" id="verifyPayMethod">Updated</button>
+    <button *ngIf="error" class="settings-save-btn" id="error">Error</button>
   </div>
-</div>
+</form>
     
 <app-footer></app-footer>
