@@ -16,7 +16,6 @@ export class ProfileComponent implements OnInit {
     offers: 0,
     uid: '',
     email: '',
-    cartItems: 0,
     isActive: false
   };
 
@@ -73,7 +72,7 @@ export class ProfileComponent implements OnInit {
       this.profileService.getUserListings().then(val => {
         val.subscribe(data => {
           this.listings = data;
-          console.log(this.listings);
+          // console.log(this.listings);
         });
       });
     }
@@ -86,7 +85,7 @@ export class ProfileComponent implements OnInit {
           data.forEach(element => {
             this.listings.push(element);
           });
-          console.log(this.listings);
+          // console.log(this.listings);
         });
       });
   }
@@ -100,7 +99,7 @@ export class ProfileComponent implements OnInit {
       this.profileService.getUserOffers().then(val => {
         val.subscribe(data => {
           this.offers = data;
-          console.log(this.offers);
+          // console.log(this.offers);
         });
       });
     }

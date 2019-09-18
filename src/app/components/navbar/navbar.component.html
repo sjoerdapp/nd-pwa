@@ -1,14 +1,14 @@
-<nav [class]="connected ? 'col-5' : 'col-4'">
+<nav [class]="connected ? 'col-4' : 'col-3'">
   <button class="nav-hamburger" (click)="openMenu()">
     <fa-icon [icon]="['fas', 'bars']"></fa-icon>
   </button>
 
-  <a routerLink="/" class="nav-home">
-    <img src="../../../assets/Color w- letterspng.png" alt="NXTDROP, Inc. Logo">
+  <a class="nav-home">
+    <img routerLink="/" src="../../../assets/Color w- letterspng.png" alt="NXTDROP, Inc. Logo">
   </a>
 
   <section class="nav-icons" *ngIf="connected; else navBtns">
-    <button class="nav-notifications nav-icon">
+    <!--<button class="nav-notifications nav-icon">
       <a (click)="openNotificationTab()">
         <fa-icon [icon]="['fas', 'bell']"></fa-icon>
       </a>
@@ -21,12 +21,18 @@
           <fa-layers-counter content="{{ userInfo.cartItems }}"></fa-layers-counter>
         </fa-layers>
       </a>
+    </button>-->
+
+    <button class="nav-profile nav-icon" routerLink="/sell" title="Sell">
+     <fa-icon [icon]="['fas', 'tag']"></fa-icon>
     </button>
       
-    <button class="nav-profile nav-icon">
-      <a routerLink="/profile">
-        <fa-icon [icon]="['fas', 'user-circle']"></fa-icon>
-      </a>
+    <button class="nav-profile nav-icon" routerLink="/profile" title="Profile">
+      <fa-icon [icon]="['fas', 'user-circle']"></fa-icon>
+    </button>
+
+    <button class="nav-profile nav-icon" routerLink="/settings" title="Profile">
+      <fa-icon [icon]="['fas', 'cog']"></fa-icon>
     </button>
   </section>
 

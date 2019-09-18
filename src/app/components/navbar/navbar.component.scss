@@ -1,12 +1,12 @@
 @import '../../base_styles/base';
 
-.col-4 {
+.col-3 {
     display: grid;
     grid-template-columns: 2fr 9fr 9fr;
     height: $navHeight;
 }
 
-.col-5 {
+.col-4 {
     display: grid;
     grid-template-columns: 2fr 12fr 6fr;
     height: $navHeight;
@@ -55,6 +55,7 @@ nav {
             margin-top: ($navHeight - $spacing-xlarge) / 2;
             margin-bottom: ($navHeight - $spacing-xlarge) / 2;
             height: $spacing-xlarge;
+            cursor: pointer;
         }
     }
 
@@ -73,7 +74,7 @@ nav {
         }
 
         &:hover {
-            a {
+            fa-icon {
                 @include vendor(transition, $transition-fast ease-in-out);
                 color: $matteblue;
             }

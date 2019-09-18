@@ -39,6 +39,7 @@
     "firebase-functions": "^3.2.0",
     "lodash": "^4.17.15",
     "ngx-mask": "^8.0.5",
+    "ngx-paypal": "^5.0.0",
     "paymentrails": "^0.9.7",
     "rxjs": "~6.5.2",
     "shelljs": "^0.8.3",

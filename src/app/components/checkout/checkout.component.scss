@@ -22,6 +22,11 @@
     display: grid;
     align-content: center;
 
+    .checkout-btns {
+        width: 50%;
+        margin: $spacing-normal auto;
+    }
+
     button {
         padding: $spacing-xsmall;
         width: 50%;

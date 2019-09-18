@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -25,7 +25,8 @@ export class ProductComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -37,13 +38,20 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  addToCart(listing) {
+  /*addToCart(listing) {
     this.productService.addToCart(listing).then(res => {
       if (res) {
         // console.log('Added to cart');
       } else {
         // console.log('Cannot add to cart');
       }
+    });
+  }*/
+
+  buyNow(listing) {
+    const data = JSON.stringify(listing);
+    this.router.navigate([`../../checkout`], {
+      queryParams: { product: data }
     });
   }
 

@@ -23,9 +23,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
 import { SettingsPasswordComponent } from './components/settings-password/settings-password.component';
-import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
+/*import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
 import { SettingsSellingComponent } from './components/settings-selling/settings-selling.component';
-import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';
+import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';*/
 import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';
 import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
 import { SellComponent } from './components/sell/sell.component';
@@ -44,6 +44,7 @@ import { MakeAnOfferComponent } from './components/make-an-offer/make-an-offer.c
 import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { PhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -51,7 +52,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 /** Icons imports */
 // tslint:disable-next-line: max-line-length
-import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard, faCog } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal, faCcVisa, faCcMastercard, faCcAmex } from '@fortawesome/free-brands-svg-icons';
 
 // Firebase Setup
@@ -69,9 +70,10 @@ import { NgAisModule } from 'angular-instantsearch';
 
 // Mask Module
 import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { PhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
+
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   declarations: [
@@ -92,9 +94,9 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     SettingsComponent,
     SettingsProfileComponent,
     SettingsPasswordComponent,
-    SettingsBuyingComponent,
+    /*SettingsBuyingComponent,
     SettingsSellingComponent,
-    SettingsShippingComponent,
+    SettingsShippingComponent,*/
     SettingsPayoutComponent,
     TransactionReviewComponent,
     SellComponent,
@@ -128,7 +130,8 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     FormsModule,
     NgAisModule,
     NgxMaskModule.forRoot(options),
-    HttpClientModule
+    HttpClientModule,
+    NgxPayPalModule
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -136,7 +139,7 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
 export class AppModule {
   constructor() {
     // add icon to library to be used in components
-// tslint:disable-next-line: max-line-length
-    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard, faCcVisa, faCcMastercard, faCcAmex);
+    // tslint:disable-next-line: max-line-length
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard, faCcVisa, faCcMastercard, faCcAmex, faCog);
   }
 }

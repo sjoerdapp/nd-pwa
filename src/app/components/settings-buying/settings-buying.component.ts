@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { isUndefined } from 'util';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CheckoutService } from 'src/app/services/checkout.service';
-import * as braintree from 'braintree-web';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-settings-buying',
@@ -12,8 +9,6 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./settings-buying.component.scss']
 })
 export class SettingsBuyingComponent implements OnInit {
-
-  readonly endpoint = 'https://us-central1-nxtdrop-app.cloudfunctions.net/';
 
   shippingInfo = {
     street: '',
@@ -61,31 +56,13 @@ export class SettingsBuyingComponent implements OnInit {
   postalCodeChanged = false;
   countryChanged = false;
 
-  hostedFieldInstance;
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private checkoutService: CheckoutService,
-    private http: HttpClient,
-    private auth: AuthService
+    private checkoutService: CheckoutService
   ) { }
 
   ngOnInit() {
-    this.http.get(`${this.endpoint}client_token`).subscribe((res: any) => {
-      // console.log(res);
-
-      this.auth.isConnected().then(user => {
-        if (user) {
-          this.userInfo.uid = user.uid;
-          this.userInfo.phoneNumber = user.phoneNumber;
-          if (res !== 'Braintree Error') {
-            this.braintreeHostedFields(res.clientToken);
-          }
-        }
-      });
-    });
-
     this.redirectURI = this.route.snapshot.queryParams.redirectURI;
 
     this.checkoutService.getShippingInfo().then(data => {
@@ -227,151 +204,6 @@ export class SettingsBuyingComponent implements OnInit {
     }
   }
 
-  braintreeHostedFields(token: string) {
-    const button = document.querySelector('#verifyPayMethod');
-    const form = document.querySelector('#hosted-fields-form');
-
-    braintree.client.create({
-      authorization: token
-    }, (clientErr, clientInstance) => {
-      if (clientErr) {
-        console.error(clientErr);
-        return;
-      }
-
-      braintree.hostedFields.create({
-        client: clientInstance,
-        styles: {
-          'input.invalid': {
-            'color': 'red'
-          },
-          'input.valid': {
-            'color': 'green'
-          }
-        },
-        fields: {
-          number: {
-            selector: '#cc-number',
-            placeholder: '4111 1111 1111 1111'
-          },
-          cvv: {
-            selector: '#cc-cvv',
-            placeholder: '123'
-          },
-          expirationDate: {
-            selector: '#cc-expiry',
-            placeholder: '10/2019'
-          }
-        }
-      }, (hostedFieldsErr, instance) => {
-        if (hostedFieldsErr) {
-          console.error(hostedFieldsErr);
-          return;
-        }
-
-        this.hostedFieldInstance = instance;
-
-        button.removeAttribute('disabled');
-      });
-    });
-  }
-
-  submitPayment() {
-    this.loading = true;
-    this.hostedFieldInstance.tokenize((tokenizeErr, payload) => {
-      if (tokenizeErr) {
-        console.error(tokenizeErr);
-        this.loading = false;
-        this.error = true;
-
-        setTimeout(() => {
-          this.error = false;
-        }, 1500);
-
-        return;
-      }
-
-      this.requestPaymentMethod(payload.nonce);
-    });
-  }
-
-  requestPaymentMethod(nonce: string) {
-    if (this.isSameAddress) {
-      this.http.post(`${this.endpoint}requestPaymentMethod`, { paymentMethodNonce: nonce }).subscribe((res: any) => {
-        console.log(res);
-        if (res) {
-          this.loading = false;
-          this.updated = true;
-
-          setTimeout(() => {
-            this.updated = false;
-            if (this.redirectURI) {
-              this.router.navigate([`../../${this.redirectURI}`]);
-            }
-          }, 1500);
-        } else {
-          this.loading = false;
-          this.error = true;
-
-          setTimeout(() => {
-            this.error = false;
-          }, 1500);
-        }
-      });
-    } else {
-      const firstName = (document.getElementById('cc-firstName') as HTMLInputElement).value;
-      const lastName = (document.getElementById('cc-lastName') as HTMLInputElement).value;
-      const street = (document.getElementById('cc-street') as HTMLInputElement).value;
-      const line = (document.getElementById('cc-line') as HTMLInputElement).value;
-      const city = (document.getElementById('cc-city') as HTMLInputElement).value;
-      const province = (document.getElementById('cc-state') as HTMLInputElement).value;
-      const postalCode = (document.getElementById('cc-zip') as HTMLInputElement).value;
-      const country = (document.getElementById('cc-country') as HTMLInputElement).value;
-
-      if (!this.isEmptyOrBlank(firstName) && !this.isEmptyOrBlank(lastName) && !this.isEmptyOrBlank(street) && !this.isEmptyOrBlank(city) && !this.isEmptyOrBlank(country)) {
-        const data = {
-          uid: this.userInfo.uid,
-          phoneNumber: this.userInfo.phoneNumber,
-          firstName,
-          lastName,
-          street,
-          line,
-          city,
-          province,
-          postalCode,
-          country
-        };
-
-        this.http.post(`${this.endpoint}requestPaymentMethod`, { paymentMethodNonce: nonce, billing: data }).subscribe((res: any) => {
-          console.log(res);
-          if (res) {
-            this.loading = false;
-            this.updated = true;
-
-            setTimeout(() => {
-              this.updated = false;
-              if (this.redirectURI) {
-                this.router.navigate([`../../${this.redirectURI}`]);
-              }
-            }, 1500);
-          } else {
-            this.loading = false;
-            this.error = true;
-
-            setTimeout(() => {
-              this.error = false;
-            }, 1500);
-          }
-        });
-      } else {
-        this.loading = false;
-        this.error = true;
-
-        setTimeout(() => {
-          this.error = false;
-        }, 1500);
-      }
-    }
-  }
+  
 
 }
