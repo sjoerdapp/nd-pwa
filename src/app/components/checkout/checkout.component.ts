@@ -55,7 +55,7 @@ export class CheckoutComponent implements OnInit {
   private initConfig() {
     this.payPalConfig = {
       currency: 'CAD',
-      clientId: 'sb',
+      clientId: 'AQW2Qq1TY5a6Tfcq7HKpnMrF7cpNeCskm4frrbBC8eFcbNFL2FUUkmRcoBb-8I0ijAt2Y4yTiipaSRSz',
       createOrderOnClient: (data) => <ICreateOrderRequest>{
         intent: 'CAPTURE',
         purchase_units: [{
