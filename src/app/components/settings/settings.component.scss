@@ -13,7 +13,6 @@ h2 {
 button {
     display: block;
     border: none;
-    width: 80%;
     margin: $spacing-large auto;
     padding: $spacing-small;
     border-radius: $spacing-xsmall;
@@ -27,5 +26,67 @@ button {
 
     &:hover {
         background: $matteblack;
+    }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    h2 {
+        font-size: $font-large;
+    }
+
+    button {
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    h2 {
+        font-size: $font-large;
+    }
+
+    button {
+        width: 80%;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    h2 {
+        font-size: $font-large;
+    }
+
+    button {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    h2 {
+        font-size: $font-large;
+    }
+
+    button {
+        width: 35%;
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    h2 {
+        font-size: $font-large;
+    }
+
+    button {
+        width: 30%;
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    h2 {
+        font-size: $font-large;
+    }
+
+    button {
+        width: 30%;
     }
 }

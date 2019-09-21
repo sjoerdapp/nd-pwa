@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { AuthService } from 'src/app/services/auth.service';
+import { isNullOrUndefined, isBoolean, isUndefined } from 'util';
 
 @Component({
   selector: 'app-checkout',
@@ -28,18 +30,49 @@ export class CheckoutComponent implements OnInit {
   product;
   shippingPrice = 18;
   tax = 0;
+  isSelling: any;
 
   constructor(
     private checkoutService: CheckoutService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
-    this.product = JSON.parse(this.route.snapshot.queryParams.product);
-    // console.log(this.product);
+    /*this.auth.isConnected().then(res => {
+      if (isNullOrUndefined(res.phoneNumber)) {
+        this.router.navigate(['../phone-verification']);
+      }
+    });*/
 
-    this.initConfig();
+    this.product = JSON.parse(this.route.snapshot.queryParams.product);
+    this.isSelling = this.route.snapshot.queryParams.sell;
+    console.log(this.isSelling);
+
+    if (!isUndefined(this.isSelling)) {
+      if (this.isSelling != 'true') {
+        this.isSelling = false;
+        this.initConfig();
+      } else {
+        this.isSelling = true;
+      }
+    } else {
+      this.router.navigate([`..`]);
+    }
+
+    this.auth.isConnected().then(res => {
+      if (isNullOrUndefined(res.phoneNumber)) {
+        if (this.route.snapshot.queryParams.product) {
+          this.router.navigate(['../phone-verification'], {
+            queryParams: { redirectTo: `product/${this.product.productID}` }
+          });
+        }
+      }
+    });
+
+
+    // console.log(this.product);
 
     /*this.checkoutService.getCartItems().then(res => {
       res.subscribe(data => {
@@ -98,6 +131,18 @@ export class CheckoutComponent implements OnInit {
       },
       onClientAuthorization: (data) => {
         console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice).then(res => {
+          if (isBoolean(res)) {
+            this.router.navigate(['transaction']);
+          } else {
+            this.router.navigate(['transaction'], {
+              queryParams: { transactionID: res }
+            });
+          }
+        })
+          .catch(err => {
+            console.error(err);
+          });
       },
       onCancel: (data, actions) => {
         console.log('OnCancel', data, actions);
@@ -112,6 +157,21 @@ export class CheckoutComponent implements OnInit {
     };
   }
 
+  sellNow() {
+    this.checkoutService.sellTransactionApproved(this.product).then(res => {
+      if (isBoolean(res)) {
+        this.router.navigate(['sold']);
+      } else {
+        this.router.navigate(['sold'], {
+          queryParams: { transactionID: res }
+        });
+      }
+    })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
   subtotal() {
     let subtotal = this.product.price;
     /*this.cartItems.forEach(ele => {
@@ -119,6 +179,18 @@ export class CheckoutComponent implements OnInit {
     });*/
 
     return subtotal;
+  }
+
+  fee() {
+    let subtotal = this.subtotal();
+
+    return subtotal * 0.095;
+  }
+
+  processing() {
+    let subtotal = this.subtotal();
+
+    return subtotal * 0.03;
   }
 
   goBack() {
@@ -137,9 +209,4 @@ export class CheckoutComponent implements OnInit {
       queryParams: { redirectURI: 'checkout' }
     });
   }*/
-
-  goToPay() {
-
-  }
-
 }

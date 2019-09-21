@@ -16,21 +16,18 @@ input {
     margin-bottom: $spacing-small;
     border-radius: $spacing-xsmall;
     border: 1px solid $lightgrey;
-    width: 60%;
     margin-left: auto;
     margin-right: auto;
 }
 
 label {
     display: block;
-    width: 60%;
     margin-left: auto;
     margin-right: auto;
     font-size: $font-small;
 }
 
 .settings-btn {
-    width: 70%;
     margin: $spacing-normal auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -43,5 +40,96 @@ label {
     &:hover {
         background: $lightgrey;
         cursor: not-allowed;
+    }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    input {
+        width: 90%;
+    }
+
+    label {
+        width: 90%;
+    }
+
+    .settings-btn {
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    input {
+        width: 65%;
+        padding: $spacing-small!important;
+    }
+
+    label {
+        width: 65%;
+    }
+
+    .settings-btn {
+        width: 65%;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    input {
+        width: 40%;
+        padding: $spacing-small!important;
+    }
+
+    label {
+        width: 40%;
+    }
+
+    .settings-btn {
+        width: 40%;
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    input {
+        width: 30%;
+        padding: $spacing-small!important;
+    }
+
+    label {
+        width: 30%;
+    }
+
+    .settings-btn {
+        width: 30%;
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    input {
+        width: 20%;
+        padding: $spacing-small!important;
+    }
+
+    label {
+        width: 20%;
+    }
+
+    .settings-btn {
+        width: 20%;
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    input {
+        width: 25%;
+        padding: $spacing-small!important;
+    }
+
+    label {
+        width: 25%;
+    }
+
+    .settings-btn {
+        width: 25%;
     }
 }

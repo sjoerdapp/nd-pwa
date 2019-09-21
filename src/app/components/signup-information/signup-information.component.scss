@@ -3,7 +3,8 @@
 section {
     height: calc(100vh - #{$footerHeight});
     background: $black;
-    padding-top: $spacing-xlarge * 2;
+    display: grid;
+    align-content: center;
 
     .signup-card {
         width: 90%;
@@ -26,6 +27,7 @@ section {
             font-size: $font-small;
             font-weight: $weight-black;
             margin: 5px auto;
+            width: 50%;
             cursor: pointer;
             @include vendor(transition, all 0.25s ease-in-out);
 
@@ -53,7 +55,6 @@ section {
 
         .signup-btn {
             margin: $spacing-normal auto;
-            width: 50vw;
             cursor: pointer;
             padding: $spacing-xsmall;
 
@@ -62,5 +63,73 @@ section {
                 color: $navyblue;
             }
         }
+    }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+ 
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    input {
+        padding: $spacing-small!important;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    input {
+        padding: $spacing-small!important;
+    }
+    
+    button {
+        padding: $spacing-small!important;
+    }
+
+    .signup-card {
+        width: 50%!important;
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    input {
+        padding: $spacing-small!important;
+    }
+    
+    button {
+        padding: $spacing-small!important;
+    }
+
+    .signup-card {
+        width: 35%!important;   
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    input {
+        padding: $spacing-small!important;
+    }
+    
+    button {
+        padding: $spacing-small!important;
+    }
+
+    .signup-card {
+        width: 35%!important;   
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    input {
+        padding: $spacing-normal!important;
+    }
+    
+    button {
+        padding: $spacing-normal!important;
+    }
+
+    .signup-card {
+        width: 35%!important;   
     }
 }

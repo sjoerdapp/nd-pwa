@@ -51,7 +51,14 @@ export class ProductComponent implements OnInit {
   buyNow(listing) {
     const data = JSON.stringify(listing);
     this.router.navigate([`../../checkout`], {
-      queryParams: { product: data }
+      queryParams: { product: data, sell: false }
+    });
+  }
+
+  sell(offer) {
+    const data = JSON.stringify(offer);
+    this.router.navigate([`../../checkout`], {
+      queryParams: { product: data, sell: true }
     });
   }
 

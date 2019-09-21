@@ -12,14 +12,14 @@ let arr: any[] = [];
 
 // Initialize the Algolia Client
 const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
-const index = client.initIndex('test_PRODUCTS');
+const index = client.initIndex('prod_PRODUCTS');
 
 // Sendgrid Setup
 const cors = require('cors')({ origin: true });
-const SENDGRID_API_TESTKEY = env.sendgrid.key_test;
-// const SENDGRID_API_KEY = env.sendgrid.key;
+//const SENDGRID_API_TESTKEY = env.sendgrid.key_test;
+const SENDGRID_API_KEY = env.sendgrid.key;
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(SENDGRID_API_TESTKEY);
+sgMail.setApiKey(SENDGRID_API_KEY);
 
 
 // Email when password is changed
@@ -112,7 +112,7 @@ exports.addFirestoreDataToAlgolia = functions.https.onRequest((req, res) => {
             arr.push(user);
         });
 
-        index.saveObjects(arr, (err, content) => {
+        index.saveObjects(arr, (err: any, content: any) => {
             res.status(200).send(content);
         });
 

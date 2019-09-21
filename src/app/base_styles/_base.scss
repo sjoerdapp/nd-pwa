@@ -128,7 +128,6 @@ $productContainerHeight: 650px;
     }
 
     .showcase-windows {
-        height: 250px;
         width: 100vw;
         max-width: 100%;
         border: 0.5px solid $lightgrey;
@@ -167,8 +166,6 @@ $productContainerHeight: 650px;
     
                 #window-image {
                     img {
-                        height: 100px;
-                        width: 100px;
                         object-fit: contain;
                     }
                 }
@@ -218,5 +215,95 @@ $productContainerHeight: 650px;
 
     &:hover {
         color: $white;
+    }
+}
+
+//MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    .showcase-container {
+        .showcase-windows {
+            height: 200px!important;
+
+            .showcase-window {
+                #window-image {
+                    img {
+                        height: 75px;
+                        width: 75px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    .showcase-container {
+        .showcase-windows {
+            height: 250px!important;
+
+            .showcase-window {
+                #window-image {
+                    img {
+                        height: 100px;
+                        width: 100px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    .showcase-container {
+        .showcase-windows {
+            height: 300px!important;
+
+            .showcase-window {
+                    width: 275px;
+                #window-image {
+                    img {
+                        height: 125px;
+                        width: 125px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 2000px) {
+    .showcase-container {
+        .showcase-windows {
+            height: 400px!important;
+
+            .showcase-window {
+                    width: 350px;
+                #window-image {
+                    img {
+                        height: 150px;
+                        width: 150px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    .showcase-container {
+        .showcase-windows {
+            height: 425px!important;
+
+            .showcase-window {
+                    width: 375px;
+                #window-image {
+                    img {
+                        height: 150px;
+                        width: 150px;
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,11 +1,13 @@
-<div class="main-container">
-  <app-navbar></app-navbar>
+<app-navbar></app-navbar>
 
+<div class="main-container">
   <section class="product-container">
     <div class="product-info">
       <div class="product-btns">
-        <button class="btn" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json }">Sell This Product <fa-icon [icon]="['fas', 'tag']"></fa-icon></button>
-        <button class="btn" routerLink="/make-an-offer" [queryParams]="{ sneaker: productInfo | json }">Make an Offer <fa-icon [icon]="['fas', 'hand-holding-usd']"></fa-icon></button>
+        <button class="btn" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json }">Sell This Product
+          <fa-icon [icon]="['fas', 'tag']"></fa-icon></button>
+        <button class="btn" routerLink="/make-an-offer" [queryParams]="{ sneaker: productInfo | json }">Make an Offer
+          <fa-icon [icon]="['fas', 'hand-holding-usd']"></fa-icon></button>
       </div>
 
       <img src="{{ productInfo.assetURL }}" alt="{{ productInfo.productInfo }}">
@@ -17,47 +19,49 @@
       </div>
     </div>
 
-    <div class="product-navigation">
-      <button class="btn" id="buy-btn" (click)="navigationBuy()">Listings</button>
-      <button class="btn" id="offers-btn" (click)="navigationOffers()">Offers</button>
-    </div>
-
-    <div class="product-offers" *ngIf="showBuy && buyListings.length >= 1">
-      <div class="product-offer" *ngFor="let buyListing of buyListings">
-        <h6>{{ buyListing.condition }}</h6>
-
-        <div class="offer-specs">
-          <h2 id="offer-size">{{ buyListing.size }}</h2>
-          <h2 id="offer-price">{{ buyListing.price | currency: 'CAD' }}</h2>
-        </div>
-
-        <button class="btn" (click)="buyNow(buyListing)" *ngIf="connected">Buy Now</button>
-        <button class="btn disabled" *ngIf="!connected">Buy Now</button>
+    <section>
+      <div class="product-navigation">
+        <button class="btn" id="buy-btn" (click)="navigationBuy()">View Listings</button>
+        <button class="btn" id="offers-btn" (click)="navigationOffers()">View Offerings</button>
       </div>
-    </div>
-    
 
-    <div class="product-offers" *ngIf="showBuy && buyListings.length < 1">
-      <p>Sorry, there is no listings at this moment.</p>
-    </div>
+      <div class="product-offers" *ngIf="showBuy && buyListings.length >= 1">
+        <div class="product-offer" *ngFor="let buyListing of buyListings">
+          <h6>{{ buyListing.condition }}</h6>
 
-    <div class="product-offers" *ngIf="showOffers && offersListings.length >= 1">
-      <div class="product-offer" *ngFor="let offerListing of offersListings">
-        <h6>{{ offerListing.condition }}</h6>
+          <div class="offer-specs">
+            <h2 id="offer-size">{{ buyListing.size }}</h2>
+            <h2 id="offer-price">{{ buyListing.price | currency: 'CAD' }}</h2>
+          </div>
 
-        <div class="offer-specs">
-          <h2 id="offer-size">{{ offerListing.size }}</h2>
-          <h2 id="offer-price">{{ offerListing.price | currency: 'CAD' }}</h2>
+          <button class="btn" (click)="buyNow(buyListing)" *ngIf="connected">Buy Now</button>
+          <button class="btn disabled" *ngIf="!connected">Buy Now</button>
         </div>
-
-        <button class="btn" (click)="sell(offerListing)" *ngIf="connected">Sell Now</button>
-        <button class="btn disabled" *ngIf="!connected">Sell Now</button>
       </div>
-    </div>
 
-    <div class="product-offers" *ngIf="showOffers && offersListings.length < 1">
-      <p>Sorry, there is no offers at this moment.</p>
-    </div>
+
+      <div class="product-offers" *ngIf="showBuy && buyListings.length < 1">
+        <p>Sorry, there are no listings at this moment.</p>
+      </div>
+
+      <div class="product-offers" *ngIf="showOffers && offersListings.length >= 1">
+        <div class="product-offer" *ngFor="let offerListing of offersListings">
+          <h6>{{ offerListing.condition }}</h6>
+
+          <div class="offer-specs">
+            <h2 id="offer-size">{{ offerListing.size }}</h2>
+            <h2 id="offer-price">{{ offerListing.price | currency: 'CAD' }}</h2>
+          </div>
+
+          <button class="btn" (click)="sell(offerListing)" *ngIf="connected">Sell Now</button>
+          <button class="btn disabled" *ngIf="!connected">Sell Now</button>
+        </div>
+      </div>
+
+      <div class="product-offers" *ngIf="showOffers && offersListings.length < 1">
+        <p>Sorry, there are no offers at this moment.</p>
+      </div>
+    </section>
   </section>
 </div>
 

@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { isNullOrUndefined } from 'util';
-import { TransactionService } from 'src/app/services/transaction.service';
 import { Transaction } from 'src/app/models/transaction';
+import { ActivatedRoute } from '@angular/router';
+import { TransactionService } from 'src/app/services/transaction.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
-  selector: 'app-transaction-review',
-  templateUrl: './transaction-review.component.html',
-  styleUrls: ['./transaction-review.component.scss']
+  selector: 'app-sold',
+  templateUrl: './sold.component.html',
+  styleUrls: ['./sold.component.scss']
 })
-export class TransactionReviewComponent implements OnInit {
+export class SoldComponent implements OnInit {
 
   transactionID: string;
   transaction: Transaction = {
     assetURL: '',
-    boughtAt: 0,
+    soldAt: 0,
     buyerID: '',
     condition: '',
     listedAt: 0,
-    listingID: '',
+    offerID: '',
     model: '',
     paymentID: '',
     price: 0,
@@ -46,12 +46,24 @@ export class TransactionReviewComponent implements OnInit {
       this.TranService.getTransaction(this.transactionID).subscribe(data => {
         this.transaction = data;
 
-        if (this.transaction.type !== 'bought') {
+        if (this.transaction.type !== 'sold') {
           this.error = true;
         }
         // console.log(this.transaction);
       }) 
     }
+  }
+
+  fee() {
+    let subtotal = this.transaction.price;
+
+    return subtotal * 0.095;
+  }
+
+  processing() {
+    let subtotal = this.transaction.price;
+
+    return subtotal * 0.03;
   }
 
 }

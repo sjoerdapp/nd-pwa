@@ -3,10 +3,8 @@
 .showcase-discovery {
     min-height: 250px;
     width: 100vw;
-    max-width: calc(100% - 10px);
-    padding: 5px;
+    max-width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
     justify-items: center;
 
     & .discovery-card:nth-child(even) {
@@ -22,6 +20,9 @@
         padding: $spacing-xsmall;
         margin: $spacing-xsmall;
         cursor: pointer;
+        display: grid;
+        align-content: center;
+        grid-auto-rows: 1fr 7fr 2fr;
 
         &:hover {
             border-color: $matteblue;
@@ -35,10 +36,12 @@
             width: 100px;
             object-fit: contain;
             margin-bottom: $spacing-xlarge;
+            justify-self: center;
+            align-self: center;
         }
 
         h6 {
-            text-align: right;
+            text-align: left;
             margin-bottom: $spacing-large;
         }
 
@@ -50,9 +53,9 @@
 }
 
 .discovery-btn {
-    width: 50%;
-    height: 35px;
-    margin: $spacing-small 25%;
+    padding: $spacing-small;
+    margin: $spacing-small auto;
+    display: block;
     border: none;
     cursor: pointer;
     text-transform: uppercase;
@@ -62,5 +65,117 @@
     
     &:hover {
         background: $matteblack;
+    }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    .showcase-discovery {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .discovery-btn {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    .showcase-discovery {
+        grid-template-columns: 1fr 1fr;
+
+        .discovery-card {
+            width: 170px;
+            height: 300px;
+
+            img {
+                width: 125px;
+                height: 125px;
+            }
+        }
+    }
+
+    .discovery-btn {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    .showcase-discovery {
+        grid-template-columns: 1fr 1fr 1fr;
+
+        .discovery-card {
+            width: 200px;
+            height: 300px;
+
+            img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    }
+
+    .discovery-btn {
+        width: 40%;
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    .showcase-discovery {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+
+        .discovery-card {
+            width: 250px;
+            height: 350px;
+
+            img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    }
+
+    .discovery-btn {
+        width: 30%;
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    .showcase-discovery {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+
+        .discovery-card {
+            width: 300px;
+            height: 400px;
+
+            img {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    }
+
+    .discovery-btn {
+        width: 30%;
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    .showcase-discovery {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+
+        .discovery-card {
+            width: 350px;
+            height: 450px;
+
+            img {
+                width: 225px;
+                height: 225px;
+            }
+        }
+    }
+
+    .discovery-btn {
+        width: 20%;
     }
 }

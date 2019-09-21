@@ -50,3 +50,7 @@ src/assets/Air-Force-1-Low-Off-White-Volt.jpg
 src/assets/Jordan-4-Retro-Black-Laser.jpg
 src/assets/Nike-Air-Force-1-Low-All-Over-Logo-Red.jpg
 src/assets/Yeezy-Boost-350-V2-Zebra.jpg
+
+# API Keys
+src/environments/environment.ts
+src/environments/environment.prod.ts

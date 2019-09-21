@@ -1,12 +1,67 @@
 @import '../../base_styles/base';
 
+.main-container {
+    display: grid;
+    align-content: center;
+}
+
 .content-container {
     text-align: center;
 
     fa-icon {
-        margin: $spacing-xlarge * 3.5 auto 0 auto;
+        margin: 0 auto; 
         font-size: $font-large;
         color: $black;
         display: block;
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    h3, h6 {
+        font-size: $font-small;
+    }
+
+    a {
+        font-size: $font-xsmall;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    h3, h6 {
+        font-size: $font-normal;
+    }
+
+    a {
+        font-size: $font-small;
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    h3, h6 {
+        font-size: $font-large;
+    }
+
+    a {
+        font-size: $font-normal;
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    h3, h6 {
+        font-size: $font-xlarge;
+    }
+
+    a {
+        font-size: $font-large;
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    h3, h6 {
+        font-size: $font-xxlarge;
+    }
+
+    a {
+        font-size: $font-xlarge;
     }
 }

@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Product } from '../models/product';
-import { of } from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { isUndefined } from 'util';
 
 @Injectable({
@@ -29,7 +26,15 @@ export class HomeService {
 
     return of(newReleaseData);*/
 
-    const newReleaseRef = this.afs.collection(`products`, ref => ref.orderBy(`yearMade`, `desc`).limit(10));
+
+    let t = new Date();
+    const dd = String(t.getDate()).padStart(2, '0');
+    const mm = String(t.getMonth() + 1).padStart(2, '0'); //January is 0!
+    const yyyy = t.getFullYear();
+    const today = `${yyyy}-${mm}-${dd}`;
+    // console.log(today);
+
+    const newReleaseRef = this.afs.collection(`products`, ref => ref.where(`yearMade`, `<=`, `${today}`).orderBy(`yearMade`, `desc`).limit(50));
     return newReleaseRef.valueChanges();
   }
 
@@ -52,7 +57,7 @@ export class HomeService {
       after = 0;
     }
 
-    const discoveryRef = this.afs.collection(`products`, ref => ref.orderBy(`discoveryRank`, `asc`).startAfter(after).limit(10));
+    const discoveryRef = this.afs.collection(`products`, ref => ref.orderBy(`discoveryRank`, `asc`).startAfter(after).limit(12));
     return discoveryRef.valueChanges();
   }
 
@@ -72,7 +77,7 @@ export class HomeService {
     
     return of(trendingData);*/
 
-    const trendingRef = this.afs.collection(`products`, ref => ref.orderBy(`trendingRank`, `asc`).limit(10));
+    const trendingRef = this.afs.collection(`products`, ref => ref.orderBy(`trendingRank`, `asc`).limit(50));
     return trendingRef.valueChanges();
   }
 

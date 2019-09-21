@@ -1,23 +1,26 @@
 @import '../../base_styles/base';
 
+.main-container {
+    display: grid;
+    align-content: center;
+}
+
 .product-container {
     width: 95vw;
     max-width: 95%;
     display: grid;
     grid-template-columns: 1fr;
-    border: 1px solid $lightgrey;
-    border-bottom: none;
-    margin: $spacing-large auto;
+    //border: 1px solid $lightgrey;
+    //border-bottom: none;
+    margin: $spacing-normal auto;
 
     .product-info {
         text-align: center;
-        border-bottom: 1px solid $lightgrey;
+        //border-bottom: 1px solid $lightgrey;
 
         img {
             display: block;
             margin: $spacing-normal auto;
-            width: 300px;
-            height: 300px;
             object-fit: contain;
             background: $white;
             border: none;
@@ -26,13 +29,11 @@
         .product-specs {
             margin: $spacing-normal auto;
             background: $black;
-            width: 80%;
             border-radius: $spacing-xsmall;
             padding: $spacing-xxsmall;
 
             h4 {
                 font-weight: $weight-bold;
-                font-size: $font-xsmall;
                 letter-spacing: 1.5px;
                 line-height: $spacing-normal;
                 color:  $white;
@@ -42,7 +43,6 @@
         .product-btns {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            width: 80%;
             column-gap: $spacing-xsmall;
             margin: $spacing-xsmall auto;
 
@@ -79,7 +79,7 @@
     .product-offers {
         overflow-y: auto;
         max-height: $productContainerHeight;
-        border-bottom: 1px solid $lightgrey;
+        //border-bottom: 1px solid $lightgrey;
 
         p {
             text-align: center;
@@ -87,19 +87,11 @@
         }
         
         .product-offer {
-            border-bottom: 1px solid $lightgrey;
+            //border-bottom: 1px solid $lightgrey;
             text-align: center;
 
             &:last-child {
                 border-bottom: none;
-            }
-
-            h6, .offer-specs, button {
-                margin: $spacing-xsmall 0;
-            }
-
-            h6 {
-                font-size: $header-size-6;
             }
 
             .offer-specs {
@@ -123,7 +115,6 @@
                 width: 60%;
                 text-justify: auto;
                 letter-spacing: 2px;
-                font-size: $font-small;
                 font-weight: $weight-bold;
                 background: $black;
 
@@ -147,6 +138,328 @@
                     background: $lightgrey;
                 }   
             }
+        }
+    }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    .product-btns {
+        width: 95%;
+        
+        button {
+            font-size: $font-xxsmall;
+            padding: $spacing-small 0;
+        }
+    }
+
+    .product-info {
+        img {
+            width: 250px;
+            height: 250px;
+        }
+
+        .product-specs {
+            h4 {
+                font-size: $font-xxsmall;
+                width: 100%;
+            }
+        }
+    }
+
+    .product-offers {
+
+        p {
+            font-size: $font-xsmall;
+        }
+
+        h6, .offer-specs, button {
+            margin: $spacing-xxsmall 0;
+        }
+
+        .product-offer {
+            h6, button {
+                font-size: $font-xsmall;
+            }
+
+            h2 {
+                font-size: $font-small;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    .product-btns {
+        width: 80%;
+        
+        button {
+            font-size: $font-xxsmall;
+            padding: $spacing-small 0;
+        }
+    }
+
+    .product-info {
+        img {
+            width: 250px;
+            height: 250px;
+        }
+
+        .product-specs {
+            h4 {
+                font-size: $font-xsmall;
+                width: 100%;
+            }
+        }
+    }
+
+    .product-offers {
+
+        p {
+            font-size: $font-xsmall;
+        }
+
+        h6, .offer-specs, button {
+            margin: $spacing-xxsmall 0;
+        }
+
+        .product-offer {
+            h6, button {
+                font-size: $font-xsmall;
+            }
+
+            h2 {
+                font-size: $font-small;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    .product-container {
+        grid-template-columns: 3fr 2fr;
+    }
+
+    .product-btns {
+        width: 80%;
+        margin: 0 auto!important;
+        
+        button {
+            font-size: $font-xxsmall;
+            padding: $spacing-small 0;
+        }
+    }
+
+    .product-info {
+        img {
+            width: 250px;
+            height: 250px;
+        }
+
+        .product-specs {
+            h4 {
+                font-size: $font-xsmall;
+                width: 100%;
+            }
+        }
+    }
+
+    .product-offers {
+
+        p {
+            font-size: $font-xsmall;
+        }
+
+        h6, .offer-specs, button {
+            margin: $spacing-xxsmall 0;
+        }
+
+        .product-offer {
+            h6, button {
+                font-size: $font-xsmall;
+            }
+
+            h2 {
+                font-size: $font-small;
+            }
+        }
+    }
+
+    .product-navigation {
+        button {
+            font-size: $font-xxsmall;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    .product-container {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .product-btns {
+        width: 80%;
+        margin: 0 auto!important;
+        
+        button {
+            font-size: $font-small;
+            padding: $spacing-small 0;
+        }
+    }
+
+    .product-info {
+        img {
+            width: 300px;
+            height: 300px;
+        }
+
+        .product-specs {
+            h4 {
+                font-size: $font-small;
+                width: 100%;
+            }
+        }
+    }
+
+    .product-offers {
+
+        p {
+            font-size: $font-normal;
+        }
+
+        h6, .offer-specs, button {
+            margin: $spacing-xsmall 0;
+        }
+
+        .product-offer {
+            h6, button {
+                font-size: $font-normal;
+            }
+
+            h2 {
+                font-size: $font-large;
+            }
+        }
+    }
+
+    .product-navigation {
+        button {
+            font-size: $font-small;
+        }
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    .product-container {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .product-btns {
+        width: 80%;
+        margin: 0 auto!important;
+        
+        button {
+            font-size: $font-small;
+            padding: $spacing-small 0;
+        }
+    }
+
+    .product-info {
+        img {
+            width: 350px;
+            height: 350px;
+        }
+
+        .product-specs {
+            h4 {
+                font-size: $font-small;
+                width: 100%;
+            }
+        }
+    }
+
+    .product-offers {
+
+        p {
+            font-size: $font-normal;
+        }
+
+        h6, .offer-specs, button {
+            margin: $spacing-xsmall 0;
+        }
+
+        .product-offer {
+            h6, button {
+                font-size: $font-normal;
+            }
+
+            h2 {
+                font-size: $font-large;
+            }
+        }
+    }
+
+    .product-navigation {
+        button {
+            font-size: $font-small;
+        }
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    .product-container {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .product-btns {
+        width: 80%;
+        margin: 0 auto!important;
+        
+        button {
+            font-size: $font-small;
+            padding: $spacing-small 0;
+        }
+    }
+
+    .product-info {
+        img {
+            width: 375px;
+            height: 375px;
+        }
+
+        .product-specs {
+            h4 {
+                font-size: $font-small;
+                width: 100%;
+            }
+        }
+    }
+
+    .product-offers {
+
+        p {
+            font-size: $font-normal;
+        }
+
+        h6, .offer-specs, button {
+            margin: $spacing-xsmall 0;
+        }
+
+        .product-offer {
+            h6, button {
+                font-size: $font-normal;
+            }
+
+            h2 {
+                font-size: $font-large;
+            }
+        }
+    }
+
+    .product-navigation {
+        button {
+            font-size: $font-small;
         }
     }
 }

@@ -12,17 +12,15 @@ section {
         max-width: 100%;
 
         #inputs {
-            width: 90%;
             margin: $spacing-small auto;
             display: grid;
             grid-template-columns: 1fr 7fr;
-            column-gap: $spacing-xsmall;
 
             input {
                 display: block;
                 margin: 5px auto;
                 height: 25px;
-                width: inherit;;
+                width: 90%;
                 border: none;
                 padding: $spacing-xsmall;
                 letter-spacing: 0.8px;
@@ -40,7 +38,6 @@ section {
         p {
             text-align: center;
             color: $white;
-            font-size: $font-xxsmall;
             padding: 0 10%;
         }
 
@@ -66,7 +63,6 @@ section {
             display: block;
             margin: 5px auto;
             height: 25px;
-            width: 50%;
             border: none;
             padding: $spacing-xsmall;
             letter-spacing: 0.8px;
@@ -87,6 +83,120 @@ section {
             display: grid;
             justify-items: center;
             justify-content: center;
+        }
+    }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    .phone-verification-card {
+        #inputs {
+            width: 90%;
+        }
+
+        p {
+            font-size: $font-xxsmall;
+        }
+
+        button {
+            width: 70%!important;
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    .phone-verification-card {
+        #inputs {
+            width: 90%;
+        }
+
+        p {
+            font-size: $font-xxsmall;
+        }
+
+        input {
+            width: 70%;
+        }
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    .phone-verification-card {
+        #inputs {
+            width: 80%;
+        }
+
+        p {
+            font-size: $font-xsmall;
+        }
+
+        button {
+            width: 40%!important;
+        }
+
+        input {
+            width: 70%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    .phone-verification-card {
+        #inputs {
+            width: 70%;
+        }
+
+        p {
+            font-size: $font-xsmall;
+        }
+
+        button {
+            width: 35%!important;
+        }
+
+        input {
+            width: 60%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    .phone-verification-card {
+        #inputs {
+            width: 60%;
+        }
+
+        p {
+            font-size: $font-xsmall;
+        }
+
+        button {
+            width: 30%!important;
+        }
+
+        input {
+            width: 550%;
+        }
+    }   
+}
+
+@media only screen and (min-width: 2000px) {
+    .phone-verification-card {
+        #inputs {
+            width: 50%;
+        }
+
+        p {
+            font-size: $font-small;
+        }
+
+        button {
+            width: 30%!important;
+        }
+
+        input {
+            width: 45%;
         }
     }
 }

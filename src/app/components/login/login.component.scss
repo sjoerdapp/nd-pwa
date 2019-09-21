@@ -10,7 +10,6 @@ section {
 
     .login-card {
         align-self: center;
-        width: 90vw;
         margin: 60px auto;
         padding: 8px;
         border-radius: 16px;
@@ -27,7 +26,6 @@ section {
             padding: 5px;
             border: none;
             border-radius: 8px;
-            font-size: $font-small;
             font-weight: $weight-black;
             margin: 5px auto;
             cursor: pointer;
@@ -60,8 +58,8 @@ section {
 
         .login-btn {
             height: 40px;
-            margin: 16px auto;
-            width: 60vw;
+            margin: $spacing-xsmall auto;
+            
             cursor: pointer;
             border-radius: $spacing-xxsmall;
 
@@ -95,7 +93,6 @@ section {
 
         .signup-btn {
             height: 40px;
-            width: 80vw;
             color: $black;
             margin-top: 16px;
             border-radius: $spacing-xxsmall;
@@ -109,11 +106,120 @@ section {
 
         .forgotpwd-btn {
             @extend .signup-btn;
-            width: 35vw;
-            background: $white;
-            height: 30px;
+        }
+    }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    .login-card {
+        width: 95vw;
+
+        .login-btn {
+            width: 80%;
             font-size: $font-xsmall;
-            margin-bottom: 16px;
+        }
+
+        .signup-btn {
+            font-size: $font-xsmall;
+            width: 70%;
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    .login-card {
+        width: 90vw;
+
+        .login-btn {
+            width: 75%;
+            font-size: $font-xsmall;
+        }
+
+        .signup-btn {
+            font-size: $font-xsmall;
+            width: 65%;
+        }
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    .login-card {
+        width: 50vw;
+
+        .login-btn {
+            width: 70%;
+            font-size: $font-xsmall;
+        }
+
+        .signup-btn {
+            font-size: $font-xsmall;
+            width: 60%;
+        }
+
+        .facebook-btn, .google-btn {
+            padding: $spacing-small!important;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    .login-card {
+        width: 35vw;
+
+        .login-btn {
+            width: 65%;
+            font-size: $font-xsmall;
+        }
+
+        .signup-btn {
+            font-size: $font-xsmall;
+            width: 55%;
+        }
+
+        .facebook-btn, .google-btn {
+            padding: $spacing-small!important;
+        }
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    .login-card {
+        width: 35vw;
+
+        .login-btn {
+            width: 60%;
+            font-size: $font-xsmall;
+        }
+
+        .signup-btn {
+            font-size: $font-xsmall;
+            width: 50%;
+        }
+
+        .facebook-btn, .google-btn {
+            padding: $spacing-small!important;
+        }
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    .login-card {
+        width: 35vw;
+
+        .login-btn {
+            width: 70%;
+            font-size: $font-small;
+        }
+
+        .signup-btn {
+            font-size: $font-small;
+            width: 60%;
+        }
+
+        .facebook-btn, .google-btn {
+            padding: $spacing-small!important;
         }
     }
 }

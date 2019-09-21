@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
       this.queryParam = data.q;
       (element as HTMLInputElement).value = this.queryParam;
     });
-    this.index = this.algoliaClient.initIndex('test_PRODUCTS');
+    this.index = this.algoliaClient.initIndex('prod_PRODUCTS');
     this.index.search({
       query: this.queryParam
     }, (err, hits = {}) => {

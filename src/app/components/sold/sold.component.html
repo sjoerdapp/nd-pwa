@@ -13,40 +13,31 @@
       </div>
     </div>
 
+    <div>
+
+    </div>
+
     <div class="review-details">
       <div class="review-summary">
         <div class="subtotal">
-          <h5>Subtotal</h5>
-          <h5>{{ transaction.price | currency: 'CAD' }}</h5>
+          <h5>Transaction Fee (9.5%)</h5>
+          <h5>{{ fee() | currency: 'CAD' }}</h5>
         </div>
 
         <div class="auth">
-          <h5>Authentication Fee</h5>
-          <h5>FREE</h5>
+          <h5>Payment Processing (3%)</h5>
+          <h5>{{ processing() | currency: 'CAD' }}</h5>
         </div>
 
         <div class="shipping">
           <h5>Shipping</h5>
-          <h5>{{ transaction.shippingCost | currency: 'CAD' }}</h5>
-        </div>
-
-        <div class="tax">
-          <h5>Tax</h5>
-          <h5>CA$0.00</h5>
+          <h5>{{ 0 | currency: 'CAD' }}</h5>
         </div>
 
         <div class="total">
-          <h5>Total</h5>
-          <h5>{{ transaction.shippingCost + transaction.price | currency: 'CAD' }}</h5>
+          <h5>Total Payout</h5>
+          <h5>{{ transaction.price - fee() - processing() | currency: 'CAD' }}</h5>
         </div>
-      </div>
-
-      <div class="review-shipment">
-        <h5></h5>
-        <h5></h5>
-        <h5></h5>
-        <h5></h5>
-        <h5></h5>
       </div>
     </div>
 

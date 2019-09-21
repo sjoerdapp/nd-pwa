@@ -3,21 +3,18 @@
 footer {
 
     display: grid;
-    grid-template-columns: 8fr 3fr 3fr 3fr 3fr;
     grid-template-rows: 5px 95px;
     height: $footerHeight;
     width: 100%;
     background: $black;
 
     .footer-logo {
-        height: $spacing-xlarge;
         margin-left: $spacing-small;
         align-self: center;
     }
 
     button {
         background: transparent;
-        font-size: $font-small;
         border: none;
         align-self: center;
         color: $white;
@@ -66,5 +63,90 @@ footer {
 
         @include vendor(transition, $transition-normal ease-in-out);
     }
+}
 
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    footer {
+        grid-template-columns: 8fr 3fr 3fr 3fr 3fr;
+    }
+
+    button {
+        font-size: $font-xsmall;
+    }
+
+    .footer-logo {
+        height: $spacing-large;
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    footer {
+        grid-template-columns: 8fr 3fr 3fr 3fr 3fr;
+    }
+
+    button {
+        font-size: $font-xsmall;
+    }
+
+    .footer-logo {
+        height: $spacing-large;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    footer {
+        grid-template-columns: 12fr 2fr 2fr 2fr 2fr;
+    }
+    
+    button {
+        font-size: $font-small;
+    }
+
+    .footer-logo {
+        height: $spacing-xlarge;
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    footer {
+        grid-template-columns: 12fr 2fr 2fr 2fr 2fr;
+    }
+    
+    button {
+        font-size: $font-normal;
+    }
+
+    .footer-logo {
+        height: $spacing-xxlarge;
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    footer {
+        grid-template-columns: 16fr 1fr 1fr 1fr 1fr;
+    }
+    
+    button {
+        font-size: $font-normal;
+    }
+
+    .footer-logo {
+        height: $spacing-xxlarge;
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    footer {
+        grid-template-columns: 16fr 1fr 1fr 1fr 1fr;
+    }
+    
+    button {
+        font-size: $font-normal;
+    }
+
+    .footer-logo {
+        height: $spacing-xxlarge;
+    }
 }

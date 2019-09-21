@@ -35,23 +35,25 @@ export class MakeAnOfferComponent implements OnInit {
     private sellService: SellService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private offerService: OfferService, 
+    private offerService: OfferService,
     private ngZone: NgZone,
     private auth: AuthService
   ) { }
 
   ngOnInit() {
-    this.auth.isConnected().then(res => {
-      if (isNullOrUndefined(res.phoneNumber)) {
-        this.router.navigate(['../phone-verification']);
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (!isUndefined(params.sneaker)) {
+        this.selectedPair = JSON.parse(params.sneaker);
+      } else {
+        this.router.navigate(['/home']);
       }
     });
 
-    this.activatedRoute.queryParams.subscribe(params => {
-      if (!isUndefined(params.sneaker)) {
-        this.selectedPair = JSON.parse(params.sneaker); 
-      } else {
-        this.router.navigate(['/home']);
+    this.auth.isConnected().then(res => {
+      if (isNullOrUndefined(res.phoneNumber)) {
+        this.router.navigate(['../phone-verification'], {
+          queryParams: { redirectTo: `product/${this.selectedPair.productID}` }
+        });
       }
     });
   }

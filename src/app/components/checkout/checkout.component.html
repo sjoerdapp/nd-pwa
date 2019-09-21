@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="summary-numbers">
+    <div class="summary-numbers" *ngIf="!isSelling">
       <div class="summary-subtotal">
         <h5>Subtotal</h5>
         <h5>{{ subtotal() | currency: 'CAD' }}</h5>
@@ -38,6 +38,28 @@
       <div class="summary-total">
         <h5>Total</h5>
         <h5>{{ subtotal() + shippingPrice + tax | currency: 'CAD' }}</h5>
+      </div>
+    </div>
+
+    <div class="summary-numbers" *ngIf="isSelling">
+      <div class="summary-subtotal">
+        <h5>Transaction Fee</h5>
+        <h5>{{ fee() | currency: 'CAD' }}</h5>
+      </div>
+
+      <div class="summary-auth">
+        <h5>Payment Processing</h5>
+        <h5>{{ processing() | currency: 'CAD' }}</h5>
+      </div>
+
+      <div class="summary-shipping">
+        <h5>Shipping</h5>
+        <h5>{{ 0 | currency: 'CAD' }}</h5>
+      </div>
+
+      <div class="summary-total">
+        <h5>Total payout</h5>
+        <h5>{{ subtotal() - fee() - processing() | currency: 'CAD' }}</h5>
       </div>
     </div>
   </div>
@@ -65,7 +87,8 @@
     </div>-->
 
   <div class="checkout-btns">
-    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    <ngx-paypal *ngIf="!isSelling" [config]="payPalConfig"></ngx-paypal>
+    <button *ngIf="isSelling" (click)="sellNow()" class="btn">Confirm</button>
     <button class="btn back-btn" (click)="goBack()">Back</button>
   </div>
 </section>

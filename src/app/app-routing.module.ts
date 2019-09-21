@@ -32,6 +32,7 @@ import { EditOfferComponent } from './components/edit-offer/edit-offer.component
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { PhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
+import { SoldComponent } from './components/sold/sold.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -64,7 +65,8 @@ const routes: Routes = [
   { path: 'edit-offer/:id', component: EditOfferComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'auth', component: AuthComponent },
-  { path: 'phone-verification', component: PhoneVerificationComponent }
+  { path: 'phone-verification', component: PhoneVerificationComponent },
+  { path: 'sold', component: SoldComponent }
 ];
 
 @NgModule({

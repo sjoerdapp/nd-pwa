@@ -7,7 +7,7 @@
   <img src="../../../assets/Negative w- letterspng.png" alt="NXTDROP, Inc. Logo Negative" class="footer-logo">
 
   <button class="blog-btn">
-    Blog
+    
   </button>
 
   <button class="support-btn" routerLink="/support">
@@ -22,15 +22,15 @@
     Privacy
   </button>
 
-  <button class="instagram-btn social">
+  <button (click)="goToLink('instagram')" class="instagram-btn social">
     <fa-icon [icon]="['fab', 'instagram']"></fa-icon>
   </button> 
   
-  <button class="facebook-btn-footer social">
+  <button (click)="goToLink('facebook')" class="facebook-btn-footer social">
       <fa-icon [icon]="['fab', 'facebook']"></fa-icon>
   </button>
 
-  <button class="twitter-btn social">
+  <button (click)="goToLink('twitter')" class="twitter-btn social">
       <fa-icon [icon]="['fab', 'twitter']"></fa-icon>
   </button>
 </footer>

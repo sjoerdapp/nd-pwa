@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebase: {
+  /*firebase: {
     apiKey: 'AIzaSyDADaJvBOsSuyZz0ytTKiwh8c1mFYQJKYE',
     authDomain: 'nxtdrop-app.firebaseapp.com',
     databaseURL: 'https://nxtdrop-app.firebaseio.com',
@@ -12,6 +12,15 @@ export const environment = {
     storageBucket: 'nxtdrop-app.appspot.com',
     messagingSenderId: '155742053339',
     appId: '1:155742053339:web:50f644112ac6b92b'
+  },*/
+  firebase: {
+    apiKey: "AIzaSyC-n8cAU2HrJky2Yh8qWytAme9REsyxV48",
+    authDomain: "nxtdrop.firebaseapp.com",
+    databaseURL: "https://nxtdrop.firebaseio.com",
+    projectId: "nxtdrop",
+    storageBucket: "nxtdrop.appspot.com",
+    messagingSenderId: "509381991959",
+    appId: "1:509381991959:web:73110b34aa09248e2a4652"
   },
   algolia: {
     appId: 'UYSPT0956N',

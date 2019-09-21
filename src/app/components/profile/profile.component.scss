@@ -5,9 +5,6 @@ h2 {
 }
 
 .stats-btn {
-    width: 80px;
-    height: 80px;
-    font-size: $font-xsmall;
     text-align: center;
     border-radius: $spacing-xlarge;
     border: none;
@@ -58,9 +55,6 @@ h2 {
 
             .btn {
                 background: $black;
-                font-size: $font-xxsmall;
-                padding: $spacing-xsmall;
-                height: $spacing-large;
                 @include vendor(transition, 0.25s ease-in-out);
 
                 &:hover {
@@ -105,7 +99,6 @@ h2 {
 
 .profile-items {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     grid-column-gap: 5px;
     padding: $spacing-normal;
 
@@ -140,7 +133,6 @@ h2 {
             h5 {
                 justify-self: right;
                 font-weight: $weight-black;
-                font-size: $font-small;
             }
         }
 
@@ -153,7 +145,6 @@ h2 {
 
         h5 {
             font-weight: $weight-bold;
-            font-size: $font-xsmall;
         }
     }
 }
@@ -167,5 +158,300 @@ h2 {
 
     &:hover {
         background: $matteblack;
+    }
+}
+
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    .stats-btn {
+        width: 70px;
+        height: 70px;
+        font-size: $font-xxsmall;
+    }
+
+    .profile-name {
+        h4 {
+            font-size: $font-small;
+        }
+
+        h6 {
+            font-size: $font-xxsmall;
+        }
+    }
+
+    .profile-btns {
+        button {
+            font-size: $font-xxsmall;
+            padding: $spacing-xsmall;
+        }
+    }
+
+    h2 {
+        font-size: $font-small;
+    }
+
+    .profile-items {
+        grid-template-columns: 1fr 1fr;
+        .profile-item {
+            .item-specs {
+                h5, h6 {
+                    font-size: $font-xsmall;
+                }
+            }
+
+            h5 {
+                font-size: $font-xxsmall;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    .stats-btn {
+        width: 80px;
+        height: 80px;
+        font-size: $font-xxsmall;
+    }
+
+    .profile-name {
+        h4 {
+            font-size: $font-normal;
+        }
+
+        h6 {
+            font-size: $font-xsmall;
+        }
+    }
+
+    .profile-btns {
+        button {
+            font-size: $font-xsmall;
+            padding: $spacing-xsmall;
+        }
+    }
+
+    h2 {
+        font-size: $font-normal;
+    }
+
+    .profile-items {
+        grid-template-columns: 1fr 1fr;
+        .profile-item {
+            .item-specs {
+                h5, h6 {
+                    font-size: $font-xsmall;
+                }
+            }
+
+            h5 {
+                font-size: $font-xsmall;
+            }
+
+            img {
+                height: 100px;
+                width: 100px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    .stats-btn {
+        width: 100px;
+        height: 100px;
+        font-size: $font-xsmall;
+    }
+
+    .profile-name {
+        h4 {
+            font-size: $font-normal;
+        }
+
+        h6 {
+            font-size: $font-xsmall;
+        }
+    }
+
+    .profile-btns {
+        button {
+            font-size: $font-xsmall;
+            padding: $spacing-xsmall;
+        }
+    }
+
+    h2 {
+        font-size: $font-large;
+    }
+
+    .profile-items {
+        grid-template-columns: 1fr 1fr 1fr;
+        .profile-item {
+            .item-specs {
+                h5, h6 {
+                    font-size: $font-normal;
+                }
+            }
+
+            h5 {
+                font-size: $font-small;
+            }
+
+            img {
+                height: 125px;
+                width: 125px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    .stats-btn {
+        width: 125px;
+        height: 125px;
+        font-size: $font-small;
+        border-radius: $spacing-xxlarge;
+    }
+
+    .profile-name {
+        h4 {
+            font-size: $font-large;
+        }
+
+        h6 {
+            font-size: $font-small;
+        }
+    }
+
+    .profile-btns {
+        button {
+            font-size: $font-small;
+            padding: $spacing-small;
+        }
+    }
+
+    h2 {
+        font-size: $font-large;
+    }
+
+    .profile-items {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        .profile-item {
+            .item-specs {
+                h5, h6 {
+                    font-size: $font-normal;
+                }
+            }
+
+            h5 {
+                font-size: $font-small;
+            }
+
+            img {
+                height: 130px;
+                width: 130px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    .stats-btn {
+        width: 125px;
+        height: 125px;
+        font-size: $font-small;
+        border-radius: $spacing-xxlarge;
+    }
+
+    .profile-name {
+        h4 {
+            font-size: $font-large;
+        }
+
+        h6 {
+            font-size: $font-small;
+        }
+    }
+
+    .profile-btns {
+        button {
+            font-size: $font-small;
+            padding: $spacing-small;
+        }
+    }
+
+    h2 {
+        font-size: $font-large;
+    }
+
+    .profile-items {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        .profile-item {
+            .item-specs {
+                h5, h6 {
+                    font-size: $font-normal;
+                }
+            }
+
+            h5 {
+                font-size: $font-small;
+            }
+
+            img {
+                height: 150px;
+                width: 150px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    .stats-btn {
+        width: 125px;
+        height: 125px;
+        font-size: $font-small;
+        border-radius: $spacing-xxlarge;
+    }
+
+    .profile-name {
+        h4 {
+            font-size: $font-large;
+        }
+
+        h6 {
+            font-size: $font-small;
+        }
+    }
+
+    .profile-btns {
+        button {
+            font-size: $font-small;
+            padding: $spacing-small;
+        }
+    }
+
+    h2 {
+        font-size: $font-large;
+    }
+
+    .profile-items {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        .profile-item {
+            .item-specs {
+                h5, h6 {
+                    font-size: $font-normal;
+                }
+            }
+
+            h5 {
+                font-size: $font-small;
+            }
+
+            img {
+                height: 150px;
+                width: 150px;
+            }
+        }
     }
 }

@@ -13,7 +13,6 @@
 
     .menu-header {
         display: grid;
-        grid-template-columns: 2fr 18fr;
         grid-template-rows: 59px 2.5px 2.5px;
         height: $navHeight;
         align-items: center;
@@ -68,5 +67,29 @@
                 font-size: $font-normal;
             }
         }
+    }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    .menu-header {
+        grid-template-columns: 2fr 18fr;
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    .menu-header {
+        grid-template-columns: 1.5fr 18.5fr;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 2000px) {
+    .menu-header {
+        grid-template-columns: 1fr 19fr;
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    .menu-header {
+        grid-template-columns: 1fr 19fr;
     }
 }

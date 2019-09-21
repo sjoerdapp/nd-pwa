@@ -45,6 +45,7 @@ import { EditOfferComponent } from './components/edit-offer/edit-offer.component
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { PhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
+import { SoldComponent } from './components/sold/sold.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -115,7 +116,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     EditOfferComponent,
     ResetPasswordComponent,
     AuthComponent,
-    PhoneVerificationComponent
+    PhoneVerificationComponent,
+    SoldComponent
   ],
   imports: [
     BrowserModule,

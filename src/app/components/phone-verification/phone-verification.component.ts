@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as firebase from 'firebase/app';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-phone-verification',
@@ -27,7 +27,8 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
   confirmationResult;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngAfterViewInit() {
@@ -51,6 +52,7 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    console.log(this.route.snapshot.queryParams.redirectTo);
   }
 
   verifyAreaCode() {
@@ -104,7 +106,7 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
     if (this.isValidCode) {
       this.verificationLoading = true;
       this.confirmationResult.confirm((document.getElementById('authCode') as HTMLInputElement).value).then(() => {
-        this.router.navigate(['../home']);
+        this.router.navigate([`../${this.route.snapshot.queryParams.redirectTo}`]);
       }).catch((err) => {
         console.error(err);
         this.verificationLoading = false;

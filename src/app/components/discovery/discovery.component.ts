@@ -20,7 +20,10 @@ export class DiscoveryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.homeService.getDiscovery().subscribe(data => this.discoveries = data);
+    this.homeService.getDiscovery().subscribe(data => {
+      this.discoveries = data
+      console.log(this.discoveries);
+    });
   }
 
   more() {
@@ -33,7 +36,9 @@ export class DiscoveryComponent implements OnInit {
         this.end = true;
         console.log(this.end);
       } else {
-        this.discoveries.push(data);
+        data.forEach(ele => {
+          this.discoveries.push(ele);
+        });
         this.loading = false;
       }
     });

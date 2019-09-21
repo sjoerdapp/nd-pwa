@@ -9,7 +9,6 @@
     #how-it-works-content {
         div {
             display: grid;
-            grid-template-columns: 1fr 8fr;
             align-items: center;
             margin: $spacing-large 0;
 
@@ -18,10 +17,6 @@
                 color: $black;
             }
         }
-    }
-
-    .sell-btns {
-        margin: $spacing-xxlarge auto;
     }
 }
 
@@ -51,14 +46,10 @@
 
 .main-container {
     display: grid;
-
-    .sell-container {
-        align-self: center;
-    }
+    align-content: center;
 }
 
 .sell-container {
-    padding: $spacing-small;
 
     h3 {
         text-align: center;
@@ -197,7 +188,6 @@
 
     #item-size {
         display: block;
-        width: 50%;
         height: 35px;
         margin: $spacing-normal auto;
     }
@@ -257,6 +247,350 @@
 
         &:hover {
             background: $matteblack;
+        }
+    }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    h3 {
+        font-size: $font-normal;
+    }
+
+    #sell-page-1 {
+        #how-it-works-content {
+            div {
+                grid-template-columns: 1fr 9fr;
+            }
+
+            h6 {
+                font-size: $font-xsmall;
+            }
+        }
+
+        .sell-btns {
+            margin: $spacing-large auto;
+        }
+    }
+
+    #item-size {
+        width: 80%;
+    }
+
+    .sell-container {
+        padding: 0!important;
+        width: 100vw;
+        justify-items: center;
+        justify-content: center;
+    }
+
+    #sell-page-4 {
+        justify-self: center;
+
+        ol li {
+            font-size: $font-xxsmall;
+        }
+
+        .pairStats {
+            p {
+                font-size: $font-xsmall;
+            }
+        }
+
+        .sell-price-input, .pairStats, .sell-btns {
+            width: inherit;
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    h3 {
+        font-size: $font-normal;
+    }
+
+    #sell-page-1 {
+        #how-it-works-content {
+            div {
+                grid-template-columns: 1fr 9fr;
+            }
+
+            h6 {
+                font-size: $font-xsmall;
+            }
+        }
+
+        .sell-btns {
+            margin: $spacing-large auto;
+        }
+    }
+
+    #item-size {
+        width: 80%;
+    }
+
+    .sell-container {
+        padding: 0!important;
+        width: 80vw;
+        justify-self: center;
+        justify-items: center;
+    }
+
+    #sell-page-4 {
+        justify-self: center;
+
+        ol li {
+            font-size: $font-xsmall;
+        }
+
+        .pairStats {
+            p {
+                font-size: $font-normal;
+            }
+        }
+
+        .sell-price-input, .pairStats, .sell-btns {
+            width: inherit;
+        }
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    h3 {
+        font-size: $font-large;
+    }
+
+    #sell-page-1 {
+        #how-it-works-content {
+            div {
+                grid-template-columns: 1fr 9fr;
+            }
+
+            h6 {
+                font-size: $font-xsmall;
+            }
+        }
+
+        .sell-btns {
+            margin: $spacing-large auto;
+        }
+    }
+
+    #item-size {
+        width: 60%;
+    }
+
+    .sell-radios {
+        label {
+            font-size: $font-normal!important;
+        }
+    }
+
+    .sell-container {
+        padding: 0!important;
+        width: 60vw;
+        justify-self: center;
+        justify-items: center;
+    }
+
+    #sell-page-4 {
+        justify-self: center;
+
+        ol li {
+            font-size: $font-small;
+        }
+
+        .pairStats {
+            p {
+                font-size: $font-large;
+            }
+        }
+
+        .sell-price-input, .pairStats, .sell-btns {
+            width: inherit;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    h3 {
+        font-size: $font-large;
+    }
+
+    #sell-page-1 {
+        #how-it-works-content {
+            div {
+                grid-template-columns: 1fr 9fr;
+            }
+
+            h6 {
+                font-size: $font-xsmall;
+            }
+        }
+
+        .sell-btns {
+            margin: $spacing-large auto;
+        }
+    }
+
+    #item-size {
+        width: 60%;
+    }
+
+    .sell-radios {
+        label {
+            font-size: $font-normal!important;
+        }
+    }
+
+    .sell-container {
+        padding: 0!important;
+        width: 50vw;
+        justify-self: center;
+        justify-items: center;
+    }
+
+    #sell-page-4 {
+        justify-self: center;
+
+        ol li {
+            font-size: $font-small;
+        }
+
+        .pairStats {
+            p {
+                font-size: $font-large;
+            }
+        }
+
+        .sell-price-input, .pairStats, .sell-btns {
+            width: inherit;
+        }
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    h3 {
+        font-size: $font-large;
+    }
+
+    #sell-page-1 {
+        #how-it-works-content {
+            div {
+                grid-template-columns: 1fr 9fr;
+            }
+
+            h6 {
+                font-size: $font-xsmall;
+            }
+        }
+
+        .sell-btns {
+            margin: $spacing-large auto;
+        }
+    }
+
+    #item-size {
+        width: 60%;
+    }
+
+    .sell-radios {
+        label {
+            font-size: $font-normal!important;
+        }
+    }
+
+    .sell-container {
+        padding: 0!important;
+        width: 40vw;
+        justify-self: center;
+        justify-items: center;
+    }
+
+    #sell-page-4 {
+        justify-self: center;
+
+        ol li {
+            font-size: $font-small;
+        }
+
+        .pairStats {
+            p {
+                font-size: $font-large;
+            }
+        }
+
+        .sell-price-input, .pairStats, .sell-btns {
+            width: inherit;
+        }
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    h3 {
+        font-size: $font-large;
+    }
+
+    #sell-page-1 {
+        width: 60vw;
+        justify-self: center;
+
+        #how-it-works-content {
+            div {
+                grid-template-columns: 2fr 8fr;
+            }
+
+            h6 {
+                font-size: $font-small;
+            }
+        }
+
+        .sell-btns {
+            margin: $spacing-large auto;
+
+            button {
+                font-size: $font-normal;
+            }
+        }
+    }
+
+    #sell-page-2, #sell-page-3 {
+        justify-self: center;
+        width: 60vw;
+    }
+
+    #item-size {
+        width: 60%;
+    }
+
+    .sell-radios {
+        label {
+            font-size: $font-normal!important;
+        }
+    }
+
+    .sell-container {
+        padding: 0!important;
+        width: 40vw;
+        justify-self: center;
+        justify-items: center;
+    }
+
+    #sell-page-4 {
+        justify-self: center;
+
+        ol li {
+            font-size: $font-normal;
+        }
+
+        .pairStats {
+            p {
+                font-size: $font-large;
+            }
+        }
+
+        .sell-price-input, .pairStats, .sell-btns {
+            width: inherit;
         }
     }
 }

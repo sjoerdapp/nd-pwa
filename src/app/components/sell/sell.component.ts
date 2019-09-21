@@ -48,12 +48,6 @@ export class SellComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.auth.isConnected().then(res => {
-      if (isNullOrUndefined(res.phoneNumber)) {
-        this.router.navigate(['../phone-verification']);
-      }
-    });
-
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
         let element = document.getElementById('sell-page-1');
@@ -64,6 +58,20 @@ export class SellComponent implements OnInit {
 
         const pair = JSON.parse(params.sneaker);
         this.selectPair(pair);
+      }
+    });
+
+    this.auth.isConnected().then(res => {
+      if (isNullOrUndefined(res.phoneNumber)) {
+        if (this.activatedRoute.snapshot.queryParams.sneaker) {
+          this.router.navigate(['../phone-verification'], {
+            queryParams: { redirectTo: `product/${this.selectedPair.productID}` }
+          });
+        } else {
+          this.router.navigate(['../phone-verification'], {
+            queryParams: { redirectTo: `sell` }
+          });
+        }
       }
     });
   }

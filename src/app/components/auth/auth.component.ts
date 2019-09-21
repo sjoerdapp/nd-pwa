@@ -18,7 +18,7 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     this.mode = this.route.snapshot.queryParams.mode;
-    this.code = this.route.snapshot.queryParams.code;
+    this.code = this.route.snapshot.queryParams.oobCode;
 
     if (this.mode === 'resetPassword') {
       this.router.navigate(['../reset-password'], { queryParams: { code: this.code } });

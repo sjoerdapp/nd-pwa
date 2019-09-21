@@ -1,7 +1,7 @@
 @import '../../base_styles/base';
 
 .carousel {
-    height: 37vh;
+    height: 27%;
     width: 100vw;
     max-width: 100%;
     position: relative;
@@ -19,10 +19,8 @@
     .search-bar {
         position: absolute;
         display: grid;
-        grid-template-columns: 90% 10%;
         @include vendor(transition, 0.50s ease-in-out);
 
-        width: 60vw;
         height: 35px;
         background: $white;
         margin: 0 auto;
@@ -51,6 +49,71 @@
             color: $black;
             opacity: 0.9;
             align-self: center;
+        }
+    }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    .search-bar {
+        grid-template-columns: 90% 10%;
+        #search-field {
+            font-size: $font-xsmall;
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    .search-bar {
+        grid-template-columns: 92% 8%;
+
+        #search-field {
+            font-size: $font-xsmall;
+        }
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    .search-bar {
+        width: 60%;
+        grid-template-columns: 92% 8%;
+
+        #search-field {
+            font-size: $font-small;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    .search-bar {
+        width: 50%;
+        grid-template-columns: 92% 8%;
+
+        #search-field {
+            font-size: $font-small;
+        }
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    .search-bar {
+        width: 40%;
+        grid-template-columns: 92% 8%;
+
+        #search-field {
+            font-size: $font-small;
+        }
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    .search-bar {
+        width: 30%;
+        grid-template-columns: 92% 8%;
+
+        #search-field {
+            font-size: $font-small;
         }
     }
 }

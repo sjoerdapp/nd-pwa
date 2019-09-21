@@ -23,8 +23,12 @@
     align-content: center;
 
     .checkout-btns {
-        width: 50%;
-        margin: $spacing-normal auto;
+        justify-self: center;
+        margin-top: $spacing-normal;
+        
+        button {
+            margin: $spacing-xsmall auto;
+        }
     }
 
     button {
@@ -56,6 +60,7 @@
         background: $white;
         border-radius: $spacing-xsmall;
         text-align: center;
+        justify-self: center;
 
         .summary-items {
             padding: $spacing-xsmall;
@@ -144,5 +149,191 @@
 
     .checkout-payment {
         @extend .checkout-shipping;
+    }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+    .checkout-summary {
+        .summary-item {
+            h6 {
+                font-size: $font-xxsmall;
+            }
+        }
+
+        .summary-numbers {
+            h5 {
+                font-size: $font-xsmall;
+            }
+        }
+    }
+
+    .checkout-btns {
+        width: 80%;
+        
+        button, ngx-paypal {
+            padding: $spacing-xsmall!important;
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+    .checkout-summary {
+        .summary-item {
+            h6 {
+                font-size: $font-xsmall;
+            }
+        }
+
+        .summary-numbers {
+            h5 {
+                font-size: $font-xsmall;
+            }
+        }
+    }
+
+    .checkout-btns {
+        width: 65%;
+        
+        button, ngx-paypal {
+            padding: $spacing-xsmall!important;
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+    .checkout-summary {
+        .summary-item {
+            h6 {
+                font-size: $font-small;
+            }
+
+            img {
+                width: 80%!important;
+            }
+        }
+
+        .summary-numbers {
+            h5 {
+                font-size: $font-normal;
+            }
+        }
+    }
+
+    .checkout-btns {
+        width: 70%;
+        
+        button, ngx-paypal {
+            padding: $spacing-small!important;
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+    .checkout-summary {
+        width: 75%!important;
+
+        h4 {
+            font-size: $font-large;
+        }
+
+        .summary-item {
+            h6 {
+                font-size: $font-small;
+            }
+
+            img {
+                width: 80%!important;
+            }
+        }
+
+        .summary-numbers {
+            h5 {
+                font-size: $font-normal;
+            }
+        }
+    }
+
+    .checkout-btns {
+        width: 50%;
+
+        button, ngx-paypal {
+            padding: $spacing-normal!important;
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+    .checkout-summary {
+        width: 75%!important;
+
+        h4 {
+            font-size: $font-large;
+        }
+
+        .summary-item {
+            h6 {
+                font-size: $font-small;
+            }
+
+            img {
+                width: 80%!important;
+            }
+        }
+
+        .summary-numbers {
+            h5 {
+                font-size: $font-normal;
+            }
+        }
+    }
+
+    .checkout-btns {
+        width: 50%;
+        
+        button, ngx-paypal {
+            padding: $spacing-normal!important;
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (min-width: 2000px) {
+    .checkout-summary {
+        width: 75%!important;
+
+        h4 {
+            font-size: $font-large;
+        }
+
+        .summary-item {
+            h6 {
+                font-size: $font-small;
+            }
+
+            img {
+                width: 80%!important;
+            }
+        }
+
+        .summary-numbers {
+            h5 {
+                font-size: $font-normal;
+            }
+        }
+    }
+
+    .checkout-btns {
+        width: 50%;
+        
+        button, ngx-paypal {
+            padding: $spacing-normal!important;
+            width: 100%;
+        }
     }
 }

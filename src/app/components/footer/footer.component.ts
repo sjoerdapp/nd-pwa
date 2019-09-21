@@ -12,4 +12,8 @@ export class FooterComponent implements OnInit {
   ngOnInit() {
   }
 
+  goToLink(link) {
+    window.open(`https://${link}.com/nxtdrop`, '_blank');
+  }
+
 }
