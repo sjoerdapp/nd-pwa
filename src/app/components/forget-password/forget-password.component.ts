@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmailService } from 'src/app/services/email.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-forget-password',
@@ -14,10 +15,12 @@ export class ForgetPasswordComponent implements OnInit {
   sent = false;
 
   constructor(
+    private title: Title,
     private emailService: EmailService
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Forgot Password | NXTDROP: Buy and Sell Sneakers in Canada`);
   }
 
   sendLink() {

@@ -3,9 +3,9 @@ export class Product {
     brand: string;
     line: string;
     model: string;
-    assetURL?: string;
+    assetURL: string;
     colorway: string;
-    yearMade: Date;
+    yearMade: string;
     type: string;
     lowestPrice?: number;
 }

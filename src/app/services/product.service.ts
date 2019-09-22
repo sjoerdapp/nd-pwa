@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { isNull } from 'util';
+import { Observable } from 'rxjs';
+import { Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class ProductService {
   ) { }
 
   getProductInfo(productID) {
-    return this.afs.collection('products').doc(`${productID}`).valueChanges();
+    return this.afs.collection('products').doc(`${productID}`).valueChanges() as Observable<Product>;
   }
 
   getBuy(productID) {

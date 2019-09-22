@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-activate-account',
@@ -17,11 +18,13 @@ export class ActivateAccountComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private title: Title
   ) { }
 
   ngOnInit() {
-    this.code = this.route.snapshot.queryParams.code; 
+    this.code = this.route.snapshot.queryParams.code;
+    this.title.setTitle(`Activate Account | NXTDROP: Sell and Buy Sneakers in Canada`);
 
     this.afs.collection(`users`).doc(`${this.code}`).update({
       isActive: true

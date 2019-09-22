@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsProfileService } from 'src/app/services/settings-profile.service';
 import { User } from 'src/app/models/user';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-settings-profile',
@@ -24,10 +25,12 @@ export class SettingsProfileComponent implements OnInit {
   updated = false;
 
   constructor(
-    private settingsProfileService: SettingsProfileService
+    private settingsProfileService: SettingsProfileService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Edit Profile | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.settingsProfileService.getUserInfo().then(res => {
       res.subscribe(data => {
         this.user = data;

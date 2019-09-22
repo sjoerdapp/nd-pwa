@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { Transaction } from 'src/app/models/transaction';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-transaction-review',
@@ -34,10 +35,12 @@ export class TransactionReviewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private TranService: TransactionService
+    private TranService: TransactionService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Transaction Review | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.transactionID = this.route.snapshot.queryParams.transactionID;
 
     if (isNullOrUndefined(this.transactionID)) {

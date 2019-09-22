@@ -1,10 +1,11 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { SellService } from 'src/app/services/sell.service';
-import { isUndefined, isNullOrUndefined } from 'util';
+import { isUndefined, isNullOrUndefined, isNull } from 'util';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { OfferService } from 'src/app/services/offer.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-make-an-offer',
@@ -37,10 +38,12 @@ export class MakeAnOfferComponent implements OnInit {
     private router: Router,
     private offerService: OfferService,
     private ngZone: NgZone,
-    private auth: AuthService
+    private auth: AuthService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Make an Offer | NXTDROP: Buy and Sell Sneakers in Canada`);
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
         this.selectedPair = JSON.parse(params.sneaker);
@@ -50,6 +53,10 @@ export class MakeAnOfferComponent implements OnInit {
     });
 
     this.auth.isConnected().then(res => {
+      if(isNull(res)) {
+        this.router.navigate([`login`]);
+      }
+
       if (isNullOrUndefined(res.phoneNumber)) {
         this.router.navigate(['../phone-verification'], {
           queryParams: { redirectTo: `product/${this.selectedPair.productID}` }

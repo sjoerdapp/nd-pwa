@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { User } from 'src/app/models/user';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -27,10 +28,12 @@ export class ProfileComponent implements OnInit {
   loading = false;
 
   constructor(
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Your profile | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.profileService.getUserData().then(val => {
       val.subscribe(data => {
         this.dashInfo = data;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-request',
@@ -9,19 +10,21 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class RequestComponent implements OnInit {
 
-  //data = require('./products2.json');
+  //data = require('./products3.json');
 
   constructor(
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Request Product | NXTDROP: Sell and Buy Sneakers in Canada`);
     //this.uploadAllData();
     //this.count();
     //this.up();
   }
 
-  count() {
+  /*count() {
     this.afs.collection('products').get().subscribe(data => {
       let haveAsset = 0;
       let haveNoAsset = 0;
@@ -39,7 +42,7 @@ export class RequestComponent implements OnInit {
     });
   }
 
-  /*public uploadImages(filename) {
+  public uploadImages(filename) {
     const listRef = firebase.storage().ref().child('products/');
     return listRef.child(`${filename}`).getDownloadURL().then(downloadURL => {
       return downloadURL;
@@ -61,7 +64,7 @@ export class RequestComponent implements OnInit {
           model: element.Model,
           colorway: element.colorway,
           yearMade: element.yearMade,
-          type: element.type,
+          type: element.Type,
           assetURL
         };
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmailService } from 'src/app/services/email.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reset-password',
@@ -24,10 +25,12 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     private emailService: EmailService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Reset Password | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.code = this.route.snapshot.queryParams.code;
     console.log(this.code);
     this.pwdChanges();

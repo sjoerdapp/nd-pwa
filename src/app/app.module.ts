@@ -23,9 +23,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
 import { SettingsPasswordComponent } from './components/settings-password/settings-password.component';
-/*import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
+import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
 import { SettingsSellingComponent } from './components/settings-selling/settings-selling.component';
-import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';*/
+import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';
 import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';
 import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
 import { SellComponent } from './components/sell/sell.component';
@@ -46,6 +46,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { AuthComponent } from './components/auth/auth.component';
 import { PhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
 import { SoldComponent } from './components/sold/sold.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -71,8 +72,7 @@ import { NgAisModule } from 'angular-instantsearch';
 
 // Mask Module
 import { NgxMaskModule, IConfig } from 'ngx-mask';
-
-export let options: Partial<IConfig> | (() => Partial<IConfig>);
+// export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 import { NgxPayPalModule } from 'ngx-paypal';
 
@@ -95,9 +95,9 @@ import { NgxPayPalModule } from 'ngx-paypal';
     SettingsComponent,
     SettingsProfileComponent,
     SettingsPasswordComponent,
-    /*SettingsBuyingComponent,
+    SettingsBuyingComponent,
     SettingsSellingComponent,
-    SettingsShippingComponent,*/
+    SettingsShippingComponent,
     SettingsPayoutComponent,
     TransactionReviewComponent,
     SellComponent,
@@ -117,7 +117,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     ResetPasswordComponent,
     AuthComponent,
     PhoneVerificationComponent,
-    SoldComponent
+    SoldComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -131,7 +132,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     ReactiveFormsModule,
     FormsModule,
     NgAisModule,
-    NgxMaskModule.forRoot(options),
+    NgxMaskModule.forRoot(),
     HttpClientModule,
     NgxPayPalModule
   ],

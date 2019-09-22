@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as algoliasearch from 'algoliasearch';
 import { environment } from 'src/environments/environment';
 import { element } from 'protractor';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search',
@@ -20,10 +21,12 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Search | NXTDROP: Sell and Buy Sneakers in Canada`);
     const element = document.getElementById('search-input');
     element.focus();
     this.activatedRoute.queryParams.subscribe(data => {

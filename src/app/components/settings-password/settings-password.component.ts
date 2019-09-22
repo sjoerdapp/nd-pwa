@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsPasswordService } from 'src/app/services/settings-password.service';
 import { EmailService } from 'src/app/services/email.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-settings-password',
@@ -20,10 +21,12 @@ export class SettingsPasswordComponent implements OnInit {
 
   constructor(
     private settingsPasswordService: SettingsPasswordService,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Change Password | NXTDROP: Sell and Buy Sneakers in Canada`);
   }
 
   pwdChanges($event) {

@@ -1,0 +1,16 @@
+@import '../../base_styles/base';
+
+.main-container {
+    display: grid;
+    align-content: center;
+}
+
+.content-container {
+    text-align: center;
+
+    fa-icon {
+        font-size: $font-large;
+        color: $green;
+        display: block;
+    }
+}

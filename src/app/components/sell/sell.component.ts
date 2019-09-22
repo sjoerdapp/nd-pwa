@@ -3,8 +3,9 @@ import { SellService } from 'src/app/services/sell.service';
 import { environment } from '../../../environments/environment';
 import { Product } from 'src/app/models/product';
 import { Router, ActivatedRoute } from '@angular/router';
-import { isUndefined, isNullOrUndefined } from 'util';
+import { isUndefined, isNullOrUndefined, isNull } from 'util';
 import { AuthService } from 'src/app/services/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sell',
@@ -44,10 +45,12 @@ export class SellComponent implements OnInit {
     private ngZone: NgZone,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private auth: AuthService
+    private auth: AuthService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Sell | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
         let element = document.getElementById('sell-page-1');
@@ -62,6 +65,10 @@ export class SellComponent implements OnInit {
     });
 
     this.auth.isConnected().then(res => {
+      if(isNull(res)) {
+        this.router.navigate([`login`]);
+      }
+
       if (isNullOrUndefined(res.phoneNumber)) {
         if (this.activatedRoute.snapshot.queryParams.sneaker) {
           this.router.navigate(['../phone-verification'], {

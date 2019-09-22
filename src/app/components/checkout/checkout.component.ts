@@ -3,7 +3,8 @@ import { CheckoutService } from 'src/app/services/checkout.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { AuthService } from 'src/app/services/auth.service';
-import { isNullOrUndefined, isBoolean, isUndefined } from 'util';
+import { isNullOrUndefined, isBoolean, isUndefined, isNull } from 'util';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-checkout',
@@ -36,7 +37,8 @@ export class CheckoutComponent implements OnInit {
     private checkoutService: CheckoutService,
     private router: Router,
     private route: ActivatedRoute,
-    private auth: AuthService
+    private auth: AuthService,
+    private title: Title
   ) { }
 
   ngOnInit() {
@@ -46,7 +48,10 @@ export class CheckoutComponent implements OnInit {
       }
     });*/
 
+    this.title.setTitle(`Checkout | NXTDROP: Sell and Buy Sneakers in Canada`);
+
     this.product = JSON.parse(this.route.snapshot.queryParams.product);
+
     this.isSelling = this.route.snapshot.queryParams.sell;
     console.log(this.isSelling);
 
@@ -62,6 +67,10 @@ export class CheckoutComponent implements OnInit {
     }
 
     this.auth.isConnected().then(res => {
+      if(isNull(res)) {
+        this.router.navigate([`login`]);
+      }
+      
       if (isNullOrUndefined(res.phoneNumber)) {
         if (this.route.snapshot.queryParams.product) {
           this.router.navigate(['../phone-verification'], {

@@ -30,7 +30,7 @@
     <button class="settings-back-btn" (click)="backBtn()">Back</button>
     <button *ngIf="!error && !loading && !updated" class="settings-save-btn" id="verifyPayMethod" (click)="submitPayment()" disabled>Save Changes</button>
     <button *ngIf="loading" class="settings-save-btn" id="verifyPayMethod"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
-    <button *ngIf="udpated" class="settings-save-btn" id="verifyPayMethod">Updated</button>
+    <button *ngIf="updated" class="settings-save-btn" id="verifyPayMethod">Updated</button>
     <button *ngIf="error" class="settings-save-btn" id="error">Error</button>
   </div>
 </form>

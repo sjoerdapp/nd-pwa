@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { SellService } from 'src/app/services/sell.service';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-edit-listing',
@@ -40,22 +41,26 @@ export class EditListingComponent implements OnInit {
     this.listingID = this.route.snapshot.params.id;
     this.offerInfo = this.profileService.getListing(this.listingID).then(val => {
       val.subscribe(data => {
-        this.offerInfo = data.data();
-        (document.getElementById('item-size') as HTMLInputElement).value = this.offerInfo.size;
-        (document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
-        this.curCondition = this.offerInfo.condition;
-        this.curPrice = this.offerInfo.price;
-        this.curSize = this.offerInfo.size;
+        if (isUndefined(data)) {
+          this.router.navigate([`page-not-found`]);
+        } else {
+          this.offerInfo = data.data();
+          (document.getElementById('item-size') as HTMLInputElement).value = this.offerInfo.size;
+          (document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
+          this.curCondition = this.offerInfo.condition;
+          this.curPrice = this.offerInfo.price;
+          this.curSize = this.offerInfo.size;
 
-        this.sellService.getHighestOffer(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
-          if (!data.empty) {
-            data.forEach(val => {
-              this.highestOffer = val.data().price;
-            });
-          } else {
-            this.highestOffer = 0;
-          }
-        });
+          this.sellService.getHighestOffer(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
+            if (!data.empty) {
+              data.forEach(val => {
+                this.highestOffer = val.data().price;
+              });
+            } else {
+              this.highestOffer = 0;
+            }
+          });
+        }
       });
     });
   }

@@ -3,6 +3,7 @@ import { Transaction } from 'src/app/models/transaction';
 import { ActivatedRoute } from '@angular/router';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { isNullOrUndefined } from 'util';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sold',
@@ -34,10 +35,12 @@ export class SoldComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private TranService: TransactionService
+    private TranService: TransactionService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Item Sold | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.transactionID = this.route.snapshot.queryParams.transactionID;
 
     if (isNullOrUndefined(this.transactionID)) {

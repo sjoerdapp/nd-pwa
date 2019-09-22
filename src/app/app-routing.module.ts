@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Components
@@ -14,14 +14,14 @@ import { SettingsProfileComponent } from './components/settings-profile/settings
 import { SettingsPasswordComponent } from './components/settings-password/settings-password.component';
 /*import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
 import { SettingsSellingComponent } from './components/settings-selling/settings-selling.component';
-import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';*/
-import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';
+import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';
+import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';*/
 import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
 import { SellComponent } from './components/sell/sell.component';
 import { SearchComponent } from './components/search/search.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+//import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EditListingComponent } from './components/edit-listing/edit-listing.component';
-import { RequestComponent } from './components/request/request.component';
+//import { RequestComponent } from './components/request/request.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
@@ -33,6 +33,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { AuthComponent } from './components/auth/auth.component';
 import { PhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
 import { SoldComponent } from './components/sold/sold.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -49,13 +50,13 @@ const routes: Routes = [
   /*{ path: 'settings/buying', component: SettingsBuyingComponent },
   { path: 'settings/selling', component: SettingsSellingComponent },
   { path: 'settings/shipping', component: SettingsShippingComponent },*/
-  { path: 'settings/payout', component: SettingsPayoutComponent },
+  //{ path: 'settings/payout', component: SettingsPayoutComponent },
   { path: 'transaction', component: TransactionReviewComponent },
   { path: 'sell', component: SellComponent },
   { path: 'search', component: SearchComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  // { path: 'dashboard', component: DashboardComponent },
   { path: 'edit-listing/:id', component: EditListingComponent },
-  { path: 'request', component: RequestComponent },
+  // { path: 'request', component: RequestComponent },
   { path: 'forgot-password', component: ForgetPasswordComponent },
   { path: 'activate-account', component: ActivateAccountComponent },
   { path: 'support', component: ContactUsComponent },
@@ -66,7 +67,8 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'phone-verification', component: PhoneVerificationComponent },
-  { path: 'sold', component: SoldComponent }
+  { path: 'sold', component: SoldComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

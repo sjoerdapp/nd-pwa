@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as firebase from 'firebase/app';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,12 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Log In | NXTDROP: Buy and Sell Sneakers in Canada`);
     this.loginForm = this.fb.group({
       email: ['', [
         Validators.required
@@ -52,6 +55,14 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.error = false;
     }, 2500);
+  }
+
+  public facebookSign() {
+    this.auth.facebookSignIn();
+  }
+
+  public googleSign() {
+    this.auth.googleSignIn();
   }
 
   // GETTER

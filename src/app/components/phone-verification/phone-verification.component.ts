@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-phone-verification',
@@ -28,7 +29,8 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private title: Title
   ) { }
 
   ngAfterViewInit() {
@@ -52,6 +54,7 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.title.setTitle(`Phone Verification | NXTDROP: Sell and Buy Sneakers in Canada`);
     console.log(this.route.snapshot.queryParams.redirectTo);
   }
 

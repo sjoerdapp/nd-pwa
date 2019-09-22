@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { debounceTime, take, map } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 export class CustomValidators {
 
@@ -41,10 +42,12 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     public auth: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`Sign Up | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.signupForm = this.fb.group({
       firstName: ['', [
         Validators.required,

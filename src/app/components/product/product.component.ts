@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
 import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Title } from '@angular/platform-browser';
+import { Product } from 'src/app/models/product';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-product',
@@ -12,7 +15,16 @@ export class ProductComponent implements OnInit {
 
   productID: string;
 
-  productInfo = {};
+  productInfo: Product = {
+    assetURL: '',
+    model: '',
+    line: '',
+    brand: '',
+    yearMade: '',
+    type: '',
+    productID: '',
+    colorway: ''
+  };
 
   buyListings = [];
   offersListings = [];
@@ -26,7 +38,8 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) { }
 
   ngOnInit() {
@@ -34,7 +47,12 @@ export class ProductComponent implements OnInit {
     this.isConnected();
 
     this.productService.getProductInfo(this.productID).subscribe(data => {
-      this.productInfo = data;
+      if (isUndefined(data)) {
+        this.router.navigate([`page-not-found`]);
+      } else {
+        this.productInfo = data;
+        this.title.setTitle(`${this.productInfo.model} - ${this.productInfo.brand} | NXTDROP`);
+      }
     });
   }
 
