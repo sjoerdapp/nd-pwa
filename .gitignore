@@ -52,5 +52,7 @@ src/assets/Nike-Air-Force-1-Low-All-Over-Logo-Red.jpg
 src/assets/Yeezy-Boost-350-V2-Zebra.jpg
 
 # API Keys
-/src/environments/environment.ts
-/src/environments/environment.prod.ts
+src/environments/environment.ts
+src/environments/environment.prod.ts
+
+.firebase/hosting.ZGlzdFxuZC1wd2E.cache
