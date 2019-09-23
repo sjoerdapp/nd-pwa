@@ -5,6 +5,7 @@ import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { AuthService } from 'src/app/services/auth.service';
 import { isNullOrUndefined, isBoolean, isUndefined, isNull } from 'util';
 import { Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -74,7 +75,7 @@ export class CheckoutComponent implements OnInit {
       if (isNullOrUndefined(res.phoneNumber)) {
         if (this.route.snapshot.queryParams.product) {
           this.router.navigate(['../phone-verification'], {
-            queryParams: { redirectTo: `product/${this.product.productID}` }
+            queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
           });
         }
       }
@@ -97,7 +98,7 @@ export class CheckoutComponent implements OnInit {
   private initConfig() {
     this.payPalConfig = {
       currency: 'CAD',
-      clientId: 'AQW2Qq1TY5a6Tfcq7HKpnMrF7cpNeCskm4frrbBC8eFcbNFL2FUUkmRcoBb-8I0ijAt2Y4yTiipaSRSz',
+      clientId: environment.payPal.apiKey,
       createOrderOnClient: (data) => <ICreateOrderRequest>{
         intent: 'CAPTURE',
         purchase_units: [{
@@ -204,7 +205,7 @@ export class CheckoutComponent implements OnInit {
 
   goBack() {
     const id = this.product.model.toLowerCase();
-    this.router.navigate([`../product/${id.replace(/ /g, '-')}`]);
+    this.router.navigate([`product/${id.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-')}`]);
   }
 
   /*editShipping() {

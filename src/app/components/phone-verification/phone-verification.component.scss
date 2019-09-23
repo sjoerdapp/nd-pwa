@@ -50,12 +50,22 @@ section {
             font-weight: $weight-black;
             width: 50%;
             margin: $spacing-small auto;
+            background: $green;
             cursor: pointer;
             @include vendor(transition, all 0.25s ease-in-out);
             border-radius: $spacing-xxsmall;
 
             &:hover {
-                background: $matteblue;
+                background: $mintgreen;
+            }
+        }
+
+        #back-btn {
+            background: $white;
+            color: $black;
+
+            &:hover {
+                background: $coolgrey;
             }
         }
 
@@ -100,7 +110,11 @@ section {
         }
 
         button {
-            width: 70%!important;
+            width: 45%!important;
+        }
+
+        #back-btn {
+            width: 35%!important;
         }
     }
 }
@@ -113,6 +127,10 @@ section {
 
         p {
             font-size: $font-xxsmall;
+        }
+
+        button {
+            width: 45%!important;
         }
 
         input {
@@ -128,11 +146,15 @@ section {
         }
 
         p {
-            font-size: $font-xsmall;
+            font-size: $font-xxsmall;
         }
 
         button {
             width: 40%!important;
+        }
+
+        #back-btn {
+            width: 20%!important;
         }
 
         input {
@@ -148,11 +170,15 @@ section {
         }
 
         p {
-            font-size: $font-xsmall;
+            font-size: $font-xxsmall;
         }
 
         button {
             width: 35%!important;
+        }
+
+        #back-btn {
+            width: 15.75%!important;
         }
 
         input {
@@ -175,6 +201,10 @@ section {
             width: 30%!important;
         }
 
+        #back-btn {
+            width: 15%!important;
+        }
+
         input {
             width: 550%;
         }
@@ -192,7 +222,11 @@ section {
         }
 
         button {
-            width: 30%!important;
+            width: 25%!important;
+        }
+
+        #back-btn {
+            width: 12.5%!important;
         }
 
         input {

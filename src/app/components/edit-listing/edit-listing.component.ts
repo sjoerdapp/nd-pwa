@@ -108,7 +108,7 @@ export class EditListingComponent implements OnInit {
         return;
       }
 
-      this.profileService.updateListing(this.offerInfo.listingID, this.offerInfo.productID, condition, price, size).then((res) => {
+      this.profileService.updateListing(this.offerInfo.listingID, this.offerInfo.productID, this.offerInfo.price, condition, price, size).then((res) => {
         if (res) {
           this.udpateSuccessful();
         } else {

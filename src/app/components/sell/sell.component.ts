@@ -16,7 +16,7 @@ export class SellComponent implements OnInit {
 
   searchConfig = {
     ...environment.algolia,
-    indexName: 'test_PRODUCTS'
+    indexName: 'prod_PRODUCTS'
   };
   showResults = false;
 

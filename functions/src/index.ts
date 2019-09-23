@@ -2,6 +2,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as algoliasearch from 'algoliasearch';
+import * as cryptoString from 'crypto-random-string';
 
 // initalizations
 admin.initializeApp();
@@ -70,9 +71,89 @@ exports.accountCreated = functions.https.onRequest((req, res) => {
         };
 
         return sgMail.send(msg).then((content: any) => {
-            return res.status(200).send(content);
+            console.log(content);
+            return res.status(200).send(true);
         }).catch((err: any) => {
-            return res.send(err);
+            console.error(err);
+            return res.send(false);
+        });
+    });
+});
+
+// Email to reset account
+exports.resetPassword = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send('Forbidden!');
+        }
+
+        console.log(`To: ${req.body.toEmail}, Name: ${req.body.toUsername}`);
+        const code = cryptoString({ length: 24, type: 'url-safe' });
+
+        return admin.firestore().collection(`users`).doc(`${req.body.toUid}`).set({
+            resetCode: code
+        }, { merge: true }).then(() => {
+            const msg = {
+                to: req.body.toEmail,
+                from: 'notifications@nxtdrop.com',
+                templateId: 'd-1630d61513f54005944c4abb4cb268ed',
+                dynamic_template_data: {
+                    username: req.body.toUsername,
+                    uid: req.body.toUid,
+                    email: req.body.toEmail,
+                    code: code
+                }
+            };
+
+            return sgMail.send(msg).then((content: any) => {
+                console.log(content);
+                return res.send(true);
+            }).catch((err: any) => {
+                console.error(err);
+                return res.send(false);
+            });
+        }).catch(err => {
+            console.error(err);
+            return res.send(false);
+        })
+    });
+});
+
+// Change Password using Admin SDK
+exports.newPassword = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'PUT') {
+            return res.status(403).send(false);
+        }
+
+        return admin.firestore().collection(`users`).doc(`${req.body.uid}`).get().then(response => {
+            const data = response.data();
+            if (data) {
+                if (data.resetCode === req.body.code) {
+                    return admin.auth().updateUser(req.body.uid, {
+                        password: req.body.newPass
+                    }).then(r => {
+                        console.log(`Password Changed`);
+                        admin.firestore().collection(`users`).doc(`${req.body.uid}`).update({
+                            resetCode: admin.firestore.FieldValue.delete()
+                        }).then(() => {
+                            console.log(`resetCode deleted`);
+                        }).catch(err => {
+                            console.error(`resetCode could not be deleted: ${err}`);
+                        });
+                        return res.send(true);
+                    }).catch(err => {
+                        console.error(err);
+                        res.send(false);
+                    });
+                } else {
+                    console.error(`resetCode: ${data.resetCode}, bodyCode: ${req.body.code}`);
+                    return res.send(false);
+                }
+            } else {
+                console.error(`Users does not exist`);
+                return res.send(false);
+            }
         });
     });
 });

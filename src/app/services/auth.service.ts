@@ -14,7 +14,6 @@ import {
 import { User } from '../models/user';
 import { first } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
-import { isNullOrUndefined } from 'util';
 import { EmailService } from './email.service';
 
 @Injectable({

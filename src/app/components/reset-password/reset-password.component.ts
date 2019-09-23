@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EmailService } from 'src/app/services/email.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { EmailService } from 'src/app/services/email.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -16,6 +17,8 @@ export class ResetPasswordComponent implements OnInit {
   confPwd: string;
 
   code: string;
+  uid: string;
+  email: string;
 
   loading = false;
   error = false;
@@ -23,16 +26,18 @@ export class ResetPasswordComponent implements OnInit {
 
 
   constructor(
-    private emailService: EmailService,
     private route: ActivatedRoute,
     private router: Router,
-    private title: Title
+    private title: Title,
+    private emailService: EmailService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Reset Password | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.code = this.route.snapshot.queryParams.code;
-    console.log(this.code);
+    this.uid = this.route.snapshot.queryParams.uid;
+    this.email = this.route.snapshot.queryParams.email;
+    // console.log(this.code);
     this.pwdChanges();
   }
 
@@ -44,14 +49,15 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   resetPassword() {
+    console.log(`resetPassword called`);
     const pwd = (document.getElementById('new-pwd') as HTMLInputElement).value;
     const confPwd = (document.getElementById('confirm-new-pwd') as HTMLInputElement).value;
 
-    if (pwd === confPwd && confPwd !== '' && this.code !== '') {
+    if (pwd === confPwd && confPwd !== '' && this.code !== '' && this.uid !== '' && this.email !== '') {
       this.loading = true;
-      this.emailService.resetPassword(this.code, confPwd).then(res => {
+      this.emailService.resetPassword(this.code, confPwd, this.uid, this.email).subscribe(res => {
         this.loading = false;
-        if (res) {  
+        if (res) {
           this.reset = true;
         } else {
           this.error = true;
@@ -65,7 +71,13 @@ export class ResetPasswordComponent implements OnInit {
             this.router.navigate(['../login']);
           }
         }, 2000);
-      });
+      })
+    } else {
+      this.error = true;
+
+      setTimeout(() => {
+        this.error = false;
+      }, 2000);
     }
   }
 

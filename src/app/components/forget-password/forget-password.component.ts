@@ -28,17 +28,19 @@ export class ForgetPasswordComponent implements OnInit {
     this.loading = true;
     if (this.validEmail) {
       this.emailService.sendResetLink(email).then(res => {
-        this.loading = false;
-        if (res) {
-          this.sent = true;
-        } else {
-          this.error = true;
-        }
-
-        setTimeout(() => {
-          this.error = false;
-          this.sent = false;
-        }, 2000);
+        res.subscribe(data => {
+          this.loading = false;
+          if (data) {
+            this.sent = true;
+          } else {
+            this.error = true;
+          }
+  
+          setTimeout(() => {
+            this.error = false;
+            this.sent = false;
+          }, 2000);
+        });
       });
     }
   }

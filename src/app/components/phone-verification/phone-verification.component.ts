@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-phone-verification',
@@ -37,30 +38,26 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
     this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('container', {
       'size': 'invisible',
       'callback': (res) => {
-        console.log('recaptcha resolved');
-        console.log(res);
+        //console.log('recaptcha resolved');
+        //console.log(res);
         this.isNotRobot = true;
       },
-      'expired-callback': (res) => {
-        console.error(res);
-      }
     });
     
-    this.recaptchaVerifier.render().then(res => {
-      console.log(res);
-    }).catch(err => {
+    this.recaptchaVerifier.render().catch(err => {
       console.error(err);
     });
   }
 
   ngOnInit() {
     this.title.setTitle(`Phone Verification | NXTDROP: Sell and Buy Sneakers in Canada`);
-    console.log(this.route.snapshot.queryParams.redirectTo);
+    this.verifyAreaCode();
+    //console.log(this.route.snapshot.queryParams.redirectTo);
   }
 
   verifyAreaCode() {
-    const code = (document.getElementById('areaCode') as HTMLInputElement).value;
-    this.areaCode = code;
+    //const code = (document.getElementById('areaCode') as HTMLInputElement).value;
+    this.areaCode = '+1';
     this.validNumber();
     // console.log(this.hasAreacode && this.hasNumber);
   }
@@ -114,6 +111,18 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
         console.error(err);
         this.verificationLoading = false;
       });
+    }
+  }
+
+  back() {
+    if (isUndefined(this.route.snapshot.queryParams.redirectTo)) {
+      this.router.navigate([`..`]);
+    } else {
+      if (this.route.snapshot.queryParams.redirectTo === 'sell') {
+        this.router.navigate([`..`]);
+      } else {
+        this.router.navigate([`${this.route.snapshot.queryParams.redirectTo}`]);
+      }
     }
   }
 

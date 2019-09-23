@@ -36,10 +36,10 @@ export class ProfileService {
 
     if (isUndefined(startAfter)) {
       // tslint:disable-next-line: max-line-length
-      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('timestamp', 'desc').limit(6));
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('size', 'asc').limit(6));
     } else {
       // tslint:disable-next-line: max-line-length
-      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('timestamp', 'desc').startAfter(startAfter).limit(6));
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('size', 'asc').startAfter(startAfter).limit(6));
     }
 
     return userRef.valueChanges();
@@ -55,10 +55,10 @@ export class ProfileService {
 
     if (isUndefined(startAfter)) {
       // tslint:disable-next-line: max-line-length
-      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`offers`, ref => ref.orderBy('timestamp', 'desc').limit(6));
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`offers`, ref => ref.orderBy('size', 'asc').limit(6));
     } else {
       // tslint:disable-next-line: max-line-length
-      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`offers`, ref => ref.orderBy('timestamp', 'desc').startAfter(startAfter).limit(6));
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`offers`, ref => ref.orderBy('size', 'asc').startAfter(startAfter).limit(6));
     }
 
     return userRef.valueChanges();
@@ -74,7 +74,7 @@ export class ProfileService {
     return offerRef.get();
   }
 
-  public async updateListing(listingID, productID, condition, price, size): Promise<boolean> {
+  public async updateListing(listingID, productID, oldPrice, condition, price, size): Promise<boolean> {
     let UID: string;
     await this.auth.isConnected().then(data => {
       UID = data.uid;
@@ -87,18 +87,30 @@ export class ProfileService {
 
     const productRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
 
-    let listingSize;
+    let prices = [];
 
-    await productRef.collection(`listings`).get().then(snap => {
-      listingSize = snap.size;
+    await productRef.collection(`listings`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
+        snap.forEach(ele => {
+          prices.push(ele.data().price);
+        });
     });
 
     await productRef.get().then(snap => {
-      if (snap.data().lowestPrice > price || listingSize == 1) {
-        batch.update(productRef, {
-          lowestPrice: price
-        });
-      }
+        if (isUndefined(prices[1]) || price < snap.data().lowestPrice) {
+          batch.update(productRef, {
+              lowestPrice: price
+          });
+        } else if (oldPrice === snap.data().lowestPrice) {
+            if (oldPrice < prices[1]) {
+              batch.update(productRef, {
+                lowestPrice: price
+              });
+            } else {
+              batch.update(productRef, {
+                lowestPrice: prices[1]
+              });
+            }
+        }
     });
 
     batch.update(listingRef, {
