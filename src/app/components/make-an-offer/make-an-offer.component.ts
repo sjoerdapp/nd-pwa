@@ -71,12 +71,6 @@ export class MakeAnOfferComponent implements OnInit {
       if (isNull(res)) {
         this.router.navigate([`login`]);
       }
-
-      if (isNullOrUndefined(res.phoneNumber)) {
-        this.router.navigate(['../phone-verification'], {
-          queryParams: { redirectTo: `product/${this.selectedPair.productID}` }
-        });
-      }
     });
   }
 
