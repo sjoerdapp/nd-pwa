@@ -144,11 +144,11 @@ export class ProfileService {
 
     const batch = this.afs.firestore.batch();
 
-    const offerRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
+    const userListingRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
     const listingRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
     const userRef = this.afs.firestore.collection('users').doc(`${UID}`);
 
-    batch.delete(offerRef);
+    batch.delete(userListingRef);
     batch.delete(listingRef);
     batch.update(userRef, {
       listed: firebase.firestore.FieldValue.increment(-1)

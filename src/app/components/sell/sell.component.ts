@@ -144,6 +144,10 @@ export class SellComponent implements OnInit {
       type: pair.type
     };
 
+    if (!isUndefined(pair.lowestPrice)) {
+      this.selectedPair.lowestPrice = pair.lowestPrice;
+    }
+
     let element = document.getElementById('sell-page-2');
     element.style.display = 'none';
 
