@@ -16,7 +16,7 @@ export class SellComponent implements OnInit {
 
   searchConfig = {
     ...environment.algolia,
-    indexName: 'prod_PRODUCTS'
+    indexName: environment.algolia.index
   };
   showResults = false;
 
@@ -40,6 +40,10 @@ export class SellComponent implements OnInit {
   listed = false;
   error = false;
 
+  // shoe type W or GS
+  isWomen = false;
+  isGS = false;
+
   constructor(
     private sellService: SellService,
     private ngZone: NgZone,
@@ -50,7 +54,9 @@ export class SellComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.title.setTitle(`Sell | NXTDROP: Sell and Buy Sneakers in Canada`);
+    this.title.setTitle(`Sell | NXTDROP: Sell and Buy Sneakers in Canada`); // Change the page title
+
+    // Skip the first page and serves the third page
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
         let element = document.getElementById('sell-page-1');
@@ -64,11 +70,13 @@ export class SellComponent implements OnInit {
       }
     });
 
+    // check if the user is connected and redirect if not
     this.auth.isConnected().then(res => {
       if(isNull(res)) {
         this.router.navigate([`login`]);
       }
 
+      // redirect is phone number verification not verified
       if (isNullOrUndefined(res.phoneNumber)) {
         if (this.activatedRoute.snapshot.queryParams.sneaker) {
           this.router.navigate(['../phone-verification'], {
@@ -143,6 +151,18 @@ export class SellComponent implements OnInit {
       yearMade: pair.yearMade,
       type: pair.type
     };
+
+    const patternW = new RegExp(/.\(W\)/);
+    const patternGS = new RegExp(/.\(GS\)/);
+
+    console.log(pair.model.toUpperCase());
+    if (patternW.test(pair.model.toUpperCase())) {
+      //console.log('Woman Size');
+      this.isWomen = true;
+    } else if (patternGS.test(pair.model.toUpperCase())) {
+      //console.log(`GS size`);
+      this.isGS = true;
+    }
 
     if (!isUndefined(pair.lowestPrice)) {
       this.selectedPair.lowestPrice = pair.lowestPrice;

@@ -32,6 +32,9 @@ export class MakeAnOfferComponent implements OnInit {
   loading: boolean;
   showFinish = true;
 
+  isWomen = false;
+  isGS = false;
+
   constructor(
     private sellService: SellService,
     private activatedRoute: ActivatedRoute,
@@ -47,13 +50,25 @@ export class MakeAnOfferComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
         this.selectedPair = JSON.parse(params.sneaker);
+
+        const patternW = new RegExp(/.\(W\)/);
+        const patternGS = new RegExp(/.\(GS\)/);
+
+        console.log(this.selectedPair.model.toUpperCase());
+        if (patternW.test(this.selectedPair.model.toUpperCase())) {
+          //console.log('Woman Size');
+          this.isWomen = true;
+        } else if (patternGS.test(this.selectedPair.model.toUpperCase())) {
+          //console.log(`GS size`);
+          this.isGS = true;
+        }
       } else {
         this.router.navigate(['/home']);
       }
     });
 
     this.auth.isConnected().then(res => {
-      if(isNull(res)) {
+      if (isNull(res)) {
         this.router.navigate([`login`]);
       }
 

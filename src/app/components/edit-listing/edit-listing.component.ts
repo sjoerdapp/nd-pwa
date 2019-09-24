@@ -29,6 +29,9 @@ export class EditListingComponent implements OnInit {
   curPrice;
   curSize;
 
+  isWomen = false;
+  isGS = false;
+
   constructor(
     private route: ActivatedRoute,
     private profileService: ProfileService,
@@ -45,11 +48,12 @@ export class EditListingComponent implements OnInit {
           this.router.navigate([`page-not-found`]);
         } else {
           this.offerInfo = data.data();
-          (document.getElementById('item-size') as HTMLInputElement).value = this.offerInfo.size;
           (document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
           this.curCondition = this.offerInfo.condition;
           this.curPrice = this.offerInfo.price;
           this.curSize = this.offerInfo.size;
+
+          this.shoeSizes();
 
           this.sellService.getHighestOffer(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
             if (!data.empty) {
@@ -63,6 +67,29 @@ export class EditListingComponent implements OnInit {
         }
       });
     });
+  }
+
+  private shoeSizes() {
+    const patternW = new RegExp(/.\(W\)/);
+    const patternGS = new RegExp(/.\(GS\)/);
+    let type = 'item-size';
+
+    console.log(this.offerInfo.model.toUpperCase());
+    if (patternW.test(this.offerInfo.model.toUpperCase())) {
+      //console.log(`women size`);
+      this.isWomen = true;
+      type = 'item-size-women';
+    } else if (patternGS.test(this.offerInfo.model.toUpperCase())) {
+      //console.log(`GS size`);
+      this.isGS = true;
+      type = 'item-size-gs';
+    } else {
+      type = 'item-size';
+    }
+
+    setTimeout(() => {
+      (document.getElementById(type) as HTMLInputElement).value = this.offerInfo.size;
+    }, 500);
   }
 
   conditionChanges($event) {
