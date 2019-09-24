@@ -109,7 +109,15 @@ export class ProfileComponent implements OnInit {
   }
 
   moreOffers() {
-
+    this.profileService.getUserListings(this.offers[this.offers.length - 1].timestamp)
+      .then(val => {
+        val.subscribe(data => {
+          data.forEach(element => {
+            this.offers.push(element);
+          });
+          // console.log(this.offers);
+        });
+      });
   }
 
 }
