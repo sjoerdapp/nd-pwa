@@ -28,6 +28,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.9.0",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@ngtools/webpack": "^8.0.2",
+    "@sendgrid/helpers": "^6.4.0",
     "@sendgrid/mail": "^6.4.0",
     "@types/braintree-web": "^3.47.0",
     "angular-instantsearch": "^2.2.2",
