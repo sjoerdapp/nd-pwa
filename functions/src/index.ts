@@ -15,12 +15,19 @@ let arr: any[] = [];
 const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
 const index = client.initIndex('prod_PRODUCTS');
 
-// Sendgrid Setup
+// CORS
 const cors = require('cors')({ origin: true });
+
+// Sendgrid Mail Setup
 //const SENDGRID_API_TESTKEY = env.sendgrid.key_test;
 const SENDGRID_API_KEY = env.sendgrid.key;
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(SENDGRID_API_KEY);
+
+//Sendgrid Web Api Setup
+const sgClient = require('@sendgrid/client');
+sgClient.setApiKey(SENDGRID_API_KEY);
+
 
 
 // Email when password is changed
@@ -58,17 +65,41 @@ exports.accountCreated = functions.https.onRequest((req, res) => {
             return res.status(403).send('Forbidden!');
         }
 
-        console.log(`To: ${req.body.toEmail}, Name: ${req.body.toName}`);
+        console.log(`To: ${req.body.toEmail}, Name: ${req.body.toFirstName + ' ' + req.body.toLastName}`);
 
         const msg = {
             to: req.body.toEmail,
             from: 'notifications@nxtdrop.com',
             templateId: 'd-35761f77395f4395bf843c0d9d2352d8',
             dynamic_template_data: {
-                name: req.body.toName,
+                name: req.body.toFirstName + ' ' + req.body.toLastName,
                 uid: req.body.toUid
             }
         };
+
+        const firstRequest = {
+            method: 'POST',
+            url: '/v3/contactdb/recipients',
+            body: [{
+                "email": req.body.toEmail,
+                "first_name": req.body.toFirstName,
+                "last_name": req.body.toLastName
+            }]
+        };
+    
+        sgClient.request(firstRequest).then(([firstResponse, firstBody]: any) => {
+            console.log(firstBody.persisted_recipients[0])
+            const r = {
+                method: 'POST',
+                url: `/v3/contactdb/lists/9601603/recipients/${firstBody.persisted_recipients[0]}`,
+            }
+    
+            sgClient.request(r).then(([secondResponse, secondBody]: any) => {
+                console.log(`Added to NXTDROP list: ${secondResponse.statusCode}`);
+            });
+        }).catch((err: any) => {
+            console.error(err);
+        })
 
         return sgMail.send(msg).then((content: any) => {
             console.log(content);
@@ -87,8 +118,8 @@ exports.resetPassword = functions.https.onRequest((req, res) => {
             return res.status(403).send('Forbidden!');
         }
 
-        console.log(`To: ${req.body.toEmail}, Name: ${req.body.toUsername}`);
         const code = cryptoString({ length: 24, type: 'url-safe' });
+        console.log(`To: ${req.body.toEmail}, Name: ${req.body.toUsername}, Code: ${code}`);
 
         return admin.firestore().collection(`users`).doc(`${req.body.toUid}`).set({
             resetCode: code
