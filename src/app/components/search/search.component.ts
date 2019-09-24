@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as algoliasearch from 'algoliasearch';
 import { environment } from 'src/environments/environment';
-import { element } from 'protractor';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -33,7 +32,7 @@ export class SearchComponent implements OnInit {
       this.queryParam = data.q;
       (element as HTMLInputElement).value = this.queryParam;
     });
-    this.index = this.algoliaClient.initIndex('prod_PRODUCTS');
+    this.index = this.algoliaClient.initIndex(environment.algolia.index);
     this.index.search({
       query: this.queryParam
     }, (err, hits = {}) => {
