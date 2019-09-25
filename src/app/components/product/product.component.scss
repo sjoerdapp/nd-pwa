@@ -21,8 +21,9 @@
         p {
             margin: $spacing-small auto;
             color: $green;
-            text-transform: capitalize;
-            background: $matteblack;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: $black;
             padding: $spacing-xsmall;
             border-radius: $spacing-normal;
 
