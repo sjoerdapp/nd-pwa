@@ -9,14 +9,18 @@ import { Product } from 'src/app/models/product';
 })
 export class TrendingComponent implements OnInit {
 
-  trends;
+  trends = [];
 
   constructor(
     private homeService: HomeService
   ) { }
 
   ngOnInit() {
-    this.homeService.getTrending().subscribe(data => this.trends = data);
+    this.homeService.getTrending().subscribe(data => {
+      data.docs.forEach(ele => {
+        this.trends.push(ele.data());
+      });
+    });
   }
 
 }

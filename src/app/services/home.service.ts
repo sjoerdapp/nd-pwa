@@ -35,7 +35,7 @@ export class HomeService {
     // console.log(today);
 
     const newReleaseRef = this.afs.collection(`products`, ref => ref.where(`yearMade`, `<=`, `${today}`).orderBy(`yearMade`, `desc`).limit(50));
-    return newReleaseRef.valueChanges();
+    return newReleaseRef.get();
   }
 
   public getDiscovery(after?) {
@@ -58,7 +58,7 @@ export class HomeService {
     }
 
     const discoveryRef = this.afs.collection(`products`, ref => ref.orderBy(`discoveryRank`, `asc`).startAfter(after).limit(12));
-    return discoveryRef.valueChanges();
+    return discoveryRef.get();
   }
 
   public getTrending() {
@@ -78,7 +78,7 @@ export class HomeService {
     return of(trendingData);*/
 
     const trendingRef = this.afs.collection(`products`, ref => ref.orderBy(`trendingRank`, `asc`).limit(50));
-    return trendingRef.valueChanges();
+    return trendingRef.get();
   }
 
 }

@@ -9,7 +9,7 @@ import { Product } from 'src/app/models/product';
 })
 export class DiscoveryComponent implements OnInit {
 
-  discoveries;
+  discoveries = [];
 
   loading;
 
@@ -21,23 +21,24 @@ export class DiscoveryComponent implements OnInit {
 
   ngOnInit() {
     this.homeService.getDiscovery().subscribe(data => {
-      this.discoveries = data
-      console.log(this.discoveries);
+      data.docs.forEach(element => {
+        this.discoveries.push(element.data());
+      })
     });
   }
 
   more() {
     this.loading = true;
-    console.log('more() called');
+    //console.log('more() called');
     this.homeService.getDiscovery(this.discoveries.length).subscribe(data => {
-      console.log(data.length);
-      if (data.length == 0) {
+      //console.log(data.docs.length);
+      if (data.docs.length == 0) {
         this.loading = false;
         this.end = true;
-        console.log(this.end);
+        //console.log(this.end);
       } else {
-        data.forEach(ele => {
-          this.discoveries.push(ele);
+        data.docs.forEach(ele => {
+          this.discoveries.push(ele.data());
         });
         this.loading = false;
       }

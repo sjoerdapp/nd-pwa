@@ -9,14 +9,18 @@ import { Product } from 'src/app/models/product';
 })
 export class NewReleasesComponent implements OnInit {
 
-  newReleases;
+  newReleases = [];
 
   constructor(
     private homeService: HomeService
   ) { }
 
   ngOnInit() {
-    this.homeService.getNewReleases().subscribe(data => this.newReleases = data);
+    this.homeService.getNewReleases().subscribe(res => {
+      res.docs.forEach(element => {
+          this.newReleases.push(element.data());
+      })
+    })
   }
 
 }
