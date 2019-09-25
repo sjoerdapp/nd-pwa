@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { AuthService } from './services/auth.service';
 
 declare var gtag;
 
@@ -11,13 +12,20 @@ declare var gtag;
 })
 export class AppComponent {
 
-  constructor(router: Router) {
+  constructor(
+    router: Router,
+    auth: AuthService
+  ) {
     const navEndEvents = router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     );
 
+    auth.isConnected().then(res => {
+      gtag('set', {'user_id': res.uid}); // Set the user ID using signed-in user_id.
+    })
+
     navEndEvents.subscribe((event: NavigationEnd) => {
-      gtag('config', 'G-ZQK7P6XM4M', {
+      gtag('config', 'UA-148418496-1', {
         'page_path': event.urlAfterRedirects
       });
     });
