@@ -5,8 +5,11 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 import { Product } from 'src/app/models/product';
 import { isUndefined } from 'util';
+import { ModalComponent } from '../modal/modal.component';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
+  providers: [ModalComponent],
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
@@ -39,7 +42,9 @@ export class ProductComponent implements OnInit {
     private productService: ProductService,
     private auth: AuthService,
     private router: Router,
-    private title: Title
+    private title: Title,
+    private modal: ModalComponent,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -54,6 +59,9 @@ export class ProductComponent implements OnInit {
         this.title.setTitle(`${this.productInfo.model} - ${this.productInfo.brand} | NXTDROP`);
       }
     });
+
+    //document.cookie = 'modalOffer=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/product/';
+    //console.log(document.cookie);
   }
 
   /*addToCart(listing) {
@@ -97,6 +105,9 @@ export class ProductComponent implements OnInit {
       this.productService.getBuy(this.productID).subscribe(data => {
         this.buyListings = data;
         // console.log(this.buyListings);
+        setTimeout(() => {
+          this.getModalCookie();
+        }, 5000);
       });
     }
   }
@@ -114,6 +125,18 @@ export class ProductComponent implements OnInit {
     }
   }
 
-}
+  private getModalCookie() {
+    const cookies = document.cookie.split(`;`);
+    cookies.forEach(element => {
+      element.split(`=`);
 
-// The Marketplacew Guy book
+      if (document.cookie.replace(/(?:(?:^|.*;\s*)modalOffer\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+        this.modal.open();
+        this.modalService.placeOffer(this.productInfo);
+        const expr = new Date(new Date().getTime() + 60*60000*24).toUTCString();
+        document.cookie = `modalOffer=true; expires=${expr}; path=/product/`
+      }
+    });
+  }
+
+}
