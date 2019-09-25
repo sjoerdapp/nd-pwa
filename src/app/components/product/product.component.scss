@@ -18,6 +18,19 @@
         text-align: center;
         //border-bottom: 1px solid $lightgrey;
 
+        p {
+            margin: $spacing-small auto;
+            color: $green;
+            text-transform: capitalize;
+            background: $matteblack;
+            padding: $spacing-xsmall;
+            border-radius: $spacing-normal;
+
+            fa-icon {
+                margin-left: $spacing-xxsmall;
+            }
+        }
+
         img {
             display: block;
             margin: $spacing-normal auto;
@@ -155,6 +168,11 @@
     }
 
     .product-info {
+        p {
+            font-size: $font-xsmall;
+            width: 80%;
+        }
+
         img {
             width: 250px;
             height: 250px;
@@ -201,6 +219,11 @@
     }
 
     .product-info {
+        p {
+            font-size: $font-xsmall;
+            width: 40%;
+        }
+
         img {
             width: 250px;
             height: 250px;
@@ -252,6 +275,11 @@
     }
 
     .product-info {
+        p {
+            font-size: $font-xsmall;
+            width: 40%;
+        }
+
         img {
             width: 250px;
             height: 250px;
@@ -309,6 +337,11 @@
     }
 
     .product-info {
+        p {
+            font-size: $font-xsmall;
+            width: 25%;
+        }
+
         img {
             width: 300px;
             height: 300px;
@@ -366,6 +399,11 @@
     }
 
     .product-info {
+        p {
+            font-size: $font-small;
+            width: 25%;
+        }
+
         img {
             width: 350px;
             height: 350px;
@@ -423,6 +461,11 @@
     }
 
     .product-info {
+        p {
+            font-size: $font-small;
+            width: 25%;
+        }
+        
         img {
             width: 375px;
             height: 375px;
