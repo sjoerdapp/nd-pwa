@@ -34,6 +34,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { PhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
 import { SoldComponent } from './components/sold/sold.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -68,6 +69,7 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'phone-verification', component: PhoneVerificationComponent },
   { path: 'sold', component: SoldComponent },
+  { path: 'privacy', component: PrivacyComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

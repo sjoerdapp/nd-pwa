@@ -48,6 +48,7 @@ import { PhoneVerificationComponent } from './components/phone-verification/phon
 import { SoldComponent } from './components/sold/sold.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -120,7 +121,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     PhoneVerificationComponent,
     SoldComponent,
     PageNotFoundComponent,
-    ModalComponent
+    ModalComponent,
+    PrivacyComponent
   ],
   imports: [
     BrowserModule,
