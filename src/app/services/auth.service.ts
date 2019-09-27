@@ -83,6 +83,10 @@ export class AuthService {
           isActive: false
         };
 
+        gtag('event', 'sign_up', {
+          'event_category': 'engagement',
+          'event_label': 'Email_SignUp'
+        });
         return this.createUserData(userData, user);
       });
     } else {
