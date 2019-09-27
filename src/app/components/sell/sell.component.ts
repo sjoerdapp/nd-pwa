@@ -7,6 +7,8 @@ import { isUndefined, isNullOrUndefined, isNull } from 'util';
 import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 
+declare var gtag: any;
+
 @Component({
   selector: 'app-sell',
   templateUrl: './sell.component.html',
@@ -103,6 +105,10 @@ export class SellComponent implements OnInit {
 
     this.sellService.addListing(this.selectedPair, this.pairCondition, this.pairPrice, this.pairSize)
       .then((res) => {
+        gtag('event', 'listing_added', {
+          'event_category': 'engagement',
+          'event_label': this.selectedPair.model
+        });
         if (res) {
           this.addListed();
         } else {

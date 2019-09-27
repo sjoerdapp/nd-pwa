@@ -7,6 +7,8 @@ import { OfferService } from 'src/app/services/offer.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 
+declare var gtag: any;
+
 @Component({
   selector: 'app-make-an-offer',
   templateUrl: './make-an-offer.component.html',
@@ -104,6 +106,10 @@ export class MakeAnOfferComponent implements OnInit {
 
     this.offerService.addOffer(this.selectedPair, this.pairCondition, this.pairPrice, this.pairSize).then(res => {
       if (res) {
+        gtag('event', 'offer_placed', {
+          'event_category': 'engagement',
+          'event_label': this.selectedPair.model
+        });
         this.addListed();
       } else {
         this.addError();

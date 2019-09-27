@@ -75,10 +75,10 @@ export class CheckoutComponent implements OnInit {
     }
 
     this.auth.isConnected().then(res => {
-      if(isNull(res)) {
+      if (isNull(res)) {
         this.router.navigate([`login`]);
       }
-      
+
       if (isNullOrUndefined(res.phoneNumber)) {
         if (this.route.snapshot.queryParams.product) {
           this.router.navigate(['../phone-verification'], {
@@ -181,6 +181,11 @@ export class CheckoutComponent implements OnInit {
 
   sellNow() {
     this.checkoutService.sellTransactionApproved(this.product).then(res => {
+      gtag('event', 'item_sold', {
+        'event_category': 'ecommerce',
+        'event_label': this.product.type,
+        'event_value': this.product.price + this.shippingPrice
+      });
       if (isBoolean(res)) {
         this.router.navigate(['sold']);
       } else {
