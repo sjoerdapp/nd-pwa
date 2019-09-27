@@ -77,6 +77,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 // export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 import { NgxPayPalModule } from 'ngx-paypal';
+import { TermsComponent } from './components/terms/terms.component';
 
 @NgModule({
   declarations: [
@@ -122,7 +123,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     SoldComponent,
     PageNotFoundComponent,
     ModalComponent,
-    PrivacyComponent
+    PrivacyComponent,
+    TermsComponent
   ],
   imports: [
     BrowserModule,
