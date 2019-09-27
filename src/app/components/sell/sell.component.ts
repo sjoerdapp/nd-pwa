@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { isUndefined, isNullOrUndefined, isNull } from 'util';
 import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
+import { SlackService } from 'src/app/services/slack.service';
 
 declare var gtag: any;
 
@@ -46,13 +47,16 @@ export class SellComponent implements OnInit {
   isWomen = false;
   isGS = false;
 
+  user: any;
+
   constructor(
     private sellService: SellService,
     private ngZone: NgZone,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private auth: AuthService,
-    private title: Title
+    private title: Title,
+    private slack: SlackService
   ) { }
 
   ngOnInit() {
@@ -77,6 +81,8 @@ export class SellComponent implements OnInit {
       if(isNull(res)) {
         this.router.navigate([`login`]);
       }
+
+      this.user = res;
 
       // redirect is phone number verification not verified
       if (isNullOrUndefined(res.phoneNumber)) {
@@ -110,6 +116,9 @@ export class SellComponent implements OnInit {
           'event_label': this.selectedPair.model
         });
         if (res) {
+          const msg = `${this.user.uid} listed ${this.selectedPair.model}, size ${this.pairSize} at ${this.pairPrice}`;
+          this.slack.sendAlert('offers', msg);
+
           this.addListed();
         } else {
           this.addError();

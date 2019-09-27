@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { isNullOrUndefined, isBoolean, isUndefined, isNull } from 'util';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
+import { SlackService } from 'src/app/services/slack.service';
 
 declare var gtag: any;
 
@@ -36,12 +37,15 @@ export class CheckoutComponent implements OnInit {
   tax = 0;
   isSelling: any;
 
+  user: any;
+
   constructor(
     private checkoutService: CheckoutService,
     private router: Router,
     private route: ActivatedRoute,
     private auth: AuthService,
-    private title: Title
+    private title: Title,
+    private slack: SlackService
   ) { }
 
   ngOnInit() {
@@ -78,6 +82,8 @@ export class CheckoutComponent implements OnInit {
       if (isNull(res)) {
         this.router.navigate([`login`]);
       }
+
+      this.user = res;
 
       if (isNullOrUndefined(res.phoneNumber)) {
         if (this.route.snapshot.queryParams.product) {
@@ -154,6 +160,10 @@ export class CheckoutComponent implements OnInit {
             'event_label': this.product.type,
             'event_value': this.product.price + this.shippingPrice
           });
+
+          const msg = `${this.user.uid} bought ${this.product.model}, size ${this.product.size} at ${this.product.price} from ${this.product.sellerID}`;
+          this.slack.sendAlert('offers', msg);
+
           if (isBoolean(res)) {
             this.router.navigate(['transaction']);
           } else {
@@ -186,6 +196,10 @@ export class CheckoutComponent implements OnInit {
         'event_label': this.product.type,
         'event_value': this.product.price + this.shippingPrice
       });
+
+      const msg = `${this.user.uid} sold ${this.product.model}, size ${this.product.size} at ${this.product.price} from ${this.product.sellerID}`;
+      this.slack.sendAlert('offers', msg);
+
       if (isBoolean(res)) {
         this.router.navigate(['sold']);
       } else {

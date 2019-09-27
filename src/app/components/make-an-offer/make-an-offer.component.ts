@@ -1,11 +1,12 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { SellService } from 'src/app/services/sell.service';
-import { isUndefined, isNullOrUndefined, isNull } from 'util';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { isUndefined, isNull } from 'util';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { OfferService } from 'src/app/services/offer.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
+import { SlackService } from 'src/app/services/slack.service';
 
 declare var gtag: any;
 
@@ -37,6 +38,8 @@ export class MakeAnOfferComponent implements OnInit {
   isWomen = false;
   isGS = false;
 
+  user: any;
+
   constructor(
     private sellService: SellService,
     private activatedRoute: ActivatedRoute,
@@ -44,7 +47,8 @@ export class MakeAnOfferComponent implements OnInit {
     private offerService: OfferService,
     private ngZone: NgZone,
     private auth: AuthService,
-    private title: Title
+    private title: Title,
+    private slack: SlackService
   ) { }
 
   ngOnInit() {
@@ -70,6 +74,7 @@ export class MakeAnOfferComponent implements OnInit {
     });
 
     this.auth.isConnected().then(res => {
+      this.user = res;
       if (isNull(res)) {
         this.router.navigate([`login`]);
       }
@@ -110,6 +115,10 @@ export class MakeAnOfferComponent implements OnInit {
           'event_category': 'engagement',
           'event_label': this.selectedPair.model
         });
+
+        const msg = `${this.user.uid} placed an offer for ${this.selectedPair.model}, size ${this.pairSize} at ${this.pairPrice}`;
+        this.slack.sendAlert('offers', msg);
+        
         this.addListed();
       } else {
         this.addError();
