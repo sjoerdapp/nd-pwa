@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from './services/auth.service';
 
-declare var gtag;
+declare var gtag: any;
 
 @Component({
   selector: 'app-root',

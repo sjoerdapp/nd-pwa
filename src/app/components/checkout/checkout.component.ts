@@ -7,6 +7,8 @@ import { isNullOrUndefined, isBoolean, isUndefined, isNull } from 'util';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 
+declare var gtag: any;
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -52,6 +54,11 @@ export class CheckoutComponent implements OnInit {
     this.title.setTitle(`Checkout | NXTDROP: Sell and Buy Sneakers in Canada`);
 
     this.product = JSON.parse(this.route.snapshot.queryParams.product);
+
+    gtag('event', 'begin_checkout', {
+      'event_category': 'ecommerce',
+      'event_label': this.product.model
+    });
 
     this.isSelling = this.route.snapshot.queryParams.sell;
     console.log(this.isSelling);
@@ -142,6 +149,11 @@ export class CheckoutComponent implements OnInit {
       onClientAuthorization: (data) => {
         console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
         this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice).then(res => {
+          gtag('event', 'purchase', {
+            'event_category': 'ecommerce',
+            'event_label': this.product.type,
+            'event_value': this.product.price + this.shippingPrice
+          });
           if (isBoolean(res)) {
             this.router.navigate(['transaction']);
           } else {

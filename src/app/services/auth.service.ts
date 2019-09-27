@@ -16,6 +16,8 @@ import { first } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { EmailService } from './email.service';
 
+declare var gtag: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -49,11 +51,19 @@ export class AuthService {
   async googleSignIn() {
     const provider = new auth.GoogleAuthProvider();
     this.oAuthLogin(provider);
+    gtag('event', 'sign_up', {
+      'event_category': 'engagement',
+      'event_label': 'Google_SignUp'
+    });
   }
 
   async facebookSignIn() {
     const provider = new auth.FacebookAuthProvider();
-    return this.oAuthLogin(provider);
+    this.oAuthLogin(provider);
+    gtag('event', 'sign_up', {
+      'event_category': 'engagement',
+      'event_label': 'Facebook_SignUp'
+    });
   }
 
   async emailSignUp(email: string, password: string, firstName: string, lastName: string, username: string) {
