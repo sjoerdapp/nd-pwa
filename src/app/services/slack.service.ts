@@ -51,6 +51,19 @@ export class SlackService {
         });
         break;
       }
+      case 'requests': {
+        const endpoint = 'https://hooks.slack.com/services/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';
+
+        const payload = { "text": msg };
+
+        return this.http.post(endpoint, JSON.stringify(payload)).subscribe((res: any) => {
+          if (res.status === 200) {
+            return true;
+          }
+
+          return false;
+        });
+      }
     }
   }
 

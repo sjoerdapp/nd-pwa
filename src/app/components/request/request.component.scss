@@ -1,33 +1,164 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
-.request-container {
+.main-container {
+  display: grid;
+  align-content: center;
+  width: 100vw;
+  max-width: 100%;
+
+  .request-container {
+    display: grid;
+    justify-items: center;
+    justify-self: center;
+
     h3 {
-        text-align: center;
-        margin: $spacing-normal 0;
+      text-align: center;
     }
 
-    textarea {
-        resize: none;
-        width: 90%;
-        height: 300px;
-        border: 1px solid $lightgrey;
-        border-radius: $spacing-xsmall;
-        margin: $spacing-large auto;
-        display: block;
-        padding: $spacing-xsmall;
-        font-size: $font-small;
-        letter-spacing: 0.8px;
+    #input-request {
+      margin: $spacing-normal 0;
+      resize: none;
+      border: 1px solid $lightgrey;
+      border-radius: $spacing-xsmall;
+      height: 20vh;
+      padding: $spacing-xsmall;
+      letter-spacing: 0.8px;
     }
 
     .request-btn {
-        width: 75%;
-        margin: $spacing-large auto;
-        background: $black;
-        display: block;
-        padding: $spacing-small;
+      display: block;
+      margin: $spacing-small auto;
+      padding: $spacing-small;
+      background: $black;
+
+      &:hover {
+        background: $matteblack;
+      }
+    }
+
+    .sent-btn {
+        @extend .request-btn;
+        background: $green;
 
         &:hover {
-            background: $matteblack;
+            background: $green;
         }
     }
+
+    .error-btn {
+        @extend .request-btn;
+        background: $inputError;
+
+        &:hover {
+            background: $inputError;
+        }
+    }
+  }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  .main-container {
+    .request-container {
+      width: 90vw;
+
+      #input-request {
+        width: 100%;
+        font-size: $font-xsmall;
+      }
+
+      button {
+        width: 80%;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+  .main-container {
+    .request-container {
+      width: 90vw;
+
+      #input-request {
+        width: 100%;
+        font-size: $font-xsmall;
+      }
+
+      button {
+        width: 80%;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  .main-container {
+    .request-container {
+      width: 75vw;
+
+      #input-request {
+        width: 100%;
+        font-size: $font-small;
+      }
+
+      button {
+        width: 70%;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  .main-container {
+    .request-container {
+      width: 70vw;
+
+      #input-request {
+        width: 100%;
+        font-size: $font-normal;
+      }
+
+      button {
+        width: 40%;
+        font-size: $font-small;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  .main-container {
+    .request-container {
+      width: 60vw;
+
+      #input-request {
+        width: 100%;
+        font-size: $font-normal;
+      }
+
+      button {
+        width: 40%;
+        font-size: $font-small;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .main-container {
+    .request-container {
+      width: 55vw;
+
+      #input-request {
+        width: 100%;
+        font-size: $font-normal;
+      }
+
+      button {
+        width: 40%;
+        font-size: $font-small;
+      }
+    }
+  }
 }

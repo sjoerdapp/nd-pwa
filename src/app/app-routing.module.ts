@@ -21,7 +21,7 @@ import { SellComponent } from './components/sell/sell.component';
 import { SearchComponent } from './components/search/search.component';
 //import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EditListingComponent } from './components/edit-listing/edit-listing.component';
-//import { RequestComponent } from './components/request/request.component';
+import { RequestComponent } from './components/request/request.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
@@ -58,7 +58,7 @@ const routes: Routes = [
   { path: 'search', component: SearchComponent },
   // { path: 'dashboard', component: DashboardComponent },
   { path: 'edit-listing/:id', component: EditListingComponent },
-  // { path: 'request', component: RequestComponent },
+  { path: 'request', component: RequestComponent },
   { path: 'forgot-password', component: ForgetPasswordComponent },
   { path: 'activate-account', component: ActivateAccountComponent },
   { path: 'support', component: ContactUsComponent },

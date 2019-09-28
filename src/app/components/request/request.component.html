@@ -1,12 +1,15 @@
-<div class="main-container">
-  <app-navbar></app-navbar>
+<app-navbar></app-navbar>
 
+<div class="main-container">
   <section class="request-container">
     <h3>Product Request</h3>
 
     <textarea name="input-request" id="input-request" placeholder="Ex: adidas Yeezy Boost 350 Clay; Air Jordan 1 High SB NYC To Paris; React Element 87 Hyper Fusion"></textarea>
 
-    <button class="btn request-btn">Send Request</button>
+    <button *ngIf="!error && !sent && !loading" class="btn request-btn" (click)="sendRequest()">Send Request</button>
+    <button *ngIf="loading" class="btn request-btn"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
+    <button *ngIf="error" class="btn error-btn">Error</button>
+    <button *ngIf="sent" class="btn sent-btn">Sent</button>
   </section>
 </div>
 
