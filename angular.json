@@ -26,7 +26,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/sitemap.xml",
-              "src/sitemap.products.xml"
+              "src/products.xml"
             ],
             "styles": [
               "node_modules/angular-instantsearch/bundles/instantsearch.min.css",
