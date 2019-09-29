@@ -23,7 +23,9 @@ export class AppComponent {
     );
 
     auth.isConnected().then(res => {
-      gtag('set', { 'user_id': res.uid }); // Set the user ID using signed-in user_id.
+      if (res != undefined) {
+        gtag('set', { 'user_id': res.uid }); // Set the user ID using signed-in user_id.
+      }
     })
 
     navEndEvents.subscribe((event: NavigationEnd) => {

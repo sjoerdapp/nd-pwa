@@ -21,19 +21,19 @@
   .main-container {
     div {
       * {
-        font-size: $spacing-xsmall;
+        font-size: $spacing-small;
       }
 
       h1 {
-        font-size: $spacing-small;
+        font-size: $spacing-normal;
       }
 
       h2 {
-        font-size: $spacing-small;
+        font-size: $spacing-normal;
       }
 
       h3 {
-        font-size: $spacing-small;
+        font-size: $spacing-normal;
         margin: $spacing-normal 0;
       }
 
@@ -43,11 +43,11 @@
       }
 
       p {
-        font-size: $spacing-xsmall;
+        font-size: $spacing-small;
       }
 
       ul li {
-        font-size: $spacing-xsmall;
+        font-size: $spacing-small;
         margin-bottom: $spacing-xsmall;
       }
     }
@@ -58,15 +58,15 @@
   .main-container {
     div {
       h1 {
-        font-size: $spacing-small;
+        font-size: $spacing-normal;
       }
 
       h2 {
-        font-size: $spacing-small;
+        font-size: $spacing-normal;
       }
 
       h3 {
-        font-size: $spacing-small;
+        font-size: $spacing-normal;
         margin: $spacing-normal 0;
       }
 
@@ -76,44 +76,11 @@
       }
 
       p {
-        font-size: $spacing-xsmall;
+        font-size: $spacing-small;
       }
 
       ul li {
-        font-size: $spacing-xsmall;
-        margin-bottom: $spacing-xsmall;
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 400px) and (max-width: 800px) {
-  .main-container {
-    div {
-      h1 {
         font-size: $spacing-small;
-      }
-
-      h2 {
-        font-size: $spacing-small;
-      }
-
-      h3 {
-        font-size: $spacing-small;
-        margin: $spacing-normal 0;
-      }
-
-      h4 {
-        margin: $spacing-small;
-        text-decoration: underline;
-      }
-
-      p {
-        font-size: $spacing-xsmall;
-      }
-
-      ul li {
-        font-size: $spacing-xsmall;
         margin-bottom: $spacing-xsmall;
       }
     }
@@ -158,15 +125,15 @@
     div {
       width: 70vw;
       h1 {
-        font-size: $spacing-normal;
+        font-size: $spacing-large;
       }
 
       h2 {
-        font-size: $spacing-normal;
+        font-size: $spacing-large;
       }
 
       h3 {
-        font-size: $spacing-normal;
+        font-size: $spacing-large;
         margin: $spacing-normal 0;
       }
 
@@ -176,11 +143,11 @@
       }
 
       p {
-        font-size: $spacing-small;
+        font-size: $spacing-normal;
       }
 
       ul li {
-        font-size: $spacing-small;
+        font-size: $spacing-normal;
         margin-bottom: $spacing-xsmall;
       }
     }
@@ -192,15 +159,15 @@
     div {
       width: 70vw;
       h1 {
-        font-size: $spacing-normal;
+        font-size: $spacing-large;
       }
 
       h2 {
-        font-size: $spacing-normal;
+        font-size: $spacing-large;
       }
 
       h3 {
-        font-size: $spacing-normal;
+        font-size: $spacing-large;
         margin: $spacing-normal 0;
       }
 
@@ -210,11 +177,11 @@
       }
 
       p {
-        font-size: $spacing-small;
+        font-size: $spacing-normal;
       }
 
       ul li {
-        font-size: $spacing-small;
+        font-size: $spacing-normal;
         margin-bottom: $spacing-xsmall;
       }
     }
