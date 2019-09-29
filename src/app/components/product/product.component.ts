@@ -7,6 +7,7 @@ import { Product } from 'src/app/models/product';
 import { isUndefined } from 'util';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalService } from 'src/app/services/modal.service';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   providers: [ModalComponent],
@@ -44,7 +45,8 @@ export class ProductComponent implements OnInit {
     private router: Router,
     private title: Title,
     private modal: ModalComponent,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
@@ -55,6 +57,7 @@ export class ProductComponent implements OnInit {
       if (isUndefined(data)) {
         this.router.navigate([`page-not-found`]);
       } else {
+        this.seo.addTags(data);
         this.productInfo = data;
         this.title.setTitle(`${this.productInfo.model} - ${this.productInfo.brand} | NXTDROP`);
       }
