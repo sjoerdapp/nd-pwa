@@ -15,7 +15,7 @@ export class SEOService {
       this.meta.addTags([
         {name: `title`, content: 'NXTDROP: Buy and Sell Authentic Sneakers in Canada'},
         {name: `description`, content: 'The first Canadian online sneaker marketplace. Buy and sell Yeezy, Nike, adidas and many more sneakers.'},
-        {name: `keywords`, content: 'stockx, stock x, goat, nxtdrop, nextdrop, next drop, deadstock sneakers, adidas yeezy, retro jordans, canada, resale, resell, marketplace, buy and sell authentic'},
+        {name: `keywords`, content: 'stockx, stock x, stockx canada, goat shoes, goat app, goat sneakers, running shoes, sneakers canada, buy shoes online, nxtdrop, nextdrop, next drop, deadstock sneakers, adidas yeezy, retro jordans, canada, resale, resell, marketplace, buy and sell authentic'},
         {name: `og:title`, content: 'NXTDROP: Buy and Sell Authentic Sneakers in Canada'},
         {name: `og:url`, content: 'https://nxtdrop.com/'},
         {name: `og:image`, content: 'https://firebasestorage.googleapis.com/v0/b/nxtdrop.appspot.com/o/CarouselDuplicata3.png?alt=media&token=4b96304e-b8c9-4761-8154-bdf27591c4c5'},
