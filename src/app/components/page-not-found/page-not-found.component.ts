@@ -13,7 +13,7 @@ export class PageNotFoundComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.title.setTitle(`Page Not Found | NXTDROP: Buy and Sell Sneakers in Canada`);
+    this.title.setTitle(`404 | NXTDROP: Buy and Sell Sneakers in Canada`);
   }
 
 }
