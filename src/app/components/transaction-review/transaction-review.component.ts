@@ -55,6 +55,12 @@ export class TransactionReviewComponent implements OnInit {
         // console.log(this.transaction);
       }) 
     }
+
+    this.removeFreeShipping();
+  }
+
+  removeFreeShipping() {
+    this.TranService.removeFreeShipping();
   }
 
 }

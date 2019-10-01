@@ -176,4 +176,10 @@ export class CheckoutService {
       })
     });
   }
+
+  getFreeShipping() {
+    return this.auth.isConnected().then(res => {
+      return this.afs.collection(`users`).doc(`${res.uid}`).get();
+    });
+  }
 }

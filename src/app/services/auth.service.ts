@@ -15,6 +15,7 @@ import { User } from '../models/user';
 import { first } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { EmailService } from './email.service';
+import { isUndefined } from 'util';
 
 declare var gtag: any;
 
@@ -66,7 +67,7 @@ export class AuthService {
     });
   }
 
-  async emailSignUp(email: string, password: string, firstName: string, lastName: string, username: string) {
+  async emailSignUp(email: string, password: string, firstName: string, lastName: string, username: string, inviteCode?: string) {
     if (email || password || firstName || lastName || username) {
       return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(user => {
@@ -82,6 +83,21 @@ export class AuthService {
           offers: 0,
           isActive: false
         };
+
+        if (!isUndefined(inviteCode)) {
+          userData.freeShipping = true;
+          this.afs.collection(`users`).doc(`${inviteCode}`).set({
+            shippingPromo: {
+              sent: true,
+              accepted: true
+            },
+            freeShipping: true
+          }, { merge: true }).catch(err => {
+            console.error(err);
+            this.afAuth.auth.currentUser.delete();
+            return false;
+          });
+        }
 
         gtag('event', 'sign_up', {
           'event_category': 'engagement',

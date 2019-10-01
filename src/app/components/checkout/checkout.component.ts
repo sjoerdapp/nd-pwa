@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
@@ -45,7 +45,8 @@ export class CheckoutComponent implements OnInit {
     private route: ActivatedRoute,
     private auth: AuthService,
     private title: Title,
-    private slack: SlackService
+    private slack: SlackService,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -70,6 +71,16 @@ export class CheckoutComponent implements OnInit {
     if (!isUndefined(this.isSelling)) {
       if (this.isSelling != 'true') {
         this.isSelling = false;
+
+        this.checkoutService.getFreeShipping().then(res => {
+          res.subscribe(response => {
+            console.log(response);
+            if (!isUndefined(response.data().freeShipping)) {
+              this.shippingPrice = 0;
+            }
+          })
+        });
+
         this.initConfig();
       } else {
         this.isSelling = true;
@@ -162,13 +173,17 @@ export class CheckoutComponent implements OnInit {
           });
 
           const msg = `${this.user.uid} bought ${this.product.model}, size ${this.product.size} at ${this.product.price} from ${this.product.sellerID}`;
-          this.slack.sendAlert('offers', msg);
+          this.slack.sendAlert('sales', msg);
 
           if (isBoolean(res)) {
-            this.router.navigate(['transaction']);
+            this.ngZone.run(() => {
+              this.router.navigate(['transaction']);
+            });
           } else {
-            this.router.navigate(['transaction'], {
-              queryParams: { transactionID: res }
+            this.ngZone.run(() => {
+              this.router.navigate(['transaction'], {
+                queryParams: { transactionID: res }
+              });
             });
           }
         })

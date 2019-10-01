@@ -28,7 +28,59 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 const sgClient = require('@sendgrid/client');
 sgClient.setApiKey(SENDGRID_API_KEY);
 
+// Email Invite
+exports.inviteEmail = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            admin.firestore().collection(`users`).doc(`${req.body.uid}`).set({
+                shippingPromo: admin.firestore.FieldValue.delete()
+            }).catch(error => {
+                console.error(error);
+            });
 
+            return res.status(403).send(false);
+        }
+
+        console.log(`${req.body.from} send an invitation to ${req.body.to}`);
+
+        const msg = {
+            to: req.body.to,
+            from: req.body.from,
+            templateId: 'd-9edc13d3429c4a4fa8b50473cc4a536f',
+            dynamic_template_data: {
+                uid: req.body.uid,
+                to: req.body.from
+            }
+        }
+
+        return admin.firestore().collection(`users`).where('email', '==', `${req.body.to}`).get().then(response => {
+            if (response.docs.length === 0) {
+                return sgMail.send(msg).then((content: any) => {
+                    console.log(content);
+                    return res.send(true).status(200);
+                }).catch((err: any) => {
+                    console.error(err);
+
+                    admin.firestore().collection(`users`).doc(`${req.body.uid}`).set({
+                        shippingPromo: admin.firestore.FieldValue.delete()
+                    }).catch(error => {
+                        console.error(error);
+                    });
+
+                    return res.send(false).status(500);
+                });
+            } else {
+                admin.firestore().collection(`users`).doc(`${req.body.uid}`).set({
+                    shippingPromo: admin.firestore.FieldValue.delete()
+                }).catch(error => {
+                    console.error(error);
+                });
+
+                return res.send(false).status(500);
+            }
+        })
+    });
+});
 
 // Email when password is changed
 exports.changedPassword = functions.https.onRequest((req, res) => {
@@ -86,14 +138,14 @@ exports.accountCreated = functions.https.onRequest((req, res) => {
                 "last_name": req.body.toLastName
             }]
         };
-    
+
         sgClient.request(firstRequest).then(([firstResponse, firstBody]: any) => {
             console.log(firstBody.persisted_recipients[0])
             const r = {
                 method: 'POST',
                 url: `/v3/contactdb/lists/9601603/recipients/${firstBody.persisted_recipients[0]}`,
             }
-    
+
             sgClient.request(r).then(([secondResponse, secondBody]: any) => {
                 console.log(`Added to NXTDROP list: ${secondResponse.statusCode}`);
             });

@@ -1,6 +1,6 @@
 <section class="modal" id="modal">
 
-    <div class="modal-card">
+    <div class="modal-card" *ngIf="isMakeOffer">
         <img src="https://firebasestorage.googleapis.com/v0/b/nxtdrop.appspot.com/o/products%2Fvirgil-off-white-chicago.jpg?alt=media&token=2c3b2ee0-3faa-4df2-b572-89c1c814267e" alt="Virgil x Jordan 1 OFF-WHITE Chicago">
 
         <div>
@@ -9,6 +9,19 @@
             <h3>Can't find the right price or size?</h3>
             <p>Place an offer now and wait for a seller to match it!</p>
             <button class="btn" routerLink="/make-an-offer" [queryParams]="{ sneaker: productInfo | json }">Place an offer now</button>
+        </div>
+    </div>
+
+    <div class="modal-card one-grid dark" *ngIf="isFreeShipping">
+        <div>
+            <fa-icon [icon]="['fas', 'times']" (click)="close()"></fa-icon>
+            <img src="../../../assets/Negativepng.png" alt="NXTDROP Logo">
+            <h3>Invite a Friend and Both Get Free Shipping</h3>
+            <input type="email" id="input-email" placeholder="Email Address" (keyup)="emailChanges($event)">
+            <button *ngIf="!loading && !error && !sent" [className]="validEmail ? 'btn dark-btn' : 'btn disabled'" (click)="sendInvite()">Send Invite</button>
+            <button *ngIf="loading" class="btn dark-btn"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
+            <button *ngIf="error" class="btn error">Error</button>
+            <button *ngIf="sent" class="btn dark-btn">Sent</button>
         </div>
     </div>
 

@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
 import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 import { Product } from 'src/app/models/product';
 import { isUndefined } from 'util';
-import { ModalComponent } from '../modal/modal.component';
 import { ModalService } from 'src/app/services/modal.service';
 import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
-  providers: [ModalComponent],
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
@@ -38,15 +36,17 @@ export class ProductComponent implements OnInit {
   showBuy = false;
   showOffers = false;
 
+  modalTimeout;
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private auth: AuthService,
     private router: Router,
     private title: Title,
-    private modal: ModalComponent,
     private modalService: ModalService,
-    private seo: SEOService
+    private seo: SEOService,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -79,15 +79,20 @@ export class ProductComponent implements OnInit {
 
   buyNow(listing) {
     const data = JSON.stringify(listing);
-    this.router.navigate([`../../checkout`], {
-      queryParams: { product: data, sell: false }
+    clearTimeout(this.modalTimeout);
+    this.ngZone.run(() => {
+      this.router.navigate([`../../checkout`], {
+        queryParams: { product: data, sell: false }
+      });
     });
   }
 
   sell(offer) {
     const data = JSON.stringify(offer);
-    this.router.navigate([`../../checkout`], {
-      queryParams: { product: data, sell: true }
+    this.ngZone.run(() => {
+      this.router.navigate([`../../checkout`], {
+        queryParams: { product: data, sell: true }
+      });
     });
   }
 
@@ -108,7 +113,7 @@ export class ProductComponent implements OnInit {
       this.productService.getBuy(this.productID).subscribe(data => {
         this.buyListings = data;
         // console.log(this.buyListings);
-        setTimeout(() => {
+        this.modalTimeout = setTimeout(() => {
           this.getModalCookie();
         }, 5000);
       });
@@ -134,7 +139,7 @@ export class ProductComponent implements OnInit {
       element.split(`=`);
 
       if (document.cookie.replace(/(?:(?:^|.*;\s*)modalOffer\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
-        this.modal.open();
+        this.modalService.openModal('makeOffer');
         this.modalService.placeOffer(this.productInfo);
         const expr = new Date(new Date().getTime() + 60*60000*24).toUTCString();
         document.cookie = `modalOffer=true; expires=${expr}; path=/product/`

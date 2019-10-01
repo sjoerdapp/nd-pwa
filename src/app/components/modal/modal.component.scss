@@ -9,8 +9,39 @@
   height: 0%;
   z-index: 10000;
   overflow-x: hidden;
-  background: rgba(56, 54, 55, 0.5);
+  //background: rgba(56, 54, 55, 0.5);
   display: grid;
+
+  .one-grid {
+    grid-template-columns: 1fr!important;
+  }
+
+  .dark {
+    background: $black!important;
+    color: $white!important;
+    
+    p, h3, h2, h1 {
+      color: $white;
+    }
+  }
+
+  .disabled {
+    background: $lightgrey;
+    cursor: not-allowed;
+
+    &:hover {
+      background: $lightgrey!important;
+    }
+  }
+
+  .error {
+    background: $inputError;
+    cursor: not-allowed;
+
+    &:hover {
+      background: $inputError!important;
+    }
+  }
 
   .modal-card {
     display: grid;
@@ -34,6 +65,15 @@
       text-align: center;
       align-items: center;
 
+      input {
+        width: 80%;
+        padding: $spacing-small;
+        border: none;
+        border-radius: $spacing-xsmall;
+        display: block;
+        margin: 0 auto;
+      }
+
       img {
         justify-self: center;
       }
@@ -43,9 +83,18 @@
         cursor: pointer;
       }
 
+      .dark-btn {
+        background: $white;
+        color: $matteblack;
+
+        &:hover {
+          background: $lightgrey!important;
+        }
+      }
+
       button {
         &:hover {
-          background: $matteblue !important;
+          background: $matteblue;
         }
       }
     }
@@ -66,6 +115,10 @@
     div {
       grid-template-rows: 1fr 1fr 2fr 4fr 2fr;
 
+      input {
+        font-size: $font-xsmall;
+      }
+
       img {
         width: 20px;
         height: 20px;
@@ -80,7 +133,7 @@
       }
 
       button {
-        font-size: $font-xxsmall !important;
+        font-size: $font-xsmall!important;
         padding: $spacing-normal $spacing-xxsmall;
       }
     }

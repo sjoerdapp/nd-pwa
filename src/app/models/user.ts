@@ -10,6 +10,7 @@ export interface User {
     // Optional
     username?: string;
     dob? : string
+    freeShipping?: boolean;
 
     /* Payment Properties */
     firstName?: string;
