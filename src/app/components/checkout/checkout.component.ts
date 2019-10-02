@@ -34,6 +34,9 @@ export class CheckoutComponent implements OnInit {
 
   product;
   shippingPrice = 18;
+
+  // 1569988800000
+  // 1570075140000
   tax = 0;
   isSelling: any;
 
@@ -56,6 +59,13 @@ export class CheckoutComponent implements OnInit {
       }
     });*/
 
+    const date = Date.now();
+    //console.log(date);
+
+    if (date >= 1569988800000 && date < 1570075140000) {
+      this.shippingPrice = 0;
+    }
+
     this.title.setTitle(`Checkout | NXTDROP: Sell and Buy Sneakers in Canada`);
 
     this.product = JSON.parse(this.route.snapshot.queryParams.product);
@@ -66,7 +76,7 @@ export class CheckoutComponent implements OnInit {
     });
 
     this.isSelling = this.route.snapshot.queryParams.sell;
-    console.log(this.isSelling);
+    //console.log(this.isSelling);
 
     if (!isUndefined(this.isSelling)) {
       if (this.isSelling != 'true') {
@@ -74,7 +84,7 @@ export class CheckoutComponent implements OnInit {
 
         this.checkoutService.getFreeShipping().then(res => {
           res.subscribe(response => {
-            console.log(response);
+            //console.log(response);
             if (!isUndefined(response.data().freeShipping)) {
               this.shippingPrice = 0;
             }
@@ -158,22 +168,19 @@ export class CheckoutComponent implements OnInit {
         tagline: false
       },
       onApprove: (data, actions) => {
-        console.log('onApprove - transaction was approved, but not authorized', data, actions);
+        //console.log('onApprove - transaction was approved, but not authorized', data, actions);
         actions.order.get().then(details => {
-          console.log('onApprove - you can get full order details inside onApprove: ', details);
+          //console.log('onApprove - you can get full order details inside onApprove: ', details);
         });
       },
       onClientAuthorization: (data) => {
-        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        //console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
         this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice).then(res => {
           gtag('event', 'purchase', {
             'event_category': 'ecommerce',
             'event_label': this.product.type,
             'event_value': this.product.price + this.shippingPrice
           });
-
-          const msg = `${this.user.uid} bought ${this.product.model}, size ${this.product.size} at ${this.product.price} from ${this.product.sellerID}`;
-          this.slack.sendAlert('sales', msg);
 
           if (isBoolean(res)) {
             this.ngZone.run(() => {
@@ -192,14 +199,14 @@ export class CheckoutComponent implements OnInit {
           });
       },
       onCancel: (data, actions) => {
-        console.log('OnCancel', data, actions);
+        //console.log('OnCancel', data, actions);
 
       },
       onError: err => {
-        console.log('OnError', err);
+        //console.log('OnError', err);
       },
       onClick: (data, actions) => {
-        console.log('onClick', data, actions);
+        //console.log('onClick', data, actions);
       },
     };
   }

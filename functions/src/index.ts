@@ -28,6 +28,132 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 const sgClient = require('@sendgrid/client');
 sgClient.setApiKey(SENDGRID_API_KEY);
 
+exports.orderConfirmation = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send();
+        }
+
+        admin.firestore().collection(`users`).doc(`${req.body.buyerID}`).get().then(response => {
+            const data = response.data();
+            if (data) {
+                const email = data.email;
+                const total = req.body.price + req.body.shippingCost;
+
+                console.log(`Order Email Buyer to ${email}.`);
+
+                const msg = {
+                    to: email,
+                    from: 'do-not-reply@nxtdrop.com',
+                    templateId: 'd-e920cad3da0d4e0b8f77501bdabe1d54',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        subtotal: req.body.price,
+                        shipping: req.body.shippingCost,
+                        total: total,
+                        assetURL: req.body.assetURL,
+                    }
+                }
+
+                sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent to buyer`);
+                }).catch((err: any) => {
+                    console.error(`Could send email to buyer: ${err}`);
+                })
+            } else {
+                console.error(`buyer don't exist`);
+            }
+        }).catch(err => {
+            console.error(`error sending buyer email`);
+        });
+
+        admin.firestore().collection(`users`).doc(`${req.body.sellerID}`).get().then(response => {
+            const data = response.data();
+            if (data) {
+                const email = data.email;
+                const fee = req.body.price * 0.095;
+                const processing = req.body.price * 0.03;
+                const payout = req.body.price - fee - processing;
+
+                console.log(`Order Email Seller to ${email}.`);
+
+                const msg = {
+                    to: email,
+                    from: 'do-not-reply@nxtdrop.com',
+                    templateId: 'd-3cb6d3dae09a4697b153d93e1fb15ab4',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        assetURL: req.body.assetURL,
+                        fee: fee,
+                        processing: processing,
+                        payout: payout
+                    }
+                }
+
+                sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent to seller`);
+                }).catch((err: any) => {
+                    console.error(`Could send email to seller: ${err}`);
+                })
+            } else {
+                console.error(`buyer don't exist`);
+            }
+        }).catch(err => {
+            console.error(`error sending seller email`);
+        })
+
+        return res.status(200);
+    });
+});
+
+// Product Shipment Email
+exports.productShipment = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send();
+        }
+
+        return admin.firestore().collection(`users`).doc(`${req.body.buyerID}`).get().then(response => {
+            const data = response.data();
+            if (data) {
+                const email = data.email;
+                const total = req.body.price + req.body.shippingCost;
+
+                console.log(`Product Shipment Email to ${email}. body: ${JSON.stringify(req.body)}`);
+
+                const msg = {
+                    to: email,
+                    from: 'do-not-reply@nxtdrop.com',
+                    templateId: 'd-f3cb1b96abc148ca963c4ffac9b5c2c4',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        subtotal: req.body.price,
+                        shipping: req.body.shippingCost,
+                        total: total,
+                        assetURL: req.body.assetURL,
+                    }
+                }
+
+                return sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent`);
+                    return res.status(200).send(JSON.stringify('sent'));
+                }).catch((err: any) => {
+                    console.error(err);
+                    return res.status(500).send(JSON.stringify('error'));
+                })
+            } else {
+                res.status(500).send(JSON.stringify('error'));
+            }
+        })
+    });
+});
+
 // Email Invite
 exports.inviteEmail = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {

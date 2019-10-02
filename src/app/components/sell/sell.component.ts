@@ -117,7 +117,7 @@ export class SellComponent implements OnInit {
         });
         if (res) {
           const msg = `${this.user.uid} listed ${this.selectedPair.model}, size ${this.pairSize} at ${this.pairPrice}`;
-          this.slack.sendAlert('offers', msg);
+          this.slack.sendAlert('listings', msg);
 
           this.addListed();
         } else {

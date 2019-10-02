@@ -45,7 +45,7 @@ export class SignUpComponent implements OnInit {
   error = false;
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private fb: FormBuilder,
     private title: Title,
     private route: ActivatedRoute

@@ -4,6 +4,9 @@ import { AuthService } from './auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Transaction } from '../models/transaction';
+import { SlackService } from './slack.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,8 @@ export class CheckoutService {
     // private cartService: CartService,
     private auth: AuthService,
     private afs: AngularFirestore,
+    private slack: SlackService,
+    private http: HttpClient
   ) { }
 
   async transactionApproved(product, paymentID: string, shippingCost: number) {
@@ -87,17 +92,24 @@ export class CheckoutService {
     }, { merge: true });
 
     // add transaction doc to  transactions collection
-    batch.set(tranRef, transactionData , { merge: true })
+    batch.set(tranRef, transactionData, { merge: true })
 
     return batch.commit()
-    .then(() => {
-      console.log('Transaction Approved');
-      return transactionID;
-    })
-    .catch(err => {
-      console.error(err);
-      return false;
-    })
+      .then(() => {
+        //console.log('Transaction Approved');
+        const msg = `${UID} bought ${product.model}, size ${product.size} at ${product.price} from ${product.sellerID}`;
+        this.slack.sendAlert('sales', msg).catch(err => {
+          //console.error(err)
+        });
+        this.http.post(`${environment.cloud.url}orderConfirmation`, transactionData).subscribe(res => {
+          //console.log(res);
+        });
+        return transactionID;
+      })
+      .catch(err => {
+        //console.error(err);
+        return false;
+      })
   }
 
   async sellTransactionApproved(product) {
@@ -152,17 +164,17 @@ export class CheckoutService {
     }, { merge: true });
 
     // add transaction doc to  transactions collection
-    batch.set(tranRef, transactionData , { merge: true })
+    batch.set(tranRef, transactionData, { merge: true })
 
     return batch.commit()
-    .then(() => {
-      console.log('Transaction Approved');
-      return transactionID;
-    })
-    .catch(err => {
-      console.error(err);
-      return false;
-    })
+      .then(() => {
+        //console.log('Transaction Approved');
+        return transactionID;
+      })
+      .catch(err => {
+        //console.error(err);
+        return false;
+      })
   }
 
   /*getCartItems() {
