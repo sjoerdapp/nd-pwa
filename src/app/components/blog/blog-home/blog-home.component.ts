@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { NewsService } from 'src/app/services/news.service';
 
 @Component({
   selector: 'app-blog-home',
@@ -11,26 +12,32 @@ export class BlogHomeComponent implements OnInit {
   posts = [];
 
   constructor(
-    private http: HttpClient
+    private router: Router,
+    private news: NewsService
   ) { }
 
   ngOnInit() {
-    this.http.get(`http://104.197.231.19/index.php/wp-json/wp/v2/posts`, {}).subscribe((json: any) => {
+    this.news.getAllNews().subscribe((json: any) => {
       json.forEach(element => {
-        this.http.get(element._links["wp:featuredmedia"][0]["href"], {}).subscribe((response: any) => {
-          const post = {
-            img: response.source_url,
-            title: element.title.rendered,
-            date: element.date_gmt,
-            alt_text: response.caption.alt_text
-          }
+        let post: any = {
+          title: element.title.rendered,
+          date: this.news.dateFormat(element.date_gmt),
+          id: element.id,
+          slug: element.slug
+        }
 
-          this.posts.push(post);
-        })
+        this.news.getFeaturedMedia(element._links["wp:featuredmedia"][0]["href"]).subscribe((response: any) => {
+          post.img = response.source_url;
+          post.alt_text = response.alt_text;
+        });
+
+        this.news.getCategory(element._links["wp:term"][0]["href"]).subscribe((response: any) => {
+          post.category = response[0].name;
+        });
+
+        this.posts.push(post);
       });
     });
-
-    console.log(this.posts);
   }
 
 }

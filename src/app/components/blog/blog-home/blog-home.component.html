@@ -2,17 +2,20 @@
 
 <section class="main-container">
 
+    <h1>News</h1>
+
   <section class="blog-posts">
 
-    <section class="blog-post" *ngFor="let post of posts">
+    <section class="blog-card" *ngFor="let post of posts" routerLink="{{ post.slug }}">
 
       <div class="featured-img">
         <img src="{{ post.img }}" alt="{{ post.alt_text }}">
       </div>
 
       <div class="post-info">
-        <p>{{ post.title }}</p>
-        <p>{{ post.date }}</p>
+        <h6 class="category">{{ post.category }}</h6>
+        <p class="title">{{ post.title }}</p>
+        <p class="date"><fa-icon [icon]="['far', 'clock']"></fa-icon> {{ post.date }}</p>
       </div>
 
     </section>

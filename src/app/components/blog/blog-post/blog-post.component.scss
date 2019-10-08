@@ -1,0 +1,84 @@
+@import "../../../base_styles/base";
+
+@import url("https://fonts.googleapis.com/css?family=PT+Serif:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700&display=swap");
+
+.main-container {
+  .post-container {
+    p,
+    a,
+    figcaption {
+      font-family: "PT Serif", serif;
+    }
+
+    .featured-img {
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      width: 80%;
+      margin: $spacing-normal auto;
+    }
+
+    .category {
+      background: $green;
+      color: $matteblack;
+      text-align: center;
+      font-size: $font-xsmall;
+      width: 20%;
+      margin: $spacing-xsmall auto;
+      padding: $spacing-xsmall;
+      font-weight: $weight-black;
+      letter-spacing: 0.25px;
+    }
+
+    .content {
+      width: 90%;
+      margin: $spacing-xsmall auto;
+
+      p {
+        font-size: $font-normal;
+        margin: $spacing-normal auto;
+        line-height: $spacing-normal;
+        font-weight: 400;
+      }
+
+      a {
+        color: $green;
+      }
+
+      li {
+        list-style: none;
+
+        figure {
+          width: 100%;
+
+          img {
+            width: 100%;
+          }
+
+          figcaption {
+            font-size: $spacing-xsmall;
+            text-align: center;
+            margin-bottom: $spacing-normal;
+          }
+        }
+      }
+
+      figure {
+        width: 100%;
+
+        img {
+          width: inherit;
+        }
+
+        figcaption {
+          font-size: $spacing-xsmall;
+          text-align: center;
+          margin-bottom: $spacing-normal;
+        }
+      }
+    }
+  }
+}

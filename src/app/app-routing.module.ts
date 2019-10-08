@@ -37,6 +37,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { BlogHomeComponent } from './components/blog/blog-home/blog-home.component';
+import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -74,6 +75,7 @@ const routes: Routes = [
   { path: 'privacy', component: PrivacyComponent },
   { path: 'terms', component: TermsComponent },
   { path: 'news', component: BlogHomeComponent },
+  { path: 'news/:title', component: BlogPostComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
