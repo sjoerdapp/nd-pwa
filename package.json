@@ -18,7 +18,6 @@
     "@angular/core": "~8.2.10",
     "@angular/fire": "^5.2.1",
     "@angular/forms": "~8.2.10",
-    "@angular/material": "^8.0.1",
     "@angular/platform-browser": "~8.2.10",
     "@angular/platform-browser-dynamic": "~8.2.10",
     "@angular/router": "~8.2.10",
