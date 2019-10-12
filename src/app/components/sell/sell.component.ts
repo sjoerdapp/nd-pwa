@@ -1,12 +1,13 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { SellService } from 'src/app/services/sell.service';
-import { environment } from '../../../environments/environment';
 import { Product } from 'src/app/models/product';
 import { Router, ActivatedRoute } from '@angular/router';
 import { isUndefined, isNullOrUndefined, isNull } from 'util';
 import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 import { SlackService } from 'src/app/services/slack.service';
+import * as algoliasearch from 'algoliasearch';
+import { environment } from 'src/environments/environment';
 
 declare var gtag: any;
 
@@ -17,10 +18,11 @@ declare var gtag: any;
 })
 export class SellComponent implements OnInit {
 
-  searchConfig = {
-    ...environment.algolia,
-    indexName: environment.algolia.index
-  };
+  // Algolia Set up
+  algoliaClient = algoliasearch(environment.algolia.appId, environment.algolia.apiKey);
+  index;
+  results;
+
   showResults = false;
 
   inputLength = 0; // Length of search box input
@@ -61,6 +63,7 @@ export class SellComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle(`Sell | NXTDROP: Sell and Buy Sneakers in Canada`); // Change the page title
+    this.index = this.algoliaClient.initIndex(environment.algolia.index);
 
     // Skip the first page and serves the third page
     this.activatedRoute.queryParams.subscribe(params => {
@@ -78,7 +81,7 @@ export class SellComponent implements OnInit {
 
     // check if the user is connected and redirect if not
     this.auth.isConnected().then(res => {
-      if(isNull(res)) {
+      if (isNull(res)) {
         this.router.navigate([`login`]);
       }
 
@@ -244,13 +247,22 @@ export class SellComponent implements OnInit {
     // console.log(`highestOffer: ${this.highestOffer} and lowestListing: ${this.lowestListing}`);
   }
 
-  searchChanged(query) {
-    if (query.length !== undefined) {
-      this.inputLength = query.length;
-    }
+  searchChanged(event) {
+    this.inputLength = event.target.value.length;
 
     if (this.inputLength) {
       this.showResults = true;
+
+      console.log(event.target.value);
+
+      this.index.search({
+        query: event.target.value
+      }, (err, hits = {}) => {
+        if (err) throw err;
+
+        this.results = hits.hits;
+        console.log(hits);
+      });
     } else {
       this.showResults = false;
     }

@@ -30,31 +30,24 @@
 
   <section class="sell-container" id="sell-page-2">
     <h3>Select a product</h3>
-    <ais-instantsearch [config]="searchConfig">
+    <input autofocus type="text" (keyup)="searchChanged($event)" placeholder="Search for product" class="prod-search">
 
-      <ais-search-box [autofocus]="true" (change)="searchChanged($event)" placeholder="Search for product">
-      </ais-search-box>
+    <div *ngIf="showResults">
+      <div class="search-results">
+        <div *ngFor="let hit of results">
 
-      <ais-hits *ngIf="showResults">
-        <ng-template let-hits="hits">
-          <div class="search-results">
-            <div *ngFor="let hit of hits">
+          <div class="hit" (click)="selectPair(hit)">
+            <img src="{{ hit.assetURL }}">
 
-              <div class="hit" (click)="selectPair(hit)">
-                <img src="{{ hit.assetURL }}">
-
-                <div class="hit-info">
-                  <h3>{{ hit.model }}</h3>
-                  <h6>{{ hit.colorway }}</h6>
-                </div>
-              </div>
-
+            <div class="hit-info">
+              <h3>{{ hit.model }}</h3>
+              <h6>{{ hit.colorway }}</h6>
             </div>
           </div>
-        </ng-template>
-      </ais-hits>
 
-    </ais-instantsearch>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="sell-container" id="sell-page-3">

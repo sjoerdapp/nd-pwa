@@ -69,11 +69,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 // Reactive Forms
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-// Algolia
-import { NgAisModule } from 'angular-instantsearch';
-
 // Mask Module
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 // export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 import { NgxPayPalModule } from 'ngx-paypal';
@@ -137,7 +134,6 @@ import { TermsComponent } from './components/terms/terms.component';
     AngularFireStorageModule,
     ReactiveFormsModule,
     FormsModule,
-    NgAisModule,
     NgxMaskModule.forRoot(),
     HttpClientModule,
     NgxPayPalModule
