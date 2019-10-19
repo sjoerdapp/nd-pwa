@@ -177,6 +177,27 @@ export class CheckoutService {
       })
   }
 
+  addTransaction(product, paymentID: string, ) {
+    const transactionID = `${product.buyerID}-${product.sellerID}-${product.soldAt}`;
+    const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`);
+    const batch = firebase.firestore().batch();
+
+    batch.update(tranRef, {
+      paymentID
+    });
+
+    return batch.commit()
+      .then(() => {
+        //console.log('Transaction Approved');
+        return transactionID;
+      })
+      .catch(err => {
+        //console.error(err);
+        return false;
+      })
+
+  }
+
   /*getCartItems() {
     return this.cartService.getCartItems();
   }*/
@@ -193,5 +214,22 @@ export class CheckoutService {
     return this.auth.isConnected().then(res => {
       return this.afs.collection(`users`).doc(`${res.uid}`).get();
     });
+  }
+
+  checkTransaction(user, transactionID: string) {
+    return this.afs.firestore.collection(`transactions`).doc(`${transactionID}`).get().then(res => {
+      if (res.exists && res.data().buyerID == user.uid) {
+        return true;
+      } else {
+        return false;
+      }
+    }).catch(err => {
+      console.error(err);
+      return false;
+    })
+  }
+
+  getTransaction(transactionID: string) {
+    return this.afs.collection(`transactions`).doc(`${transactionID}`).valueChanges();
   }
 }

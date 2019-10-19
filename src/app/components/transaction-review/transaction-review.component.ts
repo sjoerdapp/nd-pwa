@@ -49,7 +49,7 @@ export class TransactionReviewComponent implements OnInit {
       this.TranService.getTransaction(this.transactionID).subscribe(data => {
         this.transaction = data;
 
-        if (this.transaction.type !== 'bought') {
+        if (this.transaction.type !== 'bought' && this.transaction.type !== 'sold') {
           this.error = true;
         }
         // console.log(this.transaction);

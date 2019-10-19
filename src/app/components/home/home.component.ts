@@ -26,15 +26,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.title.setTitle(`NXTDROP: Buy and Sell Sneakers in Canada`);
 
-    /*this.afs.collection(`transactions`).doc(`A0ahCuH975UNJg4gKjonhZK8Yzs2-zNSB9cdIPTZykSJv7xCoTeueFmk2-1569999411222`).get().subscribe(res => {
-      this.http.post(`${environment.cloud.url}verifiedShipped`, res.data()).subscribe((re: any) => {
+    this.afs.collection(`transactions`).doc(`DoDgKivIx9OCbrwE2cQAPeWsX8g2-xdDDF5DUuxYA0e49E6VPoYjbNOM2-1571366451521`).get().subscribe(res => {
+      this.http.post(`${environment.cloud.url}orderConfirmation`, res.data()).subscribe((re: any) => {
         if (re != 'sent') {
           console.error(`Error: ${re}`);
         } else {
           console.log(`sent`);
         }
       });
-    });*/
+    });
   }
 
   ngAfterViewInit() {

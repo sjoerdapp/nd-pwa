@@ -49,6 +49,8 @@ import { SoldComponent } from './components/sold/sold.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { SpecialDropHomeComponent } from './components/special-drop/home/home.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -74,7 +76,7 @@ import { NgxMaskModule } from 'ngx-mask';
 // export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 import { NgxPayPalModule } from 'ngx-paypal';
-import { TermsComponent } from './components/terms/terms.component';
+import { DropComponent } from './components/special-drop/drop/drop.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +123,9 @@ import { TermsComponent } from './components/terms/terms.component';
     PageNotFoundComponent,
     ModalComponent,
     PrivacyComponent,
-    TermsComponent
+    TermsComponent,
+    SpecialDropHomeComponent,
+    DropComponent
   ],
   imports: [
     BrowserModule,

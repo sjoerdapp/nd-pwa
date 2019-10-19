@@ -54,7 +54,14 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                         shipping: req.body.shippingCost,
                         total: total,
                         assetURL: req.body.assetURL,
+                        link: ''
                     }
+                }
+
+                if (req.body.type == 'sold') {
+                    const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.soldAt}`;
+                    msg.templateId = 'd-1ea40fbf9ad848638489561243162e97';
+                    msg.dynamic_template_data.link = `https://nxtdrop.com/checkout?tID=${transactionID}`;
                 }
 
                 sgMail.send(msg).then((content: any) => {

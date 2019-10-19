@@ -36,6 +36,7 @@ import { SoldComponent } from './components/sold/sold.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { TermsComponent } from './components/terms/terms.component';
+import { DropComponent } from './components/special-drop/drop/drop.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -72,6 +73,7 @@ const routes: Routes = [
   { path: 'sold', component: SoldComponent },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'terms', component: TermsComponent },
+  { path: 'drop/:id', component: DropComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -17,7 +17,7 @@ export class SlackService {
         const payload = { "text": msg };
 
         this.http.post(endpoint, JSON.stringify(payload)).subscribe(res => {
-          console.log(res);
+          //console.log(res);
         });
         break;
       }
@@ -27,7 +27,7 @@ export class SlackService {
         const payload = { "text": msg };
 
         this.http.post(endpoint, JSON.stringify(payload)).subscribe(res => {
-          console.log(res);
+          //console.log(res);
         });
         break;
       }
@@ -37,7 +37,7 @@ export class SlackService {
         const payload = { "text": msg };
 
         this.http.post(endpoint, JSON.stringify(payload)).subscribe(res => {
-          console.log(res);
+          //console.log(res);
         });
         break;
       }
@@ -47,7 +47,7 @@ export class SlackService {
         const payload = { "text": msg };
 
         this.http.post(endpoint, JSON.stringify(payload)).subscribe(res => {
-          console.log(res);
+          //console.log(res);
         });
         break;
       }
