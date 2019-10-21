@@ -28,6 +28,11 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 const sgClient = require('@sendgrid/client');
 sgClient.setApiKey(SENDGRID_API_KEY);
 
+// Server-Side Rendering
+const universal = require(`${process.cwd()}/dist/server`).app;
+
+exports.ssr = functions.https.onRequest(universal);
+
 exports.orderConfirmation = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
         if (req.method !== 'POST') {
@@ -58,7 +63,7 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                     }
                 }
 
-                if (req.body.type == 'sold') {
+                if (req.body.type === 'sold') {
                     const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.soldAt}`;
                     msg.templateId = 'd-1ea40fbf9ad848638489561243162e97';
                     msg.dynamic_template_data.link = `https://nxtdrop.com/checkout?tID=${transactionID}`;

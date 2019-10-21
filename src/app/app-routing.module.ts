@@ -39,7 +39,7 @@ import { TermsComponent } from './components/terms/terms.component';
 import { DropComponent } from './components/special-drop/drop/drop.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent},
   { path: 'signup', component: SignUpComponent },
   { path: 'login', component: LoginComponent },

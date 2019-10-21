@@ -7,16 +7,17 @@
     "source": "functions"
   },
   "hosting": {
-    "public": "dist/nd-pwa",
+    "public": "dist/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "**/index.html"
     ],
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "function": "ssr"
       }
     ],
     "redirects": [

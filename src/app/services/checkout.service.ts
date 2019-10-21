@@ -118,7 +118,7 @@ export class CheckoutService {
       UID = res.uid;
     });
     const batch = firebase.firestore().batch();
-    const id = product.model.replace(/ /g, '-').toLowerCase();
+    const id = product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase();
     const soldAt = Date.now();
     const transactionID = `${product.buyerID}-${UID}-${soldAt}`;
 
@@ -169,6 +169,14 @@ export class CheckoutService {
     return batch.commit()
       .then(() => {
         //console.log('Transaction Approved');
+        const msg = `${UID} sold ${product.model}, size ${product.size} at ${product.price} to ${product.buyerID}`;
+        this.slack.sendAlert('sales', msg).catch(err => {
+          //console.error(err)
+        });
+        this.http.post(`${environment.cloud.url}orderConfirmation`, transactionData).subscribe(res => {
+          //console.log(res);
+        });
+
         return transactionID;
       })
       .catch(err => {

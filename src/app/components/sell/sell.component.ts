@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, PLATFORM_ID, Inject } from '@angular/core';
 import { SellService } from 'src/app/services/sell.service';
 import { Product } from 'src/app/models/product';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,8 +8,9 @@ import { Title } from '@angular/platform-browser';
 import { SlackService } from 'src/app/services/slack.service';
 import * as algoliasearch from 'algoliasearch';
 import { environment } from 'src/environments/environment';
+import { isPlatformBrowser } from '@angular/common';
 
-declare var gtag: any;
+declare const gtag: any;
 
 @Component({
   selector: 'app-sell',
@@ -58,7 +59,8 @@ export class SellComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private auth: AuthService,
     private title: Title,
-    private slack: SlackService
+    private slack: SlackService,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
 
   ngOnInit() {
@@ -114,10 +116,13 @@ export class SellComponent implements OnInit {
 
     this.sellService.addListing(this.selectedPair, this.pairCondition, this.pairPrice, this.pairSize)
       .then((res) => {
-        gtag('event', 'listing_added', {
-          'event_category': 'engagement',
-          'event_label': this.selectedPair.model
-        });
+        if (isPlatformBrowser(this._platformId)) {
+          gtag('event', 'listing_added', {
+            'event_category': 'engagement',
+            'event_label': this.selectedPair.model
+          });
+        }
+        
         if (res) {
           const msg = `${this.user.uid} listed ${this.selectedPair.model}, size ${this.pairSize} at ${this.pairPrice}`;
           this.slack.sendAlert('listings', msg);

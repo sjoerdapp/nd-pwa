@@ -128,7 +128,7 @@ import { DropComponent } from './components/special-drop/drop/drop.component';
     DropComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     FontAwesomeModule,
     AngularFireModule.initializeApp(environment.firebase),

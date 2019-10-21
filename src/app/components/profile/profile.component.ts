@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { User } from 'src/app/models/user';
 import { Title } from '@angular/platform-browser';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -29,46 +30,53 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private title: Title
+    private title: Title,
+    @Inject(PLATFORM_ID) private _platoformId: Object
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Your profile | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.profileService.getUserData().then(val => {
-      val.subscribe(data => {
-        this.dashInfo = data;
+
+    if (isPlatformBrowser(this._platoformId)) {
+      this.profileService.getUserData().then(val => {
+        val.subscribe(data => {
+          this.dashInfo = data;
+        });
       });
-    });
+      
+      const listingElement = document.getElementById('listingsBtn');
+      const offerElement = document.getElementById('offersBtn');
 
-    const listingElement = document.getElementById('listingsBtn');
-    const offerElement = document.getElementById('offersBtn');
+      listingElement.addEventListener('mouseover', () => {
+        listingElement.style.borderBottom = '4px solid #222021';
+      });
 
-    listingElement.addEventListener('mouseover', () => {
-      listingElement.style.borderBottom = '4px solid #222021';
-    });
+      offerElement.addEventListener('mouseover', () => {
+        offerElement.style.borderBottom = '4px solid #222021';
+      });
 
-    offerElement.addEventListener('mouseover', () => {
-      offerElement.style.borderBottom = '4px solid #222021';
-    });
+      listingElement.addEventListener('mouseleave', () => {
+        if (!this.listingNav) {
+          listingElement.style.borderBottom = '2px solid #222021';
+        }
+      });
 
-    listingElement.addEventListener('mouseleave', () => {
-      if (!this.listingNav) {
-        listingElement.style.borderBottom = '2px solid #222021';
-      }
-    });
+      offerElement.addEventListener('mouseleave', () => {
+        if (this.listingNav) {
+          offerElement.style.borderBottom = '2px solid #222021';
+        }
+      });
 
-    offerElement.addEventListener('mouseleave', () => {
-      if (this.listingNav) {
-        offerElement.style.borderBottom = '2px solid #222021';
-      }
-    });
-
-    this.showListings();
+      this.showListings();
+    }
   }
 
   showListings() {
-    document.getElementById('listingsBtn').style.borderBottom = '4px solid #222021';
-    document.getElementById('offersBtn').style.borderBottom = '2px solid #222021';
+    if (isPlatformBrowser(this._platoformId)) {
+      document.getElementById('listingsBtn').style.borderBottom = '4px solid #222021';
+      document.getElementById('offersBtn').style.borderBottom = '2px solid #222021';
+    }
+
     this.listingNav = true;
 
     if (!this.listings.length) {
@@ -94,8 +102,11 @@ export class ProfileComponent implements OnInit {
   }
 
   showOffers() {
-    document.getElementById('offersBtn').style.borderBottom = '4px solid #222021';
-    document.getElementById('listingsBtn').style.borderBottom = '2px solid #222021';
+    if (isPlatformBrowser(this._platoformId)) {
+      document.getElementById('offersBtn').style.borderBottom = '4px solid #222021';
+      document.getElementById('listingsBtn').style.borderBottom = '2px solid #222021';
+    }
+
     this.listingNav = false;
 
     if (!this.offers.length) {

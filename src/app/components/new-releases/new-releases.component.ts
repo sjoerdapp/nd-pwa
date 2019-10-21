@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../../services/home.service';
-import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-new-releases',

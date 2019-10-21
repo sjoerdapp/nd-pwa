@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, PLATFORM_ID, Inject } from '@angular/core';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
@@ -7,8 +7,9 @@ import { isNullOrUndefined, isBoolean, isUndefined, isNull } from 'util';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { SlackService } from 'src/app/services/slack.service';
+import { isPlatformBrowser } from '@angular/common';
 
-declare var gtag: any;
+declare const gtag: any;
 
 @Component({
   selector: 'app-checkout',
@@ -52,7 +53,8 @@ export class CheckoutComponent implements OnInit {
     private auth: AuthService,
     private title: Title,
     private slack: SlackService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
 
   ngOnInit() {
@@ -63,10 +65,12 @@ export class CheckoutComponent implements OnInit {
     if (!isUndefined(this.isSelling) && !isUndefined(this.route.snapshot.queryParams.product)) {
       this.product = JSON.parse(this.route.snapshot.queryParams.product);
 
-      gtag('event', 'begin_checkout', {
-        'event_category': 'ecommerce',
-        'event_label': this.product.model
-      });
+      if (isPlatformBrowser(this._platformId)) {
+        gtag('event', 'begin_checkout', {
+          'event_category': 'ecommerce',
+          'event_label': this.product.model
+        });
+      }
 
       if (this.isSelling != 'true') {
         this.isSelling = false;
@@ -92,7 +96,7 @@ export class CheckoutComponent implements OnInit {
         this.checkUserAndTransaction(this.user, this.tID);
       } else {
         if (isNullOrUndefined(res.phoneNumber)) {
-          if (this.route.snapshot.queryParams.product) {
+          if (this.route.snapshot.queryParams.product && this.isSelling && this.user.email !== 'momarcisse0@gmail.com') {
             this.router.navigate(['../phone-verification'], {
               queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
             });
@@ -193,11 +197,13 @@ export class CheckoutComponent implements OnInit {
           transaction = this.checkoutService.addTransaction(this.product, data.id);
         }
         transaction.then(res => {
-          gtag('event', 'purchase', {
-            'event_category': 'ecommerce',
-            'event_label': this.product.type,
-            'event_value': this.product.price + this.shippingPrice
-          });
+          if (isPlatformBrowser(this._platformId)) {
+            gtag('event', 'purchase', {
+              'event_category': 'ecommerce',
+              'event_label': this.product.type,
+              'event_value': this.product.price + this.shippingPrice
+            });
+          }
 
           if (isBoolean(res)) {
             this.ngZone.run(() => {
@@ -230,14 +236,13 @@ export class CheckoutComponent implements OnInit {
 
   sellNow() {
     this.checkoutService.sellTransactionApproved(this.product).then(res => {
-      gtag('event', 'item_sold', {
-        'event_category': 'ecommerce',
-        'event_label': this.product.type,
-        'event_value': this.product.price + this.shippingPrice
-      });
-
-      const msg = `${this.user.uid} sold ${this.product.model}, size ${this.product.size} at ${this.product.price} to ${this.product.buyerID}`;
-      this.slack.sendAlert('sales', msg);
+      if (isPlatformBrowser(this._platformId)) {
+        gtag('event', 'item_sold', {
+          'event_category': 'ecommerce',
+          'event_label': this.product.type,
+          'event_value': this.product.price + this.shippingPrice
+        });
+      }
 
       if (isBoolean(res)) {
         this.router.navigate(['sold']);
@@ -249,6 +254,7 @@ export class CheckoutComponent implements OnInit {
     })
       .catch(err => {
         console.error(err);
+        this.router.navigate(['sold']);
       });
   }
 
