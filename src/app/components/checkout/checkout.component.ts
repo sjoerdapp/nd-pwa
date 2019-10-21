@@ -87,19 +87,21 @@ export class CheckoutComponent implements OnInit {
 
     this.auth.isConnected().then(res => {
       if (isNull(res)) {
-        this.router.navigate([`login`]);
-      }
-
-      this.user = res;
-
-      if (!isUndefined(this.tID)) {
-        this.checkUserAndTransaction(this.user, this.tID);
+        this.router.navigate([`login`], {
+          queryParams: { redirectTo: this.router.url }
+        });
       } else {
-        if (isNullOrUndefined(res.phoneNumber)) {
-          if (this.route.snapshot.queryParams.product && this.isSelling && this.user.email !== 'momarcisse0@gmail.com') {
-            this.router.navigate(['../phone-verification'], {
-              queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
-            });
+        this.user = res;
+
+        if (!isUndefined(this.tID)) {
+          this.checkUserAndTransaction(this.user, this.tID);
+        } else {
+          if (isNullOrUndefined(res.phoneNumber)) {
+            if (this.route.snapshot.queryParams.product && this.isSelling && this.user.email !== 'momarcisse0@gmail.com') {
+              this.router.navigate(['../phone-verification'], {
+                queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
+              });
+            }
           }
         }
       }

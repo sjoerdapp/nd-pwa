@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import * as firebase from 'firebase/app';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private fb: FormBuilder,
-    private title: Title
+    private title: Title,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -37,11 +40,21 @@ export class LoginComponent implements OnInit {
   login() {
     this.loading = true;
     // console.log('login() called');
-    
+
     if (this.email.value || this.password.value) {
       return this.auth.emailLogin(this.email.value, this.password.value).then(res => {
         if (!res) {
           this.showError();
+        } else {
+          const redirect = this.route.snapshot.queryParams.redirectTo;
+
+          if (!isUndefined(redirect)) {
+            const url = decodeURIComponent(redirect);
+            console.log(url);
+            this.router.navigateByUrl(url);
+          } else {
+            this.router.navigate(['/home']);
+          }
         }
       });
     } else {

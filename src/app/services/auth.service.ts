@@ -125,10 +125,8 @@ export class AuthService {
 
   async emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((res) => {
-        return this.ngZone.run(() => {
-          return this.router.navigate(['/home']);
-        });
+      .then(() => {
+        return true;
       })
       .catch(error => {
         console.error('Error Login: Email or Password Invalid.');
