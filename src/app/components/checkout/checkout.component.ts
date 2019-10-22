@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { isNullOrUndefined, isBoolean, isUndefined, isNull } from 'util';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
-import { SlackService } from 'src/app/services/slack.service';
 import { isPlatformBrowser } from '@angular/common';
 
 declare const gtag: any;
@@ -52,7 +51,6 @@ export class CheckoutComponent implements OnInit {
     private route: ActivatedRoute,
     private auth: AuthService,
     private title: Title,
-    private slack: SlackService,
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
@@ -96,12 +94,10 @@ export class CheckoutComponent implements OnInit {
         if (!isUndefined(this.tID)) {
           this.checkUserAndTransaction(this.user, this.tID);
         } else {
-          if (isNullOrUndefined(res.phoneNumber)) {
-            if (this.route.snapshot.queryParams.product && this.isSelling && this.user.email !== 'momarcisse0@gmail.com') {
-              this.router.navigate(['../phone-verification'], {
-                queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
-              });
-            }
+          if (isNullOrUndefined(res.phoneNumber) && this.route.snapshot.queryParams.product && this.isSelling && this.user.email !== 'momarcisse0@gmail.com') {
+            this.router.navigate(['../phone-verification'], {
+              queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
+            });
           }
         }
       }
