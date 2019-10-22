@@ -1,0 +1,204 @@
+@import "../../../base_styles/base";
+
+@import url("https://fonts.googleapis.com/css?family=PT+Serif:400,700&display=swap");
+
+.main-container {
+  .btn {
+    width: 40%;
+    margin: $spacing-normal auto;
+    padding: $spacing-xsmall;
+    display: block;
+    background: $black;
+
+    &:hover {
+      background: $matteblack;
+    }
+  }
+
+  .post-container {
+    p,
+    a,
+    figcaption {
+      font-family: "PT Serif", serif;
+    }
+
+    em {
+      font-family: "PT Serif", serif;
+      font-style: italic;
+    }
+
+    .featured-img {
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      width: 80%;
+      margin: $spacing-normal auto;
+    }
+
+    .category {
+      background: $green;
+      color: $matteblack;
+      text-align: center;
+      font-size: $font-xsmall;
+      width: 20%;
+      margin: $spacing-xsmall auto;
+      padding: $spacing-xsmall;
+      font-weight: $weight-black;
+      letter-spacing: 0.25px;
+    }
+
+    .content {
+      width: 90%;
+      margin: $spacing-xsmall auto;
+
+      p {
+        font-size: $font-normal;
+        margin: $spacing-normal auto;
+        line-height: $spacing-normal;
+        font-weight: 400;
+      }
+
+      a {
+        color: $green;
+      }
+
+      li {
+        list-style: none;
+
+        figure {
+          width: 100%;
+
+          img {
+            width: 100%;
+          }
+
+          figcaption {
+            font-size: $spacing-xsmall;
+            text-align: center;
+            margin-bottom: $spacing-normal;
+          }
+        }
+      }
+
+      figure {
+        width: 100%;
+
+        img {
+          width: inherit;
+        }
+
+        figcaption {
+          font-size: $spacing-xsmall;
+          text-align: center;
+          margin-bottom: $spacing-normal;
+        }
+      }
+    }
+  }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+  .content {
+    width: 85% !important;
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  .content {
+    width: 80% !important;
+
+    ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: $spacing-normal;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  .btn {
+    width: 15% !important;
+  }
+
+  .category {
+    margin: $spacing-large auto !important;
+    font-size: $font-small !important;
+  }
+  
+  .content {
+    width: 70% !important;
+
+    ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: $spacing-normal;
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  .btn {
+    width: 15% !important;
+  }
+
+  .category {
+    margin: $spacing-large auto !important;
+    font-size: $font-small !important;
+    width: 10% !important;
+  }
+
+  h1 {
+    font-size: $font-xlarge;
+  }
+  
+  .content {
+    width: 70% !important;
+
+    p {
+      font-size: $font-large !important;
+    }
+
+    ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: $spacing-normal;
+    }
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .btn {
+    width: 15% !important;
+  }
+
+  .category {
+    margin: $spacing-large auto !important;
+    font-size: $font-small !important;
+    width: 10% !important;
+  }
+
+  h1 {
+    font-size: $font-xlarge;
+  }
+  
+  .content {
+    width: 70% !important;
+
+    p {
+      font-size: $font-large !important;
+    }
+
+    ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: $spacing-normal;
+    }
+  }
+}

@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.title.setTitle(`NXTDROP: Buy and Sell Sneakers in Canada`);
+    this.title.setTitle(`NXTDROP: Buy and Sell Authentic Sneakers in Canada`);
   }
 
   ngAfterViewInit() {

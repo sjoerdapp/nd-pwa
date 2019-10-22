@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+
+<section class="main-container">
+    <section class="post-container">
+        <img src="{{ post.img }}" alt="{{ post.alt_text }}" class="featured-img">
+
+        <div class="category">
+            {{ post.category }}
+        </div>
+
+        <h1 class="title">{{ post.title }}</h1>
+
+        <div class="content" innerHTML="{{ post.content }}">
+
+        </div>
+    </section>
+
+    <button class="btn" routerLink="..">Back</button>
+</section>
+
+<app-footer></app-footer>

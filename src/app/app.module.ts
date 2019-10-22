@@ -51,6 +51,9 @@ import { ModalComponent } from './components/modal/modal.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { SpecialDropHomeComponent } from './components/special-drop/home/home.component';
+import { BlogHomeComponent } from './components/blog/blog-home/blog-home.component';
+import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
+import { DropComponent } from './components/special-drop/drop/drop.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -59,6 +62,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 /** Icons imports */
 // tslint:disable-next-line: max-line-length
 import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal, faCcVisa, faCcMastercard, faCcAmex } from '@fortawesome/free-brands-svg-icons';
 
 // Firebase Setup
@@ -76,7 +80,6 @@ import { NgxMaskModule } from 'ngx-mask';
 // export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 import { NgxPayPalModule } from 'ngx-paypal';
-import { DropComponent } from './components/special-drop/drop/drop.component';
 
 @NgModule({
   declarations: [
@@ -125,7 +128,9 @@ import { DropComponent } from './components/special-drop/drop/drop.component';
     PrivacyComponent,
     TermsComponent,
     SpecialDropHomeComponent,
-    DropComponent
+    DropComponent,
+    BlogHomeComponent,
+    BlogPostComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -149,6 +154,6 @@ export class AppModule {
   constructor() {
     // add icon to library to be used in components
     // tslint:disable-next-line: max-line-length
-    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard, faCcVisa, faCcMastercard, faCcAmex, faCog);
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard, faCcVisa, faCcMastercard, faCcAmex, faCog, faClock);
   }
 }
