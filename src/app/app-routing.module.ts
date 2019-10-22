@@ -73,7 +73,7 @@ const routes: Routes = [
   { path: 'sold', component: SoldComponent },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'terms', component: TermsComponent },
-  { path: 'drop/:id', component: DropComponent },
+  //{ path: 'drop/:id', component: DropComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
