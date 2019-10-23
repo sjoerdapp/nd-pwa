@@ -5,6 +5,7 @@ import { debounceTime, take, map } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { isUndefined } from 'util';
+import { SEOService } from 'src/app/services/seo.service';
 
 export class CustomValidators {
 
@@ -48,11 +49,14 @@ export class SignUpComponent implements OnInit {
     public auth: AuthService,
     private fb: FormBuilder,
     private title: Title,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Sign Up | NXTDROP: Sell and Buy Sneakers in Canada`);
+    this.seo.addTags('Sign Up');
+
     this.signupForm = this.fb.group({
       firstName: ['', [
         Validators.required,

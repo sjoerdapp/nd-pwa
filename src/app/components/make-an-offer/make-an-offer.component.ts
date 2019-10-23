@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 import { SlackService } from 'src/app/services/slack.service';
 import { isPlatformBrowser } from '@angular/common';
+import { SEOService } from 'src/app/services/seo.service';
 
 declare var gtag: any;
 
@@ -50,11 +51,14 @@ export class MakeAnOfferComponent implements OnInit {
     private auth: AuthService,
     private title: Title,
     private slack: SlackService,
-    @Inject(PLATFORM_ID) private _platformId: Object
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Make an Offer | NXTDROP: Buy and Sell Sneakers in Canada`);
+    this.seo.addTags('Make an Offer');
+    
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
         this.selectedPair = JSON.parse(params.sneaker);

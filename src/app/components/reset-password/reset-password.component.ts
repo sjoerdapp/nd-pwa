@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { EmailService } from 'src/app/services/email.service';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -29,11 +30,14 @@ export class ResetPasswordComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private title: Title,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Reset Password | NXTDROP: Sell and Buy Sneakers in Canada`);
+    this.seo.addTags('Reset Password');
+    
     this.code = this.route.snapshot.queryParams.code;
     this.uid = this.route.snapshot.queryParams.uid;
     this.email = this.route.snapshot.queryParams.email;

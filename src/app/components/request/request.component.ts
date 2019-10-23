@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { SlackService } from 'src/app/services/slack.service';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-request',
@@ -19,11 +20,13 @@ export class RequestComponent implements OnInit {
     private title: Title,
     private auth: AuthService,
     private router: Router,
-    private slack: SlackService
+    private slack: SlackService,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Request Product | NXTDROP: Sell and Buy Sneakers in Canada`);
+    this.seo.addTags('Request Product');
 
     this.auth.isConnected().then(res => {
       if (!res) {

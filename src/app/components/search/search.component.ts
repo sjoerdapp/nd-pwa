@@ -4,6 +4,7 @@ import * as algoliasearch from 'algoliasearch';
 import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-search',
@@ -23,11 +24,13 @@ export class SearchComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private title: Title,
-    @Inject(PLATFORM_ID) private _platformId: Object
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
-    this.title.setTitle(`Search | NXTDROP: Sell and Buy Sneakers in Canada`);
+    this.title.setTitle(`Search | NXTDROP: Sell and Buy Authentic Sneakers in Canada`);
+    this.seo.addTags('Search');
 
     if (isPlatformBrowser(this._platformId)) {
       const element = document.getElementById('search-input');

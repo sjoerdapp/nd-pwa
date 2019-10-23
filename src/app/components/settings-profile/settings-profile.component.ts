@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsProfileService } from 'src/app/services/settings-profile.service';
 import { User } from 'src/app/models/user';
 import { Title } from '@angular/platform-browser';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-settings-profile',
@@ -26,11 +27,14 @@ export class SettingsProfileComponent implements OnInit {
 
   constructor(
     private settingsProfileService: SettingsProfileService,
-    private title: Title
+    private title: Title,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Edit Profile | NXTDROP: Sell and Buy Sneakers in Canada`);
+    this.seo.addTags('Edit Profile');
+    
     this.settingsProfileService.getUserInfo().then(res => {
       res.subscribe(data => {
         this.user = data;

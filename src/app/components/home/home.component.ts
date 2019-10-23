@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
 import { isUndefined } from 'util';
 import { isPlatformBrowser } from '@angular/common';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -19,11 +20,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private ref: ChangeDetectorRef,
     private afs: AngularFirestore,
     private auth: AuthService,
-    @Inject(PLATFORM_ID) private _platformId: Object
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`NXTDROP: Buy and Sell Sneakers in Canada`);
+    this.seo.addTags('Home');
+
   }
 
   ngAfterViewInit() {

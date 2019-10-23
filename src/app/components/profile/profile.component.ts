@@ -3,6 +3,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { User } from 'src/app/models/user';
 import { Title } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,11 +32,13 @@ export class ProfileComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private title: Title,
-    @Inject(PLATFORM_ID) private _platoformId: Object
+    @Inject(PLATFORM_ID) private _platoformId: Object,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Your profile | NXTDROP: Sell and Buy Sneakers in Canada`);
+    this.seo.addTags('Profile');
 
     if (isPlatformBrowser(this._platoformId)) {
       this.profileService.getUserData().then(val => {
