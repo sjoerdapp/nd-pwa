@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-page-not-found',
@@ -9,11 +10,13 @@ import { Title } from '@angular/platform-browser';
 export class PageNotFoundComponent implements OnInit {
 
   constructor(
-    private title: Title
+    private title: Title,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`404 | NXTDROP: Buy and Sell Sneakers in Canada`);
+    this.seo.addTags('404');
   }
 
 }

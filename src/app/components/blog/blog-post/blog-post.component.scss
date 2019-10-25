@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css?family=PT+Serif:400,700&display=swap");
 
 .main-container {
-  .btn {
+  .back-btn {
     width: 40%;
     margin: $spacing-normal auto;
     padding: $spacing-xsmall;
@@ -137,7 +137,7 @@
     font-size: 36px;
   }
 
-  .btn {
+  .back-btn {
     width: 15% !important;
   }
 
@@ -160,7 +160,7 @@
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
-  .btn {
+  .back-btn {
     width: 15% !important;
   }
 
@@ -188,7 +188,7 @@
 }
 
 @media only screen and (min-width: 2000px) {
-  .btn {
+  .back-btn {
     width: 15% !important;
   }
 

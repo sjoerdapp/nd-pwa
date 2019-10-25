@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isUndefined } from 'util';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,14 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private title: Title,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Log In | NXTDROP: Buy and Sell Sneakers in Canada`);
+    this.seo.addTags('Log In');
+
     this.loginForm = this.fb.group({
       email: ['', [
         Validators.required

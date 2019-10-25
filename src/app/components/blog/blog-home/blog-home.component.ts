@@ -20,8 +20,8 @@ export class BlogHomeComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle(`News | NXTDROP: Buy and Sell Authentic Sneakers - Sneaker and Fashion News`)
-    this.seo.addTags();
-    
+    this.seo.addTags('News');
+
     this.news.getAllNews().subscribe((json: any) => {
       json.forEach(element => {
         let post: any = {

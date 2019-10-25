@@ -9,6 +9,7 @@ import { SlackService } from 'src/app/services/slack.service';
 import * as algoliasearch from 'algoliasearch';
 import { environment } from 'src/environments/environment';
 import { isPlatformBrowser } from '@angular/common';
+import { SEOService } from 'src/app/services/seo.service';
 
 declare const gtag: any;
 
@@ -60,11 +61,14 @@ export class SellComponent implements OnInit {
     private auth: AuthService,
     private title: Title,
     private slack: SlackService,
-    @Inject(PLATFORM_ID) private _platformId: Object
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Sell | NXTDROP: Sell and Buy Sneakers in Canada`); // Change the page title
+    this.seo.addTags('Sell');
+    
     this.index = this.algoliaClient.initIndex(environment.algolia.index);
 
     // Skip the first page and serves the third page

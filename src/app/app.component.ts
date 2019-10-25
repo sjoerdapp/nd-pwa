@@ -41,12 +41,6 @@ export class AppComponent implements AfterViewInit {
     }
 
     navEndEvents.subscribe((event: NavigationEnd) => {
-      const pattern = new RegExp('^\/product\/.+$');
-      const pattern2 = new RegExp('^\/news\/.+$');
-      if (!pattern.test(event.urlAfterRedirects) && !pattern2.test(event.urlAfterRedirects)) {
-        this.seo.addTags();
-      }
-
       if (isPlatformBrowser(this._platformId)) {
         (<any>window).gtag('config', 'UA-148418496-1', {
           'page_path': event.urlAfterRedirects

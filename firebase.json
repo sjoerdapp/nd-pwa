@@ -16,6 +16,10 @@
     ],
     "rewrites": [
       {
+        "source": "/blog/xmlrpc.php",
+        "destination": "/main.html"
+      },
+      {
         "source": "**",
         "function": "ssr"
       }
