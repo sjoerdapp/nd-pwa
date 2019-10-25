@@ -42,7 +42,8 @@ export class AppComponent implements AfterViewInit {
 
     navEndEvents.subscribe((event: NavigationEnd) => {
       const pattern = new RegExp('^\/product\/.+$');
-      if (!pattern.test(event.urlAfterRedirects)) {
+      const pattern2 = new RegExp('^\/news\/.+$');
+      if (!pattern.test(event.urlAfterRedirects) && !pattern2.test(event.urlAfterRedirects)) {
         this.seo.addTags();
       }
 

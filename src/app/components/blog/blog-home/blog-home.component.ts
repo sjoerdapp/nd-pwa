@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { NewsService } from 'src/app/services/news.service';
+import { SEOService } from 'src/app/services/seo.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-blog-home',
@@ -12,11 +13,15 @@ export class BlogHomeComponent implements OnInit {
   posts = [];
 
   constructor(
-    private router: Router,
-    private news: NewsService
+    private news: NewsService,
+    private seo: SEOService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(`News | NXTDROP: Buy and Sell Authentic Sneakers - Sneaker and Fashion News`)
+    this.seo.addTags();
+    
     this.news.getAllNews().subscribe((json: any) => {
       json.forEach(element => {
         let post: any = {
@@ -26,12 +31,12 @@ export class BlogHomeComponent implements OnInit {
           slug: element.slug
         }
 
-        this.news.getFeaturedMedia(element._links["wp:featuredmedia"][0]["href"]).subscribe((response: any) => {
+        this.news.getFeaturedMedia(element._links["wp:featuredmedia"][0]["href"].replace('104.197.231.19', 'news.nxtdrop.com')).subscribe((response: any) => {
           post.img = response.source_url;
           post.alt_text = response.alt_text;
         });
 
-        this.news.getCategory(element._links["wp:term"][0]["href"]).subscribe((response: any) => {
+        this.news.getCategory(element._links["wp:term"][0]["href"].replace('104.197.231.19', 'news.nxtdrop.com')).subscribe((response: any) => {
           post.category = response[0].name;
         });
 
