@@ -33,6 +33,55 @@ const universal = require(`${process.cwd()}/dist/server`).app;
 
 exports.ssr = functions.https.onRequest(universal);
 
+exports.orderDelivered = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send();
+        }
+
+        return admin.firestore().collection(`users`).doc(`${req.body.buyerID}`).get().then(response => {
+            const data = response.data();
+
+            if (data) {
+                //const email = data.email;
+                const email = data.email;
+                const total = req.body.price + req.body.shippingCost;
+
+                console.log(`orderDelivered Email Buyer to ${email}.`);
+
+                const msg = {
+                    to: email,
+                    from: 'do-not-reply@nxtdrop.com',
+                    templateId: 'd-2544c5b2779547ee9d5915e0c111e3f6',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        subtotal: req.body.price,
+                        shipping: req.body.shippingCost,
+                        total: total,
+                        assetURL: req.body.assetURL
+                    }
+                }
+
+                return sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent`);
+                    return res.status(200);
+                }).catch((err: any) => {
+                    console.error(`Could send email to: ${err}`);
+                    return res.status(500);
+                })
+            } else {
+                console.error(`buyer don't exist`);
+                return res.status(500);
+            }
+        }).catch(err => {
+            console.error(`error sending email`);
+            return res.status(500);
+        });
+    });
+});
+
 exports.verifiedShipped = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
         if (req.method !== 'POST') {
