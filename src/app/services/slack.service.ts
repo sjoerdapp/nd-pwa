@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class SlackService {
   async sendAlert(channel: string, msg: string) {
     switch (channel) {
       case 'offers': {
-        const endpoint = 'https://hooks.slack.com/services/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';
+        const endpoint = environment.slack.offers;
         const payload = { "text": msg };
 
         this.http.post(endpoint, JSON.stringify(payload)).subscribe(res => {
@@ -22,7 +23,7 @@ export class SlackService {
         break;
       }
       case 'listings': {
-        const endpoint = 'https://hooks.slack.com/services/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';
+        const endpoint = environment.slack.listings;
 
         const payload = { "text": msg };
 
@@ -32,7 +33,7 @@ export class SlackService {
         break;
       }
       case 'others': {
-        const endpoint = 'https://hooks.slack.com/services/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';
+        const endpoint = environment.slack.others;
 
         const payload = { "text": msg };
 
@@ -42,7 +43,7 @@ export class SlackService {
         break;
       }
       case 'sales': {
-        const endpoint = 'https://hooks.slack.com/services/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';
+        const endpoint = environment.slack.sales;
 
         const payload = { "text": msg };
 
@@ -52,7 +53,7 @@ export class SlackService {
         break;
       }
       case 'requests': {
-        const endpoint = 'https://hooks.slack.com/services/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';
+        const endpoint = environment.slack.requests;
 
         const payload = { "text": msg };
 
