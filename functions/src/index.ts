@@ -33,6 +33,55 @@ const universal = require(`${process.cwd()}/dist/server`).app;
 
 exports.ssr = functions.https.onRequest(universal);
 
+exports.offerAcceptedReminder = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send();
+        }
+
+        return admin.firestore().collection(`users`).doc(`${req.body.buyerID}`).get().then(response => {
+            const data = response.data();
+            if (data) {
+                const email = data.email;
+                const total = req.body.price + req.body.shippingCost;
+                const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.soldAt}`;
+
+                console.log(`Order Email Buyer to ${email}.`);
+
+                const msg = {
+                    to: email,
+                    from: 'do-not-reply@nxtdrop.com',
+                    templateId: 'd-1470cf9fcbd74918b5ce0c78db3005d2',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        subtotal: req.body.price,
+                        shipping: req.body.shippingCost,
+                        total: total,
+                        assetURL: req.body.assetURL,
+                        link: `https://nxtdrop.com/checkout?tID=${transactionID}`
+                    }
+                }
+
+                return sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent to buyer`);
+                    return res.status(200);
+                }).catch((err: any) => {
+                    console.error(`Could send email to buyer: ${err}`);
+                    return res.status(500);
+                })
+            } else {
+                console.error(`buyer don't exist`);
+                return res.status(500);
+            }
+        }).catch(err => {
+            console.error(`error sending buyer email`);
+            return res.status(500);
+        });
+    });
+});
+
 exports.orderDelivered = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
         if (req.method !== 'POST') {
