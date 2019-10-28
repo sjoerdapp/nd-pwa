@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-logged-out',
@@ -9,11 +10,13 @@ import { Title } from '@angular/platform-browser';
 export class LoggedOutComponent implements OnInit {
 
   constructor(
-    private title: Title
+    private title: Title,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`See You Later! | NXTDROP: Buy and Sell Sneakers in Canada`);
+    this.seo.addTags('Logged Out');
   }
 
 }

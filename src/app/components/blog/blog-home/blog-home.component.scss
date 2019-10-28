@@ -21,14 +21,14 @@
       &:hover {
         background: $lightergrey;
 
-        .featured-img {
+        .card-img {
           img {
             opacity: 0.7;
           }
         }
       }
 
-      .featured-img {
+      .card-img {
         width: 100%;
         background: $black;
 
@@ -45,11 +45,11 @@
         display: grid;
         grid-template-rows: 1fr 2fr 1fr;
 
-        .category {
+        .post-category {
           color: $green;
         }
 
-        .title {
+        .post-title {
           color: $black;
           font-weight: $weight-black;
 
@@ -78,16 +78,16 @@
       border-right: none;
       border-left: none;
 
-      .featured-img {
+      .card-img {
         height: inherit;
       }
 
       .post-info {
-        .category {
+        .post-category {
           font-size: $font-xsmall;
         }
 
-        .title {
+        .post-title {
           font-size: $font-small;
         }
 
@@ -109,16 +109,16 @@
       border-right: none;
       border-left: none;
 
-      .featured-img {
+      .card-img {
         height: inherit;
       }
 
       .post-info {
-        .category {
+        .post-category {
           font-size: $font-xsmall;
         }
 
-        .title {
+        .post-title {
           font-size: $font-small;
         }
 
@@ -143,16 +143,16 @@
       border: none !important;
       @include vendor(box-shadow, 10px 10px 10px -6px rgba(196, 196, 196, 1));
 
-      .featured-img {
+      .card-img {
         height: 250px;
       }
 
       .post-info {
-        .category {
+        .post-category {
           font-size: $font-xsmall;
         }
 
-        .title {
+        .post-title {
           font-size: $font-small;
         }
 
@@ -181,18 +181,18 @@
       border: none !important;
       @include vendor(box-shadow, 10px 10px 10px -6px rgba(196, 196, 196, 1));
 
-      .featured-img {
+      .card-img {
         height: 312.5px;
       }
 
       .post-info {
         padding: $spacing-normal !important;
 
-        .category {
+        .post-category {
           font-size: $font-small;
         }
 
-        .title {
+        .post-title {
           font-size: $font-normal;
         }
 
@@ -221,18 +221,18 @@
       border: none !important;
       @include vendor(box-shadow, 10px 10px 10px -6px rgba(196, 196, 196, 1));
 
-      .featured-img {
+      .card-img {
         height: 312.5px;
       }
 
       .post-info {
         padding: $spacing-normal !important;
 
-        .category {
+        .post-category {
           font-size: $font-small;
         }
 
-        .title {
+        .post-title {
           font-size: $font-normal;
         }
 
@@ -261,18 +261,18 @@
       border: none !important;
       @include vendor(box-shadow, 10px 10px 10px -6px rgba(196, 196, 196, 1));
 
-      .featured-img {
+      .card-img {
         height: 312.5px;
       }
 
       .post-info {
         padding: $spacing-normal !important;
         
-        .category {
+        .post-category {
           font-size: $font-small;
         }
 
-        .title {
+        .post-title {
           font-size: $font-normal;
         }
 

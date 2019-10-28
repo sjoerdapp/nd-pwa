@@ -118,7 +118,7 @@ export class CheckoutService {
       UID = res.uid;
     });
     const batch = firebase.firestore().batch();
-    const id = product.model.replace(/ /g, '-').toLowerCase();
+    const id = product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase();
     const soldAt = Date.now();
     const transactionID = `${product.buyerID}-${UID}-${soldAt}`;
 
@@ -169,12 +169,41 @@ export class CheckoutService {
     return batch.commit()
       .then(() => {
         //console.log('Transaction Approved');
+        const msg = `${UID} sold ${product.model}, size ${product.size} at ${product.price} to ${product.buyerID}`;
+        this.slack.sendAlert('sales', msg).catch(err => {
+          //console.error(err)
+        });
+        this.http.post(`${environment.cloud.url}orderConfirmation`, transactionData).subscribe(res => {
+          //console.log(res);
+        });
+
         return transactionID;
       })
       .catch(err => {
         //console.error(err);
         return false;
       })
+  }
+
+  addTransaction(product, paymentID: string, ) {
+    const transactionID = `${product.buyerID}-${product.sellerID}-${product.soldAt}`;
+    const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`);
+    const batch = firebase.firestore().batch();
+
+    batch.update(tranRef, {
+      paymentID
+    });
+
+    return batch.commit()
+      .then(() => {
+        //console.log('Transaction Approved');
+        return transactionID;
+      })
+      .catch(err => {
+        //console.error(err);
+        return false;
+      })
+
   }
 
   /*getCartItems() {
@@ -193,5 +222,22 @@ export class CheckoutService {
     return this.auth.isConnected().then(res => {
       return this.afs.collection(`users`).doc(`${res.uid}`).get();
     });
+  }
+
+  checkTransaction(user, transactionID: string) {
+    return this.afs.firestore.collection(`transactions`).doc(`${transactionID}`).get().then(res => {
+      if (res.exists && res.data().buyerID == user.uid) {
+        return true;
+      } else {
+        return false;
+      }
+    }).catch(err => {
+      console.error(err);
+      return false;
+    })
+  }
+
+  getTransaction(transactionID: string) {
+    return this.afs.collection(`transactions`).doc(`${transactionID}`).valueChanges();
   }
 }

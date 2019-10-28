@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css?family=PT+Serif:400,700&display=swap");
 
 .main-container {
-  .btn {
+  .back-btn {
     width: 40%;
     margin: $spacing-normal auto;
     padding: $spacing-xsmall;
@@ -16,6 +16,8 @@
   }
 
   .post-container {
+    width: 75%;
+    margin: $spacing-xlarge auto;
     p,
     a,
     figcaption {
@@ -50,18 +52,24 @@
     }
 
     .content {
-      width: 90%;
+      width: 100%;
       margin: $spacing-xsmall auto;
 
       p {
         font-size: $font-normal;
         margin: $spacing-normal auto;
-        line-height: $spacing-normal;
+        line-height: $spacing-large;
         font-weight: 400;
+        color: $matteblack;
       }
 
       a {
-        color: $green;
+        @include vendor(transition, all 0.5s);
+        border-bottom: 1.5px solid $green;
+
+        &:hover {
+          color: $green;
+        }
       }
 
       li {
@@ -105,15 +113,17 @@
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
-  .content {
-    width: 85% !important;
+  h1 {
+    font-size: 20px;
   }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
-  .content {
-    width: 80% !important;
+  h1 {
+    font-size: 28px;
+  }
 
+  .content {
     ul {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -123,7 +133,11 @@
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
-  .btn {
+  h1 {
+    font-size: 36px;
+  }
+
+  .back-btn {
     width: 15% !important;
   }
 
@@ -133,7 +147,9 @@
   }
   
   .content {
-    width: 70% !important;
+    p {
+      font-size: 18px !important;
+    }
 
     ul {
       display: grid;
@@ -144,7 +160,7 @@
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
-  .btn {
+  .back-btn {
     width: 15% !important;
   }
 
@@ -159,8 +175,6 @@
   }
   
   .content {
-    width: 70% !important;
-
     p {
       font-size: $font-large !important;
     }
@@ -174,7 +188,7 @@
 }
 
 @media only screen and (min-width: 2000px) {
-  .btn {
+  .back-btn {
     width: 15% !important;
   }
 
@@ -189,8 +203,6 @@
   }
   
   .content {
-    width: 70% !important;
-
     p {
       font-size: $font-large !important;
     }

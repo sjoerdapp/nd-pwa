@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, PLATFORM_ID, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ModalService } from 'src/app/services/modal.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
 import { isUndefined } from 'util';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { isPlatformBrowser } from '@angular/common';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -20,37 +20,31 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private ref: ChangeDetectorRef,
     private afs: AngularFirestore,
     private auth: AuthService,
-    private http: HttpClient
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`NXTDROP: Buy and Sell Sneakers in Canada`);
-
-    /*this.afs.collection(`transactions`).doc(`3SzkazZE1uRfyCj2xfGvSaj4Tmw1-zNSB9cdIPTZykSJv7xCoTeueFmk2-1569436779732`).get().subscribe(res => {
-      this.http.post(`${environment.cloud.url}verifiedShipped`, res.data()).subscribe((re: any) => {
-        if (re != 'sent') {
-          console.error(`Error: ${re}`);
-        } else {
-          console.log(`sent`);
-        }
-      });
-    });*/
+    this.seo.addTags('Home');
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.auth.isConnected().then(res => {
-        this.afs.collection(`users`).doc(`${res.uid}`).get().subscribe(data => {
-          if (isUndefined(data.data().shippingPromo)) {
-            // console.log(`freeShipping`);
-            //this.modalService.openModal('freeShipping');
-          }
-        })
-      }).catch(err => {
-        console.log(`not connected`);
-      });
-    }, 10000);
-    this.ref.detectChanges();
+    if (isPlatformBrowser(this._platformId)) {
+      setTimeout(() => {
+        this.auth.isConnected().then(res => {
+          this.afs.collection(`users`).doc(`${res.uid}`).get().subscribe(data => {
+            if (isUndefined(data.data().shippingPromo)) {
+              // console.log(`freeShipping`);
+              //this.modalService.openModal('freeShipping');
+            }
+          })
+        }).catch(err => {
+          console.log(`not connected`);
+        });
+      }, 10000);
+      this.ref.detectChanges();
+    }
   }
 
 }

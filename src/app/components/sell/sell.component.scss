@@ -62,23 +62,17 @@
         margin-top: $spacing-xsmall;
     }
 
-    ::ng-deep .ais-SearchBox {
-        input {
-            @include vendor(transition, 0.25s ease-in-out);
-            display: block;
-            padding: $spacing-small;
-            width: 90%;
-            margin: $spacing-normal auto;
-            border-radius: $spacing-xxsmall;
-            border: 1px solid $lightgrey;
+    .prod-search {
+        @include vendor(transition, 0.25s ease-in-out);
+        display: block;
+        padding: $spacing-small;
+        width: 90%;
+        margin: $spacing-normal auto;
+        border-radius: $spacing-xxsmall;
+        border: 1px solid $lightgrey;
 
-            &:focus, &:hover {
-                border-color: $matteblack;
-            }
-        }
-
-        button {
-            display: none;
+        &:focus, &:hover {
+            border-color: $matteblack;
         }
     }
 

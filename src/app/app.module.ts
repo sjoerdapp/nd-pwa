@@ -50,8 +50,10 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ModalComponent } from './components/modal/modal.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { TermsComponent } from './components/terms/terms.component';
+import { SpecialDropHomeComponent } from './components/special-drop/home/home.component';
 import { BlogHomeComponent } from './components/blog/blog-home/blog-home.component';
 import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
+import { DropComponent } from './components/special-drop/drop/drop.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -72,9 +74,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 // Reactive Forms
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
-// Algolia
-import { NgAisModule } from 'angular-instantsearch';
 
 // Mask Module
 import { NgxMaskModule } from 'ngx-mask';
@@ -128,11 +127,13 @@ import { NgxPayPalModule } from 'ngx-paypal';
     ModalComponent,
     PrivacyComponent,
     TermsComponent,
+    SpecialDropHomeComponent,
+    DropComponent,
     BlogHomeComponent,
     BlogPostComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     FontAwesomeModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -142,7 +143,6 @@ import { NgxPayPalModule } from 'ngx-paypal';
     AngularFireStorageModule,
     ReactiveFormsModule,
     FormsModule,
-    NgAisModule,
     NgxMaskModule.forRoot(),
     HttpClientModule,
     NgxPayPalModule

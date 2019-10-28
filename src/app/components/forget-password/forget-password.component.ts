@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmailService } from 'src/app/services/email.service';
 import { Title } from '@angular/platform-browser';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-forget-password',
@@ -16,11 +17,13 @@ export class ForgetPasswordComponent implements OnInit {
 
   constructor(
     private title: Title,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Forgot Password | NXTDROP: Buy and Sell Sneakers in Canada`);
+    this.seo.addTags('Forgot Password');
   }
 
   sendLink() {

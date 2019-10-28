@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, PLATFORM_ID, Inject } from '@angular/core';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
@@ -6,9 +6,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { isNullOrUndefined, isBoolean, isUndefined, isNull } from 'util';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
-import { SlackService } from 'src/app/services/slack.service';
+import { isPlatformBrowser } from '@angular/common';
+import { SEOService } from 'src/app/services/seo.service';
 
-declare var gtag: any;
+declare const gtag: any;
 
 @Component({
   selector: 'app-checkout',
@@ -32,7 +33,7 @@ export class CheckoutComponent implements OnInit {
 
   // cartItems = [];
 
-  product;
+  product: any = {}
   shippingPrice = 18;
 
   // 1569988800000
@@ -42,75 +43,66 @@ export class CheckoutComponent implements OnInit {
 
   user: any;
 
+  // User Checking out item sold to them
+  tID;
+
   constructor(
     private checkoutService: CheckoutService,
     private router: Router,
     private route: ActivatedRoute,
     private auth: AuthService,
     private title: Title,
-    private slack: SlackService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
-    /*this.auth.isConnected().then(res => {
-      if (isNullOrUndefined(res.phoneNumber)) {
-        this.router.navigate(['../phone-verification']);
-      }
-    });*/
-
-    const date = Date.now();
-    //console.log(date);
-
-    if (date >= 1569988800000 && date < 1570075140000) {
-      this.shippingPrice = 0;
-    }
-
+    this.tID = this.route.snapshot.queryParams.tID;
     this.title.setTitle(`Checkout | NXTDROP: Sell and Buy Sneakers in Canada`);
-
-    this.product = JSON.parse(this.route.snapshot.queryParams.product);
-
-    gtag('event', 'begin_checkout', {
-      'event_category': 'ecommerce',
-      'event_label': this.product.model
-    });
+    this.seo.addTags('Checkout');
 
     this.isSelling = this.route.snapshot.queryParams.sell;
-    //console.log(this.isSelling);
 
-    if (!isUndefined(this.isSelling)) {
+    if (!isUndefined(this.isSelling) && !isUndefined(this.route.snapshot.queryParams.product)) {
+      this.product = JSON.parse(this.route.snapshot.queryParams.product);
+
+      if (isPlatformBrowser(this._platformId)) {
+        gtag('event', 'begin_checkout', {
+          'event_category': 'ecommerce',
+          'event_label': this.product.model
+        });
+      }
+
       if (this.isSelling != 'true') {
         this.isSelling = false;
-
-        this.checkoutService.getFreeShipping().then(res => {
-          res.subscribe(response => {
-            //console.log(response);
-            if (!isUndefined(response.data().freeShipping)) {
-              this.shippingPrice = 0;
-            }
-          })
-        });
-
+        this.checkFreeShipping();
         this.initConfig();
       } else {
         this.isSelling = true;
       }
     } else {
-      this.router.navigate([`..`]);
+      if (isUndefined(this.tID)) {
+        this.router.navigate([`..`]);
+      }
     }
 
     this.auth.isConnected().then(res => {
       if (isNull(res)) {
-        this.router.navigate([`login`]);
-      }
+        this.router.navigate([`login`], {
+          queryParams: { redirectTo: this.router.url }
+        });
+      } else {
+        this.user = res;
 
-      this.user = res;
-
-      if (isNullOrUndefined(res.phoneNumber)) {
-        if (this.route.snapshot.queryParams.product) {
-          this.router.navigate(['../phone-verification'], {
-            queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
-          });
+        if (!isUndefined(this.tID)) {
+          this.checkUserAndTransaction(this.user, this.tID);
+        } else {
+          if (isNullOrUndefined(res.phoneNumber) && this.route.snapshot.queryParams.product && this.isSelling && this.user.email !== 'momarcisse0@gmail.com') {
+            this.router.navigate(['../phone-verification'], {
+              queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
+            });
+          }
         }
       }
     });
@@ -127,6 +119,30 @@ export class CheckoutComponent implements OnInit {
     this.checkoutService.getShippingInfo().then(data => {
       this.shippingInfo = data;
     })*/
+  }
+
+  private checkFreeShipping() {
+    this.checkoutService.getFreeShipping().then(res => {
+      res.subscribe(response => {
+        //console.log(response);
+        if (!isUndefined(response.data().freeShipping) || response.data().ordered === 0) {
+          this.shippingPrice = 0;
+        }
+      })
+    });
+  }
+
+  checkUserAndTransaction(user, transactionID: string) {
+    this.checkoutService.checkTransaction(user, transactionID).then(res => {
+      if (res) {
+        this.checkoutService.getTransaction(transactionID).subscribe(response => {
+          this.product = response;
+          this.initConfig();
+        })
+      } else {
+        this.router.navigate(['page-not-found']);
+      }
+    })
   }
 
   private initConfig() {
@@ -175,12 +191,21 @@ export class CheckoutComponent implements OnInit {
       },
       onClientAuthorization: (data) => {
         //console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
-        this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice).then(res => {
-          gtag('event', 'purchase', {
-            'event_category': 'ecommerce',
-            'event_label': this.product.type,
-            'event_value': this.product.price + this.shippingPrice
-          });
+        let transaction;
+
+        if (isUndefined(this.tID)) {
+          transaction = this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice);
+        } else {
+          transaction = this.checkoutService.addTransaction(this.product, data.id);
+        }
+        transaction.then(res => {
+          if (isPlatformBrowser(this._platformId)) {
+            gtag('event', 'purchase', {
+              'event_category': 'ecommerce',
+              'event_label': this.product.type,
+              'event_value': this.product.price + this.shippingPrice
+            });
+          }
 
           if (isBoolean(res)) {
             this.ngZone.run(() => {
@@ -213,14 +238,13 @@ export class CheckoutComponent implements OnInit {
 
   sellNow() {
     this.checkoutService.sellTransactionApproved(this.product).then(res => {
-      gtag('event', 'item_sold', {
-        'event_category': 'ecommerce',
-        'event_label': this.product.type,
-        'event_value': this.product.price + this.shippingPrice
-      });
-
-      const msg = `${this.user.uid} sold ${this.product.model}, size ${this.product.size} at ${this.product.price} from ${this.product.sellerID}`;
-      this.slack.sendAlert('offers', msg);
+      if (isPlatformBrowser(this._platformId)) {
+        gtag('event', 'item_sold', {
+          'event_category': 'ecommerce',
+          'event_label': this.product.type,
+          'event_value': this.product.price + this.shippingPrice
+        });
+      }
 
       if (isBoolean(res)) {
         this.router.navigate(['sold']);
@@ -232,6 +256,7 @@ export class CheckoutComponent implements OnInit {
     })
       .catch(err => {
         console.error(err);
+        this.router.navigate(['sold']);
       });
   }
 

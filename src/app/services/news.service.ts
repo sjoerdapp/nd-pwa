@@ -1,5 +1,7 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { resolve } from 'dns';
+import { reject } from 'q';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class NewsService {
   ) { }
 
   getAllNews() {
-    return this.http.get(`http://104.197.231.19/index.php/wp-json/wp/v2/posts`, {});
+    return this.http.get(`https://news.nxtdrop.com/index.php/wp-json/wp/v2/posts`, {});
   }
 
   getFeaturedMedia(url: string) {
@@ -23,7 +25,18 @@ export class NewsService {
   }
 
   getNews(id: string) {
-    return this.http.get(`http://104.197.231.19/index.php/wp-json/wp/v2/posts?slug=${id}`, {});
+    return this.http.get(`https://news.nxtdrop.com/index.php/wp-json/wp/v2/posts?slug=${id}`, {});
+  }
+
+  getTags(tagIDs: []): Promise<string[]> {
+    let tags: string[] = [];
+    tagIDs.forEach((id) => {
+      this.http.get(`https://news.nxtdrop.com/index.php/wp-json/wp/v2/tags/${id}`, {}).subscribe((res: any) => {
+        tags.push(res.name);
+      });
+    });
+
+    return Promise.resolve(tags);
   }
 
   dateFormat(date) {

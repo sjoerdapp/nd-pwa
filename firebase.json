@@ -7,22 +7,32 @@
     "source": "functions"
   },
   "hosting": {
-    "public": "dist/nd-pwa",
+    "public": "dist/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "index.html"
     ],
     "rewrites": [
       {
+        "source": "/blog/xmlrpc.php",
+        "destination": "/main.html"
+      },
+      {
         "source": "**",
-        "destination": "/index.html"
+        "function": "ssr"
       }
     ],
     "redirects": [
       {
         "source": "/blog/the-best-canadian-online-sneaker-stores",
-        "destination": "/home",
+        "destination": "/news/nxtdrop-the-canadian-stockx-is-finally-here",
+        "type": 301
+      },
+      {
+        "source": "/blog/nxtdrop-the-canadian-stockx-is-finally-here",
+        "destination": "/news/nxtdrop-the-canadian-stockx-is-finally-here",
         "type": 301
       }
     ],

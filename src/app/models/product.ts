@@ -8,4 +8,6 @@ export class Product {
     yearMade: string;
     type: string;
     lowestPrice?: number;
+    retailPrice?: number;
+    views?: number;
 }

@@ -28,6 +28,11 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 const sgClient = require('@sendgrid/client');
 sgClient.setApiKey(SENDGRID_API_KEY);
 
+// Server-Side Rendering
+const universal = require(`${process.cwd()}/dist/server`).app;
+
+exports.ssr = functions.https.onRequest(universal);
+
 exports.verifiedShipped = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
         if (req.method !== 'POST') {
@@ -36,7 +41,18 @@ exports.verifiedShipped = functions.https.onRequest((req, res) => {
 
         admin.firestore().collection(`users`).doc(`${req.body.buyerID}`).get().then(response => {
             const data = response.data();
-            const trackingURL = `http://theupsstore.ca/track/${req.body.shipTracking.trackingID}`;
+            let trackingURL;
+
+            switch (req.body.shipTracking.carrier) {
+                case 'UPS':
+                    trackingURL = `http://theupsstore.ca/track/${req.body.shipTracking.trackingID}`;
+                    break;
+                case 'Canada Post':
+                    trackingURL = `https://www.canadapost.ca/trackweb/en#/details/${req.body.shipTracking.trackingID}`;
+                    break;
+                default:
+                    break;
+            }
 
             if (data) {
                 //const email = data.email;
@@ -141,7 +157,14 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                         shipping: req.body.shippingCost,
                         total: total,
                         assetURL: req.body.assetURL,
+                        link: ''
                     }
+                }
+
+                if (req.body.type === 'sold') {
+                    const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.soldAt}`;
+                    msg.templateId = 'd-1ea40fbf9ad848638489561243162e97';
+                    msg.dynamic_template_data.link = `https://nxtdrop.com/checkout?tID=${transactionID}`;
                 }
 
                 sgMail.send(msg).then((content: any) => {

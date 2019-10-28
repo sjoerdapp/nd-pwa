@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/nd-pwa",
+            "outputPath": "dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -29,8 +29,6 @@
               "src/products.xml"
             ],
             "styles": [
-              "node_modules/angular-instantsearch/bundles/instantsearch.min.css",
-              "node_modules/angular-instantsearch/bundles/instantsearch-theme-algolia.min.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -107,6 +105,29 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": {
+                "scripts": false,
+                "styles": true
+              }
+            }
           }
         }
       }

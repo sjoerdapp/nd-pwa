@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, PLATFORM_ID, Inject } from '@angular/core';
 import { SellService } from 'src/app/services/sell.service';
 import { isUndefined, isNull } from 'util';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { OfferService } from 'src/app/services/offer.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 import { SlackService } from 'src/app/services/slack.service';
+import { isPlatformBrowser } from '@angular/common';
+import { SEOService } from 'src/app/services/seo.service';
 
 declare var gtag: any;
 
@@ -48,11 +50,15 @@ export class MakeAnOfferComponent implements OnInit {
     private ngZone: NgZone,
     private auth: AuthService,
     private title: Title,
-    private slack: SlackService
+    private slack: SlackService,
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Make an Offer | NXTDROP: Buy and Sell Sneakers in Canada`);
+    this.seo.addTags('Make an Offer');
+    
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
         this.selectedPair = JSON.parse(params.sneaker);
@@ -111,10 +117,12 @@ export class MakeAnOfferComponent implements OnInit {
 
     this.offerService.addOffer(this.selectedPair, this.pairCondition, this.pairPrice, this.pairSize).then(res => {
       if (res) {
-        gtag('event', 'offer_placed', {
-          'event_category': 'engagement',
-          'event_label': this.selectedPair.model
-        });
+        if(isPlatformBrowser(this._platformId)) {
+          gtag('event', 'offer_placed', {
+            'event_category': 'engagement',
+            'event_label': this.selectedPair.model
+          });
+        }
 
         const msg = `${this.user.uid} placed an offer for ${this.selectedPair.model}, size ${this.pairSize} at ${this.pairPrice}`;
         this.slack.sendAlert('offers', msg);

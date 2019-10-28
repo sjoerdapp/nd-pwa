@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as algoliasearch from 'algoliasearch';
 import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
+import { isPlatformBrowser } from '@angular/common';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-search',
@@ -21,30 +23,36 @@ export class SearchComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private title: Title
+    private title: Title,
+    @Inject(PLATFORM_ID) private _platformId: Object,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
-    this.title.setTitle(`Search | NXTDROP: Sell and Buy Sneakers in Canada`);
-    const element = document.getElementById('search-input');
-    element.focus();
-    this.activatedRoute.queryParams.subscribe(data => {
-      this.queryParam = data.q;
-      (element as HTMLInputElement).value = this.queryParam;
-    });
-    this.index = this.algoliaClient.initIndex(environment.algolia.index);
-    this.index.search({
-      query: this.queryParam
-    }, (err, hits = {}) => {
-      if (err) throw err;
+    this.title.setTitle(`Search | NXTDROP: Sell and Buy Authentic Sneakers in Canada`);
+    this.seo.addTags('Search');
 
-      this.results = hits.hits;
-      console.log(hits);
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      const element = document.getElementById('search-input');
+      element.focus();
+      this.activatedRoute.queryParams.subscribe(data => {
+        this.queryParam = data.q;
+        (element as HTMLInputElement).value = this.queryParam;
+      });
+      this.index = this.algoliaClient.initIndex(environment.algolia.index);
+      this.index.search({
+        query: this.queryParam
+      }, (err, hits = {}) => {
+        if (err) throw err;
+
+        this.results = hits.hits;
+        //console.log(hits);
+      });
+    }
   }
 
   search(event) {
-    console.log(event.target.value);
+    //console.log(event.target.value);
 
     this.router.navigate([],
       {
@@ -57,7 +65,7 @@ export class SearchComponent implements OnInit {
       if (err) throw err;
 
       this.results = hits.hits;
-      console.log(hits);
+      //console.log(hits);
     });
   }
 

@@ -4,6 +4,7 @@ import { isNullOrUndefined } from 'util';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { Transaction } from 'src/app/models/transaction';
 import { Title } from '@angular/platform-browser';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-transaction-review',
@@ -36,11 +37,14 @@ export class TransactionReviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private TranService: TransactionService,
-    private title: Title
+    private title: Title,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Transaction Review | NXTDROP: Sell and Buy Sneakers in Canada`);
+    this.seo.addTags('Transaction Review');
+    
     this.transactionID = this.route.snapshot.queryParams.transactionID;
 
     if (isNullOrUndefined(this.transactionID)) {
@@ -49,7 +53,7 @@ export class TransactionReviewComponent implements OnInit {
       this.TranService.getTransaction(this.transactionID).subscribe(data => {
         this.transaction = data;
 
-        if (this.transaction.type !== 'bought') {
+        if (this.transaction.type !== 'bought' && this.transaction.type !== 'sold') {
           this.error = true;
         }
         // console.log(this.transaction);

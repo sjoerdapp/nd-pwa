@@ -8,13 +8,13 @@
 
     <section class="blog-card" *ngFor="let post of posts" routerLink="{{ post.slug }}">
 
-      <div class="featured-img">
+      <div class="card-img">
         <img src="{{ post.img }}" alt="{{ post.alt_text }}">
       </div>
 
       <div class="post-info">
-        <h6 class="category">{{ post.category }}</h6>
-        <p class="title">{{ post.title }}</p>
+        <h6 class="post-category">{{ post.category }}</h6>
+        <p class="post-title">{{ post.title }}</p>
         <p class="date"><fa-icon [icon]="['far', 'clock']"></fa-icon> {{ post.date }}</p>
       </div>
 

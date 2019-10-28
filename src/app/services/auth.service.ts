@@ -1,6 +1,8 @@
 import {
   Injectable,
-  NgZone
+  NgZone,
+  PLATFORM_ID,
+  Inject
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -16,8 +18,9 @@ import { first } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { EmailService } from './email.service';
 import { isUndefined } from 'util';
+import { isPlatformBrowser } from '@angular/common';
 
-declare var gtag: any;
+declare const gtag: any;
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +34,8 @@ export class AuthService {
     private afs: AngularFirestore,
     private router: Router,
     private ngZone: NgZone,
-    private emailService: EmailService
+    private emailService: EmailService,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
 
   async signOut(redirect: boolean) {
@@ -52,59 +56,68 @@ export class AuthService {
   async googleSignIn() {
     const provider = new auth.GoogleAuthProvider();
     this.oAuthLogin(provider);
-    gtag('event', 'sign_up', {
-      'event_category': 'engagement',
-      'event_label': 'Google_SignUp'
-    });
+
+    if (isPlatformBrowser(this._platformId)) {
+      gtag('event', 'sign_up', {
+        'event_category': 'engagement',
+        'event_label': 'Google_SignUp'
+      });
+    }
   }
 
   async facebookSignIn() {
     const provider = new auth.FacebookAuthProvider();
     this.oAuthLogin(provider);
-    gtag('event', 'sign_up', {
-      'event_category': 'engagement',
-      'event_label': 'Facebook_SignUp'
-    });
+
+    if (isPlatformBrowser(this._platformId)) {
+      gtag('event', 'sign_up', {
+        'event_category': 'engagement',
+        'event_label': 'Facebook_SignUp'
+      });
+    }
   }
 
   async emailSignUp(email: string, password: string, firstName: string, lastName: string, username: string, inviteCode?: string) {
     if (email || password || firstName || lastName || username) {
       return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        const userData: User = {
-          firstName,
-          lastName,
-          username,
-          email: user.user.email,
-          uid: user.user.uid,
-          listed: 0,
-          sold: 0,
-          ordered: 0,
-          offers: 0,
-          isActive: false
-        };
+        .then(user => {
+          const userData: User = {
+            firstName,
+            lastName,
+            username,
+            email: user.user.email,
+            uid: user.user.uid,
+            listed: 0,
+            sold: 0,
+            ordered: 0,
+            offers: 0,
+            isActive: false
+          };
 
-        if (!isUndefined(inviteCode)) {
-          userData.freeShipping = true;
-          this.afs.collection(`users`).doc(`${inviteCode}`).set({
-            shippingPromo: {
-              sent: true,
-              accepted: true
-            },
-            freeShipping: true
-          }, { merge: true }).catch(err => {
-            console.error(err);
-            this.afAuth.auth.currentUser.delete();
-            return false;
-          });
-        }
+          if (!isUndefined(inviteCode)) {
+            userData.freeShipping = true;
+            this.afs.collection(`users`).doc(`${inviteCode}`).set({
+              shippingPromo: {
+                sent: true,
+                accepted: true
+              },
+              freeShipping: true
+            }, { merge: true }).catch(err => {
+              console.error(err);
+              this.afAuth.auth.currentUser.delete();
+              return false;
+            });
+          }
 
-        gtag('event', 'sign_up', {
-          'event_category': 'engagement',
-          'event_label': 'Email_SignUp'
+          if (isPlatformBrowser(this._platformId)) {
+            gtag('event', 'sign_up', {
+              'event_category': 'engagement',
+              'event_label': 'Email_SignUp'
+            });
+          }
+
+          return this.createUserData(userData, user);
         });
-        return this.createUserData(userData, user);
-      });
     } else {
       return false;
     }
@@ -112,10 +125,8 @@ export class AuthService {
 
   async emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((res) => {
-        return this.ngZone.run(() => {
-          return this.router.navigate(['/home']);
-        });
+      .then(() => {
+        return true;
       })
       .catch(error => {
         console.error('Error Login: Email or Password Invalid.');

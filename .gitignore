@@ -48,4 +48,6 @@ Thumbs.db
 #api keys
 src/environments
 
-.firebase/hosting.ZGlzdFxuZC1wd2E.cache
+/.firebase
+
+functions/dist

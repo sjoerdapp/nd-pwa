@@ -57,7 +57,7 @@ export class ProductComponent implements OnInit {
       if (isUndefined(data)) {
         this.router.navigate([`page-not-found`]);
       } else {
-        this.seo.addTags(data);
+        this.seo.addTags('Product', data);
         this.productInfo = data;
         this.title.setTitle(`${this.productInfo.model} - ${this.productInfo.brand} | NXTDROP`);
       }

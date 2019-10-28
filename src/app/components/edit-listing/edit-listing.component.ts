@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { SellService } from 'src/app/services/sell.service';
 import { isUndefined } from 'util';
+import { Title } from '@angular/platform-browser';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-edit-listing',
@@ -37,10 +39,15 @@ export class EditListingComponent implements OnInit {
     private profileService: ProfileService,
     private ngZone: NgZone,
     private router: Router,
-    private sellService: SellService
+    private sellService: SellService,
+    private title: Title,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
+    this.title.setTitle('Edit Listing | NXTDROP: Sell and Buy Authentic Sneakers in Canada');
+    this.seo.addTags('Edit Listing');
+    
     this.listingID = this.route.snapshot.params.id;
     this.offerInfo = this.profileService.getListing(this.listingID).then(val => {
       val.subscribe(data => {

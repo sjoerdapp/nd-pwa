@@ -10,7 +10,6 @@ export class CarouselComponent implements OnInit {
 
   typingTimer;
   doneTypingInterval = 250;
-  myInput = document.getElementById('search-field');
 
   constructor(
     private router: Router,
@@ -26,7 +25,7 @@ export class CarouselComponent implements OnInit {
       this.typingTimer = setTimeout(() => {
         return this.ngZone.run(() => {
           return this.router.navigate(['../search'], {
-            queryParams: { q: (document.getElementById('search-field') as HTMLInputElement).value }
+            queryParams: { q: event.target.value }
           });
         });
       }, this.doneTypingInterval);

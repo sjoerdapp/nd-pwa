@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-terms',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TermsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private title: Title,
+    private seo: SEOService
+  ) { }
 
   ngOnInit() {
+    this.title.setTitle('Terms | NXTDROP: Buy and Sell Sneakers in Canada');
+    this.seo.addTags('Terms')
   }
 
 }

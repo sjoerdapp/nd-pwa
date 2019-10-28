@@ -5,6 +5,7 @@ import { OfferService } from 'src/app/services/offer.service';
 import { SellService } from 'src/app/services/sell.service';
 import { isUndefined } from 'util';
 import { Title } from '@angular/platform-browser';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-edit-offer',
@@ -41,7 +42,8 @@ export class EditOfferComponent implements OnInit {
     private ngZone: NgZone,
     private router: Router,
     private sellService: SellService,
-    private title: Title
+    private title: Title,
+    private seo: SEOService
   ) { }
 
   ngOnInit() {
@@ -69,7 +71,8 @@ export class EditOfferComponent implements OnInit {
             }
           });
 
-          this.title.setTitle(`Edit Offer | NXTDROP: Buy and Sell Sneakers in Canada`);
+          this.title.setTitle(`Edit Offer | NXTDROP: Buy and Sell Authentic Sneakers in Canada`);
+          this.seo.addTags('Edit Offer');
         }
       });
     });
