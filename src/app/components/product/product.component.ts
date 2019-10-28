@@ -63,8 +63,7 @@ export class ProductComponent implements OnInit {
       }
     });
 
-    //document.cookie = 'modalOffer=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/product/';
-    //console.log(document.cookie);
+    this.countView();
   }
 
   /*addToCart(listing) {
@@ -76,6 +75,12 @@ export class ProductComponent implements OnInit {
       }
     });
   }*/
+
+  countView() {
+    this.productService.countView(this.productID).catch(err => {
+      console.error(err);
+    })
+  }
 
   buyNow(listing) {
     const data = JSON.stringify(listing);

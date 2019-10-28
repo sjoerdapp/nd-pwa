@@ -73,4 +73,10 @@ export class ProductService {
       }
     });
   }
+
+  countView(productID: string) {
+    return this.afs.firestore.collection('products').doc(`${productID}`).update({
+      views: firebase.firestore.FieldValue.increment(1)
+    });
+  }
 }
