@@ -1,9 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { isUndefined } from 'util';
 import { SEOService } from 'src/app/services/seo.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-phone-verification',
@@ -33,28 +34,31 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private title: Title,
-    private seo: SEOService
+    private seo: SEOService,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
 
   ngAfterViewInit() {
-    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('container', {
-      'size': 'invisible',
-      'callback': (res) => {
-        //console.log('recaptcha resolved');
-        //console.log(res);
-        this.isNotRobot = true;
-      },
-    });
-    
-    this.recaptchaVerifier.render().catch(err => {
-      console.error(err);
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('container', {
+        'size': 'invisible',
+        'callback': (res) => {
+          //console.log('recaptcha resolved');
+          //console.log(res);
+          this.isNotRobot = true;
+        },
+      });
+
+      this.recaptchaVerifier.render().catch(err => {
+        console.error(err);
+      });
+    }
   }
 
   ngOnInit() {
     this.title.setTitle(`Phone Verification | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.seo.addTags('Phone Verification');
-    
+
     this.verifyAreaCode();
     //console.log(this.route.snapshot.queryParams.redirectTo);
   }
