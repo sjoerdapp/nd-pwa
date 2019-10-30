@@ -39,7 +39,6 @@ import { TermsComponent } from './components/terms/terms.component';
 import { DropComponent } from './components/special-drop/drop/drop.component';
 import { BlogHomeComponent } from './components/blog/blog-home/blog-home.component';
 import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
-import { BrandComponent } from './components/brand/brand.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -79,7 +78,6 @@ const routes: Routes = [
   { path: 'drop/:id', component: DropComponent },
   { path: 'news', component: BlogHomeComponent },
   { path: 'news/:title', component: BlogPostComponent },
-  { path: 'brand/:id', component: BrandComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
