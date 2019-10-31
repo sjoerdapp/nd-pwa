@@ -27,7 +27,8 @@
               "src/assets",
               "src/sitemap.xml",
               "src/products.xml",
-              "src/news.xml"
+              "src/news.xml",
+              "src/robots.txt"
             ],
             "styles": [
               "src/styles.scss"
