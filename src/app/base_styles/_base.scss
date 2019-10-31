@@ -36,13 +36,15 @@ $productContainerHeight: 650px;
 
 //double line
 .blueLine {
-    background: $darkblue;
+    //background: $darkblue;
+    background: #FFA500;
     height: 2.5px;
     grid-column: 1/6;
 }
 
 .greenLine {
-    background: $green;
+    //background: $green;
+    background: #FFA500;
     height: 2.5px;
     grid-column: 1/6;
 }
