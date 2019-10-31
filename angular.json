@@ -26,7 +26,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/sitemap.xml",
-              "src/products.xml"
+              "src/products.xml",
+              "src/news.xml"
             ],
             "styles": [
               "src/styles.scss"
