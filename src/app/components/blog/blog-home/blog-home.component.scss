@@ -1,6 +1,7 @@
 @import "../../../base_styles/base";
 
 .main-container {
+  margin: 0 0 $spacing-xlarge 0;
   h1 {
     text-align: center;
     margin: $spacing-normal;
