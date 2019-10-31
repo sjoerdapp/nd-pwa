@@ -32,7 +32,7 @@ export class BlogHomeComponent implements OnInit {
         }
 
         this.news.getFeaturedMedia(element._links["wp:featuredmedia"][0]["href"].replace('104.197.231.19', 'news.nxtdrop.com')).subscribe((response: any) => {
-          post.img = response.source_url;
+          post.img = response.source_url.replace('104.197.231.19', 'news.nxtdrop.com');
           post.alt_text = response.alt_text;
         });
 
