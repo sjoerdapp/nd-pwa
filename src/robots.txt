@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: */sell/*
+Disallow: */checkout/*
+
+Sitemap: http://www.nxtdrop.com/products.xml
+Sitemap: http://www.nxtdrop.com/news.xml
+Sitemap: http://www.nxtdrop.com/sitemap.xml
