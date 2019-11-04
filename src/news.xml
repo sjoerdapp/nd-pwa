@@ -5,7 +5,7 @@
 			https://nxtdrop.com/news/nxtdrop-the-canadian-stockx-is-finally-here
 		</loc>
 		<lastmod>
-			2019-10-30
+			2019-11-04
 		</lastmod>
 		<changefreq>
 			weekly
@@ -19,7 +19,35 @@
 			https://nxtdrop.com/news/top-5-sneakers-to-wear-for-halloween
 		</loc>
 		<lastmod>
-			2019-10-30
+			2019-11-04
+		</lastmod>
+		<changefreq>
+			weekly
+		</changefreq>
+		<priority>
+			0.9
+		</priority>
+	</url>
+	<url>
+		<loc>
+			https://nxtdrop.com/news/the-best-canadian-online-sneaker-stores
+		</loc>
+		<lastmod>
+			2019-11-04
+		</lastmod>
+		<changefreq>
+			weekly
+		</changefreq>
+		<priority>
+			0.9
+		</priority>
+	</url>
+	<url>
+		<loc>
+			https://nxtdrop.com/news/the-reason-you-should-avoid-stockx
+		</loc>
+		<lastmod>
+			2019-11-04
 		</lastmod>
 		<changefreq>
 			weekly

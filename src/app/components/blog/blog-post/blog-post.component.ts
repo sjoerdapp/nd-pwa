@@ -29,19 +29,19 @@ export class BlogPostComponent implements OnInit {
         title: json.title.rendered,
         date: json.date_gmt,
         id: json.id,
-        content: json.content.rendered,
+        content: json.content.rendered.replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com'),
         slug: json.slug,
         excerpt: json.excerpt.rendered
       }
 
       this.news.dateFormat(json.date_gmt);
 
-      this.news.getFeaturedMedia(json._links["wp:featuredmedia"][0]["href"].replace('104.197.231.19', 'news.nxtdrop.com')).subscribe((response: any) => {
-        post.img = response.source_url.replace('104.197.231.19', 'news.nxtdrop.com');
+      this.news.getFeaturedMedia(json._links["wp:featuredmedia"][0]["href"].replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
+        post.img = response.source_url.replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com');
         post.alt_text = response.alt_text;
       });
 
-      this.news.getCategory(json._links["wp:term"][0]["href"].replace('104.197.231.19', 'news.nxtdrop.com')).subscribe((response: any) => {
+      this.news.getCategory(json._links["wp:term"][0]["href"].replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
         post.category = response[0].name;
       });
 

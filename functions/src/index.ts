@@ -33,6 +33,59 @@ const universal = require(`${process.cwd()}/dist/server`).app;
 
 exports.ssr = functions.https.onRequest(universal);
 
+exports.sendShippingLabel = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send();
+        }
+
+        return admin.firestore().collection(`users`).doc(`${req.body.sellerID}`).get().then(response => {
+            const data = response.data();
+
+            if (data) {
+                //const email = data.email;
+                const email = data.email;
+                const fee = req.body.price * 0.095;
+                const processing = req.body.price * 0.03;
+                const payout = req.body.price - fee - processing;
+
+                console.log(`sendShippingLabel email to ${email}.`);
+
+                const msg = {
+                    to: email,
+                    from: 'do-not-reply@nxtdrop.com',
+                    templateId: 'd-0215a6c29937473ea4b204b3d94fe073',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        assetURL: req.body.assetURL,
+                        fee: fee,
+                        processing: processing,
+                        payout: payout,
+                        price: req.body.price,
+                        label: req.body.shipTracking.label
+                    }
+                }
+
+                return sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent to buyer`);
+                    return res.status(200).send();
+                }).catch((err: any) => {
+                    console.error(`Could send email to buyer: ${err}`);
+                    return res.status(500).send();
+                })
+            } else {
+                console.error(`buyer don't exist`);
+                return res.status(500).send();
+            }
+        }).catch(err => {
+            console.error(`error sending buyer email`);
+            return res.status(500).send();
+        });
+    });
+});
+
 exports.offerAcceptedReminder = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
         if (req.method !== 'POST') {
