@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, PLATFORM_ID, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
 import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -7,6 +7,7 @@ import { Product } from 'src/app/models/product';
 import { isUndefined } from 'util';
 import { ModalService } from 'src/app/services/modal.service';
 import { SEOService } from 'src/app/services/seo.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-product',
@@ -46,7 +47,8 @@ export class ProductComponent implements OnInit {
     private title: Title,
     private modalService: ModalService,
     private seo: SEOService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private platform_id: Object
   ) { }
 
   ngOnInit() {
@@ -146,10 +148,24 @@ export class ProductComponent implements OnInit {
       if (document.cookie.replace(/(?:(?:^|.*;\s*)modalOffer\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
         this.modalService.openModal('makeOffer');
         this.modalService.placeOffer(this.productInfo);
-        const expr = new Date(new Date().getTime() + 60*60000*24).toUTCString();
+        const expr = new Date(new Date().getTime() + 60 * 60000 * 24).toUTCString();
         document.cookie = `modalOffer=true; expires=${expr}; path=/product/`
       }
     });
+  }
+
+  share(social: string) {
+    if (isPlatformBrowser(this.platform_id)) {
+      if (social === 'fb') {
+        window.open(`https://www.facebook.com/sharer/sharer.php?app_id=316718239101883&u=https://nxtdrop.com/product/${this.productID}&display=popup&ref=plugin`, 'popup', 'width=600,height=600,scrollbars=no,resizable=no');
+        return false;
+      } else if (social === 'twitter') {
+        window.open(`https://twitter.com/intent/tweet?text=Check out the ${this.productInfo.model} available on @nxtdrop https://nxtdrop.com/product/${this.productID}`, 'popup', 'width=600,height=600,scrollbars=no,resizable=no');
+        return false;
+      } else {
+        return false;
+      }
+    }
   }
 
 }
