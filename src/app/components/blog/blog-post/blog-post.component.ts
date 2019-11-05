@@ -12,6 +12,7 @@ import { Title, Meta } from '@angular/platform-browser';
 export class BlogPostComponent implements OnInit {
 
   post: any = {}
+  articles = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -21,7 +22,10 @@ export class BlogPostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //console.log(this.route.snapshot.url[1].path);
+    this.getPost();
+  }
+
+  getPost() {
     this.news.getNews(this.route.snapshot.url[1].path).subscribe((json: any) => {
       json = json[0];
 
@@ -31,13 +35,14 @@ export class BlogPostComponent implements OnInit {
         id: json.id,
         content: json.content.rendered.replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com'),
         slug: json.slug,
-        excerpt: json.excerpt.rendered
+        excerpt: json.excerpt.rendered,
+        category_id: json.categories[0]
       }
 
       this.news.dateFormat(json.date_gmt);
 
       this.news.getFeaturedMedia(json._links["wp:featuredmedia"][0]["href"].replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
-        post.img = response.source_url.replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com');
+        post.img = response.source_url.replace(/https:\/\/104.197.231.19/g, 'https://news.nxtdrop.com');
         post.alt_text = response.alt_text;
       });
 
@@ -48,7 +53,7 @@ export class BlogPostComponent implements OnInit {
       // this.post.tags = this.news.getTags(json.tags);
 
       this.post = post;
-      //console.log(this.post);
+      this.getRelatedNews(this.post.id, this.post.category_id);
 
       this.news.getTags(json.tags).then(res => {
         setTimeout(() => {
@@ -72,6 +77,30 @@ export class BlogPostComponent implements OnInit {
         console.error(err);
       });
     });
+  }
+
+  getRelatedNews(id: number, categoryID: number) {
+    this.news.getRelatedArticles(id, categoryID).subscribe((res: any) => {
+      res.forEach(element => {
+        let article: any = {
+          title: element.title.rendered,
+          date: this.news.dateFormat(element.date_gmt),
+          id: element.id,
+          slug: element.slug
+        }
+
+        this.news.getFeaturedMedia(element._links["wp:featuredmedia"][0]["href"].replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
+          article.img = response.source_url.replace(/https:\/\/104.197.231.19/g, 'https://news.nxtdrop.com');
+          article.alt_text = response.alt_text;
+        });
+
+        this.news.getCategory(element._links["wp:term"][0]["href"].replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
+          article.category = response[0].name;
+        });
+
+        this.articles.push(article);
+      });
+    })
   }
 
   displayTags(tags) {

@@ -3,6 +3,10 @@
 @import url("https://fonts.googleapis.com/css?family=PT+Serif:400,700&display=swap");
 
 .main-container {
+  h1 {
+    text-align: center;
+  }
+
   .back-btn {
     width: 40%;
     margin: $spacing-normal auto;
@@ -20,7 +24,8 @@
     margin: $spacing-xlarge auto;
     p,
     a,
-    figcaption, li {
+    figcaption,
+    li {
       font-family: "PT Serif", serif;
     }
 
@@ -80,6 +85,12 @@
 
       ul li {
         list-style: none;
+        margin: $spacing-small 0;
+
+        a {
+          width: inherit;
+          word-wrap: break-word;
+        }
 
         figure {
           width: 100%;
@@ -113,16 +124,122 @@
       }
     }
   }
+
+  .related-articles {
+    margin: 0 auto;
+    display: grid;
+    justify-content: center;
+    column-gap: $spacing-large;
+    padding: $spacing-small 0;
+
+    .article-card {
+      @include vendor(transition, all 0.5s ease-in-out);
+      width: 100%;
+      display: grid;
+      justify-self: center;
+      border: 1px solid $lightergrey;
+      cursor: pointer;
+
+      &:hover {
+        background: $lightergrey;
+
+        .article-img {
+          img {
+            opacity: 0.7;
+          }
+        }
+      }
+
+      .article-img {
+        width: 100%;
+        background: $black;
+
+        img {
+          @include vendor(transition, all 0.5s ease-in-out);
+          object-fit: cover;
+          width: inherit;
+          height: inherit;
+        }
+      }
+
+      .article-info {
+        padding: $spacing-normal;
+        display: grid;
+        grid-template-rows: 1fr 2fr 1fr;
+
+        .article-category {
+          color: $green;
+        }
+
+        .article-title {
+          font-weight: $weight-black;
+        }
+
+        .article-date {
+          color: $coolgrey;
+          font-size: $font-xsmall;
+        }
+      }
+    }
+  }
 }
 
 // MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
+  .related-articles {
+    width: 99%;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    .article-card {
+      height: 200px;
+      grid-template-columns: 3fr 5fr;
+
+      .article-img {
+        height: inherit;
+      }
+
+      .article-info {
+        .article-title {
+          font-size: $font-xsmall;
+        }
+
+        .article-date {
+          align-self: flex-end;
+        }
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
   h1 {
     font-size: 20px;
+  }
+
+  .related-articles {
+    width: 99%;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    .article-card {
+      height: 200px;
+      grid-template-columns: 3fr 5fr;
+
+      .article-img {
+        height: inherit;
+      }
+
+      .article-info {
+        .article-title {
+          font-size: $font-small;
+          align-self: center;
+        }
+
+        .article-date {
+          align-self: flex-end;
+        }
+      }
+    }
   }
 }
 
@@ -136,6 +253,35 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: $spacing-normal;
+    }
+  }
+
+  .related-articles {
+    width: 95%;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    .article-card {
+      @include vendor(box-shadow, 10px 10px 10px -6px rgba(196, 196, 196, 1));
+      border: none;
+      border-top: 1px solid $lightergrey;
+      border-bottom: 1px solid $lightergrey;
+      height: 400px;
+      grid-template-rows: 5fr 3fr;
+
+      .article-img {
+        height: 250px;
+      }
+
+      .article-info {
+        .article-title {
+          font-size: $font-small;
+          align-self: center;
+        }
+
+        .article-date {
+          align-self: flex-end;
+        }
+      }
     }
   }
 }
@@ -153,7 +299,7 @@
     margin: $spacing-large auto !important;
     font-size: $font-small !important;
   }
-  
+
   .content {
     p {
       font-size: 18px !important;
@@ -163,6 +309,35 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: $spacing-normal;
+    }
+  }
+
+  .related-articles {
+    width: 95%;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    .article-card {
+      @include vendor(box-shadow, 10px 10px 10px -6px rgba(196, 196, 196, 1));
+      border: none;
+      border-top: 1px solid $lightergrey;
+      border-bottom: 1px solid $lightergrey;
+      height: 500px;
+      grid-template-rows: 5fr 3fr;
+
+      .article-img {
+        height: 312.5px;
+      }
+
+      .article-info {
+        .article-title {
+          font-size: $font-small;
+          align-self: center;
+        }
+
+        .article-date {
+          align-self: flex-end;
+        }
+      }
     }
   }
 }
@@ -181,7 +356,7 @@
   h1 {
     font-size: $font-xlarge;
   }
-  
+
   .content {
     p {
       font-size: $font-large !important;
@@ -191,6 +366,35 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: $spacing-normal;
+    }
+  }
+
+  .related-articles {
+    width: 95%;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    .article-card {
+      @include vendor(box-shadow, 10px 10px 10px -6px rgba(196, 196, 196, 1));
+      border: none;
+      border-top: 1px solid $lightergrey;
+      border-bottom: 1px solid $lightergrey;
+      height: 500px;
+      grid-template-rows: 5fr 3fr;
+
+      .article-img {
+        height: 312.5px;
+      }
+
+      .article-info {
+        .article-title {
+          font-size: $font-small;
+          align-self: center;
+        }
+
+        .article-date {
+          align-self: flex-end;
+        }
+      }
     }
   }
 }
@@ -209,7 +413,7 @@
   h1 {
     font-size: $font-xlarge;
   }
-  
+
   .content {
     p {
       font-size: $font-large !important;
@@ -219,6 +423,35 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: $spacing-normal;
+    }
+  }
+
+  .related-articles {
+    width: 95%;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    .article-card {
+      @include vendor(box-shadow, 10px 10px 10px -6px rgba(196, 196, 196, 1));
+      border: none;
+      border-top: 1px solid $lightergrey;
+      border-bottom: 1px solid $lightergrey;
+      height: 500px;
+      grid-template-rows: 5fr 3fr;
+
+      .article-img {
+        height: 312.5px;
+      }
+
+      .article-info {
+        .article-title {
+          font-size: $font-small;
+          align-self: center;
+        }
+
+        .article-date {
+          align-self: flex-end;
+        }
+      }
     }
   }
 }

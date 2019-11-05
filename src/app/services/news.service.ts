@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { resolve } from 'dns';
-import { reject } from 'q';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +35,10 @@ export class NewsService {
     });
 
     return Promise.resolve(tags);
+  }
+
+  getRelatedArticles(articleID: number, categoryID: number) {
+    return this.http.get(`https://news.nxtdrop.com/index.php/wp-json/wp/v2/posts?exclude=${articleID}&per_page=3&categories=${categoryID}`, {});
   }
 
   dateFormat(date) {

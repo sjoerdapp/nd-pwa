@@ -15,6 +15,24 @@
         </div>
     </section>
 
+    <h1>Related Articles</h1>
+
+    <section class="related-articles">
+        <a class="article-card" *ngFor="let article of articles" routerLink="../../news/{{ article.slug }}">
+            <div class="article-img">
+                <img src="{{ article.img }}" alt="{{ article.alt_text }}">
+            </div>
+
+            <div class="article-info">
+                <h6 class="article-category">{{ article.category }}</h6>
+                <p class="article-title">{{ article.title }}</p>
+                <p class="article-date">
+                    <fa-icon [icon]="['far', 'clock']"></fa-icon> {{ article.date }}
+                </p>
+            </div>
+        </a>
+    </section>
+
     <button class="btn back-btn" routerLink="..">Back</button>
 </section>
 
