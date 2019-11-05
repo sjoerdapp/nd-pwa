@@ -9,6 +9,8 @@ import { ModalService } from 'src/app/services/modal.service';
 import { SEOService } from 'src/app/services/seo.service';
 import { isPlatformBrowser } from '@angular/common';
 
+declare const gtag: any;
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -158,9 +160,24 @@ export class ProductComponent implements OnInit {
     if (isPlatformBrowser(this.platform_id)) {
       if (social === 'fb') {
         window.open(`https://www.facebook.com/sharer/sharer.php?app_id=316718239101883&u=https://nxtdrop.com/product/${this.productID}&display=popup&ref=plugin`, 'popup', 'width=600,height=600,scrollbars=no,resizable=no');
+        gtag('event', 'share_product_fb', {
+          'event_category': 'engagement',
+          'event_label': this.productInfo.model
+        });
         return false;
       } else if (social === 'twitter') {
         window.open(`https://twitter.com/intent/tweet?text=Check out the ${this.productInfo.model} available on @nxtdrop https://nxtdrop.com/product/${this.productID}`, 'popup', 'width=600,height=600,scrollbars=no,resizable=no');
+        gtag('event', 'share_product_twitter', {
+          'event_category': 'engagement',
+          'event_label': this.productInfo.model
+        });
+        return false;
+      } else if (social === 'mail') {
+        window.location.href = `mailto:?subject=Check out the ${this.productInfo.model} available on NXTDROP&body=Hey, I just came across the ${this.productInfo.model} and thought you'd be interested. Check it out here https://nxtdrop.com/product/${this.productID}`;
+        gtag('event', 'share_product_mail', {
+          'event_category': 'engagement',
+          'event_label': this.productInfo.model
+        });
         return false;
       } else {
         return false;

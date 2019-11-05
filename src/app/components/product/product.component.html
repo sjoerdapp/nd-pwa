@@ -22,7 +22,7 @@
         <a href="https://twitter.com/intent/tweet?text=Check out the {{ productInfo.model }} available on @nxtdrop https://nxtdrop.com/product/{{ productID }}" class="twitter-share-btn" (click)="share('twitter')">
           <fa-icon [icon]="['fab', 'twitter']"></fa-icon>
         </a>
-        <a href="mailto:?subject=Check out the {{ productInfo.model }} available on NXTDROP&body=Hey, I just came across the {{ productInfo.model }} and thought you'd be interested. Check it out here https://nxtdrop.com/product/{{ productID }}" class="mail-share-btn">
+        <a href="mailto:?subject=Check out the {{ productInfo.model }} available on NXTDROP&body=Hey, I just came across the {{ productInfo.model }} and thought you'd be interested. Check it out here https://nxtdrop.com/product/{{ productID }}" class="mail-share-btn" (click)="share('mail')">
           <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
         </a>
       </div>
