@@ -10,7 +10,7 @@ h2 {
     margin: $spacing-large;
 }
 
-button {
+a {
     display: block;
     border: none;
     margin: $spacing-large auto;
@@ -22,10 +22,12 @@ button {
     letter-spacing: 2px;
     background: $black;
     color: $white;
+    text-align: center;
     @include vendor(transition, 0.25s ease-in-out);
 
     &:hover {
         background: $matteblack;
+        color: $white;
     }
 }
 
@@ -36,7 +38,7 @@ button {
         font-size: $font-large;
     }
 
-    button {
+    a {
         width: 90%;
     }
 }
@@ -46,7 +48,7 @@ button {
         font-size: $font-large;
     }
 
-    button {
+    a {
         width: 80%;
     }
 }
@@ -56,7 +58,7 @@ button {
         font-size: $font-large;
     }
 
-    button {
+    a {
         width: 50%;
     }
 }
@@ -66,7 +68,7 @@ button {
         font-size: $font-large;
     }
 
-    button {
+    a {
         width: 35%;
     }
 }
@@ -76,7 +78,7 @@ button {
         font-size: $font-large;
     }
 
-    button {
+    a {
         width: 30%;
     }
 }
@@ -86,7 +88,7 @@ button {
         font-size: $font-large;
     }
 
-    button {
+    a {
         width: 30%;
     }
 }

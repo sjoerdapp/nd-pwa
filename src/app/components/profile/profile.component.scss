@@ -59,6 +59,7 @@ h2 {
 
                 &:hover {
                     background: $matteblack;
+                    color: $white;
                 }
             }
         }
@@ -182,7 +183,7 @@ h2 {
     }
 
     .profile-btns {
-        button {
+        a {
             font-size: $font-xxsmall;
             padding: $spacing-xsmall;
         }
@@ -226,7 +227,7 @@ h2 {
     }
 
     .profile-btns {
-        button {
+        a {
             font-size: $font-xsmall;
             padding: $spacing-xsmall;
         }
@@ -275,7 +276,7 @@ h2 {
     }
 
     .profile-btns {
-        button {
+        a {
             font-size: $font-xsmall;
             padding: $spacing-xsmall;
         }
@@ -325,7 +326,7 @@ h2 {
     }
 
     .profile-btns {
-        button {
+        a {
             font-size: $font-small;
             padding: $spacing-small;
         }
@@ -375,7 +376,7 @@ h2 {
     }
 
     .profile-btns {
-        button {
+        a {
             font-size: $font-small;
             padding: $spacing-small;
         }
@@ -425,7 +426,7 @@ h2 {
     }
 
     .profile-btns {
-        button {
+        a {
             font-size: $font-small;
             padding: $spacing-small;
         }

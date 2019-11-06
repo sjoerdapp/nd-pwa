@@ -63,6 +63,9 @@ nav {
         @include vendor(transition, $transition-fast ease-in-out);
         @include navbarItems;
         color: $darkblue;
+        display: grid;
+        justify-items: center;
+        align-items: center;
 
         fa-icon {
             font-size: $font-large;
@@ -90,14 +93,29 @@ nav {
         margin: 15px 2.5px;
         cursor: pointer;
         color: $white;
+        text-align: center;
+        display: grid;
+
+        p {
+            justify-self: center;
+            align-self: center;
+        }
 
         &:hover {
             background: $matteblue;
+
+            p {
+                color: $white;
+            }
         }
     }
 
     .nav-signup {
-        @include vendor(box-shadow,  2px 8px 10px -5px rgba(94,94,94,0.75));;
+        @include vendor(box-shadow,  2px 8px 10px -5px rgba(94,94,94,0.75));
+
+        p {
+            color: $white;
+        }
     }
 
     .nav-login {

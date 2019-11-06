@@ -7,14 +7,14 @@
   </div>
 
   <div class="search-items">
-    <div class="search-item" *ngFor="let result of results" routerLink="/product/{{ result.productID }}">
+    <a class="search-item" *ngFor="let result of results" routerLink="/product/{{ result.productID }}">
       <section class="item-specs">
         <h6>{{ result.size }}</h6>
         <h5>{{ result.price | currency: 'CAD' }}</h5>
       </section>
       <img src="{{ result.assetURL }}" alt="{{ result.model }}">
       <h5>{{ result.model }}</h5>
-    </div>
+    </a>
   </div>
 </div>
 

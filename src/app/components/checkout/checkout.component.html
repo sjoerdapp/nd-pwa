@@ -43,12 +43,12 @@
 
     <div class="summary-numbers" *ngIf="isSelling">
       <div class="summary-subtotal">
-        <h5>Transaction Fee</h5>
+        <h5>Transaction Fee (9.5%)</h5>
         <h5>{{ fee() | currency: 'CAD' }}</h5>
       </div>
 
       <div class="summary-auth">
-        <h5>Payment Processing</h5>
+        <h5>Payment Processing (3%)</h5>
         <h5>{{ processing() | currency: 'CAD' }}</h5>
       </div>
 

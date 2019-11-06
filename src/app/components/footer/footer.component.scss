@@ -13,16 +13,17 @@ footer {
         align-self: center;
     }
 
-    button {
+    a {
         background: transparent;
         border: none;
         align-self: center;
+        justify-self: center;
         color: $white;
         cursor: pointer;
         @include vendor(transition, $transition-fast ease-in-out);
 
         &:hover {
-            color: $matteblue;
+            color: $coolergrey;
         }
     }
 
@@ -72,7 +73,7 @@ footer {
         grid-template-columns: 8fr 3fr 3fr 3fr 3fr;
     }
 
-    button {
+    a {
         font-size: $font-xsmall;
     }
 
@@ -86,7 +87,7 @@ footer {
         grid-template-columns: 8fr 3fr 3fr 3fr 3fr;
     }
 
-    button {
+    a {
         font-size: $font-xsmall;
     }
 
@@ -100,7 +101,7 @@ footer {
         grid-template-columns: 12fr 2fr 2fr 2fr 2fr;
     }
     
-    button {
+    a {
         font-size: $font-small;
     }
 
@@ -114,7 +115,7 @@ footer {
         grid-template-columns: 12fr 2fr 2fr 2fr 2fr;
     }
     
-    button {
+    a {
         font-size: $font-normal;
     }
 
@@ -128,7 +129,7 @@ footer {
         grid-template-columns: 16fr 1fr 1fr 1fr 1fr;
     }
     
-    button {
+    a {
         font-size: $font-normal;
     }
 
@@ -142,7 +143,7 @@ footer {
         grid-template-columns: 16fr 1fr 1fr 1fr 1fr;
     }
     
-    button {
+    a {
         font-size: $font-normal;
     }
 

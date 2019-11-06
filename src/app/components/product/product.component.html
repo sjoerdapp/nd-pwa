@@ -4,10 +4,10 @@
   <section class="product-container">
     <div class="product-info">
       <div class="product-btns">
-        <button class="btn" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json }">Sell This Product
-          <fa-icon [icon]="['fas', 'tag']"></fa-icon></button>
-        <button class="btn" routerLink="/make-an-offer" [queryParams]="{ sneaker: productInfo | json }">Make an Offer
-          <fa-icon [icon]="['fas', 'hand-holding-usd']"></fa-icon></button>
+        <a class="btn" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json }">Sell This Product
+          <fa-icon [icon]="['fas', 'tag']"></fa-icon></a>
+        <a class="btn" routerLink="/make-an-offer" [queryParams]="{ sneaker: productInfo | json }">Make an Offer
+          <fa-icon [icon]="['fas', 'hand-holding-usd']"></fa-icon></a>
       </div>
 
       <p>Guaranteed Authentic <fa-icon [icon]="['fas', 'check-circle']"></fa-icon>
@@ -57,7 +57,7 @@
             <h2 id="offer-price">{{ buyListing.price | currency: 'CAD' }}</h2>
           </div>
 
-          <button class="btn" (click)="buyNow(buyListing)" *ngIf="connected">Buy Now</button>
+          <a [routerLink]="['/checkout']" [queryParams]="{ product: buyListing | json, sell: false }" class="btn" *ngIf="connected">Buy Now</a>
           <button class="btn disabled" *ngIf="!connected">Buy Now</button>
         </div>
       </div>
@@ -76,7 +76,7 @@
             <h2 id="offer-price">{{ offerListing.price | currency: 'CAD' }}</h2>
           </div>
 
-          <button class="btn" (click)="sell(offerListing)" *ngIf="connected">Sell Now</button>
+          <a class="btn" [routerLink]="['/checkout']" [queryParams]="{ product: offerListing | json, sell: true }" class="btn" *ngIf="connected">Sell Now</a>
           <button class="btn disabled" *ngIf="!connected">Sell Now</button>
         </div>
       </div>

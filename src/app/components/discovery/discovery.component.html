@@ -2,13 +2,13 @@
   <h2>Discovery</h2>
 
   <div class="showcase-discovery">
-    <div *ngFor="let discovery of discoveries" class="discovery-card" routerLink="/product/{{ discovery.productID }}">
+    <a *ngFor="let discovery of discoveries" class="discovery-card" routerLink="/product/{{ discovery.productID }}">
       <h6>{{ discovery.lowestPrice | currency: 'CAD' }}</h6>
 
       <img src="{{ discovery.assetURL }}" alt="{{ discovery.model }}">
 
       <h3>{{ discovery.model }}</h3>
-    </div>
+    </a>
   </div>
 
   <button class="discovery-btn btn" *ngIf="!loading && !end" (click)="more()">Show More</button>

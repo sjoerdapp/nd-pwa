@@ -3,8 +3,8 @@
     <fa-icon [icon]="['fas', 'bars']"></fa-icon>
   </button>
 
-  <a class="nav-home">
-    <img routerLink="/" src="../../../assets/Color w- letterspng.png" alt="NXTDROP, Inc. Logo">
+  <a class="nav-home" routerLink="/">
+    <img src="../../../assets/Color w- letterspng.png" alt="NXTDROP, Inc. Logo">
   </a>
 
   <section class="nav-icons" *ngIf="connected; else navBtns">
@@ -23,28 +23,28 @@
       </a>
     </button>-->
 
-    <button class="nav-profile nav-icon" routerLink="/sell" title="Sell">
+    <a class="nav-profile nav-icon" routerLink="/sell" title="Sell">
      <fa-icon [icon]="['fas', 'tag']"></fa-icon>
-    </button>
+    </a>
       
-    <button class="nav-profile nav-icon" routerLink="/profile" title="Profile">
+    <a class="nav-profile nav-icon" routerLink="/profile" title="Profile">
       <fa-icon [icon]="['fas', 'user-circle']"></fa-icon>
-    </button>
+    </a>
 
-    <button class="nav-profile nav-icon" routerLink="/settings" title="Settings">
+    <a class="nav-profile nav-icon" routerLink="/settings" title="Settings">
       <fa-icon [icon]="['fas', 'cog']"></fa-icon>
-    </button>
+    </a>
   </section>
 
   <ng-template #navBtns>
     <section class="nav-btns">
-      <button class="btn nav-login" routerLink="/login">
-        LOG IN
-      </button>
+      <a class="btn nav-login" routerLink="/login">
+        <p>LOG IN</p>
+      </a>
       
-      <button class="btn nav-signup" routerLink="/signup">
-        SIGN UP
-      </button>
+      <a class="btn nav-signup" routerLink="/signup">
+        <p>SIGN UP</p>
+      </a>
     </section>
   </ng-template>
   
