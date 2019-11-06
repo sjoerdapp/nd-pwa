@@ -181,6 +181,10 @@ export class ProductComponent implements OnInit {
         return false;
       } else if (social === 'copy_link') {
         this.copyStringToClipboard(`https://nxtdrop.com/product/${this.productID}`);
+        gtag('event', 'share_news_link', {
+          'event_category': 'engagement',
+          'event_label': this.productInfo.model
+        });
       } else {
         return false;
       }
