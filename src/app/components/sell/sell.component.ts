@@ -241,7 +241,7 @@ export class SellComponent implements OnInit {
           this.highestOffer = val.data();
         });
       } else {
-        this.highestOffer = 0;
+        this.highestOfferPrice = 0;
       }
     });
 
