@@ -156,8 +156,8 @@
     </ol>
 
     <div class="pairStats">
-      <p *ngIf="highestOffer == 0">Highest Offer: --</p>
-      <p *ngIf="highestOffer > 0">Highest Offer: {{ highestOffer | currency: 'CAD' }}</p>
+      <p *ngIf="highestOfferPrice == 0">Highest Offer: --</p>
+      <p *ngIf="highestOfferPrice > 0">Highest Offer: {{ highestOfferPrice | currency: 'CAD' }}</p>
       <p *ngIf="lowestListing == 0">Lowest Price: --</p>
       <p *ngIf="lowestListing > 0">Lowest Price: {{ lowestListing | currency: 'CAD' }}</p>
     </div>
@@ -172,10 +172,10 @@
       <button class="btn" (click)="goToPage3()">Back</button>
       <button class="btn disabled" id="add-btn" *ngIf="!error && !listed && !loading && !priceAdded">Finish</button>
       <button class="btn" id="add-btn" (click)="submitListing()"
-        *ngIf="!error && !listed && !loading && priceAdded && pairPrice > highestOffer">Finish</button>
+        *ngIf="!error && !listed && !loading && priceAdded && pairPrice > highestOfferPrice">Finish</button>
       <button class="btn" id="add-btn" (click)="sellNow()"
-        *ngIf="!error && !listed && !loading && priceAdded && pairPrice <= highestOffer">Sell at
-        {{ highestOffer | currency: 'CAD' }}</button>
+        *ngIf="!error && !listed && !loading && priceAdded && pairPrice <= highestOfferPrice">Sell at
+        {{ highestOfferPrice | currency: 'CAD' }}</button>
       <button class="btn error-btn" *ngIf="error">Error</button>
       <button class="btn listed-btn" *ngIf="listed">Listed</button>
       <button class="btn" *ngIf="loading">

@@ -179,9 +179,31 @@ export class ProductComponent implements OnInit {
           'event_label': this.productInfo.model
         });
         return false;
+      } else if (social === 'copy_link') {
+        this.copyStringToClipboard(`https://nxtdrop.com/product/${this.productID}`);
       } else {
         return false;
       }
+    }
+  }
+
+  copyStringToClipboard(str: string) {
+    if (isPlatformBrowser(this.platform_id)) {
+      const el = document.createElement('textarea');
+      el.value = str;
+      el.style.visibility = 'none';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      document.getElementById('tooltiptext').style.visibility = 'visible';
+      document.getElementById('tooltiptext').style.opacity = '1';
+
+      setTimeout(() => {
+        document.getElementById('tooltiptext').style.visibility = 'none';
+        document.getElementById('tooltiptext').style.opacity = '0';
+      }, 3000);
     }
   }
 

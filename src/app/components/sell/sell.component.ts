@@ -31,8 +31,9 @@ export class SellComponent implements OnInit {
 
   selectedPair: Product; // Listing Product object
 
-  highestOffer: number;
+  highestOfferPrice: number;
   lowestListing: number;
+  highestOffer: any;
 
   // Listing Information
   pairCondition: string;
@@ -68,7 +69,7 @@ export class SellComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle(`Sell | NXTDROP: Sell and Buy Sneakers in Canada`); // Change the page title
     this.seo.addTags('Sell');
-    
+
     this.index = this.algoliaClient.initIndex(environment.algolia.index);
 
     // Skip the first page and serves the third page
@@ -126,7 +127,7 @@ export class SellComponent implements OnInit {
             'event_label': this.selectedPair.model
           });
         }
-        
+
         if (res) {
           const msg = `${this.user.uid} listed ${this.selectedPair.model}, size ${this.pairSize} at ${this.pairPrice}`;
           this.slack.sendAlert('listings', msg);
@@ -236,7 +237,8 @@ export class SellComponent implements OnInit {
     this.sellService.getHighestOffer(this.selectedPair.productID, this.pairCondition, this.pairSize).subscribe(data => {
       if (!data.empty) {
         data.forEach(val => {
-          this.highestOffer = val.data().price;
+          this.highestOfferPrice = val.data().price;
+          this.highestOffer = val.data();
         });
       } else {
         this.highestOffer = 0;
@@ -304,6 +306,15 @@ export class SellComponent implements OnInit {
     } else {
       this.nextToPage4 = false;
     }
+  }
+
+  sellNow() {
+    const data = JSON.stringify(this.highestOffer);
+    this.ngZone.run(() => {
+      this.router.navigate([`../../checkout`], {
+        queryParams: { product: data, sell: true }
+      });
+    });
   }
 
 }

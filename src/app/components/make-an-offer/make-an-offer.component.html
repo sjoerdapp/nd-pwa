@@ -110,8 +110,8 @@
     <div class="pairStats">
       <p *ngIf="highestOffer < 0">Highest Offer: --</p>
       <p *ngIf="highestOffer > 0">Highest Offer: {{ highestOffer | currency: 'CAD' }}</p>
-      <p *ngIf="lowestListing < 0">Lowest Price: --</p>
-      <p *ngIf="lowestListing > 0">Lowest Price: {{ lowestListing | currency: 'CAD' }}</p>
+      <p *ngIf="lowestListingPrice < 0">Lowest Price: --</p>
+      <p *ngIf="lowestListingPrice > 0">Lowest Price: {{ lowestListingPrice | currency: 'CAD' }}</p>
     </div>
 
     <div class="offer-price-input">
@@ -127,7 +127,7 @@
         *ngIf="!error && !listed && !loading && priceAdded && showFinish">Finish</button>
       <button class="btn" id="add-btn" (click)="buyNow()"
         *ngIf="!error && !listed && !loading && priceAdded && !showFinish">Buy at
-        {{ lowestListing | currency: 'CAD' }}</button>
+        {{ lowestListingPrice | currency: 'CAD' }}</button>
       <button class="btn error-btn" *ngIf="error">Error</button>
       <button class="btn listed-btn" *ngIf="listed">Offer Added</button>
       <button class="btn" *ngIf="loading">

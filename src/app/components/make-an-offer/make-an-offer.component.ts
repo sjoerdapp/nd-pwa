@@ -28,7 +28,9 @@ export class MakeAnOfferComponent implements OnInit {
   selectedPair: Product;
 
   highestOffer: number;
-  lowestListing: number;
+  lowestListingPrice: number;
+
+  lowestListing: any;
 
   priceAdded = false;
 
@@ -58,7 +60,7 @@ export class MakeAnOfferComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle(`Make an Offer | NXTDROP: Buy and Sell Sneakers in Canada`);
     this.seo.addTags('Make an Offer');
-    
+
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
         this.selectedPair = JSON.parse(params.sneaker);
@@ -117,7 +119,7 @@ export class MakeAnOfferComponent implements OnInit {
 
     this.offerService.addOffer(this.selectedPair, this.pairCondition, this.pairPrice, this.pairSize).then(res => {
       if (res) {
-        if(isPlatformBrowser(this._platformId)) {
+        if (isPlatformBrowser(this._platformId)) {
           gtag('event', 'offer_placed', {
             'event_category': 'engagement',
             'event_label': this.selectedPair.model
@@ -126,7 +128,7 @@ export class MakeAnOfferComponent implements OnInit {
 
         const msg = `${this.user.uid} placed an offer for ${this.selectedPair.model}, size ${this.pairSize} at ${this.pairPrice}`;
         this.slack.sendAlert('offers', msg);
-        
+
         this.addListed();
       } else {
         this.addError();
@@ -166,7 +168,7 @@ export class MakeAnOfferComponent implements OnInit {
   }
 
   showFinishBtn() {
-    if (this.pairPrice >= this.lowestListing) {
+    if (this.pairPrice >= this.lowestListingPrice) {
       if (this.lowestListing != -1) {
         this.showFinish = false;
       } else {
@@ -209,7 +211,8 @@ export class MakeAnOfferComponent implements OnInit {
     this.sellService.getLowestListing(this.selectedPair.productID, this.pairCondition, this.pairSize).subscribe(data => {
       if (!data.empty) {
         data.forEach(val => {
-          this.lowestListing = val.data().price;
+          this.lowestListingPrice = val.data().price;
+          this.lowestListing = val.data();
         });
       } else {
         this.lowestListing = -1;
@@ -217,6 +220,15 @@ export class MakeAnOfferComponent implements OnInit {
     });
 
     console.log(this.selectedPair);
+  }
+
+  buyNow() {
+    const data = JSON.stringify(this.lowestListing);
+    this.ngZone.run(() => {
+      this.router.navigate([`../../checkout`], {
+        queryParams: { product: data, sell: false }
+      });
+    });
   }
 
 }
