@@ -8,6 +8,8 @@
             {{ post.category }}
         </div>
 
+        <h1 class="title">{{ post.title }}</h1>
+
         <div class="share-btns">
             <a href="https://www.facebook.com/sharer/sharer.php?app_id=316718239101883&u=https://nxtdrop.com/news/{{ post.slug }}&display=popup&ref=plugin"
                 class="fb-share-btn" (click)="share('fb')">
@@ -26,8 +28,6 @@
                 <span class="tooltiptext" id="tooltiptext">Copied!</span>
             </a>
         </div>
-
-        <h1 class="title">{{ post.title }}</h1>
 
         <div class="content" innerHTML="{{ post.content }}">
 
