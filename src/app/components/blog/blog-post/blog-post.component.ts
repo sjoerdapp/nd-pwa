@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, PLATFORM_ID, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NewsService } from 'src/app/services/news.service';
 import { Title, Meta } from '@angular/platform-browser';
+import { isPlatformBrowser } from '@angular/common';
 
+declare const gtag: any;
 @Component({
   selector: 'app-blog-post',
   templateUrl: './blog-post.component.html',
@@ -18,7 +20,8 @@ export class BlogPostComponent implements OnInit {
     private route: ActivatedRoute,
     private news: NewsService,
     private title: Title,
-    private meta: Meta
+    private meta: Meta,
+    @Inject(PLATFORM_ID) private platform_id: Object
   ) { }
 
   ngOnInit() {
@@ -114,6 +117,61 @@ export class BlogPostComponent implements OnInit {
 
     //console.log(tag);
     return tag;
+  }
+
+  share(social: string) {
+    if (isPlatformBrowser(this.platform_id)) {
+      if (social === 'fb') {
+        window.open(`https://www.facebook.com/sharer/sharer.php?app_id=316718239101883&u=https://nxtdrop.com/news/${this.post.slug}&display=popup&ref=plugin`, 'popup', 'width=600,height=600,scrollbars=no,resizable=no');
+        gtag('event', 'share_news_fb', {
+          'event_category': 'engagement',
+          'event_label': this.post.slug
+        });
+        return false;
+      } else if (social === 'twitter') {
+        window.open(`https://twitter.com/intent/tweet?text=${this.post.title} - @nxtdrop https://nxtdrop.com/news/${this.post.slug}`, 'popup', 'width=600,height=600,scrollbars=no,resizable=no');
+        gtag('event', 'share_news_twitter', {
+          'event_category': 'engagement',
+          'event_label': this.post.slug
+        });
+        return false;
+      } else if (social === 'mail') {
+        window.location.href = `mailto:?subject=${this.post.title}&body=Hey, I just came across this article and thought you'd be interested. Check it out here https://nxtdrop.com/news/${this.post.slug}`;
+        gtag('event', 'share_news_mail', {
+          'event_category': 'engagement',
+          'event_label': this.post.slug
+        });
+        return false;
+      } else if (social === 'copy_link') {
+        this.copyStringToClipboard(`https://nxtdrop.com/news/${this.post.slug}`);
+        gtag('event', 'share_news_mail', {
+          'event_category': 'engagement',
+          'event_label': this.post.slug
+        });
+      } else {
+        return false;
+      }
+    }
+  }
+
+  copyStringToClipboard(str: string) {
+    if (isPlatformBrowser(this.platform_id)) {
+      const el = document.createElement('textarea');
+      el.value = str;
+      el.style.visibility = 'none';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      document.getElementById('tooltiptext').style.visibility = 'visible';
+      document.getElementById('tooltiptext').style.opacity = '1';
+
+      setTimeout(() => {
+        document.getElementById('tooltiptext').style.visibility = 'none';
+        document.getElementById('tooltiptext').style.opacity = '0';
+      }, 3000);
+    }
   }
 
 }

@@ -2,11 +2,11 @@
 // Base
 //
 
-@import 'base.fonts';
-@import 'base.mixins';
-@import 'base.palette';
-@import 'base.settings';
-@import 'base.themes';
+@import "base.fonts";
+@import "base.mixins";
+@import "base.palette";
+@import "base.settings";
+@import "base.themes";
 
 // variables
 $navHeight: 64px;
@@ -14,296 +14,408 @@ $footerHeight: 150px;
 $productContainerHeight: 650px;
 
 * {
-    outline: none;
+  outline: none;
 
-    &:focus {
-        outline: none;
-    }
+  &:focus {
+    outline: none;
+  }
 }
 
 .ripple {
-    background-position: center;
-    transition: background 0.5s;
-    &:hover {
-        background: inherit radial-gradient(circle, transparent 1%, inherit 1%) center/15000%;
-    }
-    &:active {
-        background-color: inherit;
-        background-size: 100%;
-        transition: background 0s;
-    }
+  background-position: center;
+  transition: background 0.5s;
+  &:hover {
+    background: inherit radial-gradient(circle, transparent 1%, inherit 1%) center/15000%;
+  }
+  &:active {
+    background-color: inherit;
+    background-size: 100%;
+    transition: background 0s;
+  }
 }
 
 //double line
 .blueLine {
-    background: $darkblue;
-    height: 2.5px;
-    grid-column: 1/6;
+  background: $darkblue;
+  height: 2.5px;
+  grid-column: 1/6;
 }
 
 .greenLine {
-    background: $green;
-    height: 2.5px;
-    grid-column: 1/6;
+  background: $green;
+  height: 2.5px;
+  grid-column: 1/6;
 }
 
 // Line on both sides of text
 .divider {
-    h2 {
-        overflow: hidden;
-        text-align: center;
-        color: $white;
-        font-size: $header-size-6;
+  h2 {
+    overflow: hidden;
+    text-align: center;
+    color: $white;
+    font-size: $header-size-6;
 
-        &:before, &:after {
-            background-color: $white;
-            content: "";
-            display: inline-block;
-            height: 1.5px;
-            position: relative;
-            vertical-align: middle;
-            width: 30%;
-        }
-
-        &:before {
-            right: 0.5em;
-            margin-left: -50%;
-        }
-
-        &:after {
-            left: 0.5em;
-            margin-right: -50%;
-        }
+    &:before,
+    &:after {
+      background-color: $white;
+      content: "";
+      display: inline-block;
+      height: 1.5px;
+      position: relative;
+      vertical-align: middle;
+      width: 30%;
     }
+
+    &:before {
+      right: 0.5em;
+      margin-left: -50%;
+    }
+
+    &:after {
+      left: 0.5em;
+      margin-right: -50%;
+    }
+  }
 }
 
 // FB & GOOG Btn
-.google-btn, .facebook-btn {
-    width: 90%;
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    background: $white;
-    align-content: center;
-    justify-content: center;
-    letter-spacing: 0.5px;
-    border-radius: $spacing-xxsmall;
+.google-btn,
+.facebook-btn {
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  background: $white;
+  align-content: center;
+  justify-content: center;
+  letter-spacing: 0.5px;
+  border-radius: $spacing-xxsmall;
 }
 
 .google-btn {
-    color: $black;
+  color: $black;
 
-    &:hover {
-        color: $white;
-        background: $googleRed;
+  &:hover {
+    color: $white;
+    background: $googleRed;
 
-        h3 {
-            color: inherit;
-        }
+    h3 {
+      color: inherit;
     }
+  }
 }
 
 .facebook-btn {
+  color: $blueivy;
+
+  h3 {
     color: $blueivy;
+  }
+
+  &:hover {
+    color: $white;
+    background: $blueivy;
 
     h3 {
-        color: $blueivy;
+      color: inherit;
     }
-
-    &:hover {
-        color: $white;
-        background: $blueivy;
-
-        h3 {
-            color: inherit;
-        }
-    }
+  }
 }
 
 // Showcase Settings
 .showcase-container {
-    margin-top: $spacing-large;
+  margin-top: $spacing-large;
 
-    h2 {
-        text-align: center;
-    }
+  h2 {
+    text-align: center;
+  }
 
-    .showcase-windows {
-        width: 100vw;
-        max-width: 100%;
-        border: 0.5px solid $lightgrey;
-        border-left: none;
-        border-right: none;
-        margin: $spacing-small auto;
-        padding: 5px 0;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
+  .showcase-windows {
+    width: 100vw;
+    max-width: 100%;
+    border: 0.5px solid $lightgrey;
+    border-left: none;
+    border-right: none;
+    margin: $spacing-small auto;
+    padding: 5px 0;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
 
-        .showcase-window {
-            width: 219px;
-            height: 100%;
-            border-right: 1px solid $lightgrey;
-            text-align: center;
-            cursor: pointer;
-            display: inline-block;
-            white-space: initial;
+    .showcase-window {
+      width: 219px;
+      height: 100%;
+      border-right: 1px solid $lightgrey;
+      text-align: center;
+      cursor: pointer;
+      display: inline-block;
+      white-space: initial;
 
+      section {
+        height: inherit;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-gap: 0;
+        align-items: center;
+        justify-items: center;
 
-            section {
-                height: inherit;
-                display: grid;
-                grid-template-rows: 1fr 1fr 1fr;
-                grid-gap: 0;
-                align-items: center;
-                justify-items: center;
-
-                &:hover, &:focus {
-                    h6, h3 {
-                        color: $matteblue;
-                    }
-                }
-    
-                #window-image {
-                    img {
-                        object-fit: contain;
-                    }
-                }
-    
-                #window-price {
-                    font-size: $font-xsmall;
-                }
-    
-                #window-model {
-                    font-size: $header-size-7;
-                    font-weight: $weight-bold;
-                    width: 80%;
-                }
-            }
-
+        &:hover,
+        &:focus {
+          h6,
+          h3 {
+            color: $matteblue;
+          }
         }
+
+        #window-image {
+          img {
+            object-fit: contain;
+          }
+        }
+
+        #window-price {
+          font-size: $font-xsmall;
+        }
+
+        #window-model {
+          font-size: $header-size-7;
+          font-weight: $weight-bold;
+          width: 80%;
+        }
+      }
     }
+  }
 }
 
 // Separate Header & Footer
 .main-container {
-    min-height: calc(100vh - #{$footerHeight});
-    padding-top: calc(#{$navHeight} + 5px);
+  min-height: calc(100vh - #{$footerHeight});
+  padding-top: calc(#{$navHeight} + 5px);
 }
 
 // Settings btns
-.settings-back-btn, .settings-save-btn {
-    padding: $spacing-small;
-    border: none;
-    border-radius: $spacing-xsmall;
-    background: $black;
-    color: $white;
-    font-size: $font-xsmall;
-    font-weight: $weight-black;
-    letter-spacing: 2px;
-    cursor: pointer;
-    @include vendor(transition, 0.25s ease-in-out);
+.settings-back-btn,
+.settings-save-btn {
+  padding: $spacing-small;
+  border: none;
+  border-radius: $spacing-xsmall;
+  background: $black;
+  color: $white;
+  font-size: $font-xsmall;
+  font-weight: $weight-black;
+  letter-spacing: 2px;
+  cursor: pointer;
+  @include vendor(transition, 0.25s ease-in-out);
 
-    &:hover {
-        background: $matteblack;
-    }
+  &:hover {
+    background: $matteblack;
+  }
 }
 
 .settings-back-btn {
-    background: transparent;
-    color: $black;
+  background: transparent;
+  color: $black;
 
-    &:hover {
-        color: $white;
+  &:hover {
+    color: $white;
+  }
+}
+
+// Share Btns
+.share-btns {
+  margin: $spacing-small 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: $spacing-small;
+  justify-items: center;
+
+  a {
+    border-radius: $spacing-large;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+
+    fa-icon {
+      font-size: $font-normal;
     }
+  }
+}
+
+.fb-share-btn {
+  background: $facebook;
+  color: $white;
+
+  &:hover {
+    background: $facebooklighter;
+    color: $white;
+  }
+
+  &:focus {
+      color: $white;
+  }
+}
+
+.twitter-share-btn {
+  background: $twitter;
+  color: $white;
+
+  &:hover {
+    background: $twitterlighter;
+    color: $white;
+  }
+
+  &:focus {
+      color: $white;
+  }
+}
+
+.mail-share-btn {
+  background: $black;
+  color: $white;
+
+  &:hover {
+    background: $matteblack;
+    color: $white;
+  }
+
+  &:focus {
+      color: $white;
+  }
+}
+
+.link-share-btn {
+  background: $coolgrey;
+  color: $white;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+
+  &:hover {
+    background: $coolergrey;
+    color: $white;
+  }
+
+  &:focus {
+      color: $white;
+  }
+}
+
+.link-share-btn .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.link-share-btn .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
 }
 
 //MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
-    .showcase-container {
-        .showcase-windows {
-            height: 200px!important;
+  .showcase-container {
+    .showcase-windows {
+      height: 200px !important;
 
-            .showcase-window {
-                #window-image {
-                    img {
-                        height: 75px;
-                        width: 75px;
-                    }
-                }
-            }
+      .showcase-window {
+        #window-image {
+          img {
+            height: 75px;
+            width: 75px;
+          }
         }
+      }
     }
+  }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
-    .showcase-container {
-        .showcase-windows {
-            height: 250px!important;
+  .showcase-container {
+    .showcase-windows {
+      height: 250px !important;
 
-            .showcase-window {
-                #window-image {
-                    img {
-                        height: 100px;
-                        width: 100px;
-                    }
-                }
-            }
+      .showcase-window {
+        #window-image {
+          img {
+            height: 100px;
+            width: 100px;
+          }
         }
+      }
     }
+  }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .showcase-container {
-        .showcase-windows {
-            height: 300px!important;
+  .showcase-container {
+    .showcase-windows {
+      height: 300px !important;
 
-            .showcase-window {
-                    width: 275px;
-                #window-image {
-                    img {
-                        height: 125px;
-                        width: 125px;
-                    }
-                }
-            }
+      .showcase-window {
+        width: 275px;
+        #window-image {
+          img {
+            height: 125px;
+            width: 125px;
+          }
         }
+      }
     }
+  }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 2000px) {
-    .showcase-container {
-        .showcase-windows {
-            height: 400px!important;
+  .showcase-container {
+    .showcase-windows {
+      height: 400px !important;
 
-            .showcase-window {
-                    width: 350px;
-                #window-image {
-                    img {
-                        height: 150px;
-                        width: 150px;
-                    }
-                }
-            }
+      .showcase-window {
+        width: 350px;
+        #window-image {
+          img {
+            height: 150px;
+            width: 150px;
+          }
         }
+      }
     }
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    .showcase-container {
-        .showcase-windows {
-            height: 425px!important;
+  .showcase-container {
+    .showcase-windows {
+      height: 425px !important;
 
-            .showcase-window {
-                    width: 375px;
-                #window-image {
-                    img {
-                        height: 150px;
-                        width: 150px;
-                    }
-                }
-            }
+      .showcase-window {
+        width: 375px;
+        #window-image {
+          img {
+            height: 150px;
+            width: 150px;
+          }
         }
+      }
     }
+  }
 }
