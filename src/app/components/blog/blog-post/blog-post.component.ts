@@ -44,12 +44,12 @@ export class BlogPostComponent implements OnInit {
 
       this.news.dateFormat(json.date_gmt);
 
-      this.news.getFeaturedMedia(json._links["wp:featuredmedia"][0]["href"].replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
+      this.news.getFeaturedMedia(json._links["wp:featuredmedia"][0]["href"].replace(/https:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
         post.img = response.source_url.replace(/https:\/\/104.197.231.19/g, 'https://news.nxtdrop.com');
         post.alt_text = response.alt_text;
       });
 
-      this.news.getCategory(json._links["wp:term"][0]["href"].replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
+      this.news.getCategory(json._links["wp:term"][0]["href"].replace(/https:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
         post.category = response[0].name;
       });
 
@@ -92,12 +92,12 @@ export class BlogPostComponent implements OnInit {
           slug: element.slug
         }
 
-        this.news.getFeaturedMedia(element._links["wp:featuredmedia"][0]["href"].replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
+        this.news.getFeaturedMedia(element._links["wp:featuredmedia"][0]["href"].replace(/https:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
           article.img = response.source_url.replace(/https:\/\/104.197.231.19/g, 'https://news.nxtdrop.com');
           article.alt_text = response.alt_text;
         });
 
-        this.news.getCategory(element._links["wp:term"][0]["href"].replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
+        this.news.getCategory(element._links["wp:term"][0]["href"].replace(/https:\/\/104.197.231.19/g, 'https://news.nxtdrop.com')).subscribe((response: any) => {
           article.category = response[0].name;
         });
 
