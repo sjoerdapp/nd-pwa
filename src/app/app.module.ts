@@ -80,6 +80,7 @@ import { NgxMaskModule } from 'ngx-mask';
 // export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 import { NgxPayPalModule } from 'ngx-paypal';
+import { SnkrsComponent } from './components/snkrs/snkrs.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +131,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     SpecialDropHomeComponent,
     DropComponent,
     BlogHomeComponent,
-    BlogPostComponent
+    BlogPostComponent,
+    SnkrsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

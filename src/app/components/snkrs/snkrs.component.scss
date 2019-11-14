@@ -1,0 +1,17 @@
+@import '../../base_styles/base';
+
+.main-container {
+    display: grid;
+    align-content: center;
+
+    .leaderboard {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .question-container {
+        display: grid;
+        align-content: center;
+        justify-content: center;
+    }
+}
