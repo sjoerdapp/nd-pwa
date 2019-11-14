@@ -33,7 +33,7 @@ export class BlogPostComponent implements OnInit {
       json = json[0];
 
       let post: any = {
-        title: json.title.rendered,
+        title: json.title.rendered.replace(/&#8220;/g, '"').replace(/&#8221;/g, '"'),
         date: json.date_gmt,
         id: json.id,
         content: json.content.rendered.replace(/http:\/\/104.197.231.19/g, 'https://news.nxtdrop.com'),

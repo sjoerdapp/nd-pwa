@@ -14,7 +14,7 @@
 
       <div class="post-info">
         <h6 class="post-category">{{ post.category }}</h6>
-        <p class="post-title">{{ post.title }}</p>
+        <p class="post-title" [innerHtml]="post.title | safeHtml"></p>
         <p class="date"><fa-icon [icon]="['far', 'clock']"></fa-icon> {{ post.date }}</p>
       </div>
 
