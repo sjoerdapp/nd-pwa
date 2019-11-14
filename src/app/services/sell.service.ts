@@ -59,28 +59,32 @@ export class SellService {
     const prodDocRef = this.afs.firestore.collection(`products/${pair.productID}/listings`).doc(`${listingID}`);
     const listedValRef = this.afs.firestore.doc(`users/${UID}`);
 
-    batch.set(userDocRef, this.userListing);
-    batch.set(prodDocRef, this.productListing);
+    batch.set(userDocRef, this.userListing); // add Listing to User Document
+    batch.set(prodDocRef, this.productListing); // add Listing to Products Document
     batch.set(listedValRef, {
       listed: firebase.firestore.FieldValue.increment(1)
-    }, { merge: true });
+    }, { merge: true }); // increment 'listed' field by one
 
-    if (isUndefined(pair.lowestPrice) || pair.lowestPrice > price) {
-      const productRef = this.afs.firestore.collection(`products`).doc(`${pair.productID}`);
-      batch.set(productRef, { 
-        lowestPrice: price 
-      }, { merge: true });
-    }
+    // update lowestprice in Product Document
+    return this.afs.collection(`products`).doc(`${pair.productID}`).get().subscribe(res => {
+      const lowestPrice = res.data().lowestPrice
+      if (isUndefined(lowestPrice) || lowestPrice > price) {
+        const productRef = this.afs.firestore.collection(`products`).doc(`${pair.productID}`);
+        batch.set(productRef, {
+          lowestPrice: price
+        }, { merge: true });
+      }
 
-    return batch.commit()
-      .then(() => {
-        console.log('New Listing Added');
-        return true;
-      })
-      .catch((err) => {
-        console.error(err);
-        return false;
-      });
+      return batch.commit()
+        .then(() => {
+          console.log('New Listing Added');
+          return true;
+        })
+        .catch((err) => {
+          console.error(err);
+          return false;
+        });
+    });
   }
 
   /*async getLowestPrice(productID: string) {
