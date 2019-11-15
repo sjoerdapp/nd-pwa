@@ -1,17 +1,124 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .main-container {
+  display: grid;
+  align-content: center;
+
+  .game-container {
     display: grid;
-    align-content: center;
+    grid-template-columns: 1fr 2fr;
+    margin: $spacing-normal auto;
+    width: 90%;
+
+    .leaderboard,
+    .quiz-container {
+      padding: $spacing-normal;
+
+      h2 {
+        text-align: center;
+      }
+    }
 
     .leaderboard {
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+      border: 1px solid $lightgrey;
+      border-radius: $spacing-xsmall;
+      overflow-y: auto;
+
+      h2 {
+        margin-bottom: $spacing-normal;
+      }
+
+      .user-rank {
+        display: grid;
+        grid-template-columns: 1fr 4fr 1fr;
+        justify-items: center;
+        height: 40px;
+
+        #rank {
+          font-weight: $weight-black;
+          justify-self: baseline;
+        }
+
+        #username {
+          font-weight: $weight-bold;
+          justify-self: center;
+        }
+
+        #points {
+          font-weight: $weight-black;
+          justify-self: end;
+        }
+      }
+
+      #first {
+        color: #daa520;
+      }
+
+      #second {
+        color: #c0c0c0;
+      }
+
+      #third {
+        color: #b08d57;
+      }
     }
 
-    .question-container {
+    .quiz-container {
+      display: grid;
+      grid-template-columns: 1fr;
+
+      .question-container {
         display: grid;
-        align-content: center;
-        justify-content: center;
+        grid-template-rows: 2fr 1fr 2fr;
+
+        img {
+          width: 50%;
+          margin: 0 auto;
+          display: block;
+        }
+
+        .countdown {
+          align-self: center;
+          justify-self: center;
+          color: $black;
+          border-radius: $spacing-large;
+          border: 4px solid $matteblack;
+          height: 60px;
+          width: 60px;
+          display: grid;
+          justify-content: center;
+          align-content: center;
+
+          p {
+            font-size: $font-xlarge;
+          }
+        }
+
+        .answers {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          column-gap: $spacing-normal;
+          row-gap: $spacing-normal;
+
+          button {
+            @include vendor(transition, all 0.3s ease 0s);
+            cursor: pointer;
+            border: none;
+            background: $darkblue;
+            color: $white;
+            border-radius: $spacing-xxsmall;
+            font-size: $font-normal;
+            @include vendor(box-shadow, 0px 8px 15px rgba(0, 0, 0, 0.4));
+
+            &:hover {
+              background-color: $green;
+              @include vendor(box-shadow, 0px 15px 20px rgba(152, 251, 152, 0.4));
+              color: #fff;
+              transform: translateY(-7px);
+            }
+          }
+        }
+      }
     }
+  }
 }

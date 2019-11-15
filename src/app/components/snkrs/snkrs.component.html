@@ -1,15 +1,56 @@
 <app-navbar></app-navbar>
 
-<section class="main-container">
+<div class="main-container">
 
-    <div class="leaderboard">
-        
-    </div>
+    <section class="game-container">
 
-    <div class="question-container">
+        <div class="leaderboard">
+            <h2>Leaderboard</h2>
 
-    </div>
+            <div class="user-rank">
+                <p id="rank"><fa-icon [icon]="['fas', 'medal']" id="first"></fa-icon></p>
+                <p id="username">momarcissex</p>
+                <p id="points">100pts</p>
+            </div>
+            <div class="user-rank">
+                <p id="rank"><fa-icon [icon]="['fas', 'medal']" id="second"></fa-icon></p>
+                <p id="username">blvckpvblo</p>
+                <p id="points">95pts</p>
+            </div>
+            <div class="user-rank">
+                <p id="rank"><fa-icon [icon]="['fas', 'medal']" id="third"></fa-icon></p>
+                <p id="username">yusuf</p>
+                <p id="points">80pts</p>
+            </div>
+            <div class="user-rank">
+                    <p id="rank">4</p>
+                    <p id="username">mosalah</p>
+                    <p id="points">55pts</p>
+                </div>
+        </div>
 
-</section>
+        <div class="quiz-container">
+            <h2>Name The Sneaker</h2>
+
+            <div class="question-container">
+                <img src="https://firebasestorage.googleapis.com/v0/b/nxtdrop.appspot.com/o/products%2FAir-Force-1-Low-Off-White-MCA-University-Blue.jpg?alt=media&token=6c61be03-b1ea-4c1b-8a1b-37cf77e9f650"
+                    alt="Air-Force-1-Low-Off-White-MCA-University-Blue">
+
+                <div class="countdown">
+                    <p>10</p>
+                </div>
+
+                <div class="answers">
+                    <button>Air Force 1 Low OFF-WHITE MCA University Blue</button>
+                    <button>Air Force 1 Low OFF-WHITE Volt</button>
+                    <button>Air Force 1 Low OFF-WHITE UNC</button>
+                    <button>Air Force 1 Low OFF-WHITE Chicago Blue</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</div>
 
 <app-footer></app-footer>
