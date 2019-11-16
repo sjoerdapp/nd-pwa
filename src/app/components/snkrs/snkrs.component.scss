@@ -9,9 +9,11 @@
     grid-template-columns: 1fr 2fr;
     margin: $spacing-normal auto;
     width: 90%;
+    min-height: 600px;
 
     .leaderboard,
-    .quiz-container {
+    .quiz-container,
+    .how-it-works-container {
       padding: $spacing-normal;
 
       h2 {
@@ -78,6 +80,7 @@
         }
 
         .countdown {
+          @include vendor(transition, all 0.15s ease 0s);
           align-self: center;
           justify-self: center;
           color: $black;
@@ -116,6 +119,32 @@
               color: #fff;
               transform: translateY(-7px);
             }
+          }
+        }
+      }
+    }
+
+    .how-it-works-container {
+      display: grid;
+      grid-template-columns: 1fr;
+
+      .content-container {
+        display: grid;
+        grid-template-rows: 5fr 1fr;
+        row-gap: $spacing-small;
+
+        p {
+          margin: $spacing-normal;
+        }
+
+        button {
+          padding: $spacing-small;
+          width: 50%;
+          justify-self: center;
+
+          &:hover {
+            background: $matteblue;
+            padding: $spacing-small;
           }
         }
       }

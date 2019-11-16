@@ -8,43 +8,88 @@
             <h2>Leaderboard</h2>
 
             <div class="user-rank">
-                <p id="rank"><fa-icon [icon]="['fas', 'medal']" id="first"></fa-icon></p>
+                <p id="rank">
+                    <fa-icon [icon]="['fas', 'medal']" id="first"></fa-icon>
+                </p>
                 <p id="username">momarcissex</p>
                 <p id="points">100pts</p>
             </div>
             <div class="user-rank">
-                <p id="rank"><fa-icon [icon]="['fas', 'medal']" id="second"></fa-icon></p>
+                <p id="rank">
+                    <fa-icon [icon]="['fas', 'medal']" id="second"></fa-icon>
+                </p>
                 <p id="username">blvckpvblo</p>
                 <p id="points">95pts</p>
             </div>
             <div class="user-rank">
-                <p id="rank"><fa-icon [icon]="['fas', 'medal']" id="third"></fa-icon></p>
+                <p id="rank">
+                    <fa-icon [icon]="['fas', 'medal']" id="third"></fa-icon>
+                </p>
                 <p id="username">yusuf</p>
                 <p id="points">80pts</p>
             </div>
             <div class="user-rank">
-                    <p id="rank">4</p>
-                    <p id="username">mosalah</p>
-                    <p id="points">55pts</p>
-                </div>
+                <p id="rank">4</p>
+                <p id="username">mosalah</p>
+                <p id="points">55pts</p>
+            </div>
         </div>
 
-        <div class="quiz-container">
+        <div class="how-it-works-container" *ngIf="howItWorksPage">
+            <h2>How It Works</h2>
+
+            <div class="content-container">
+                <div class="rules">
+                    <p>
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> You will be given <strong>1 image and 4 possible
+                            answers</strong>
+                    </p>
+                    <p>
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> The goal is to <strong>pick the right answer</strong> and
+                        collect the most points possible
+                    </p>
+                    <p>
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> You have <strong>10 seconds</strong> to pick the right answer
+                    </p>
+                    <p>
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> If you pick the right answer, you <strong>earn 10
+                            points</strong>
+                    </p>
+                    <p>
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> If you pick the wrong answer, you <strong>lose 2 points</strong>
+                    </p>
+                    <p>
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> In order to <strong>win a prize</strong>, you must be in the top
+                        3
+                    </p>
+                </div>
+
+                <button class="btn ripple" (click)="goToQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="countdownPage" *ngIf="countdownPage">
+            <div class="large-countdown" id="large-countdown">
+                <p>{{ pageCountdown }}</p>
+            </div>
+        </div>
+
+        <div class="quiz-container" *ngIf="questionPage">
             <h2>Name The Sneaker</h2>
 
             <div class="question-container">
                 <img src="https://firebasestorage.googleapis.com/v0/b/nxtdrop.appspot.com/o/products%2FAir-Force-1-Low-Off-White-MCA-University-Blue.jpg?alt=media&token=6c61be03-b1ea-4c1b-8a1b-37cf77e9f650"
                     alt="Air-Force-1-Low-Off-White-MCA-University-Blue">
 
-                <div class="countdown">
-                    <p>10</p>
+                <div class="countdown" id="countdown">
+                    <p>{{ countdown }}</p>
                 </div>
 
                 <div class="answers">
-                    <button>Air Force 1 Low OFF-WHITE MCA University Blue</button>
-                    <button>Air Force 1 Low OFF-WHITE Volt</button>
-                    <button>Air Force 1 Low OFF-WHITE UNC</button>
-                    <button>Air Force 1 Low OFF-WHITE Chicago Blue</button>
+                    <button class="ripple">Air Force 1 Low OFF-WHITE MCA University Blue</button>
+                    <button class="ripple">Air Force 1 Low OFF-WHITE Volt</button>
+                    <button class="ripple">Air Force 1 Low OFF-WHITE UNC</button>
+                    <button class="ripple">Air Force 1 Low OFF-WHITE Chicago Blue</button>
                 </div>
             </div>
         </div>
