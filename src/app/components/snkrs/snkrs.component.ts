@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-snkrs',
@@ -8,13 +9,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class SnkrsComponent implements OnInit, OnDestroy {
 
   countdown = 10;
-  pageCountdown = 6;
+  pageCountdown = 3;
+
+  countdownDisplay: number;
+  countdownInterval: NodeJS.Timer;
 
   // Pages boolean
-  howItWorksPage = true;
+  howItWorksPage = false;
   countdownPage = false;
   resultPage = false;
-  totalPage = false;
+  totalPage = true;
   questionPage = false;
 
   constructor() { }
@@ -27,18 +31,20 @@ export class SnkrsComponent implements OnInit, OnDestroy {
     console.log('work');
   }
 
-  startCountdown() {
-    const interval = setInterval(() => {
-      this.countdown--;
-      this.countdownBorderAnimation(this.countdown);
+  startCountdown(seconds: number, int: number) {
+    this.countdownDisplay = seconds;
 
-      if (this.countdown == 0) {
-        clearInterval(interval);
+    this.countdownInterval = setInterval(() => {
+      this.countdownDisplay--;
+      this.countdownBorderAnimation(this.countdownDisplay, int);
+
+      if (this.countdownDisplay <= 0) {
+        clearInterval(this.countdownInterval);
       }
-    }, 1000);
+    }, int);
   }
 
-  countdownBorderAnimation(countdown) {
+  countdownBorderAnimation(countdown: number, int: number) {
     let color: string;
     let animation = 0;
 
@@ -67,26 +73,59 @@ export class SnkrsComponent implements OnInit, OnDestroy {
         document.getElementById('countdown').style.borderLeftColor = color;
         clearInterval(interval);
 
-        const reset = setTimeout(() => {
+        setTimeout(() => {
           document.getElementById('countdown').style.borderLeftColor = "#222021";
           document.getElementById('countdown').style.borderBottomColor = "#222021";
           document.getElementById('countdown').style.borderRightColor = "#222021";
           document.getElementById('countdown').style.borderTopColor = "#222021";
-          clearTimeout(reset);
-        }, 150);
+        }, int * 0.15);
       }
-    }, 200);
+    }, int * 0.20);
   }
 
   goToQuestion() {
     setTimeout(() => {
       this.howItWorksPage = false;
+      this.countdownPage = false;
+      this.resultPage = false;
+      this.totalPage = false;
       this.questionPage = true;
-      
+
       setTimeout(() => {
-        this.startCountdown();
+        this.startCountdown(this.countdown, 1000);
       }, 1000);
 
+    }, 500);
+  }
+
+  goToCountdown() {
+    setTimeout(() => {
+      this.howItWorksPage = false;
+      this.countdownPage = true;
+      this.resultPage = false;
+      this.totalPage = false;
+      this.questionPage = false;
+
+      setTimeout(() => {
+        this.startCountdown(this.pageCountdown, 2000);
+
+        setTimeout(() => {
+          this.goToQuestion();
+        }, 8000);
+      }, 1000);
+
+    }, 500);
+  }
+
+  goToResult() {
+    clearTimeout(this.countdownInterval);
+    setTimeout(() => {
+      this.howItWorksPage = false;
+      this.countdownPage = false;1
+      this.resultPage = true;
+      this.totalPage = false;
+      this.questionPage = false;
+      clearTimeout();
     }, 500);
   }
 

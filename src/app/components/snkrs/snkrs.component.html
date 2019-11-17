@@ -41,36 +41,42 @@
             <div class="content-container">
                 <div class="rules">
                     <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> You will be given <strong>1 image and 4 possible
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> You will be given <strong>1 image and 4
+                            possible
                             answers</strong>
                     </p>
                     <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> The goal is to <strong>pick the right answer</strong> and
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> The goal is to <strong>pick the right
+                            answer</strong> and
                         collect the most points possible
                     </p>
                     <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> You have <strong>10 seconds</strong> to pick the right answer
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> You have <strong>10 seconds</strong> to pick
+                        the right answer
                     </p>
                     <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> If you pick the right answer, you <strong>earn 10
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> If you pick the right answer, you <strong>earn
+                            10
                             points</strong>
                     </p>
                     <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> If you pick the wrong answer, you <strong>lose 2 points</strong>
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> If you pick the wrong answer, you <strong>lose
+                            2 points</strong>
                     </p>
                     <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> In order to <strong>win a prize</strong>, you must be in the top
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> In order to <strong>win a prize</strong>, you
+                        must be in the top
                         3
                     </p>
                 </div>
 
-                <button class="btn ripple" (click)="goToQuestion()">Next</button>
+                <button class="btn ripple" (click)="goToCountdown()">Next</button>
             </div>
         </div>
 
         <div class="countdownPage" *ngIf="countdownPage">
-            <div class="large-countdown" id="large-countdown">
-                <p>{{ pageCountdown }}</p>
+            <div class="large-countdown" id="countdown">
+                <p>{{ countdownDisplay }}</p>
             </div>
         </div>
 
@@ -82,15 +88,49 @@
                     alt="Air-Force-1-Low-Off-White-MCA-University-Blue">
 
                 <div class="countdown" id="countdown">
-                    <p>{{ countdown }}</p>
+                    <p>{{ countdownDisplay }}</p>
                 </div>
 
                 <div class="answers">
-                    <button class="ripple">Air Force 1 Low OFF-WHITE MCA University Blue</button>
-                    <button class="ripple">Air Force 1 Low OFF-WHITE Volt</button>
-                    <button class="ripple">Air Force 1 Low OFF-WHITE UNC</button>
-                    <button class="ripple">Air Force 1 Low OFF-WHITE Chicago Blue</button>
+                    <button class="ripple" (click)="goToResult()">Air Force 1 Low OFF-WHITE MCA University Blue</button>
+                    <button class="ripple" (click)="goToResult()">Air Force 1 Low OFF-WHITE Volt</button>
+                    <button class="ripple" (click)="goToResult()">Air Force 1 Low OFF-WHITE UNC</button>
+                    <button class="ripple" (click)="goToResult()">Air Force 1 Low OFF-WHITE Chicago Blue</button>
                 </div>
+            </div>
+        </div>
+
+        <div class="resultPage" *ngIf="resultPage">
+            <h2>Result</h2>
+
+            <div class="result-container">
+                <div>
+                    <p><strong>Your Answer:</strong> Air Force 1 Low OFF-WHITE MCA University Blue</p>
+
+                    <p><strong>Correct Answer:</strong> Air Force 1 Low OFF-WHITE MCA University Blue</p>
+
+                    <p><strong>Points:</strong> 10pts</p>
+                </div>
+
+                <button class="btn ripple" (click)="goToCountdown()">NEXT</button>
+            </div>
+        </div>
+
+        <div class="totalPage" *ngIf="totalPage">
+            <h2>Your Score</h2>
+
+            <div class="total-container">
+                <div>
+                    <p><strong>Total:</strong> 38pts</p>
+
+                    <p><strong>Correct Answer:</strong> 4</p>
+
+                    <p><strong>Wrong Answer:</strong> 1</p>
+
+                    <p><strong>Current Rank:</strong> 34th</p>
+                </div>
+
+                <button class="btn ripple" routerLink="..">QUIT</button>
             </div>
         </div>
 

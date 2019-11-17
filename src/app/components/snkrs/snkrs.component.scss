@@ -11,9 +11,21 @@
     width: 90%;
     min-height: 600px;
 
+    .btn {
+      padding: $spacing-small;
+      width: 50%;
+      justify-self: center;
+
+      &:hover {
+        background: $matteblue;
+        padding: $spacing-small;
+      }
+    }
+
     .leaderboard,
     .quiz-container,
-    .how-it-works-container {
+    .how-it-works-container,
+    .resultPage {
       padding: $spacing-normal;
 
       h2 {
@@ -136,15 +148,65 @@
         p {
           margin: $spacing-normal;
         }
+      }
+    }
 
-        button {
-          padding: $spacing-small;
-          width: 50%;
+    .countdownPage {
+      display: grid;
+      align-content: center;
+      justify-content: center;
+      
+      .large-countdown {
+        @include vendor(transition, all 0.15s ease 0s);
+        align-self: center;
+        justify-self: center;
+        color: $black;
+        border-radius: $spacing-large;
+        border: 4px solid $matteblack;
+        height: 60px;
+        width: 60px;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+
+        p {
+          font-size: $font-xlarge;
+        }
+      }
+    }
+
+    .resultPage {
+      display: grid;
+      grid-template-columns: 1fr;
+
+      .result-container {
+        display: grid;
+        grid-template-rows: 5fr 1fr;
+
+        div {
           justify-self: center;
+          
+          p {
+            font-size: $font-xlarge;
+            margin: $spacing-small auto;
+          }
+        }
+      }
+    }
 
-          &:hover {
-            background: $matteblue;
-            padding: $spacing-small;
+    .totalPage {
+      @extend .resultPage;
+
+      .total-container {
+        display: grid;
+        grid-template-rows: 5fr 1fr;
+
+        div {
+          justify-self: center;
+          
+          p {
+            font-size: $font-xlarge;
+            margin: $spacing-small auto;
           }
         }
       }
