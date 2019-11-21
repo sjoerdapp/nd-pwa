@@ -70,7 +70,7 @@
                     </p>
                 </div>
 
-                <button class="btn ripple" (click)="goToCountdown()">Next</button>
+                <button class="btn ripple" (click)="startGame()">Next</button>
             </div>
         </div>
 
@@ -84,7 +84,7 @@
             <h2>Name The Sneaker</h2>
 
             <div class="question-container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/nxtdrop.appspot.com/o/products%2FAir-Force-1-Low-Off-White-MCA-University-Blue.jpg?alt=media&token=6c61be03-b1ea-4c1b-8a1b-37cf77e9f650"
+                <img src="{{ currentQuestion.assetURL }}"
                     alt="Air-Force-1-Low-Off-White-MCA-University-Blue">
 
                 <div class="countdown" id="countdown">
@@ -92,10 +92,7 @@
                 </div>
 
                 <div class="answers">
-                    <button class="ripple" (click)="goToResult()">Air Force 1 Low OFF-WHITE MCA University Blue</button>
-                    <button class="ripple" (click)="goToResult()">Air Force 1 Low OFF-WHITE Volt</button>
-                    <button class="ripple" (click)="goToResult()">Air Force 1 Low OFF-WHITE UNC</button>
-                    <button class="ripple" (click)="goToResult()">Air Force 1 Low OFF-WHITE Chicago Blue</button>
+                    <button class="ripple" (click)="selectAnswer($event)" *ngFor="let answer of currentQuestion.answers">{{ answer }}</button>
                 </div>
             </div>
         </div>
@@ -105,11 +102,11 @@
 
             <div class="result-container">
                 <div>
-                    <p><strong>Your Answer:</strong> Air Force 1 Low OFF-WHITE MCA University Blue</p>
+                    <p><strong>Your Answer:</strong> {{ resultInfo.userAnswer }}</p>
 
-                    <p><strong>Correct Answer:</strong> Air Force 1 Low OFF-WHITE MCA University Blue</p>
+                    <p><strong>Correct Answer:</strong> {{ resultInfo.correctAnswer }}</p>
 
-                    <p><strong>Points:</strong> 10pts</p>
+                    <p><strong>Points:</strong> {{ resultInfo.points }}</p>
                 </div>
 
                 <button class="btn ripple" (click)="goToCountdown()">NEXT</button>

@@ -1,5 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { of } from 'rxjs';
+import { SnkrsService } from 'src/app/services/snkrs.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { isNullOrUndefined } from 'util';
+import { Router } from '@angular/router';
+
+class Question {
+  answers: Array<any>;
+  assetURL: string;
+  correctAnswer: string;
+}
 
 @Component({
   selector: 'app-snkrs',
@@ -8,23 +17,62 @@ import { of } from 'rxjs';
 })
 export class SnkrsComponent implements OnInit, OnDestroy {
 
+  UID: string;
+  gameID: string;
+  qID: string;
+
   countdown = 10;
   pageCountdown = 3;
 
   countdownDisplay: number;
   countdownInterval: NodeJS.Timer;
+  animationInterval: NodeJS.Timer;
 
   // Pages boolean
-  howItWorksPage = false;
+  howItWorksPage = true;
   countdownPage = false;
   resultPage = false;
-  totalPage = true;
+  totalPage = false;
   questionPage = false;
 
-  constructor() { }
+  // Game Variables
+  questions = [];
+  currentQuestion: Question;
+  numQuestionAnswered = 0;
+  resultInfo = {
+    correctAnswer: '',
+    userAnswer: '',
+    points: 0
+  }
+
+  timestamp = Date.now();
+
+  constructor(
+    private snkrsService: SnkrsService,
+    private auth: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-
+    this.auth.isConnected().then(res => {
+      if (isNullOrUndefined(res)) {
+        this.router.navigate(['/login'], {
+          queryParams: { redirectTo: '/contest' }
+        });
+      } else {
+        this.UID = res.uid;
+        this.snkrsService.getGameID(this.timestamp).then(response => {
+          // console.log(response);
+          if (response) {
+            this.gameID = response[0] as string;
+            this.qID = response[1] as string;
+          } else {
+            this.router.navigate(['..']);
+          }
+        });
+        //console.log(this.UID);
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -39,7 +87,7 @@ export class SnkrsComponent implements OnInit, OnDestroy {
       this.countdownBorderAnimation(this.countdownDisplay, int);
 
       if (this.countdownDisplay <= 0) {
-        clearInterval(this.countdownInterval);
+        clearTimeout(this.countdownInterval);
       }
     }, int);
   }
@@ -59,7 +107,8 @@ export class SnkrsComponent implements OnInit, OnDestroy {
     } else {
       color = "#f51b1b";
     }
-    const interval = setInterval(() => {
+
+    this.animationInterval = setInterval(() => {
       if (animation === 0) {
         document.getElementById('countdown').style.borderTopColor = color;
         animation++;
@@ -71,7 +120,7 @@ export class SnkrsComponent implements OnInit, OnDestroy {
         animation++;
       } else {
         document.getElementById('countdown').style.borderLeftColor = color;
-        clearInterval(interval);
+        clearTimeout(this.animationInterval);
 
         setTimeout(() => {
           document.getElementById('countdown').style.borderLeftColor = "#222021";
@@ -119,9 +168,10 @@ export class SnkrsComponent implements OnInit, OnDestroy {
 
   goToResult() {
     clearTimeout(this.countdownInterval);
+    clearTimeout(this.animationInterval);
     setTimeout(() => {
       this.howItWorksPage = false;
-      this.countdownPage = false;1
+      this.countdownPage = false;
       this.resultPage = true;
       this.totalPage = false;
       this.questionPage = false;
@@ -129,4 +179,58 @@ export class SnkrsComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
+  selectAnswer($event) {
+    const answerPicked = $event.target.innerHTML;
+    this.goToResult();
+
+    if (this.currentQuestion.correctAnswer === answerPicked) {
+      this.resultInfo.correctAnswer = this.currentQuestion.correctAnswer;
+      this.resultInfo.points = 10;
+      this.resultInfo.userAnswer = answerPicked;
+    } else {
+      this.resultInfo.correctAnswer = this.currentQuestion.correctAnswer;
+      this.resultInfo.points = -2;
+      this.resultInfo.userAnswer = answerPicked;
+    }
+
+    this.snkrsService.addUserAnswer(this.resultInfo, this.UID, this.gameID, this.qID).then(res => {
+      if (res) {
+        this.numQuestionAnswered++;
+        this.cleanResultInfo();
+        this.nextQuestion();
+      } else {
+        //this.router.navigate(['..']);
+      }
+    })
+  }
+
+  cleanResultInfo() {
+    this.resultInfo.correctAnswer = '';
+    this.resultInfo.points = 0;
+    this.resultInfo.userAnswer = '';
+  }
+
+  nextQuestion() {
+    this.currentQuestion = this.questions[this.numQuestionAnswered];
+  }
+
+  getQuestions() {
+    this.snkrsService.getQuestions(this.gameID, this.qID).then(res => {
+      this.questions = res.data().Q;
+      this.currentQuestion = this.questions[0];
+      console.log(this.questions);
+    });
+  }
+
+  startGame() {
+    this.goToCountdown();
+    this.snkrsService.startGame(this.UID, this.gameID, this.qID).then(res => {
+      if (typeof res === "boolean") {
+        this.router.navigate(['..']);
+      } else {
+        this.numQuestionAnswered = res;
+        this.getQuestions();
+      }
+    })
+  }
 }
