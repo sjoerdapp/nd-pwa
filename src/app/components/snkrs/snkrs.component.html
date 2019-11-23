@@ -7,31 +7,15 @@
         <div class="leaderboard">
             <h2>Leaderboard</h2>
 
-            <div class="user-rank">
-                <p id="rank">
-                    <fa-icon [icon]="['fas', 'medal']" id="first"></fa-icon>
+            <div class="user-rank" *ngFor="let user of leaderboard">
+                <p id="rank" *ngIf="user.rank <= 3">
+                    <fa-icon [icon]="['fas', 'medal']" id="first" *ngIf="user.rank == 1"></fa-icon>
+                    <fa-icon [icon]="['fas', 'medal']" id="second" *ngIf="user.rank == 2"></fa-icon>
+                    <fa-icon [icon]="['fas', 'medal']" id="third" *ngIf="user.rank == 3"></fa-icon>
                 </p>
-                <p id="username">momarcissex</p>
-                <p id="points">100pts</p>
-            </div>
-            <div class="user-rank">
-                <p id="rank">
-                    <fa-icon [icon]="['fas', 'medal']" id="second"></fa-icon>
-                </p>
-                <p id="username">blvckpvblo</p>
-                <p id="points">95pts</p>
-            </div>
-            <div class="user-rank">
-                <p id="rank">
-                    <fa-icon [icon]="['fas', 'medal']" id="third"></fa-icon>
-                </p>
-                <p id="username">yusuf</p>
-                <p id="points">80pts</p>
-            </div>
-            <div class="user-rank">
-                <p id="rank">4</p>
-                <p id="username">mosalah</p>
-                <p id="points">55pts</p>
+                <p id="rank" *ngIf="user.rank > 3">{{ user.rank }}</p>
+                <p id="username">{{ user.username }}</p>
+                <p id="points">{{ user.points }}pts</p>
             </div>
         </div>
 
@@ -84,15 +68,15 @@
             <h2>Name The Sneaker</h2>
 
             <div class="question-container">
-                <img src="{{ currentQuestion.assetURL }}"
-                    alt="Air-Force-1-Low-Off-White-MCA-University-Blue">
+                <img src="{{ currentQuestion.assetURL }}" alt="Air-Force-1-Low-Off-White-MCA-University-Blue">
 
                 <div class="countdown" id="countdown">
                     <p>{{ countdownDisplay }}</p>
                 </div>
 
                 <div class="answers">
-                    <button class="ripple" (click)="selectAnswer($event)" *ngFor="let answer of currentQuestion.answers">{{ answer }}</button>
+                    <button class="ripple" (click)="selectAnswer($event)"
+                        *ngFor="let answer of currentQuestion.answers">{{ answer }}</button>
                 </div>
             </div>
         </div>
@@ -114,17 +98,22 @@
         </div>
 
         <div class="totalPage" *ngIf="totalPage">
-            <h2>Your Score</h2>
+            <h2>Today's Score</h2>
 
             <div class="total-container">
                 <div>
-                    <p><strong>Total:</strong> 38pts</p>
+                    <p><strong>Points:</strong> {{ totalPoints }}pts</p>
 
-                    <p><strong>Correct Answer:</strong> 4</p>
+                    <p><strong>Correct Answers:</strong> {{ numCorrectAnswer }}</p>
 
-                    <p><strong>Wrong Answer:</strong> 1</p>
+                    <p><strong>Wrong Answers:</strong> {{ numWrongAnswer }}</p>
 
-                    <p><strong>Current Rank:</strong> 34th</p>
+                    <p><strong>Rank:</strong> #{{ rank }}</p>
+                </div>
+
+                <div class="invite-friends">
+                    <input type="email" name="email" id="email">
+                    <button class="btn">Send Invite</button>
                 </div>
 
                 <button class="btn ripple" routerLink="..">QUIT</button>

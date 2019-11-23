@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SnkrsService } from 'src/app/services/snkrs.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined, isUndefined } from 'util';
 import { Router } from '@angular/router';
 
 class Question {
@@ -38,12 +38,21 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   // Game Variables
   questions = [];
   currentQuestion: Question;
+  numQuestion: number;
   numQuestionAnswered = 0;
   resultInfo = {
     correctAnswer: '',
     userAnswer: '',
     points: 0
   }
+
+  // Game Stats
+  totalPoints: number;
+  numCorrectAnswer = 0;
+  numWrongAnswer = 0;
+  rank: number;
+
+  leaderboard = [];
 
   timestamp = Date.now();
 
@@ -66,6 +75,7 @@ export class SnkrsComponent implements OnInit, OnDestroy {
           if (response) {
             this.gameID = response[0] as string;
             this.qID = response[1] as string;
+            this.getLeaderboard();
           } else {
             this.router.navigate(['..']);
           }
@@ -76,7 +86,9 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('work');
+    //console.log('work');
+    clearTimeout(this.countdownInterval);
+    clearTimeout(this.animationInterval);
   }
 
   startCountdown(seconds: number, int: number) {
@@ -88,6 +100,12 @@ export class SnkrsComponent implements OnInit, OnDestroy {
 
       if (this.countdownDisplay <= 0) {
         clearTimeout(this.countdownInterval);
+
+        if (this.questionPage) {
+          this.numQuestionAnswered++;
+          this.goToResult();
+          this.nextQuestion();
+        }
       }
     }, int);
   }
@@ -140,6 +158,8 @@ export class SnkrsComponent implements OnInit, OnDestroy {
       this.totalPage = false;
       this.questionPage = true;
 
+      this.snkrsService.questionViewed(this.currentQuestion, this.gameID, this.qID, this.UID);
+
       setTimeout(() => {
         this.startCountdown(this.countdown, 1000);
       }, 1000);
@@ -148,25 +168,33 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   }
 
   goToCountdown() {
-    setTimeout(() => {
-      this.howItWorksPage = false;
-      this.countdownPage = true;
-      this.resultPage = false;
-      this.totalPage = false;
-      this.questionPage = false;
-
+    console.log(this.numQuestion);
+    console.log(this.numQuestionAnswered);
+    if (this.numQuestionAnswered < this.numQuestion) {
       setTimeout(() => {
-        this.startCountdown(this.pageCountdown, 2000);
+        this.howItWorksPage = false;
+        this.countdownPage = true;
+        this.resultPage = false;
+        this.totalPage = false;
+        this.questionPage = false;
 
         setTimeout(() => {
-          this.goToQuestion();
-        }, 8000);
-      }, 1000);
+          this.startCountdown(this.pageCountdown, 2000);
 
-    }, 500);
+          setTimeout(() => {
+            this.goToQuestion();
+          }, 8000);
+        }, 500);
+
+      }, 500);
+    } else {
+      this.gameStats();
+      this.goToFinalPage();
+    }
   }
 
   goToResult() {
+    this.cleanResultInfo();
     clearTimeout(this.countdownInterval);
     clearTimeout(this.animationInterval);
     setTimeout(() => {
@@ -196,7 +224,6 @@ export class SnkrsComponent implements OnInit, OnDestroy {
     this.snkrsService.addUserAnswer(this.resultInfo, this.UID, this.gameID, this.qID).then(res => {
       if (res) {
         this.numQuestionAnswered++;
-        this.cleanResultInfo();
         this.nextQuestion();
       } else {
         //this.router.navigate(['..']);
@@ -205,8 +232,8 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   }
 
   cleanResultInfo() {
-    this.resultInfo.correctAnswer = '';
-    this.resultInfo.points = 0;
+    this.resultInfo.correctAnswer = this.currentQuestion.correctAnswer;
+    this.resultInfo.points = -2;
     this.resultInfo.userAnswer = '';
   }
 
@@ -217,20 +244,66 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   getQuestions() {
     this.snkrsService.getQuestions(this.gameID, this.qID).then(res => {
       this.questions = res.data().Q;
-      this.currentQuestion = this.questions[0];
-      console.log(this.questions);
+      this.numQuestion = res.data().numQ;
+      this.currentQuestion = this.questions[this.numQuestionAnswered];
+      this.goToCountdown();
+      //console.log(res.data());
     });
   }
 
   startGame() {
-    this.goToCountdown();
     this.snkrsService.startGame(this.UID, this.gameID, this.qID).then(res => {
+      //console.log(res);
       if (typeof res === "boolean") {
         this.router.navigate(['..']);
       } else {
         this.numQuestionAnswered = res;
         this.getQuestions();
       }
+    })
+  }
+
+  goToFinalPage() {
+    setTimeout(() => {
+      this.howItWorksPage = false;
+      this.countdownPage = false;
+      this.resultPage = false;
+      this.totalPage = true;
+      this.questionPage = false;
+    }, 250);
+  }
+
+  gameStats() {
+    this.snkrsService.getGameStats(this.gameID, this.qID, this.UID).then(data => {
+      this.totalPoints = data.data().totalPoints;
+
+      data.data().answers.forEach(element => {
+        if (element.correctAnswer === element.userAnswer) {
+          this.numCorrectAnswer++;
+        } else {
+          this.numWrongAnswer++;
+        }
+      });
+    });
+
+    this.snkrsService.getRank(this.gameID, this.qID, this.UID).then(data => {
+      //console.log(data.docs.length);
+      this.rank = data.docs.length;
+    });
+  }
+
+  getLeaderboard() {
+    this.snkrsService.getLeaderboard(this.gameID).then(res => {
+      let i = 0;
+      res.docs.forEach(doc => {
+        i++;
+        const data = {
+          username: doc.data().username,
+          points: doc.data().points,
+          rank: i
+        }
+        this.leaderboard.push(data);
+      })
     })
   }
 }

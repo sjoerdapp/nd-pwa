@@ -11,8 +11,8 @@ export class SnkrsService {
     private afs: AngularFirestore
   ) { }
 
-  getLeaderboard() {
-
+  getLeaderboard(gameID: string) {
+    return this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`).ref.orderBy('points', 'desc').get();
   }
 
   getGameID(timestamp): Promise<string[] | boolean> {
@@ -32,10 +32,28 @@ export class SnkrsService {
   }
 
   addUserAnswer(payload, uid: string, gameID: string, qID: string) {
-    return this.afs.collection(`snkrs`).doc(`${gameID}`).collection('users').doc(`${uid}`).collection(`questions`).doc(`${qID}`).set({
+    const batch = this.afs.firestore.batch();
+    const userQRef = this.afs.firestore.collection(`snkrs`).doc(`${gameID}`).collection('users').doc(`${uid}`).collection(`questions`).doc(`${qID}`);
+    const userRef = this.afs.firestore.collection(`snkrs`).doc(`${gameID}`).collection('users').doc(`${uid}`);
+
+    batch.set(userQRef, {
+      answers: firebase.firestore.FieldValue.arrayRemove({
+        correctAnswer: payload.correctAnswer,
+        points: 0,
+        userAnswer: ''
+      })
+    });
+
+    batch.set(userQRef, {
       answers: firebase.firestore.FieldValue.arrayUnion(payload),
       totalPoints: firebase.firestore.FieldValue.increment(payload.points)
-    }, { merge: true }).then(() => {
+    }, { merge: true });
+
+    batch.update(userRef, {
+      points: firebase.firestore.FieldValue.increment(payload.points)
+    });
+
+    return batch.commit().then(() => {
       return true;
     }).catch((err) => {
       console.error(err);
@@ -50,13 +68,15 @@ export class SnkrsService {
       if (!res.exists) {
         return userRef.ref.get().then((response): Promise<number | boolean> => {
           if (!response.exists) {
-            return this.afs.collection(`users`).doc(`${UID}`).ref.get().then(data => {
+            return this.afs.collection(`users`).doc(`${UID}`).ref.get().then((data): Promise<number | boolean> => {
               if (data.exists) {
                 userRef.set({
                   points: 0,
                   username: data.data().username,
                   uid: UID
                 });
+
+                return Promise.resolve(0);
               } else {
                 // Cannot find the user's information. TO SOLVE
                 return Promise.resolve(false);
@@ -78,4 +98,29 @@ export class SnkrsService {
     });
   }
 
+  getGameStats(gameID: string, qID: string, UID: string) {
+    const usersRef = this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`).doc(`${UID}`).collection(`questions`).doc(`${qID}`);
+
+    return usersRef.ref.get();
+  }
+
+  getRank(gameID: string, qID: string, UID: string) {
+    const db = this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`);
+
+    return db.doc(`${UID}`).ref.get().then(doc => {
+      return db.ref.orderBy('points').startAt(doc).get();
+    });
+  }
+
+  questionViewed(currentQuestion: any, gameID: string, qID: string, UID: string) {
+    const userRef = this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`).doc(`${UID}`).collection(`questions`).doc(`${qID}`);
+
+    userRef.set({
+      answers: firebase.firestore.FieldValue.arrayUnion({
+        correctAnswer: currentQuestion.correctAnswer,
+        points: 0,
+        userAnswer: ''
+      })
+    }, { merge: true });
+  }
 }

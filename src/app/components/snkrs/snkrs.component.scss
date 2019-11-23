@@ -155,7 +155,7 @@
       display: grid;
       align-content: center;
       justify-content: center;
-      
+
       .large-countdown {
         @include vendor(transition, all 0.15s ease 0s);
         align-self: center;
@@ -185,7 +185,7 @@
 
         div {
           justify-self: center;
-          
+
           p {
             font-size: $font-xlarge;
             margin: $spacing-small auto;
@@ -196,17 +196,38 @@
 
     .totalPage {
       @extend .resultPage;
+      width: 100%;
 
       .total-container {
         display: grid;
-        grid-template-rows: 5fr 1fr;
+        grid-template-rows: 3fr 2fr 1fr;
 
         div {
           justify-self: center;
-          
+
           p {
             font-size: $font-xlarge;
             margin: $spacing-small auto;
+          }
+        }
+
+        .invite-friends {
+          width: 45%;
+          display: grid;
+          grid-template-columns: 2fr 1fr;
+          justify-items: center;
+          align-items: center;
+          column-gap: $spacing-normal;
+
+          input {
+            width: 100%;
+            padding: $spacing-small;
+            border-radius: $spacing-xsmall;
+            border: 1px solid $lightgrey;
+          }
+
+          button {
+            width: 100%;
           }
         }
       }
