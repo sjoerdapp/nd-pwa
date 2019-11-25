@@ -42,9 +42,13 @@ export class SnkrsService {
     batch.set(userQRef, {
       answers: firebase.firestore.FieldValue.arrayRemove({
         correctAnswer: payload.correctAnswer,
-        points: 0,
+        points: -2,
         userAnswer: ''
       })
+    }, { merge: true });
+
+    batch.update(userRef, {
+      points: firebase.firestore.FieldValue.increment(2)
     });
 
     batch.set(userQRef, {
@@ -120,15 +124,23 @@ export class SnkrsService {
   }
 
   questionViewed(currentQuestion: any, gameID: string, qID: string, UID: string) {
-    const userRef = this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`).doc(`${UID}`).collection(`questions`).doc(`${qID}`);
+    const batch = firebase.firestore().batch();
+    const userQRef = this.afs.firestore.collection(`snkrs`).doc(`${gameID}`).collection(`users`).doc(`${UID}`).collection(`questions`).doc(`${qID}`);
+    const userRef = this.afs.firestore.collection(`snkrs`).doc(`${gameID}`).collection('users').doc(`${UID}`);
 
-    userRef.set({
+    batch.set(userQRef, {
       answers: firebase.firestore.FieldValue.arrayUnion({
         correctAnswer: currentQuestion.correctAnswer,
-        points: 0,
+        points: -2,
         userAnswer: ''
       })
     }, { merge: true });
+
+    batch.update(userRef, {
+      points: firebase.firestore.FieldValue.increment(-2)
+    });
+
+    batch.commit();
   }
 
   addEmail(email: string, gameID: string, UID: string, username: string) {
@@ -142,7 +154,7 @@ export class SnkrsService {
         email,
         username
       }).subscribe();
-      
+
       return userRef.update({
         points: firebase.firestore.FieldValue.increment(10),
         invitationExtra: true

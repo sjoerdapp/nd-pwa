@@ -86,8 +86,10 @@ export class SnkrsComponent implements OnInit, OnDestroy {
           this.userEmail = res.email;
 
           this.snkrsService.getUsername(this.UID, this.gameID).subscribe((response: any) => {
-            this.username = response.username;
-            this.hasExtra = response.invitationExtra;
+            if (!isNullOrUndefined(response)) {
+              this.username = response.username;
+              this.hasExtra = response.invitationExtra;
+            }
           });
           //console.log(this.UID);
         }
