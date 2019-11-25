@@ -669,3 +669,29 @@ exports.addFirestoreDataToAlgolia = functions.https.onRequest((req, res) => {
 
     });
 });
+
+exports.snkrsInvitation = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send('Forbidden!');
+        }
+
+        const msg = {
+            to: req.body.email,
+            from: 'do-not-reply@nxtdrop.com',
+            templateId: 'd-e5e4d6fa0d1f4c6295a999bffc654cb1',
+            dynamic_template_data: {
+                username: req.body.username,
+                email: req.body.email,
+            }
+        };
+
+        return sgMail.send(msg).then((content: any) => {
+            console.log(content);
+            return res.send(true);
+        }).catch((err: any) => {
+            console.error(err);
+            return res.send(false);
+        });
+    });
+});

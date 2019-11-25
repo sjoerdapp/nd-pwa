@@ -13,7 +13,7 @@
 
     .btn {
       padding: $spacing-small;
-      width: 50%;
+      width: 75%;
       justify-self: center;
 
       &:hover {
@@ -218,6 +218,38 @@
           justify-items: center;
           align-items: center;
           column-gap: $spacing-normal;
+
+          .red-btn {
+            background: $googleRed;
+
+            &:hover {
+              background: $googleRed;
+            }
+          }
+
+          .green-btn {
+            background: $green;
+
+            &:hover {
+              background: $green;
+            }
+          }
+
+          .disabled-btn {
+            background: $lightgrey;
+            cursor: not-allowed;
+
+            &:hover {
+              background: $lightgrey;
+            }
+          }
+
+          p {
+            align-self: flex-end;
+            grid-column: 1/3;
+            font-size: $font-xsmall;
+            font-weight: $weight-black;
+          }
 
           input {
             width: 100%;

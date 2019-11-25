@@ -112,8 +112,13 @@
                 </div>
 
                 <div class="invite-friends">
-                    <input type="email" name="email" id="email">
-                    <button class="btn">Send Invite</button>
+                    <p>Invite a friend and get 10 extra points</p>
+                    <input type="email" name="email" id="email" placeholder="email" (keyup)="emailChanges($event)">
+                    <button class="btn" *ngIf="!invitationLoading && !invitationError && !invitationSent && validEmail" (click)="sendInvite()">Send Invite</button>
+                    <button class="btn disabled-btn" *ngIf="!validEmail">Send Invite</button>
+                    <button class="btn" *ngIf="invitationLoading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
+                    <button class="btn red-btn" *ngIf="invitationError">Error</button>
+                    <button class="btn green-btn" *ngIf="invitationSent">Sent</button>
                 </div>
 
                 <button class="btn ripple" routerLink="..">QUIT</button>

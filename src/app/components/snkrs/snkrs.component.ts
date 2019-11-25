@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SnkrsService } from 'src/app/services/snkrs.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { isNullOrUndefined, isUndefined } from 'util';
+import { isNullOrUndefined } from 'util';
 import { Router } from '@angular/router';
 
 class Question {
@@ -18,6 +18,8 @@ class Question {
 export class SnkrsComponent implements OnInit, OnDestroy {
 
   UID: string;
+  username: string;
+  userEmail: string;
   gameID: string;
   qID: string;
 
@@ -34,6 +36,11 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   resultPage = false;
   totalPage = false;
   questionPage = false;
+  invitationLoading = false;
+  invitationSent = false;
+  invitationError = false;
+  validEmail = false;
+  hasExtra = false;
 
   // Game Variables
   questions = [];
@@ -63,25 +70,28 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.auth.isConnected().then(res => {
-      if (isNullOrUndefined(res)) {
-        this.router.navigate(['/login'], {
-          queryParams: { redirectTo: '/contest' }
-        });
+    this.snkrsService.getGameID(this.timestamp).then(response => {
+      // console.log(response);
+      if (response) {
+        this.gameID = response[0] as string;
+        this.qID = response[1] as string;
+        this.getLeaderboard();
       } else {
-        this.UID = res.uid;
-        this.snkrsService.getGameID(this.timestamp).then(response => {
-          // console.log(response);
-          if (response) {
-            this.gameID = response[0] as string;
-            this.qID = response[1] as string;
-            this.getLeaderboard();
-          } else {
-            this.router.navigate(['..']);
-          }
-        });
-        //console.log(this.UID);
+        this.router.navigate(['..']);
       }
+
+      this.auth.isConnected().then(res => {
+        if (!isNullOrUndefined(res)) {
+          this.UID = res.uid;
+          this.userEmail = res.email;
+
+          this.snkrsService.getUsername(this.UID, this.gameID).subscribe((response: any) => {
+            this.username = response.username;
+            this.hasExtra = response.invitationExtra;
+          });
+          //console.log(this.UID);
+        }
+      });
     });
   }
 
@@ -168,8 +178,8 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   }
 
   goToCountdown() {
-    console.log(this.numQuestion);
-    console.log(this.numQuestionAnswered);
+    //console.log(this.numQuestion);
+    //console.log(this.numQuestionAnswered);
     if (this.numQuestionAnswered < this.numQuestion) {
       setTimeout(() => {
         this.howItWorksPage = false;
@@ -252,15 +262,21 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   }
 
   startGame() {
-    this.snkrsService.startGame(this.UID, this.gameID, this.qID).then(res => {
-      //console.log(res);
-      if (typeof res === "boolean") {
-        this.router.navigate(['..']);
-      } else {
-        this.numQuestionAnswered = res;
-        this.getQuestions();
-      }
-    })
+    if (isNullOrUndefined(this.UID)) {
+      this.router.navigate(['/login'], {
+        queryParams: { redirectTo: '/contest' }
+      });
+    } else {
+      this.snkrsService.startGame(this.UID, this.gameID, this.qID).then(res => {
+        //console.log(res);
+        if (typeof res === "boolean") {
+          this.router.navigate(['..']);
+        } else {
+          this.numQuestionAnswered = res;
+          this.getQuestions();
+        }
+      });
+    }
   }
 
   goToFinalPage() {
@@ -270,12 +286,17 @@ export class SnkrsComponent implements OnInit, OnDestroy {
       this.resultPage = false;
       this.totalPage = true;
       this.questionPage = false;
+
+      setTimeout(() => {
+        this.disableInvite();
+      }, 500);
     }, 250);
   }
 
   gameStats() {
     this.snkrsService.getGameStats(this.gameID, this.qID, this.UID).then(data => {
-      this.totalPoints = data.data().totalPoints;
+      this.numCorrectAnswer = 0;
+      this.numWrongAnswer = 0;
 
       data.data().answers.forEach(element => {
         if (element.correctAnswer === element.userAnswer) {
@@ -286,7 +307,11 @@ export class SnkrsComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.snkrsService.getRank(this.gameID, this.qID, this.UID).then(data => {
+    this.snkrsService.getPoints(this.gameID, this.UID).subscribe((data: any) => {
+      this.totalPoints = data.points;
+    })
+
+    this.snkrsService.getRank(this.gameID, this.UID).then(data => {
       //console.log(data.docs.length);
       this.rank = data.docs.length;
     });
@@ -295,6 +320,7 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   getLeaderboard() {
     this.snkrsService.getLeaderboard(this.gameID).then(res => {
       let i = 0;
+      let board = [];
       res.docs.forEach(doc => {
         i++;
         const data = {
@@ -302,8 +328,60 @@ export class SnkrsComponent implements OnInit, OnDestroy {
           points: doc.data().points,
           rank: i
         }
-        this.leaderboard.push(data);
-      })
+        board.push(data);
+      });
+
+      this.leaderboard = Object.assign([], board);
+      board.length = 0;
     })
+  }
+
+  sendInvite() {
+    const email = (document.getElementById('email') as HTMLInputElement).value;
+
+    if (email !== this.userEmail && !isNullOrUndefined(email) && email !== '') {
+      this.invitationLoading = true;
+      this.snkrsService.addEmail(email, this.gameID, this.UID, this.username).then(res => {
+        this.invitationLoading = false;
+        if (res) {
+          this.invitationSent = true;
+          this.gameStats();
+          this.getLeaderboard();
+        } else {
+          this.invitationError = true;
+        }
+
+        this.disableInvite();
+
+        setTimeout(() => {
+          this.invitationError = false;
+          this.invitationSent = false;
+          this.validEmail = false;
+        }, 2000)
+      });
+    } else {
+      this.invitationError = true;
+
+      setTimeout(() => {
+        this.invitationError = false;
+      }, 2000);
+    }
+  }
+
+  emailChanges($event) {
+    const email = $event.target.value;
+    const pattern = new RegExp(/^.+@.+\.[a-zA-Z]{2,}$/gm);
+
+    if (pattern.test(email)) {
+      this.validEmail = true;
+    } else {
+      this.validEmail = false;
+    }
+  }
+
+  disableInvite() {
+    if (this.hasExtra) {
+      (document.getElementById('email') as HTMLInputElement).disabled = true;
+    }
   }
 }

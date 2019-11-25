@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,8 @@ import * as firebase from 'firebase/app';
 export class SnkrsService {
 
   constructor(
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private http: HttpClient
   ) { }
 
   getLeaderboard(gameID: string) {
@@ -104,7 +107,11 @@ export class SnkrsService {
     return usersRef.ref.get();
   }
 
-  getRank(gameID: string, qID: string, UID: string) {
+  getPoints(gameID: string, UID: string) {
+    return this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`).doc(`${UID}`).valueChanges();
+  }
+
+  getRank(gameID: string, UID: string) {
     const db = this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`);
 
     return db.doc(`${UID}`).ref.get().then(doc => {
@@ -122,5 +129,38 @@ export class SnkrsService {
         userAnswer: ''
       })
     }, { merge: true });
+  }
+
+  addEmail(email: string, gameID: string, UID: string, username: string) {
+    const db = this.afs.collection(`snkrs`).doc(`${gameID}`);
+    const userRef = db.collection(`users`).doc(`${UID}`);
+
+    return db.set({
+      invitations: firebase.firestore.FieldValue.arrayUnion(email)
+    }, { merge: true }).then(() => {
+      this.http.post(`${environment.cloud.url}snkrsInvitation`, {
+        email,
+        username
+      }).subscribe();
+      
+      return userRef.update({
+        points: firebase.firestore.FieldValue.increment(10),
+        invitationExtra: true
+      }).then(() => {
+        return true;
+      }).catch(err => {
+        console.error(err);
+        return false;
+      });
+    }).catch(err => {
+      console.error(err);
+      return false;
+    });
+  }
+
+  getUsername(UID: string, gameID: string) {
+    const db = this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`).doc(`${UID}`);
+
+    return db.valueChanges();
   }
 }

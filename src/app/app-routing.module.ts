@@ -79,7 +79,7 @@ const routes: Routes = [
   { path: 'drop/:id', component: DropComponent },
   { path: 'news', component: BlogHomeComponent },
   { path: 'news/:title', component: BlogPostComponent },
-  { path: 'contest', component: SnkrsComponent },
+  { path: 'snkrs', component: SnkrsComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
