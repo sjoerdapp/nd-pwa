@@ -45,7 +45,18 @@
     h1 {
       text-align: center;
       width: 80%;
-      margin: $spacing-normal auto;
+      margin: $spacing-xlarge auto;
+      font-size: 42px;
+    }
+
+    h2 {
+      margin: $spacing-large auto;
+      font-size: 36px;
+    }
+
+    h4 {
+      margin: $spacing-large auto;
+      font-size: 28px;
     }
 
     .category {
@@ -61,7 +72,7 @@
     }
 
     .content {
-      width: 100%;
+      width: 80%;
       margin: $spacing-xsmall auto;
 
       p {
@@ -97,7 +108,7 @@
         }
 
         figure {
-          width: 100%;
+          width: 50%;
 
           img {
             width: 100%;
@@ -112,7 +123,8 @@
       }
 
       figure {
-        width: 100%;
+        width: 80%;
+        margin: auto;
 
         img {
           width: 100%;

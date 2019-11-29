@@ -41,6 +41,8 @@ export class ProductComponent implements OnInit {
 
   modalTimeout;
 
+  UID: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -55,6 +57,13 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.productID = this.route.snapshot.params.id;
+
+    this.auth.isConnected().then(res => {
+      if (!isUndefined(res)) {
+        this.UID = res.uid;
+      }
+    });
+
     this.isConnected();
 
     this.productService.getProductInfo(this.productID).subscribe(data => {
