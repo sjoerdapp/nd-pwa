@@ -2,6 +2,11 @@
 
 <div class="main-container">
 
+    <section class="timer-countdown" *ngIf="gameUnavailable && nextTourCountdown">
+        <p>Next tournament starts in:</p>
+        <h1>{{ nextGameCountdown }}</h1>
+    </section>
+
     <section class="game-container">
 
         <div class="leaderboard">
@@ -25,36 +30,34 @@
             <div class="content-container">
                 <div class="rules">
                     <p>
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> Daily rounds <strong>starts at 12:01 AM
+                            PDT</strong> and <strong>ends
+                            at 11:59 PM PDT</strong>
+                    </p>
+                    <p>
                         <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> You will be given <strong>1 image and 4
-                            possible
                             answers</strong>
                     </p>
                     <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> The goal is to <strong>pick the right
-                            answer</strong> and
-                        collect the most points possible
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> Pick the <strong>right
+                            answer</strong> and <strong>earn 10 points</strong>
                     </p>
                     <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> You have <strong>10 seconds</strong> to pick
-                        the right answer
-                    </p>
-                    <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> If you pick the right answer, you <strong>earn
-                            10
-                            points</strong>
-                    </p>
-                    <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> If you pick the wrong answer, you <strong>lose
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> Pick the <strong>wrong answer</strong> and <strong>lose
                             2 points</strong>
                     </p>
                     <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> In order to <strong>win a prize</strong>, you
-                        must be in the top
-                        3
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> You have <strong>10 seconds</strong> to pick
+                        an answer
+                    </p>
+                    <p>
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> In order to <strong>win a prize (Store Credit)</strong>, you
+                        must be in the <strong>top 3</strong> at the end of week
                     </p>
                 </div>
 
-                <button class="btn ripple" (click)="startGame()">Next</button>
+                <button class="btn ripple" (click)="startGame()" *ngIf="!gameUnavailable">Next</button>
+                <button class="btn disabled-btn" *ngIf="gameUnavailable">Next</button>
             </div>
         </div>
 
@@ -98,7 +101,7 @@
         </div>
 
         <div class="totalPage" *ngIf="totalPage">
-            <h2>Today's Score</h2>
+            <h2>Game Stats</h2>
 
             <div class="total-container">
                 <div>
@@ -112,11 +115,14 @@
                 </div>
 
                 <div class="invite-friends">
-                    <p>Invite a friend and get 10 extra points</p>
+                    <p>Challenge a friend and get 10 extra points</p>
                     <input type="email" name="email" id="email" placeholder="email" (keyup)="emailChanges($event)">
-                    <button class="btn" *ngIf="!invitationLoading && !invitationError && !invitationSent && validEmail" (click)="sendInvite()">Send Invite</button>
+                    <button class="btn" *ngIf="!invitationLoading && !invitationError && !invitationSent && validEmail"
+                        (click)="sendInvite()">Send Invite</button>
                     <button class="btn disabled-btn" *ngIf="!validEmail">Send Invite</button>
-                    <button class="btn" *ngIf="invitationLoading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
+                    <button class="btn" *ngIf="invitationLoading">
+                        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+                    </button>
                     <button class="btn red-btn" *ngIf="invitationError">Error</button>
                     <button class="btn green-btn" *ngIf="invitationSent">Sent</button>
                 </div>

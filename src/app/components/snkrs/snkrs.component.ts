@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SnkrsService } from 'src/app/services/snkrs.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined, isUndefined } from 'util';
 import { Router } from '@angular/router';
 
 class Question {
@@ -41,6 +41,8 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   invitationError = false;
   validEmail = false;
   hasExtra = false;
+  gameUnavailable = true;
+  nextTourCountdown = true;
 
   // Game Variables
   questions = [];
@@ -63,6 +65,8 @@ export class SnkrsComponent implements OnInit, OnDestroy {
 
   timestamp = Date.now();
 
+  nextGameCountdown: string = `00:00:00`;
+
   constructor(
     private snkrsService: SnkrsService,
     private auth: AuthService,
@@ -70,30 +74,42 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.init();
+  }
+
+  init() {
     this.snkrsService.getGameID(this.timestamp).then(response => {
       // console.log(response);
       if (response) {
-        this.gameID = response[0] as string;
-        this.qID = response[1] as string;
-        this.getLeaderboard();
-      } else {
-        this.router.navigate(['..']);
-      }
+        if (this.timestamp > response[2]) {
+          this.gameUnavailable = false;
+          this.gameID = response[0] as string;
+          this.qID = response[1] as string;
+          this.getLeaderboard();
 
-      this.auth.isConnected().then(res => {
-        if (!isNullOrUndefined(res)) {
-          this.UID = res.uid;
-          this.userEmail = res.email;
-
-          this.snkrsService.getUsername(this.UID, this.gameID).subscribe((response: any) => {
-            if (!isNullOrUndefined(response)) {
-              this.username = response.username;
-              this.hasExtra = response.invitationExtra;
-            }
-          });
-          //console.log(this.UID);
+          if (this.qID === '') {
+            this.gameUnavailable = true;
+            this.getNextTournament();
+          }
+        } else {
+          this.quizCountdown(response[2]);
         }
-      });
+
+        this.auth.isConnected().then(res => {
+          if (!isNullOrUndefined(res)) {
+            this.UID = res.uid;
+            this.userEmail = res.email;
+
+            this.snkrsService.getUsername(this.UID, this.gameID).subscribe((response: any) => {
+              if (!isNullOrUndefined(response)) {
+                this.username = response.username;
+                this.hasExtra = response.invitationExtra;
+              }
+            });
+            //console.log(this.UID);
+          }
+        });
+      }
     });
   }
 
@@ -385,5 +401,60 @@ export class SnkrsComponent implements OnInit, OnDestroy {
     if (this.hasExtra) {
       (document.getElementById('email') as HTMLInputElement).disabled = true;
     }
+  }
+
+  quizCountdown(countdownDate: number) {
+    let int: NodeJS.Timer;
+
+    int = setInterval(() => {
+      const distance = countdownDate - Date.now();
+
+      let h = Math.floor(distance / (1000 * 60 * 60));
+      let m = Math.floor(distance / (1000 * 60) % 60);
+      let s = Math.floor(distance / 1000) % 60;
+
+      let hours: any;
+      let minutes: any;
+      let seconds: any;
+
+      if (h < 10) {
+        hours = `0${h}`;
+      } else {
+        hours = h;
+      }
+
+      if (m < 10) {
+        minutes = `0${m}`;
+      } else {
+        minutes = m;
+      }
+
+      if (s < 10) {
+        seconds = `0${s}`;
+      } else {
+        seconds = s;
+      }
+
+      this.nextGameCountdown = `${hours}:${minutes}:${seconds}`;
+
+      console.log(distance);
+
+      if (distance <= 0) {
+        console.log('work');
+        clearTimeout(int);
+        this.timestamp = Date.now();
+        this.init();
+      }
+    }, 1000);
+  }
+
+  getNextTournament() {
+    this.snkrsService.getNextTournament(this.timestamp).then(response => {
+      if (!isUndefined(response.docs[0])) {
+        this.quizCountdown(response.docs[0].data().openingDate);
+      } else {
+        this.nextTourCountdown = false;
+      }
+    });
   }
 }

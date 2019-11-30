@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { isUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,11 @@ export class SnkrsService {
   getGameID(timestamp): Promise<string[] | boolean> {
     return this.afs.collection(`snkrs`).ref.where('closingDate', '>', timestamp).orderBy('closingDate', 'asc').limit(1).get().then(res => {
       return this.afs.collection(`snkrs`).doc(`${res.docs[0].data().ID}`).collection('questions').ref.where(`closingDate`, '>', timestamp).orderBy('closingDate', 'asc').limit(1).get().then(response => {
-        if (res.docs[0].exists && response.docs[0].exists) {
-          return [res.docs[0].data().ID, response.docs[0].data().ID];
+        if (!isUndefined(res.docs) && !isUndefined(response.docs)) {
+          if (isUndefined(response.docs[0])) {
+            return [res.docs[0].data().ID, '', res.docs[0].data().openingDate];
+          }
+          return [res.docs[0].data().ID, response.docs[0].data().ID, res.docs[0].data().openingDate];
         } else {
           return false;
         }
@@ -174,5 +178,9 @@ export class SnkrsService {
     const db = this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`).doc(`${UID}`);
 
     return db.valueChanges();
+  }
+
+  getNextTournament(timestamp: number) {
+    return this.afs.collection(`snkrs`).ref.where('openingDate', '>', timestamp).orderBy('openingDate', 'asc').limit(1).get();
   }
 }
