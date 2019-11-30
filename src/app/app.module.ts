@@ -81,6 +81,7 @@ import { NgxMaskModule } from 'ngx-mask';
 // export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 import { NgxPayPalModule } from 'ngx-paypal';
+import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
 
 @NgModule({
   declarations: [
@@ -133,6 +134,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     BlogHomeComponent,
     BlogPostComponent,
     SnkrsComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

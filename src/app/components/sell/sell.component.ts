@@ -192,10 +192,6 @@ export class SellComponent implements OnInit {
       this.isGS = true;
     }
 
-    if (!isUndefined(pair.lowestPrice)) {
-      this.selectedPair.lowestPrice = pair.lowestPrice;
-    }
-
     let element = document.getElementById('sell-page-2');
     element.style.display = 'none';
 

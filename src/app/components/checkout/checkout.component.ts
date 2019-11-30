@@ -122,14 +122,19 @@ export class CheckoutComponent implements OnInit {
   }
 
   private checkFreeShipping() {
-    this.checkoutService.getFreeShipping().then(res => {
-      res.subscribe(response => {
-        //console.log(response);
-        if (!isUndefined(response.data().freeShipping) || response.data().ordered === 0) {
-          this.shippingPrice = 0;
-        }
-      })
-    });
+    const date = Date.now();
+    if (date >= 1575014460000 && date <= 1575273599000) {
+      this.shippingPrice = 0;
+    } else {
+      this.checkoutService.getFreeShipping().then(res => {
+        res.subscribe(response => {
+          //console.log(response);
+          if (!isUndefined(response.data().freeShipping) || response.data().ordered === 0) {
+            this.shippingPrice = 0;
+          }
+        })
+      });
+    }
   }
 
   checkUserAndTransaction(user, transactionID: string) {

@@ -33,6 +33,91 @@ const universal = require(`${process.cwd()}/dist/server`).app;
 
 exports.ssr = functions.https.onRequest(universal);
 
+exports.orderCancellation = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send();
+        }
+
+        admin.firestore().collection(`users`).doc(`${req.body.buyerID}`).get().then(response => {
+            const data = response.data();
+            if (data) {
+                const email = data.email;
+                const total = req.body.price + req.body.shippingCost;
+
+                console.log(`Order Cancellation Email Buyer to ${email}.`);
+
+                const msg = {
+                    to: email,
+                    from: 'do-not-reply@nxtdrop.com',
+                    templateId: 'd-e044c539f9fc44e893c7b0de43757da2',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        subtotal: req.body.price,
+                        shipping: req.body.shippingCost,
+                        total: total,
+                        assetURL: req.body.assetURL,
+                        link: '',
+                        cancellationNote: req.body.cancellationNote
+                    }
+                }
+
+                sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent to buyer`);
+                }).catch((err: any) => {
+                    console.error(`Could send email to buyer: ${err}`);
+                })
+            } else {
+                console.error(`buyer don't exist`);
+            }
+        }).catch(err => {
+            console.error(`error sending buyer email`);
+        });
+
+        admin.firestore().collection(`users`).doc(`${req.body.sellerID}`).get().then(response => {
+            const data = response.data();
+            if (data) {
+                const email = data.email;
+                const fee = req.body.price * 0.095;
+                const processing = req.body.price * 0.03;
+                const payout = req.body.price - fee - processing;
+
+                console.log(`Order Cancellation Email Seller to ${email}.`);
+
+                const msg = {
+                    to: email,
+                    from: 'do-not-reply@nxtdrop.com',
+                    templateId: 'd-3a33db14afc544b2b6507d6be937cff3',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        assetURL: req.body.assetURL,
+                        fee: fee,
+                        processing: processing,
+                        payout: payout,
+                        cancellationNote: req.body.cancellationNote
+                    }
+                }
+
+                sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent to seller`);
+                }).catch((err: any) => {
+                    console.error(`Could send email to seller: ${err}`);
+                })
+            } else {
+                console.error(`buyer don't exist`);
+            }
+        }).catch(err => {
+            console.error(`error sending seller email`);
+        })
+
+        return res.status(200);
+    });
+});
+
 exports.sendShippingLabel = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
         if (req.method !== 'POST') {

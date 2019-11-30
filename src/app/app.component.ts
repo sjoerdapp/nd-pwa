@@ -47,6 +47,7 @@ export class AppComponent implements AfterViewInit {
         });
         fbq('track', 'PageView');
       }
+      this.seo.createCanonicalLink();
     });
   }
 
