@@ -29,8 +29,8 @@ export class SoldComponent implements OnInit {
     shippingCost: 0,
     size: '',
     status: {},
-    type: ''
-
+    type: '',
+    total: 0
   };
   error = false;
 
@@ -44,7 +44,7 @@ export class SoldComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle(`Item Sold | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.seo.addTags('Item Sold');
-    
+
     this.transactionID = this.route.snapshot.queryParams.transactionID;
 
     if (isNullOrUndefined(this.transactionID)) {
@@ -57,7 +57,7 @@ export class SoldComponent implements OnInit {
           this.error = true;
         }
         // console.log(this.transaction);
-      }) 
+      })
     }
   }
 

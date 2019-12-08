@@ -30,14 +30,14 @@
           <h5>{{ transaction.shippingCost | currency: 'CAD' }}</h5>
         </div>
 
-        <div class="tax">
-          <h5>Tax</h5>
-          <h5>CA$0.00</h5>
+        <div class="tax" *ngIf="transaction.discount">
+          <h5>Discount</h5>
+          <h5>- {{ transaction.discount | currency: 'CAD' }}</h5>
         </div>
 
         <div class="total">
           <h5>Total</h5>
-          <h5>{{ transaction.shippingCost + transaction.price | currency: 'CAD' }}</h5>
+          <h5>{{ transaction.total | currency: 'CAD' }}</h5>
         </div>
       </div>
 

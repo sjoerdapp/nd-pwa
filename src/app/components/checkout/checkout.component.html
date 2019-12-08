@@ -17,7 +17,7 @@
     <div class="summary-numbers" *ngIf="!isSelling">
       <div class="summary-subtotal">
         <h5>Subtotal</h5>
-        <h5>{{ subtotal() | currency: 'CAD' }}</h5>
+        <h5>{{ subtotal | currency: 'CAD' }}</h5>
       </div>
 
       <div class="summary-auth">
@@ -35,10 +35,26 @@
         <h5>{{ tax | currency: 'CAD' }}</h5>
       </div>
 
+      <div class="summary-tax" *ngIf="promoApplied">
+        <h5>Discount</h5>
+        <h5>- {{ discount | currency: 'CAD' }}</h5>
+      </div>
+
       <div class="summary-total">
         <h5>Total</h5>
-        <h5>{{ subtotal() + shippingPrice + tax | currency: 'CAD' }}</h5>
+        <h5>{{ total | currency: 'CAD' }}</h5>
       </div>
+    </div>
+
+    <div class="promo-code" *ngIf="!isSelling">
+      <input type="text" name="promo-code" id="promo-code" placeholder="Enter Promo Code" mask="AAAAAAAAAA">
+      <button class="btn promo-btn" (click)="applyPromo()" *ngIf="!promoError && !promoApplied && !promoLoading">Apply
+        Promo</button>
+      <button class="btn promo-btn" *ngIf="promoLoading">
+        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+      </button>
+      <button class="btn promo-btn-applied" *ngIf="promoApplied">Promo Applied</button>
+      <button class="btn promo-btn-invalid" *ngIf="promoError">Code Invalid</button>
     </div>
 
     <div class="summary-numbers" *ngIf="isSelling">
@@ -59,7 +75,7 @@
 
       <div class="summary-total">
         <h5>Total payout</h5>
-        <h5>{{ subtotal() - fee() - processing() | currency: 'CAD' }}</h5>
+        <h5>{{ subtotal - fee() - processing() | currency: 'CAD' }}</h5>
       </div>
     </div>
   </div>

@@ -12,7 +12,9 @@ export class Transaction {
     price: number;
     productID: string;
     sellerID: string;
-    shippingCost: number;
+    shippingCost?: number;
+    discount?: number;
+    total: number;
     size: string;
     status: Object;
     type: string;

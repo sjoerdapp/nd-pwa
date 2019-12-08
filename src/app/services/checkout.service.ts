@@ -7,6 +7,7 @@ import { Transaction } from '../models/transaction';
 import { SlackService } from './slack.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { isNullOrUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class CheckoutService {
     private http: HttpClient
   ) { }
 
-  async transactionApproved(product, paymentID: string, shippingCost: number) {
+  async transactionApproved(product, paymentID: string, shippingCost: number, discount?: number, discountCardID?: string) {
     let UID;
     await this.auth.isConnected().then(res => {
       UID = res.uid;
@@ -43,6 +44,7 @@ export class CheckoutService {
       productID: id,
       model: product.model,
       price: product.price,
+      total: product.price + shippingCost,
       sellerID: product.sellerID,
       buyerID: UID,
       size: product.size,
@@ -58,6 +60,15 @@ export class CheckoutService {
       shippingCost,
       type: 'bought'
     };
+
+    if (!isNullOrUndefined(discount)) {
+      transactionData.discount = discount;
+      transactionData.total = transactionData.total - discount;
+      const discountRef = this.afs.firestore.collection(`nxtcards`).doc(`${discountCardID}`);
+      batch.update(discountRef, {
+        amount: firebase.firestore.FieldValue.increment(-discount)
+      });
+    }
 
     let prices = [];
 
@@ -134,6 +145,7 @@ export class CheckoutService {
       productID: id,
       model: product.model,
       price: product.price,
+      total: product.price,
       sellerID: UID,
       buyerID: product.buyerID,
       size: product.size,
@@ -146,7 +158,6 @@ export class CheckoutService {
         cancelled: false
       },
       paymentID: '',
-      shippingCost: 18,
       type: 'sold'
     };
 
@@ -185,14 +196,28 @@ export class CheckoutService {
       })
   }
 
-  addTransaction(product, paymentID: string, ) {
+  addTransaction(product, paymentID: string, shippingCost: number, discount?: number, discountCardID?: string) {
     const transactionID = `${product.buyerID}-${product.sellerID}-${product.soldAt}`;
     const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`);
     const batch = firebase.firestore().batch();
 
     batch.update(tranRef, {
-      paymentID
+      paymentID,
+      shippingCost,
+      total: firebase.firestore.FieldValue.increment(shippingCost)
     });
+
+    if (!isNullOrUndefined(discount)) {
+      batch.update(tranRef, {
+        discount,
+        total: firebase.firestore.FieldValue.increment(-discount)
+      });
+
+      const discountRef = this.afs.firestore.collection(`nxtcards`).doc(`${discountCardID}`);
+      batch.update(discountRef, {
+        amount: firebase.firestore.FieldValue.increment(-discount)
+      });
+    }
 
     return batch.commit()
       .then(() => {
@@ -239,5 +264,9 @@ export class CheckoutService {
 
   getTransaction(transactionID: string) {
     return this.afs.collection(`transactions`).doc(`${transactionID}`).valueChanges();
+  }
+
+  getPromoCode(cardID: string) {
+    return this.afs.collection('nxtcards').doc(`${cardID}`).ref.get();
   }
 }

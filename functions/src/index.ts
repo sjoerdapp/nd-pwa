@@ -3,6 +3,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as algoliasearch from 'algoliasearch';
 import * as cryptoString from 'crypto-random-string';
+import { isUndefined } from 'util';
 
 // initalizations
 admin.initializeApp();
@@ -381,7 +382,7 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
 
                 console.log(`Order Email Buyer to ${email}.`);
 
-                const msg = {
+                const msg: any = {
                     to: email,
                     from: 'do-not-reply@nxtdrop.com',
                     templateId: 'd-e920cad3da0d4e0b8f77501bdabe1d54',
@@ -395,6 +396,11 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                         assetURL: req.body.assetURL,
                         link: ''
                     }
+                }
+
+                if (!isUndefined(req.body.discount)) {
+                    msg.dynamic_template_data.discount = req.body.discount;
+                    msg.dynamic_template_data.total = total - req.body.discount;
                 }
 
                 if (req.body.type === 'sold') {

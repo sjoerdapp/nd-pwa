@@ -35,9 +35,11 @@ export class CheckoutComponent implements OnInit {
 
   product: any = {}
   shippingPrice = 18;
+  subtotal = 0;
+  total = 0;
+  discount = 0;
+  discountCardID: string;
 
-  // 1569988800000
-  // 1570075140000
   tax = 0;
   isSelling: any;
 
@@ -45,6 +47,11 @@ export class CheckoutComponent implements OnInit {
 
   // User Checking out item sold to them
   tID;
+
+  // Promo variables
+  promoError = false;
+  promoApplied = false;
+  promoLoading = false;
 
   constructor(
     private checkoutService: CheckoutService,
@@ -66,6 +73,7 @@ export class CheckoutComponent implements OnInit {
 
     if (!isUndefined(this.isSelling) && !isUndefined(this.route.snapshot.queryParams.product)) {
       this.product = JSON.parse(this.route.snapshot.queryParams.product);
+      this.subtotal = this.product.price;
 
       if (isPlatformBrowser(this._platformId)) {
         gtag('event', 'begin_checkout', {
@@ -121,20 +129,55 @@ export class CheckoutComponent implements OnInit {
     })*/
   }
 
-  private checkFreeShipping() {
-    const date = Date.now();
-    if (date >= 1575014460000 && date <= 1575273599000) {
-      this.shippingPrice = 0;
-    } else {
-      this.checkoutService.getFreeShipping().then(res => {
-        res.subscribe(response => {
-          //console.log(response);
-          if (!isUndefined(response.data().freeShipping) || response.data().ordered === 0) {
-            this.shippingPrice = 0;
+  applyPromo() {
+    const code = (document.getElementById('promo-code') as HTMLInputElement).value;
+
+    if (code.length == 10) {
+      this.promoLoading = true;
+      this.checkoutService.getPromoCode(code).then(res => {
+        if (res.exists && res.data().amount != 0) {
+          if (this.subtotal <= res.data().amount) {
+            this.total = 0;
+            this.discount = this.total;
+          } else {
+            this.total = this.subtotal - res.data().amount;
+            this.discount = res.data().amount;
           }
-        })
-      });
+
+          this.promoLoading = false;
+          this.promoApplied = true;
+          this.discountCardID = code;
+        } else {
+          this.promoLoading = false;
+          this.promoError = true;
+
+          setTimeout(() => {
+            this.promoError = false;
+          }, 2000);
+        }
+      }).catch(err => {
+        console.error(err);
+        this.promoLoading = false;
+        this.promoError = true;
+
+        setTimeout(() => {
+          this.promoError = false;
+        }, 2000);
+      })
     }
+  }
+
+  private checkFreeShipping() {
+    this.checkoutService.getFreeShipping().then(res => {
+      res.subscribe(response => {
+        //console.log(response);
+        if (!isUndefined(response.data().freeShipping) || response.data().ordered === 0) {
+          this.shippingPrice = 0;
+        }
+
+        this.total = this.subtotal + this.shippingPrice;
+      })
+    });
   }
 
   checkUserAndTransaction(user, transactionID: string) {
@@ -159,11 +202,11 @@ export class CheckoutComponent implements OnInit {
         purchase_units: [{
           amount: {
             currency_code: 'CAD',
-            value: this.subtotal() + this.tax + this.shippingPrice,
+            value: (this.total).toString(),
             breakdown: {
               item_total: {
                 currency_code: 'CAD',
-                value: this.subtotal() + this.tax + this.shippingPrice
+                value: (this.total).toString()
               }
             }
           },
@@ -173,7 +216,7 @@ export class CheckoutComponent implements OnInit {
             category: 'PHYSICAL_GOODS',
             unit_amount: {
               currency_code: 'CAD',
-              value: this.subtotal() + this.tax + this.shippingPrice,
+              value: (this.total).toString(),
             },
           }]
         }]
@@ -199,9 +242,17 @@ export class CheckoutComponent implements OnInit {
         let transaction;
 
         if (isUndefined(this.tID)) {
-          transaction = this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice);
+          if (this.promoApplied) {
+            transaction = this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice, this.discount, this.discountCardID);
+          } else {
+            transaction = this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice);
+          }
         } else {
-          transaction = this.checkoutService.addTransaction(this.product, data.id);
+          if (this.promoApplied) {
+            transaction = this.checkoutService.addTransaction(this.product, data.id, this.shippingPrice, this.discount, this.discountCardID);
+          } else {
+            transaction = this.checkoutService.addTransaction(this.product, data.id, this.shippingPrice);
+          }
         }
         transaction.then(res => {
           if (isPlatformBrowser(this._platformId)) {
@@ -237,6 +288,10 @@ export class CheckoutComponent implements OnInit {
       },
       onClick: (data, actions) => {
         //console.log('onClick', data, actions);
+        gtag('event', 'PP_click', {
+          'event_category': 'ecommerce',
+          'event_label': this.product.model
+        });
       },
     };
   }
@@ -265,23 +320,14 @@ export class CheckoutComponent implements OnInit {
       });
   }
 
-  subtotal() {
-    let subtotal = this.product.price;
-    /*this.cartItems.forEach(ele => {
-      subtotal = subtotal + ele.price;
-    });*/
-
-    return subtotal;
-  }
-
   fee() {
-    let subtotal = this.subtotal();
+    let subtotal = this.subtotal;
 
     return subtotal * 0.095;
   }
 
   processing() {
-    let subtotal = this.subtotal();
+    let subtotal = this.subtotal;
 
     return subtotal * 0.03;
   }

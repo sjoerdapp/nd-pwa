@@ -1,339 +1,397 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .checkout-input {
-    border-radius: $spacing-xsmall;
-    border: none;
-    border-bottom: 1px solid $lightgrey;
-    height: $spacing-small;
-    padding: $spacing-xsmall;
-    font-size: $font-xsmall;
-    margin: $spacing-xxsmall 0;
+  border-radius: $spacing-xsmall;
+  border: none;
+  border-bottom: 1px solid $lightgrey;
+  height: $spacing-small;
+  padding: $spacing-xsmall;
+  font-size: $font-xsmall;
+  margin: $spacing-xxsmall 0;
 
-    &:focus {
-        border-color: $matteblack;
-    }
+  &:focus {
+    border-color: $matteblack;
+  }
 }
 
 .main-container {
-    width: 100vw;
-    max-width: 100%;
-    background: $black;
-    margin-top: $spacing-xsmall;
-    display: grid;
-    align-content: center;
+  width: 100vw;
+  max-width: 100%;
+  background: $black;
+  margin-top: $spacing-xsmall;
+  display: grid;
+  align-content: center;
 
-    .checkout-btns {
-        justify-self: center;
-        margin-top: $spacing-normal;
-        
-        button {
-            margin: $spacing-xsmall auto;
-        }
-    }
+  .checkout-btns {
+    justify-self: center;
+    margin-top: $spacing-normal;
 
     button {
-        padding: $spacing-xsmall;
-        width: 50%;
-        margin: $spacing-small auto;
-        display: block;
-        background: $green;
-        color: $black;
+      margin: $spacing-xsmall auto;
+    }
+  }
 
-        &:hover {
-            background: $mintgreen;
+  button {
+    padding: $spacing-xsmall;
+    width: 50%;
+    margin: $spacing-small auto;
+    display: block;
+    background: $green;
+    color: $black;
+
+    &:hover {
+      background: $mintgreen;
+    }
+  }
+
+  .back-btn {
+    background: $black;
+    color: $white;
+
+    &:hover {
+      background: $matteblack;
+    }
+  }
+
+  .checkout-summary {
+    margin-bottom: $spacing-xsmall;
+    width: 95%;
+    margin: 0 auto;
+    background: $white;
+    border-radius: $spacing-xsmall;
+    text-align: center;
+    justify-self: center;
+
+    .summary-items {
+      padding: $spacing-xsmall;
+
+      .summary-item {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        align-items: center;
+        justify-items: center;
+
+        h6:last-child {
+          justify-self: end;
         }
+
+        img {
+          width: 100%;
+        }
+      }
     }
 
-    .back-btn {
+    .summary-numbers {
+      padding: $spacing-xsmall;
+
+      div {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        h5 {
+          font-weight: $weight-bold;
+        }
+
+        h5:first-child {
+          justify-self: start;
+        }
+
+        h5:last-child {
+          justify-self: end;
+        }
+      }
+
+      .summary-total {
+        h5 {
+          font-weight: $weight-black;
+        }
+      }
+    }
+
+    .promo-code {
+      display: grid;
+      align-items: center;
+
+      input {
+        padding: $spacing-xsmall $spacing-small;
+        width: 30%;
+        justify-self: center;
+        border-radius: $spacing-xxsmall;
+        border: 1px solid $lightgrey;
+        text-align: center;
+      }
+
+      button {
+        justify-self: left;
+        width: 20%;
         background: $black;
         color: $white;
 
         &:hover {
-            background: $matteblack;
+          background: $matteblack;
         }
+      }
+
+      .promo-btn-invalid {
+        background: $inputError;
+        cursor: not-allowed;
+
+        &:hover {
+          background: $inputError;
+        }
+      }
+
+      .promo-btn-invalid {
+        background: $inputError;
+        cursor: not-allowed;
+
+        &:hover {
+          background: $inputError;
+        }
+      }
+
+      .promo-btn-applied {
+        background: $lightgrey;
+        cursor: not-allowed;
+
+        &:hover {
+          background: $lightgrey;
+        }
+      }
+    }
+  }
+
+  .checkout-shipping {
+    background: $white;
+    border-radius: $spacing-xsmall;
+    margin: $spacing-xsmall auto;
+    text-align: center;
+    width: 95%;
+
+    fa-icon {
+      color: $black;
     }
 
-    .checkout-summary {
-        margin-bottom: $spacing-xsmall;
-        width: 95%;
-        margin: 0 auto;
-        background: $white;
-        border-radius: $spacing-xsmall;
-        text-align: center;
-        justify-self: center;
-
-        .summary-items {
-            padding: $spacing-xsmall;
-
-            .summary-item {
-                display: grid;
-                grid-template-columns: 1fr 3fr 1fr;
-                align-items: center;
-                justify-items: center;
-
-                h6:last-child {
-                    justify-self: end;
-                }
-
-                img {
-                    width: 100%;
-                }
-            }
-        }
-
-        .summary-numbers {
-            padding: $spacing-xsmall;
-
-            div {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                
-                h5 {
-                    font-weight: $weight-bold;
-                }
-
-                h5:first-child {
-                    justify-self: start;
-                }
-
-                h5:last-child {
-                    justify-self: end;
-                }
-            }
-
-            .summary-total {
-                h5 {
-                    font-weight: $weight-black;
-                }
-            }
-        }
+    h3 {
+      font-size: $font-xsmall;
     }
 
-    .checkout-shipping {
-        background: $white;
-        border-radius: $spacing-xsmall;
-        margin: $spacing-xsmall auto;
-        text-align: center;
-        width: 95%;
+    h6 {
+      text-align: left;
+      font-size: $font-small;
+      margin: $spacing-xsmall;
 
-        fa-icon {
-            color: $black;
-        }
-
-        h3 {
-            font-size: $font-xsmall;
-        }
-
-        h6 {
-            text-align: left;
-            font-size: $font-small;
-            margin: $spacing-xsmall;
-
-            span {
-                font-size: $font-xsmall;
-                color: $coolgrey;
-                margin: 0 0 0 $spacing-xsmall;
-            }
-        }
-
-        .edit-btn {
-            background: none;
-            color: $green;
-            font-size: $font-small;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
+      span {
+        font-size: $font-xsmall;
+        color: $coolgrey;
+        margin: 0 0 0 $spacing-xsmall;
+      }
     }
 
-    .checkout-payment {
-        @extend .checkout-shipping;
+    .edit-btn {
+      background: none;
+      color: $green;
+      font-size: $font-small;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
+  }
+
+  .checkout-payment {
+    @extend .checkout-shipping;
+  }
 }
 
 // MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
-    .checkout-summary {
-        .summary-item {
-            h6 {
-                font-size: $font-xxsmall;
-            }
-        }
-
-        .summary-numbers {
-            h5 {
-                font-size: $font-xsmall;
-            }
-        }
+  .checkout-summary {
+    .summary-item {
+      h6 {
+        font-size: $font-xxsmall;
+      }
     }
 
-    .checkout-btns {
-        width: 80%;
-        
-        button, ngx-paypal {
-            padding: $spacing-xsmall!important;
-            width: 100%;
-        }
+    .summary-numbers {
+      h5 {
+        font-size: $font-xsmall;
+      }
     }
+  }
+
+  .checkout-btns {
+    width: 80%;
+
+    button,
+    ngx-paypal {
+      padding: $spacing-xsmall !important;
+      width: 100%;
+    }
+  }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
-    .checkout-summary {
-        .summary-item {
-            h6 {
-                font-size: $font-xsmall;
-            }
-        }
-
-        .summary-numbers {
-            h5 {
-                font-size: $font-xsmall;
-            }
-        }
+  .checkout-summary {
+    .summary-item {
+      h6 {
+        font-size: $font-xsmall;
+      }
     }
 
-    .checkout-btns {
-        width: 65%;
-        
-        button, ngx-paypal {
-            padding: $spacing-xsmall!important;
-            width: 100%;
-        }
+    .summary-numbers {
+      h5 {
+        font-size: $font-xsmall;
+      }
     }
+  }
+
+  .checkout-btns {
+    width: 65%;
+
+    button,
+    ngx-paypal {
+      padding: $spacing-xsmall !important;
+      width: 100%;
+    }
+  }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .checkout-summary {
-        .summary-item {
-            h6 {
-                font-size: $font-small;
-            }
+  .checkout-summary {
+    .summary-item {
+      h6 {
+        font-size: $font-small;
+      }
 
-            img {
-                width: 80%!important;
-            }
-        }
-
-        .summary-numbers {
-            h5 {
-                font-size: $font-normal;
-            }
-        }
+      img {
+        width: 80% !important;
+      }
     }
 
-    .checkout-btns {
-        width: 70%;
-        
-        button, ngx-paypal {
-            padding: $spacing-small!important;
-            width: 100%;
-        }
+    .summary-numbers {
+      h5 {
+        font-size: $font-normal;
+      }
     }
+  }
+
+  .checkout-btns {
+    width: 70%;
+
+    button,
+    ngx-paypal {
+      padding: $spacing-small !important;
+      width: 100%;
+    }
+  }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    .checkout-summary {
-        width: 75%!important;
+  .checkout-summary {
+    width: 75% !important;
 
-        h4 {
-            font-size: $font-large;
-        }
-
-        .summary-item {
-            h6 {
-                font-size: $font-small;
-            }
-
-            img {
-                width: 80%!important;
-            }
-        }
-
-        .summary-numbers {
-            h5 {
-                font-size: $font-normal;
-            }
-        }
+    h4 {
+      font-size: $font-large;
     }
 
-    .checkout-btns {
-        width: 50%;
+    .summary-item {
+      h6 {
+        font-size: $font-small;
+      }
 
-        button, ngx-paypal {
-            padding: $spacing-normal!important;
-            width: 100%;
-        }
+      img {
+        width: 80% !important;
+      }
     }
+
+    .summary-numbers {
+      h5 {
+        font-size: $font-normal;
+      }
+    }
+  }
+
+  .checkout-btns {
+    width: 50%;
+
+    button,
+    ngx-paypal {
+      padding: $spacing-normal !important;
+      width: 100%;
+    }
+  }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    .checkout-summary {
-        width: 75%!important;
+  .checkout-summary {
+    width: 75% !important;
 
-        h4 {
-            font-size: $font-large;
-        }
-
-        .summary-item {
-            h6 {
-                font-size: $font-small;
-            }
-
-            img {
-                width: 80%!important;
-            }
-        }
-
-        .summary-numbers {
-            h5 {
-                font-size: $font-normal;
-            }
-        }
+    h4 {
+      font-size: $font-large;
     }
 
-    .checkout-btns {
-        width: 50%;
-        
-        button, ngx-paypal {
-            padding: $spacing-normal!important;
-            width: 100%;
-        }
+    .summary-item {
+      h6 {
+        font-size: $font-small;
+      }
+
+      img {
+        width: 80% !important;
+      }
     }
+
+    .summary-numbers {
+      h5 {
+        font-size: $font-normal;
+      }
+    }
+  }
+
+  .checkout-btns {
+    width: 50%;
+
+    button,
+    ngx-paypal {
+      padding: $spacing-normal !important;
+      width: 100%;
+    }
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    .checkout-summary {
-        width: 75%!important;
+  .checkout-summary {
+    width: 75% !important;
 
-        h4 {
-            font-size: $font-large;
-        }
-
-        .summary-item {
-            h6 {
-                font-size: $font-small;
-            }
-
-            img {
-                width: 80%!important;
-            }
-        }
-
-        .summary-numbers {
-            h5 {
-                font-size: $font-normal;
-            }
-        }
+    h4 {
+      font-size: $font-large;
     }
 
-    .checkout-btns {
-        width: 50%;
-        
-        button, ngx-paypal {
-            padding: $spacing-normal!important;
-            width: 100%;
-        }
+    .summary-item {
+      h6 {
+        font-size: $font-small;
+      }
+
+      img {
+        width: 80% !important;
+      }
     }
+
+    .summary-numbers {
+      h5 {
+        font-size: $font-normal;
+      }
+    }
+  }
+
+  .checkout-btns {
+    width: 50%;
+
+    button,
+    ngx-paypal {
+      padding: $spacing-normal !important;
+      width: 100%;
+    }
+  }
 }

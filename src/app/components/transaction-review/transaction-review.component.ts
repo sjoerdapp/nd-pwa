@@ -29,8 +29,8 @@ export class TransactionReviewComponent implements OnInit {
     shippingCost: 0,
     size: '',
     status: {},
-    type: ''
-
+    type: '',
+    total: 0
   };
   error = false;
 
@@ -44,7 +44,7 @@ export class TransactionReviewComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle(`Transaction Review | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.seo.addTags('Transaction Review');
-    
+
     this.transactionID = this.route.snapshot.queryParams.transactionID;
 
     if (isNullOrUndefined(this.transactionID)) {
@@ -57,7 +57,7 @@ export class TransactionReviewComponent implements OnInit {
           this.error = true;
         }
         // console.log(this.transaction);
-      }) 
+      })
     }
 
     this.removeFreeShipping();
