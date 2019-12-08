@@ -131,9 +131,9 @@ export class ProductComponent implements OnInit {
       this.productService.getBuy(this.productID).subscribe(data => {
         this.buyListings = data;
         // console.log(this.buyListings);
-        this.modalTimeout = setTimeout(() => {
+        /*this.modalTimeout = setTimeout(() => {
           this.getModalCookie();
-        }, 5000);
+        }, 5000);*/
       });
     }
   }
@@ -151,7 +151,7 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  private getModalCookie() {
+  /*private getModalCookie() {
     const cookies = document.cookie.split(`;`);
     cookies.forEach(element => {
       element.split(`=`);
@@ -163,7 +163,7 @@ export class ProductComponent implements OnInit {
         document.cookie = `modalOffer=true; expires=${expr}; path=/product/`
       }
     });
-  }
+  }*/
 
   share(social: string) {
     if (isPlatformBrowser(this.platform_id)) {
