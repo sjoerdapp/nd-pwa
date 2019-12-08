@@ -3,6 +3,7 @@ import { SnkrsService } from 'src/app/services/snkrs.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { isNullOrUndefined, isUndefined } from 'util';
 import { Router } from '@angular/router';
+import { Title, Meta } from '@angular/platform-browser';
 
 class Question {
   answers: Array<any>;
@@ -70,11 +71,28 @@ export class SnkrsComponent implements OnInit, OnDestroy {
   constructor(
     private snkrsService: SnkrsService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private title: Title,
+    private meta: Meta
   ) { }
 
   ngOnInit() {
     this.init();
+
+    this.title.setTitle('Name The SNKRS | NXTDROP: Buy and Sell Sneakers in Canada');
+    this.meta.addTags([
+      { name: `title`, content: `Name The SNKRS | NXTDROP: Easiest & Safest Way To Buy and Sell Authentic Sneakers in Canada` },
+      { name: `description`, content: 'Play Name The SNKRS and win up to CA$200 in store credit. Canada\'s only online sneaker marketplace. The easiest and safest way to buy and sell Jordan, Yeezy, Nike, adidas and all the hottest sneakers in Canada. All sneakers are 100% verified authentic and no duty fees. We take care of everything while you happily wait to receive your kicks or get paid.' },
+      { name: `keywords`, content: 'stockx canada, goat canada, consignment canada, sneakers canada, deadstock, jordans, yeezys, adidas, nxtdrop, next drop' },
+      { name: `og:title`, content: `Name The SNKRS | NXTDROP: Easiest & Safest Way To Buy and Sell Authentic Sneakers in Canada` },
+      { name: `og:url`, content: 'https://nxtdrop.com/' },
+      { name: `og:image`, content: 'https://firebasestorage.googleapis.com/v0/b/nxtdrop.appspot.com/o/CarouselDuplicata3.png?alt=media&token=4b96304e-b8c9-4761-8154-bdf27591c4c5' },
+      { name: `og:description`, content: 'Play Name The SNKRS and win up to CA$200 in store credit. Play Name The SNKRS and win up to CA$200 in store credit.Canada\'s only online sneaker marketplace. The easiest and safest way to buy and sell Jordan, Yeezy, Nike, adidas and all the hottest sneakers in Canada. All sneakers are 100% verified authentic and no duty fees. We take care of everything while you happily wait to receive your kicks or get paid.' },
+      { name: `twitter:title`, content: `Name The SNKRS | NXTDROP: Easiest & Safest Way To Buy and Sell Authentic Sneakers in Canada` },
+      { name: `twitter:card`, content: 'summary_large_image' },
+      { name: `twitter:image`, content: 'https://firebasestorage.googleapis.com/v0/b/nxtdrop.appspot.com/o/CarouselDuplicata3.png?alt=media&token=4b96304e-b8c9-4761-8154-bdf27591c4c5' },
+      { name: `twitter:description`, content: 'Play Name The SNKRS and win up to CA$200 in store credit. Canada\'s only online sneaker marketplace. The easiest and safest way to buy and sell Jordan, Yeezy, Nike, adidas and all the hottest sneakers in Canada. All sneakers are 100% verified authentic and no duty fees. We take care of everything while you happily wait to receive your kicks or get paid.' }
+    ], true);
   }
 
   init() {

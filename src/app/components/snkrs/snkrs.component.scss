@@ -30,6 +30,7 @@
     display: grid;
     margin: $spacing-normal auto;
     min-height: 600px;
+    max-height: 601px;
 
     .btn {
       padding: $spacing-small;
