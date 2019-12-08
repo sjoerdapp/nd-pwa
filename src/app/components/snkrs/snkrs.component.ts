@@ -455,10 +455,10 @@ export class SnkrsComponent implements OnInit, OnDestroy {
 
       this.nextGameCountdown = `${hours}:${minutes}:${seconds}`;
 
-      console.log(distance);
+      //console.log(distance);
 
       if (distance <= 0) {
-        console.log('work');
+        //console.log('work');
         clearTimeout(int);
         this.timestamp = Date.now();
         this.init();
