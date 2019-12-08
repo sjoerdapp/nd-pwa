@@ -28,7 +28,7 @@ export class CheckoutService {
       UID = res.uid;
     });
     const batch = firebase.firestore().batch();
-    const id = product.model.replace(/ /g, '-').toLowerCase();
+    const id = product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase();
     const boughtAt = Date.now();
     const transactionID = `${UID}-${product.sellerID}-${boughtAt}`;
 
