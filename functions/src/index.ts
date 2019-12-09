@@ -786,3 +786,38 @@ exports.snkrsInvitation = functions.https.onRequest((req, res) => {
         });
     });
 });
+
+exports.sendGiftCard = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send('Forbidden!');
+        }
+
+        const msg: any = {
+            to: req.body.email,
+            from: 'do-not-reply@nxtdrop.com',
+            templateId: 'd-c3466f43205846deaba1fde2fa5f0d5f',
+            dynamic_template_data: {
+                message: req.body.message,
+                code: req.body.code,
+                expirationDate: new Date(req.body.expirationDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })
+            }
+        }
+
+        if (req.body.giftCard100) {
+            msg.dynamic_template_data.giftCard100 = true;
+        } else if (req.body.giftCard50) {
+            msg.dynamic_template_data.giftCard50 = true;
+        } else if (req.body.giftCard75) {
+            msg.dynamic_template_data.giftCard75 = true;
+        }
+
+        return sgMail.send(msg).then((content: any) => {
+            console.log(content);
+            return res.send(true);
+        }).catch((err: any) => {
+            console.error(err);
+            return res.send(false);
+        });
+    });
+});
