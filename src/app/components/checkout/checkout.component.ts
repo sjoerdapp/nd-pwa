@@ -129,70 +129,6 @@ export class CheckoutComponent implements OnInit {
     })*/
   }
 
-  applyPromo() {
-    const code = (document.getElementById('promo-code') as HTMLInputElement).value;
-
-    if (code.length == 10) {
-      this.promoLoading = true;
-      this.checkoutService.getPromoCode(code).then(res => {
-        if (res.exists && res.data().amount != 0) {
-          if (this.subtotal <= res.data().amount) {
-            this.total = 0;
-            this.discount = this.total;
-          } else {
-            this.total = this.subtotal - res.data().amount;
-            this.discount = res.data().amount;
-          }
-
-          this.promoLoading = false;
-          this.promoApplied = true;
-          this.discountCardID = code;
-        } else {
-          this.promoLoading = false;
-          this.promoError = true;
-
-          setTimeout(() => {
-            this.promoError = false;
-          }, 2000);
-        }
-      }).catch(err => {
-        console.error(err);
-        this.promoLoading = false;
-        this.promoError = true;
-
-        setTimeout(() => {
-          this.promoError = false;
-        }, 2000);
-      })
-    }
-  }
-
-  private checkFreeShipping() {
-    this.checkoutService.getFreeShipping().then(res => {
-      res.subscribe(response => {
-        //console.log(response);
-        if (!isUndefined(response.data().freeShipping) || response.data().ordered === 0) {
-          this.shippingPrice = 0;
-        }
-
-        this.total = this.subtotal + this.shippingPrice;
-      })
-    });
-  }
-
-  checkUserAndTransaction(user, transactionID: string) {
-    this.checkoutService.checkTransaction(user, transactionID).then(res => {
-      if (res) {
-        this.checkoutService.getTransaction(transactionID).subscribe(response => {
-          this.product = response;
-          this.initConfig();
-        })
-      } else {
-        this.router.navigate(['page-not-found']);
-      }
-    })
-  }
-
   private initConfig() {
     this.payPalConfig = {
       currency: 'CAD',
@@ -294,6 +230,73 @@ export class CheckoutComponent implements OnInit {
         });
       },
     };
+  }
+
+  applyPromo() {
+    const code = (document.getElementById('promo-code') as HTMLInputElement).value;
+    const now = Date.now();
+
+    if (code.length == 10) {
+      this.promoLoading = true;
+      this.checkoutService.getPromoCode(code).then(res => {
+        if (res.exists && res.data().amount != 0 && res.data().expirationDate > now) {
+          if (this.total <= res.data().amount) {
+            this.total = 0;
+            this.discount = this.total;
+          } else {
+            this.total = this.total - res.data().amount;
+            this.discount = res.data().amount;
+          }
+
+          this.promoLoading = false;
+          this.promoApplied = true;
+          this.discountCardID = code;
+        } else {
+          this.promoLoading = false;
+          this.promoError = true;
+
+          setTimeout(() => {
+            this.promoError = false;
+          }, 2000);
+        }
+      }).catch(err => {
+        console.error(err);
+        this.promoLoading = false;
+        this.promoError = true;
+
+        setTimeout(() => {
+          this.promoError = false;
+        }, 2000);
+      })
+    }
+  }
+
+  private checkFreeShipping() {
+    this.checkoutService.getFreeShipping().then(res => {
+      res.subscribe(response => {
+        //console.log(response);
+        if (!isUndefined(response.data().freeShipping) || response.data().ordered === 0) {
+          this.shippingPrice = 0;
+        }
+
+        this.total = this.subtotal + this.shippingPrice;
+      })
+    });
+  }
+
+  checkUserAndTransaction(user, transactionID: string) {
+    this.checkoutService.checkTransaction(user, transactionID).then(res => {
+      if (res) {
+        this.checkoutService.getTransaction(transactionID).subscribe(response => {
+          this.product = response;
+          this.subtotal = this.product.price;
+          this.checkFreeShipping();
+          this.initConfig();
+        })
+      } else {
+        this.router.navigate(['page-not-found']);
+      }
+    })
   }
 
   sellNow() {

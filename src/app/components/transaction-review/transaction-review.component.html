@@ -3,7 +3,8 @@
 <div class="main-container">
   <section class="review-container" *ngIf="!error">
     <h2>Transaction ID:</h2>
-    <h6>{{ transaction.buyerID + '-' + transaction.sellerID + '-' + transaction.boughtAt }}</h6>
+    <h6 *ngIf="transaction.boughtAt">{{ transaction.buyerID + '-' + transaction.sellerID + '-' + transaction.boughtAt }}</h6>
+    <h6 *ngIf="transaction.soldAt">{{ transaction.buyerID + '-' + transaction.sellerID + '-' + transaction.soldAt }}</h6>
 
     <div class="review-items">
       <div class="review-item">
