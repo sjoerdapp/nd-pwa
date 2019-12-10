@@ -3,178 +3,121 @@
 .main-container {
   display: grid;
   align-content: center;
+}
 
-  .timer-countdown {
+.timer-countdown {
+  justify-self: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: $spacing-large auto 0 auto;
+  column-gap: $spacing-xsmall;
+  justify-content: center;
+
+  p {
     justify-self: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin: $spacing-large auto 0 auto;
-    column-gap: $spacing-xsmall;
-    justify-content: center;
+    align-self: center;
+  }
 
-    p {
-      justify-self: center;
-      align-self: center;
-    }
+  h1 {
+    justify-self: center;
+    align-self: center;
+    font-weight: $weight-black;
+    letter-spacing: 3px;
+    color: #77fa77;
+  }
+}
 
-    h1 {
-      justify-self: center;
-      align-self: center;
-      font-weight: $weight-black;
-      letter-spacing: 3px;
-      color: #77fa77;
+.game-container {
+  display: grid;
+  margin: $spacing-normal auto;
+  height: 75vh;
+
+  .btn {
+    padding: $spacing-small;
+    justify-self: center;
+
+    &:hover {
+      background: $matteblue;
+      padding: $spacing-small;
     }
   }
 
-  .game-container {
-    display: grid;
-    margin: $spacing-normal auto;
-    min-height: 600px;
-    max-height: 601px;
+  .disabled-btn {
+    background: $lightgrey;
+    cursor: not-allowed;
 
-    .btn {
-      padding: $spacing-small;
-      justify-self: center;
-
-      &:hover {
-        background: $matteblue;
-        padding: $spacing-small;
-      }
-    }
-
-    .disabled-btn {
+    &:hover {
       background: $lightgrey;
-      cursor: not-allowed;
+    }
+  }
 
-      &:hover {
-        background: $lightgrey;
-      }
+  .leaderboard,
+  .quiz-container,
+  .how-it-works-container,
+  .resultPage {
+    h2 {
+      text-align: center;
+    }
+  }
+
+  .leaderboard {
+    border: 1px solid $lightgrey;
+    border-radius: $spacing-xsmall;
+    overflow-y: auto;
+
+    h2 {
+      margin-bottom: $spacing-normal;
     }
 
-    .leaderboard,
-    .quiz-container,
-    .how-it-works-container,
-    .resultPage {
-      h2 {
-        text-align: center;
-      }
-    }
-
-    .leaderboard {
-      border: 1px solid $lightgrey;
-      border-radius: $spacing-xsmall;
-      overflow-y: auto;
-
-      h2 {
-        margin-bottom: $spacing-normal;
-      }
-
-      .user-rank {
-        display: grid;
-        grid-template-columns: 1fr 4fr 1fr;
-        justify-items: center;
-        height: 40px;
-
-        #rank {
-          font-weight: $weight-black;
-          justify-self: baseline;
-        }
-
-        #username {
-          font-weight: $weight-bold;
-          justify-self: center;
-        }
-
-        #points {
-          font-weight: $weight-black;
-          justify-self: end;
-        }
-      }
-
-      #first {
-        color: #daa520;
-      }
-
-      #second {
-        color: #c0c0c0;
-      }
-
-      #third {
-        color: #b08d57;
-      }
-    }
-
-    .quiz-container {
+    .user-rank {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 4fr 1fr;
+      justify-items: center;
+      height: 40px;
 
-      .question-container {
-        display: grid;
-        grid-template-rows: 2fr 1fr 2fr;
+      #rank {
+        font-weight: $weight-black;
+        justify-self: baseline;
+      }
 
-        img {
-          margin: 0 auto;
-          display: block;
-        }
+      #username {
+        font-weight: $weight-bold;
+        justify-self: center;
+      }
 
-        .countdown {
-          @include vendor(transition, all 0.15s ease 0s);
-          align-self: center;
-          justify-self: center;
-          color: $black;
-          border-radius: $spacing-large;
-          border: 4px solid $matteblack;
-          height: 60px;
-          width: 60px;
-          display: grid;
-          justify-content: center;
-          align-content: center;
-
-          p {
-            font-size: $font-xlarge;
-          }
-        }
-
-        .answers {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          column-gap: $spacing-normal;
-          row-gap: $spacing-normal;
-
-          button {
-            @include vendor(transition, all 0.3s ease 0s);
-            cursor: pointer;
-            border: none;
-            background: $darkblue;
-            color: $white;
-            border-radius: $spacing-xxsmall;
-            @include vendor(box-shadow, 0px 8px 15px rgba(0, 0, 0, 0.4));
-          }
-        }
+      #points {
+        font-weight: $weight-black;
+        justify-self: end;
       }
     }
 
-    .how-it-works-container {
-      display: grid;
-      grid-template-columns: 1fr;
-
-      .content-container {
-        display: grid;
-        grid-template-rows: 5fr 1fr;
-        row-gap: $spacing-small;
-
-        p {
-          margin: $spacing-normal;
-        }
-      }
+    #first {
+      color: #daa520;
     }
 
-    .countdownPage {
-      display: grid;
-      align-content: center;
-      justify-content: center;
+    #second {
+      color: #c0c0c0;
+    }
 
-      .large-countdown {
+    #third {
+      color: #b08d57;
+    }
+  }
+
+  .quiz-container {
+    display: grid;
+    grid-template-rows: 1fr 8fr;
+
+    .question-container {
+      display: grid;
+      grid-template-rows: 1fr 1fr 2fr;
+
+      img {
+        margin: auto;
+        display: block;
+      }
+
+      .countdown {
         @include vendor(transition, all 0.15s ease 0s);
         align-self: center;
         justify-self: center;
@@ -191,83 +134,140 @@
           font-size: $font-xlarge;
         }
       }
-    }
 
-    .resultPage {
-      display: grid;
-      grid-template-columns: 1fr;
-
-      .result-container {
+      .answers {
         display: grid;
-        grid-template-rows: 5fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        column-gap: $spacing-normal;
+        row-gap: $spacing-normal;
 
-        div {
-          justify-self: center;
-
-          p {
-            font-size: $font-xlarge;
-            margin: $spacing-small auto;
-          }
+        button {
+          @include vendor(transition, all 0.3s ease 0s);
+          cursor: pointer;
+          border: none;
+          background: $darkblue;
+          color: $white;
+          border-radius: $spacing-xxsmall;
+          @include vendor(box-shadow, 0px 8px 15px rgba(0, 0, 0, 0.4));
         }
       }
     }
+  }
 
-    .totalPage {
-      @extend .resultPage;
-      width: 100%;
+  .how-it-works-container {
+    display: grid;
+    grid-template-columns: 1fr;
 
-      .total-container {
+    .content-container {
+      display: grid;
+      grid-template-rows: 5fr 1fr;
+      row-gap: $spacing-small;
+
+      p {
+        margin: $spacing-normal;
+      }
+    }
+  }
+
+  .countdownPage {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+
+    .large-countdown {
+      @include vendor(transition, all 0.15s ease 0s);
+      align-self: center;
+      justify-self: center;
+      color: $black;
+      border-radius: $spacing-large;
+      border: 4px solid $matteblack;
+      height: 60px;
+      width: 60px;
+      display: grid;
+      justify-content: center;
+      align-content: center;
+
+      p {
+        font-size: $font-xlarge;
+      }
+    }
+  }
+
+  .resultPage {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    .result-container {
+      display: grid;
+      grid-template-rows: 5fr 1fr;
+
+      div {
+        justify-self: center;
+
+        p {
+          text-align: center;
+          font-size: $font-xlarge;
+          margin: $spacing-small auto;
+        }
+      }
+    }
+  }
+
+  .totalPage {
+    @extend .resultPage;
+    width: 100%;
+
+    .total-container {
+      display: grid;
+      grid-template-rows: 3fr 2fr 1fr;
+
+      div {
+        justify-self: center;
+
+        p {
+          margin: $spacing-small auto;
+        }
+      }
+
+      .invite-friends {
         display: grid;
-        grid-template-rows: 3fr 2fr 1fr;
+        grid-template-columns: 2fr 1fr;
+        justify-items: center;
+        align-items: center;
+        column-gap: $spacing-normal;
 
-        div {
-          justify-self: center;
+        .red-btn {
+          background: $googleRed;
 
-          p {
-            margin: $spacing-small auto;
+          &:hover {
+            background: $googleRed;
           }
         }
 
-        .invite-friends {
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          justify-items: center;
-          align-items: center;
-          column-gap: $spacing-normal;
+        .green-btn {
+          background: $green;
 
-          .red-btn {
-            background: $googleRed;
-
-            &:hover {
-              background: $googleRed;
-            }
-          }
-
-          .green-btn {
+          &:hover {
             background: $green;
-
-            &:hover {
-              background: $green;
-            }
           }
+        }
 
-          p {
-            align-self: flex-end;
-            grid-column: 1/3;
-            font-size: $font-xsmall;
-            font-weight: $weight-black;
-          }
+        p {
+          align-self: flex-end;
+          grid-column: 1/3;
+          font-size: $font-xsmall;
+          font-weight: $weight-black;
+        }
 
-          input {
-            width: 100%;
-            padding: $spacing-small;
-            border-radius: $spacing-xsmall;
-            border: 1px solid $lightgrey;
-          }
+        input {
+          width: 100%;
+          padding: $spacing-small;
+          border-radius: $spacing-xsmall;
+          border: 1px solid $lightgrey;
+        }
 
-          button {
-            width: 100%;
-          }
+        button {
+          width: 100%;
         }
       }
     }
@@ -289,7 +289,8 @@
 
     .game-container {
       width: 90%;
-      grid-template-rows: 1fr 2fr;
+      grid-template-rows: 1fr 1fr;
+      height: 175vh;
 
       .btn {
         width: 100%;
@@ -304,6 +305,7 @@
 
       .leaderboard {
         padding: $spacing-normal;
+        grid-row: 2/3;
       }
 
       .how-it-works-container {
@@ -349,9 +351,18 @@
       }
 
       .quiz-container {
+        .countdown {
+          height: 40px;
+          width: 40px;
+
+          p {
+            font-size: $font-normal !important;
+          }
+        }
+
         .question-container {
           img {
-            width: 80%;
+            width: 50%;
           }
 
           .answers button {
@@ -378,7 +389,8 @@
 
     .game-container {
       width: 90%;
-      grid-template-rows: 1fr 2fr;
+      grid-template-rows: 1fr 1fr;
+      height: 150vh;
 
       .btn {
         width: 100%;
@@ -393,6 +405,7 @@
 
       .leaderboard {
         padding: $spacing-normal;
+        grid-row: 2/3;
       }
 
       .how-it-works-container {
@@ -438,13 +451,22 @@
       }
 
       .quiz-container {
+        .countdown {
+          height: 60px;
+          width: 60px;
+
+          p {
+            font-size: $font-normal !important;
+          }
+        }
+
         .question-container {
           img {
-            width: 80%;
+            width: 30%;
           }
 
           .answers button {
-            font-size: $font-xsmall;
+            font-size: $font-small;
             padding: 0 $spacing-xsmall;
           }
         }
@@ -466,8 +488,9 @@
     }
 
     .game-container {
-      width: 98%;
-      grid-template-columns: 2fr 3fr;
+      width: 80%;
+      grid-template-rows: 1fr 1fr;
+      height: 175vh;
 
       .btn {
         width: 80%;
@@ -482,6 +505,7 @@
 
       .leaderboard {
         padding: $spacing-normal;
+        grid-row: 2/3;
       }
 
       .how-it-works-container {
@@ -532,8 +556,17 @@
 
       .quiz-container {
         .question-container {
+          .countdown {
+            height: 60px;
+            width: 60px;
+  
+            p {
+              font-size: $font-normal !important;
+            }
+          }
+
           img {
-            width: 80%;
+            width: 20%;
           }
 
           .answers {
@@ -564,8 +597,9 @@
     }
 
     .game-container {
-      width: 90%;
+      width: 85%;
       grid-template-columns: 1fr 2fr;
+      height: 80vh;
 
       .btn {
         width: 85%;
@@ -618,7 +652,7 @@
       .quiz-container {
         .question-container {
           img {
-            width: 45%;
+            width: 20%;
           }
 
           .answers {
@@ -656,8 +690,9 @@
     }
 
     .game-container {
-      width: 90%;
+      width: 80%;
       grid-template-columns: 1fr 2fr;
+      height: 80vh;
 
       .btn {
         width: 85%;
@@ -710,7 +745,7 @@
       .quiz-container {
         .question-container {
           img {
-            width: 45%;
+            width: 25%;
           }
 
           .answers {
@@ -718,7 +753,7 @@
             justify-self: center;
 
             button {
-              font-size: $font-xsmall;
+              font-size: $font-normal;
               padding: 0 $spacing-xsmall;
 
               &:hover {
@@ -748,8 +783,9 @@
     }
 
     .game-container {
-      width: 90%;
+      width: 80%;
       grid-template-columns: 1fr 2fr;
+      height: 80vh;
 
       .btn {
         width: 85%;
@@ -802,7 +838,7 @@
       .quiz-container {
         .question-container {
           img {
-            width: 45%;
+            width: 25%;
           }
 
           .answers {
@@ -810,7 +846,7 @@
             justify-self: center;
 
             button {
-              font-size: $font-xsmall;
+              font-size: $font-normal;
               padding: 0 $spacing-xsmall;
 
               &:hover {

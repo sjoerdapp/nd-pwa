@@ -25,8 +25,12 @@ export class SnkrsService {
         if (!isUndefined(res.docs) && !isUndefined(response.docs)) {
           if (isUndefined(response.docs[0])) {
             return [res.docs[0].data().ID, '', res.docs[0].data().openingDate];
+          } else if (response.docs[0].data().openingDate > timestamp) {
+            return [res.docs[0].data().ID, response.docs[0].data().openingDate, res.docs[0].data().openingDate];
+          } else {
+            return [res.docs[0].data().ID, response.docs[0].data().ID, res.docs[0].data().openingDate];
           }
-          return [res.docs[0].data().ID, response.docs[0].data().ID, res.docs[0].data().openingDate];
+          
         } else {
           return false;
         }
