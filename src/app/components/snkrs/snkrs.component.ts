@@ -56,6 +56,8 @@ export class SnkrsComponent implements OnInit, OnDestroy {
     points: 0
   }
 
+  countdownName: string;
+
   // Game Stats
   totalPoints: number;
   numCorrectAnswer = 0;
@@ -101,15 +103,20 @@ export class SnkrsComponent implements OnInit, OnDestroy {
       if (response) {
         if (this.timestamp > response[2]) {
           this.gameUnavailable = false;
-          this.gameID = response[0] as string;
-          this.qID = response[1] as string;
+          this.gameID = response[0];
+          this.qID = response[1];
           this.getLeaderboard();
 
           if (this.qID === '') {
             this.gameUnavailable = true;
             this.getNextTournament();
+          } else if (typeof this.qID === 'number') {
+            this.gameUnavailable = true;
+            this.quizCountdown(this.qID);
+            this.countdownName = 'round';
           }
         } else {
+          this.countdownName = 'tournament';
           this.quizCountdown(response[2]);
         }
 
@@ -285,6 +292,7 @@ export class SnkrsComponent implements OnInit, OnDestroy {
 
   nextQuestion() {
     this.currentQuestion = this.questions[this.numQuestionAnswered];
+    this.getLeaderboard();
   }
 
   getQuestions() {

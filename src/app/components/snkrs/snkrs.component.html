@@ -3,7 +3,7 @@
 <div class="main-container">
 
     <section class="timer-countdown" *ngIf="gameUnavailable && nextTourCountdown">
-        <p>Next tournament starts in:</p>
+        <p>Next {{ countdownName }} starts in:</p>
         <h1>{{ nextGameCountdown }}</h1>
     </section>
 
@@ -30,7 +30,7 @@
             <div class="content-container">
                 <div class="rules">
                     <p>
-                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> Daily rounds <strong>starts at 12:01 AM
+                        <fa-icon [icon]="['fas', 'asterisk']"></fa-icon> Rounds <strong>starts at 12:01 AM
                             PDT</strong> and <strong>ends
                             at 11:59 PM PDT</strong>
                     </p>
@@ -89,11 +89,12 @@
 
             <div class="result-container">
                 <div>
-                    <p><strong>Your Answer:</strong> {{ resultInfo.userAnswer }}</p>
+                    <p *ngIf="resultInfo.userAnswer != resultInfo.correctAnswer" style="color: #ea4335;"><strong>Wrong Answer!</strong></p>
+                    <p *ngIf="resultInfo.userAnswer === resultInfo.correctAnswer" style="color: #36f736;"><strong>Correct Answer!</strong></p>
 
-                    <p><strong>Correct Answer:</strong> {{ resultInfo.correctAnswer }}</p>
+                    <!--<p><strong>Your Answer:</strong> {{ resultInfo.userAnswer }}</p>-->
 
-                    <p><strong>Points:</strong> {{ resultInfo.points }}</p>
+                    <!--<p><strong>Points:</strong> {{ resultInfo.points }}</p>-->
                 </div>
 
                 <button class="btn ripple" (click)="goToCountdown()">NEXT</button>

@@ -251,7 +251,7 @@ export class CheckoutService {
 
   checkTransaction(user, transactionID: string) {
     return this.afs.firestore.collection(`transactions`).doc(`${transactionID}`).get().then(res => {
-      if (res.exists && res.data().buyerID == user.uid && !res.data().status.cancelled) {
+      if (res.exists && res.data().buyerID == user.uid && !res.data().status.cancelled && res.data().paymentID === '') {
         return true;
       } else {
         return false;
