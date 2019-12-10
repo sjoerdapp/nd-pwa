@@ -52,6 +52,7 @@ export class CheckoutComponent implements OnInit {
   promoError = false;
   promoApplied = false;
   promoLoading = false;
+  freePair = false;
 
   constructor(
     private checkoutService: CheckoutService,
@@ -179,9 +180,9 @@ export class CheckoutComponent implements OnInit {
 
         if (isUndefined(this.tID)) {
           if (this.promoApplied) {
-            transaction = this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice, this.discount, this.discountCardID);
+            transaction = this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice, this.total, this.discount, this.discountCardID);
           } else {
-            transaction = this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice);
+            transaction = this.checkoutService.transactionApproved(this.product, data.id, this.shippingPrice, this.total);
           }
         } else {
           if (this.promoApplied) {
@@ -213,6 +214,9 @@ export class CheckoutComponent implements OnInit {
         })
           .catch(err => {
             console.error(err);
+            this.ngZone.run(() => {
+              this.router.navigate(['transaction']);
+            });
           });
       },
       onCancel: (data, actions) => {
@@ -241,8 +245,9 @@ export class CheckoutComponent implements OnInit {
       this.checkoutService.getPromoCode(code).then(res => {
         if (res.exists && res.data().amount != 0 && res.data().expirationDate > now) {
           if (this.total <= res.data().amount) {
-            this.total = 0;
             this.discount = this.total;
+            this.total = 0;
+            this.freePair = true;
           } else {
             this.total = this.total - res.data().amount;
             this.discount = res.data().amount;
@@ -320,6 +325,36 @@ export class CheckoutComponent implements OnInit {
       .catch(err => {
         console.error(err);
         this.router.navigate(['sold']);
+      });
+  }
+
+  buyNow() {
+    this.checkoutService.transactionApproved(this.product, '', this.shippingPrice, this.total, this.discount, this.discountCardID)
+      .then(res => {
+        if (isPlatformBrowser(this._platformId)) {
+          gtag('event', 'purchase', {
+            'event_category': 'ecommerce',
+            'event_label': this.product.type,
+            'event_value': this.product.price + this.shippingPrice
+          });
+        }
+
+        if (isBoolean(res)) {
+          this.ngZone.run(() => {
+            this.router.navigate(['transaction']);
+          });
+        } else {
+          this.ngZone.run(() => {
+            this.router.navigate(['transaction'], {
+              queryParams: { transactionID: res }
+            });
+          });
+        }
+      }).catch(err => {
+        console.error(err);
+        this.ngZone.run(() => {
+          this.router.navigate(['transaction']);
+        });
       });
   }
 

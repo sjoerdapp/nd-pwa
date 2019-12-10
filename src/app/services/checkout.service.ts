@@ -22,7 +22,7 @@ export class CheckoutService {
     private http: HttpClient
   ) { }
 
-  async transactionApproved(product, paymentID: string, shippingCost: number, discount?: number, discountCardID?: string) {
+  async transactionApproved(product, paymentID: string, shippingCost: number, total: number, discount?: number, discountCardID?: string) {
     let UID;
     await this.auth.isConnected().then(res => {
       UID = res.uid;
@@ -44,7 +44,7 @@ export class CheckoutService {
       productID: id,
       model: product.model,
       price: product.price,
-      total: product.price + shippingCost,
+      total,
       sellerID: product.sellerID,
       buyerID: UID,
       size: product.size,
@@ -63,7 +63,6 @@ export class CheckoutService {
 
     if (!isNullOrUndefined(discount)) {
       transactionData.discount = discount;
-      transactionData.total = transactionData.total - discount;
       const discountRef = this.afs.firestore.collection(`nxtcards`).doc(`${discountCardID}`);
       batch.update(discountRef, {
         amount: firebase.firestore.FieldValue.increment(-discount)

@@ -103,7 +103,8 @@
     </div>-->
 
   <div class="checkout-btns">
-    <ngx-paypal *ngIf="!isSelling" [config]="payPalConfig"></ngx-paypal>
+    <ngx-paypal *ngIf="!isSelling && !freePair" [config]="payPalConfig"></ngx-paypal>
+    <button *ngIf="freePair" (click)="buyNow()" class="btn">Confirm</button>
     <button *ngIf="isSelling" (click)="sellNow()" class="btn">Confirm</button>
     <button class="btn back-btn" (click)="goBack()">Back</button>
   </div>
