@@ -34,8 +34,6 @@ export class ProductComponent implements OnInit {
   buyListings = [];
   offersListings = [];
 
-  connected = false;
-
   showBuy = false;
   showOffers = false;
 
@@ -63,8 +61,6 @@ export class ProductComponent implements OnInit {
         this.UID = res.uid;
       }
     });
-
-    this.isConnected();
 
     this.productService.getProductInfo(this.productID).subscribe(data => {
       if (isUndefined(data)) {
@@ -111,13 +107,6 @@ export class ProductComponent implements OnInit {
       this.router.navigate([`../../checkout`], {
         queryParams: { product: data, sell: true }
       });
-    });
-  }
-
-  isConnected() {
-    return this.auth.checkStatus().then(res => {
-      // console.log(res);
-      this.connected = res;
     });
   }
 

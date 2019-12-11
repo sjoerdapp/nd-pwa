@@ -40,7 +40,7 @@ export class CheckoutComponent implements OnInit {
   discount = 0;
   discountCardID: string;
 
-  tax = 0;
+  connected = false;
   isSelling: any;
 
   user: any;
@@ -97,15 +97,14 @@ export class CheckoutComponent implements OnInit {
     }
 
     this.auth.isConnected().then(res => {
-      if (isNull(res)) {
-        this.router.navigate([`login`], {
-          queryParams: { redirectTo: this.router.url }
-        });
-      } else {
+      if (!isNull(res)) {
+        this.connected = true;
         this.user = res;
 
         if (!isUndefined(this.tID)) {
-          this.checkUserAndTransaction(this.user, this.tID);
+          this.checkUserAndTransaction(this.tID);
+        } else if (this.user.uid === this.product.sellerID) {
+          this.router.navigate(['page-not-found']);
         } else {
           if (isNullOrUndefined(res.phoneNumber) && this.route.snapshot.queryParams.product && this.isSelling && this.user.email !== 'momarcisse0@gmail.com') {
             this.router.navigate(['../phone-verification'], {
@@ -277,20 +276,24 @@ export class CheckoutComponent implements OnInit {
   }
 
   private checkFreeShipping() {
-    this.checkoutService.getFreeShipping().then(res => {
-      res.subscribe(response => {
-        //console.log(response);
-        if (!isUndefined(response.data().freeShipping) || response.data().ordered === 0) {
-          this.shippingPrice = 0;
-        }
+    if (this.connected) {
+      this.checkoutService.getFreeShipping().then(res => {
+        res.subscribe(response => {
+          //console.log(response);
+          if (!isUndefined(response.data().freeShipping) || response.data().ordered === 0) {
+            this.shippingPrice = 0;
+          }
 
-        this.total = this.subtotal + this.shippingPrice;
-      })
-    });
+          this.total = this.subtotal + this.shippingPrice;
+        })
+      });
+    } else {
+      this.total = this.subtotal + this.shippingPrice;
+    }
   }
 
-  checkUserAndTransaction(user, transactionID: string) {
-    this.checkoutService.checkTransaction(user, transactionID).then(res => {
+  checkUserAndTransaction(transactionID: string) {
+    this.checkoutService.checkTransaction(transactionID).then(res => {
       if (res) {
         this.checkoutService.getTransaction(transactionID).subscribe(response => {
           this.product = response;
@@ -301,7 +304,7 @@ export class CheckoutComponent implements OnInit {
       } else {
         this.router.navigate(['page-not-found']);
       }
-    })
+    });
   }
 
   sellNow() {
@@ -373,6 +376,18 @@ export class CheckoutComponent implements OnInit {
   goBack() {
     const id = this.product.model.toLowerCase();
     this.router.navigate([`product/${id.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-')}`]);
+  }
+
+  connect(mode) {
+    if (mode === 'login') {
+      this.router.navigate(['login'], {
+        queryParams: { redirectTo: this.router.url }
+      });
+    } else if (mode === 'signup') {
+      this.router.navigate(['signup'], {
+        queryParams: { redirectTo: this.router.url }
+      });
+    }
   }
 
   /*editShipping() {

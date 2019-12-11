@@ -22,17 +22,13 @@
 
       <div class="summary-auth">
         <h5>Authentication Fee</h5>
-        <h5>{{ 0 | currency: 'CAD' }}</h5>
+        <h5>FREE</h5>
       </div>
 
       <div class="summary-shipping">
         <h5>Shipping</h5>
-        <h5>{{ shippingPrice | currency: 'CAD' }}</h5>
-      </div>
-
-      <div class="summary-tax">
-        <h5>Tax</h5>
-        <h5>{{ tax | currency: 'CAD' }}</h5>
+        <h5 *ngIf="shippingPrice > 0">{{ shippingPrice | currency: 'CAD' }}</h5>
+        <h5 *ngIf="shippingPrice === 0">FREE</h5>
       </div>
 
       <div class="summary-tax" *ngIf="promoApplied">
@@ -103,9 +99,17 @@
     </div>-->
 
   <div class="checkout-btns">
-    <ngx-paypal *ngIf="!isSelling && !freePair" [config]="payPalConfig"></ngx-paypal>
+    <h2 *ngIf="!isSelling && !freePair && connected">Select Payment Method</h2>
+    <ngx-paypal *ngIf="!isSelling && !freePair && connected" [config]="payPalConfig"></ngx-paypal>
+
+    <div class="connect-btns" *ngIf="!connected">
+      <button class="btn" (click)="connect('login')">Login</button>
+      <button class="btn" (click)="connect('signup')">Sign Up</button>
+    </div>
+
     <button *ngIf="freePair" (click)="buyNow()" class="btn">Confirm</button>
     <button *ngIf="isSelling" (click)="sellNow()" class="btn">Confirm</button>
+
     <button class="btn back-btn" (click)="goBack()">Back</button>
   </div>
 </section>

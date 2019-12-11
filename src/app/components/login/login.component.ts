@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
     this.title.setTitle(`Log In | NXTDROP: Buy and Sell Sneakers in Canada`);
     this.seo.addTags('Log In');
 
+    console.log(this.route.snapshot.queryParams.redirectTo);
+
     this.loginForm = this.fb.group({
       email: ['', [
         Validators.required
@@ -54,8 +56,8 @@ export class LoginComponent implements OnInit {
 
           if (!isUndefined(redirect)) {
             const url = decodeURIComponent(redirect);
-            console.log(url);
-            this.router.navigateByUrl(url);
+            console.log(redirect);
+            this.router.navigateByUrl(`${redirect}`);
           } else {
             this.router.navigate(['/home']);
           }

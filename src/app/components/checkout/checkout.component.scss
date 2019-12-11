@@ -26,8 +26,19 @@
     justify-self: center;
     margin-top: $spacing-normal;
 
+    h2 {
+      color: $white;
+      text-align: center;
+    }
+
     button {
       margin: $spacing-xsmall auto;
+    }
+
+    .connect-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: $spacing-xsmall;
     }
   }
 
@@ -114,7 +125,6 @@
 
       input {
         padding: $spacing-xsmall $spacing-small;
-        width: 30%;
         justify-self: center;
         border-radius: $spacing-xxsmall;
         border: 1px solid $lightgrey;
@@ -123,7 +133,6 @@
 
       button {
         justify-self: left;
-        width: 20%;
         background: $black;
         color: $white;
 
@@ -221,8 +230,25 @@
     }
   }
 
+  .promo-code {
+    margin: $spacing-xsmall auto;
+
+    input {
+      width: 80%;
+    }
+
+    button {
+      width: 60%;
+    }
+  }
+
   .checkout-btns {
     width: 80%;
+
+    h2 {
+      margin: $spacing-xsmall auto;
+      font-size: $font-xsmall;
+    }
 
     button,
     ngx-paypal {
@@ -247,8 +273,25 @@
     }
   }
 
+  .promo-code {
+    margin: $spacing-xsmall auto;
+
+    input {
+      width: 75%;
+    }
+
+    button {
+      width: 55%;
+    }
+  }
+
   .checkout-btns {
     width: 65%;
+
+    h2 {
+      margin: $spacing-xsmall auto;
+      font-size: $font-small;
+    }
 
     button,
     ngx-paypal {
@@ -277,8 +320,25 @@
     }
   }
 
+  .promo-code {
+    margin: $spacing-xsmall auto;
+
+    input {
+      width: 60%;
+    }
+
+    button {
+      width: 40%;
+    }
+  }
+
   .checkout-btns {
     width: 70%;
+
+    h2 {
+      margin: $spacing-small auto;
+      font-size: $font-normal;
+    }
 
     button,
     ngx-paypal {
@@ -313,8 +373,25 @@
     }
   }
 
+  .promo-code {
+    margin: $spacing-xsmall auto;
+
+    input {
+      width: 40%;
+    }
+
+    button {
+      width: 25%;
+    }
+  }
+
   .checkout-btns {
     width: 50%;
+
+    h2 {
+      margin: $spacing-small auto;
+      font-size: $font-normal;
+    }
 
     button,
     ngx-paypal {
@@ -349,8 +426,25 @@
     }
   }
 
+  .promo-code {
+    margin: $spacing-xsmall auto;
+
+    input {
+      width: 35%;
+    }
+
+    button {
+      width: 20%;
+    }
+  }
+
   .checkout-btns {
     width: 50%;
+
+    h2 {
+      margin: $spacing-small auto;
+      font-size: $font-normal;
+    }
 
     button,
     ngx-paypal {
@@ -385,8 +479,25 @@
     }
   }
 
+  .promo-code {
+    margin: $spacing-xsmall auto;
+
+    input {
+      width: 30%;
+    }
+
+    button {
+      width: 15%;
+    }
+  }
+
   .checkout-btns {
     width: 50%;
+
+    h2 {
+      margin: $spacing-small auto;
+      font-size: $font-normal;
+    }
 
     button,
     ngx-paypal {

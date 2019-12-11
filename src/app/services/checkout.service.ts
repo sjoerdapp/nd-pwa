@@ -248,9 +248,9 @@ export class CheckoutService {
     });
   }
 
-  checkTransaction(user, transactionID: string) {
+  checkTransaction(transactionID: string) {
     return this.afs.firestore.collection(`transactions`).doc(`${transactionID}`).get().then(res => {
-      if (res.exists && res.data().buyerID == user.uid && !res.data().status.cancelled && res.data().paymentID === '') {
+      if (res.exists && !res.data().status.cancelled && res.data().paymentID === '') {
         return true;
       } else {
         return false;
