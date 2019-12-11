@@ -39,6 +39,9 @@ export class SignupInformationComponent implements OnInit, OnDestroy {
   signupForm: FormGroup;
   accountCreated: boolean;
 
+  loading = false;
+  error = false;
+
   constructor(
     private auth: AuthService,
     private fb: FormBuilder,
@@ -72,17 +75,28 @@ export class SignupInformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log(this.accountCreated);
+    //console.log(this.accountCreated);
     if (!this.accountCreated) {
       this.auth.signOut(false);
     }
   }
 
   createUser() {
-    console.log('createUser() called');
-    this.auth.addInformationUser(this.firstName.value, this.lastName.value, this.username.value, this.password.value).then(() => {
-      this.accountCreated = true;
-      console.log(this.accountCreated);
+    //console.log('createUser() called');
+    this.loading = true;
+
+    this.auth.addInformationUser(this.firstName.value, this.lastName.value, this.username.value, this.password.value).then((res) => {
+      if (!res) {
+        this.loading = false;
+        this.error = true;
+      } else {
+        this.accountCreated = true;
+      }
+
+      setTimeout(() => {
+        this.error = false;
+      }, 1000);
+      //console.log(this.accountCreated);
     });
   }
 

@@ -1,135 +1,151 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 section {
-    height: calc(100vh - #{$footerHeight});
-    background: $black;
-    display: grid;
-    align-content: center;
+  height: calc(100vh - #{$footerHeight});
+  background: $black;
+  display: grid;
+  align-content: center;
 
-    .signup-card {
-        width: 90%;
-        margin: 0 auto;
-        padding: 8px;
-        border-radius: 16px;
-        background: linear-gradient(-50.23deg, $darkblue 65%, $green 95%);
+  .signup-card {
+    width: 90%;
+    margin: 0 auto;
+    padding: 8px;
+    border-radius: 16px;
+    background: linear-gradient(-50.23deg, $darkblue 65%, $green 95%);
 
-        img {
-            display: block;
-            height: 40px;
-            margin: 2.5px auto;
-        }
+    img {
+      display: block;
+      height: 40px;
+      margin: 2.5px auto;
+    }
 
-        button {
-            display: block;
-            padding: 5px;
-            border: none;
-            border-radius: $spacing-xxsmall;
-            font-size: $font-small;
-            font-weight: $weight-black;
-            margin: 5px auto;
-            width: 50%;
-            cursor: pointer;
-            @include vendor(transition, all 0.25s ease-in-out);
+    button {
+      display: block;
+      padding: 5px;
+      border: none;
+      border-radius: $spacing-xxsmall;
+      font-size: $font-small;
+      font-weight: $weight-black;
+      margin: 5px auto;
+      width: 50%;
+      cursor: pointer;
+      text-align: center;
+      color: $white;
+      @include vendor(transition, all 0.25s ease-in-out);
 
-            fa-icon {
-                float: left;
-                margin-left: 10px;
-                font-size: $font-normal;
-            }
-        }
+      fa-icon {
+        float: left;
+        margin-left: 10px;
+        font-size: $font-normal;
+      }
+    }
 
-        .input-error {
-            background: $inputError;
-        }
+    .input-error {
+      background: $inputError;
+    }
 
-        input {
-            display: block;
-            margin: $spacing-small auto;
-            height: 25px;
-            width: 90%;
-            border: none;
-            border-radius: $spacing-xxsmall;
-            padding: $spacing-xsmall;
-            letter-spacing: 0.5px;
-        }
+    input {
+      display: block;
+      margin: $spacing-small auto;
+      height: 25px;
+      width: 90%;
+      border: none;
+      border-radius: $spacing-xxsmall;
+      padding: $spacing-xsmall;
+      letter-spacing: 0.5px;
+    }
 
-        .signup-btn {
-            margin: $spacing-normal auto;
-            cursor: pointer;
-            padding: $spacing-xsmall;
+    .signup-btn {
+      margin: $spacing-normal auto;
+      cursor: pointer;
+      padding: $spacing-xsmall;
+      display: grid;
+      align-content: center;
 
-            &:hover {
-                background: $white;
-                color: $navyblue;
-            }
+      fa-icon {
+        color: $white;
+      }
+
+      &:hover {
+        background: $white;
+        color: $navyblue;
+      }
+    }
+
+    .error-btn {
+        background: $googleRed;
+
+        &:hover {
+            background: $googleRed;
+            color: white;
         }
     }
+  }
 }
 
 // MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
- 
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
-    input {
-        padding: $spacing-small!important;
-    }
+  input {
+    padding: $spacing-small !important;
+  }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    input {
-        padding: $spacing-small!important;
-    }
-    
-    button {
-        padding: $spacing-small!important;
-    }
+  input {
+    padding: $spacing-small !important;
+  }
 
-    .signup-card {
-        width: 50%!important;
-    }
+  button {
+    padding: $spacing-small !important;
+  }
+
+  .signup-card {
+    width: 50% !important;
+  }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    input {
-        padding: $spacing-small!important;
-    }
-    
-    button {
-        padding: $spacing-small!important;
-    }
+  input {
+    padding: $spacing-small !important;
+  }
 
-    .signup-card {
-        width: 35%!important;   
-    }
+  button {
+    padding: $spacing-small !important;
+  }
+
+  .signup-card {
+    width: 35% !important;
+  }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    input {
-        padding: $spacing-small!important;
-    }
-    
-    button {
-        padding: $spacing-small!important;
-    }
+  input {
+    padding: $spacing-small !important;
+  }
 
-    .signup-card {
-        width: 35%!important;   
-    }
+  button {
+    padding: $spacing-small !important;
+  }
+
+  .signup-card {
+    width: 35% !important;
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    input {
-        padding: $spacing-normal!important;
-    }
-    
-    button {
-        padding: $spacing-normal!important;
-    }
+  input {
+    padding: $spacing-normal !important;
+  }
 
-    .signup-card {
-        width: 35%!important;   
-    }
+  button {
+    padding: $spacing-normal !important;
+  }
+
+  .signup-card {
+    width: 35% !important;
+  }
 }

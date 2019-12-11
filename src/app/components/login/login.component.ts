@@ -55,8 +55,6 @@ export class LoginComponent implements OnInit {
           const redirect = this.route.snapshot.queryParams.redirectTo;
 
           if (!isUndefined(redirect)) {
-            const url = decodeURIComponent(redirect);
-            console.log(redirect);
             this.router.navigateByUrl(`${redirect}`);
           } else {
             this.router.navigate(['/home']);

@@ -4,7 +4,7 @@ import {
   PLATFORM_ID,
   Inject
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -17,7 +17,7 @@ import { User } from '../models/user';
 import { first } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { EmailService } from './email.service';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 import { isPlatformBrowser } from '@angular/common';
 
 declare const gtag: any;
@@ -33,6 +33,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
+    private route: ActivatedRoute,
     private ngZone: NgZone,
     private emailService: EmailService,
     @Inject(PLATFORM_ID) private _platformId: Object
@@ -151,29 +152,53 @@ export class AuthService {
 
   private handleAuthToken(user) {
     return this.checkEmail(user.email).get().subscribe((snapshot) => {
+      const redirect = this.route.snapshot.queryParams.redirectTo;
+
       if (snapshot.empty) {
-        return this.ngZone.run(() => {
-          return this.router.navigate(['/additional-information']);
-        });
+        if (!isUndefined(redirect)) {
+          return this.ngZone.run(() => {
+            return this.router.navigate(['/additional-information'], {
+              queryParams: { redirectTo: redirect }
+            });
+          });
+        } else {
+          return this.ngZone.run(() => {
+            return this.router.navigate(['/additional-information']);
+          });
+        }
       } else {
-        return this.ngZone.run(() => {
-          return this.router.navigate(['/home']);
-        });
+        if (!isUndefined(redirect)) {
+          return this.ngZone.run(() => {
+            return this.router.navigateByUrl(`${redirect}`);
+          });
+        } else {
+          return this.ngZone.run(() => {
+            return this.router.navigate(['/home']);
+          });
+        }
       }
     });
   }
 
   private createUserData(user: User, userCred: auth.UserCredential) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    const redirect = this.route.snapshot.queryParams.redirectTo;
 
     return userRef.set(user, { merge: true })
       .then(() => {
         console.log('User information updated');
         this.signOut(false);
         this.emailService.activateAccount();
-        return this.ngZone.run(() => {
-          return this.router.navigate(['/home']);
-        });
+
+        if (!isUndefined(redirect)) {
+          return this.ngZone.run(() => {
+            return this.router.navigateByUrl(`${redirect}`);
+          });
+        } else {
+          return this.ngZone.run(() => {
+            return this.router.navigate(['/home']);
+          });
+        }
       })
       .catch((error) => {
         console.error('Error: ', error);
@@ -199,28 +224,32 @@ export class AuthService {
   }
 
   public addInformationUser(firstName: string, lastName: string, username: string, password: string) {
-    const credential = auth.EmailAuthProvider.credential(this.afAuth.auth.currentUser.email, password);
+    if (!isNullOrUndefined(this.afAuth.auth.currentUser)) {
+      const credential = auth.EmailAuthProvider.credential(this.afAuth.auth.currentUser.email, password);
 
-    return this.afAuth.auth.currentUser.linkWithCredential(credential)
-      .then((userCredential) => {
-        const userData: User = {
-          firstName,
-          lastName,
-          username,
-          email: userCredential.user.email,
-          uid: userCredential.user.uid,
-          listed: 0,
-          sold: 0,
-          ordered: 0,
-          offers: 0,
-          isActive: false
-        };
+      return this.afAuth.auth.currentUser.linkWithCredential(credential)
+        .then((userCredential) => {
+          const userData: User = {
+            firstName,
+            lastName,
+            username,
+            email: userCredential.user.email,
+            uid: userCredential.user.uid,
+            listed: 0,
+            sold: 0,
+            ordered: 0,
+            offers: 0,
+            isActive: false
+          };
 
-        return this.createUserData(userData, userCredential);
-      })
-      .catch((error) => {
-        console.error('Account linking error', error);
-      });
+          return this.createUserData(userData, userCredential);
+        })
+        .catch((error) => {
+          console.error('Account linking error', error);
+        });
+    } else {
+      return Promise.resolve(false);
+    }
   }
 
   checkUsername(username) {
