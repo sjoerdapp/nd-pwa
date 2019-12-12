@@ -16,7 +16,7 @@ export class SnkrsService {
   ) { }
 
   getLeaderboard(gameID: string) {
-    return this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`).ref.orderBy('points', 'desc').get();
+    return this.afs.collection(`snkrs`).doc(`${gameID}`).collection(`users`).ref.orderBy('points', 'desc').limit(25).get();
   }
 
   getGameID(timestamp): Promise<string[] | boolean> {
