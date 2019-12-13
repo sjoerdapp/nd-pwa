@@ -433,7 +433,7 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
 
                 const msg = {
                     to: email,
-                    from: 'do-not-reply@nxtdrop.com',
+                    from: 'orders@nxtdrop.com',
                     templateId: 'd-3cb6d3dae09a4697b153d93e1fb15ab4',
                     dynamic_template_data: {
                         model: req.body.model,
