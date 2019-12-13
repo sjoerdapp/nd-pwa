@@ -21,6 +21,22 @@ $productContainerHeight: 650px;
   }
 }
 
+.free-shipping {
+  text-align: center;
+  background: $black;
+  padding: $spacing-xsmall;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100vw;
+
+  p {
+    color: $white;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+  }
+}
+
 .ripple {
   position: relative;
   overflow: hidden;
@@ -41,7 +57,7 @@ $productContainerHeight: 650px;
   background-position: 50%;
   transform: scale(10, 10);
   opacity: 0;
-  transition: transform .5s, opacity 1s;
+  transition: transform 0.5s, opacity 1s;
 }
 
 .ripple:active:after {
@@ -208,7 +224,7 @@ $productContainerHeight: 650px;
 // Separate Header & Footer
 .main-container {
   min-height: calc(100vh - #{$footerHeight});
-  padding-top: calc(#{$navHeight} + 5px);
+  padding-top: calc(#{$navHeight} + 45px);
 }
 
 // Settings btns
@@ -271,7 +287,7 @@ $productContainerHeight: 650px;
   }
 
   &:focus {
-      color: $white;
+    color: $white;
   }
 }
 
@@ -285,7 +301,7 @@ $productContainerHeight: 650px;
   }
 
   &:focus {
-      color: $white;
+    color: $white;
   }
 }
 
@@ -299,7 +315,7 @@ $productContainerHeight: 650px;
   }
 
   &:focus {
-      color: $white;
+    color: $white;
   }
 }
 
@@ -316,7 +332,7 @@ $productContainerHeight: 650px;
   }
 
   &:focus {
-      color: $white;
+    color: $white;
   }
 }
 

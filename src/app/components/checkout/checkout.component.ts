@@ -34,7 +34,7 @@ export class CheckoutComponent implements OnInit {
   // cartItems = [];
 
   product: any = {}
-  shippingPrice = 18;
+  shippingPrice = 0;
   subtotal = 0;
   total = 0;
   discount = 0;
@@ -282,6 +282,8 @@ export class CheckoutComponent implements OnInit {
           //console.log(response);
           if (!isUndefined(response.data().freeShipping) || response.data().ordered === 0) {
             this.shippingPrice = 0;
+          } else {
+            this.shippingPrice = 18;
           }
 
           this.total = this.subtotal + this.shippingPrice;
