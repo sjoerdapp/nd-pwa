@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
 import { SlackService } from 'src/app/services/slack.service';
 import { SEOService } from 'src/app/services/seo.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-request',
@@ -16,11 +16,11 @@ export class RequestComponent implements OnInit {
   error = false;
   sent = false;
   userEmail: string;
+  connected = false;
 
   constructor(
     private title: Title,
     private auth: AuthService,
-    private router: Router,
     private slack: SlackService,
     private seo: SEOService
   ) { }
@@ -30,10 +30,9 @@ export class RequestComponent implements OnInit {
     this.seo.addTags('Request Product');
 
     this.auth.isConnected().then(res => {
-      if (!res) {
-        this.router.navigate(['login']);
-      } else {
+      if (!isNullOrUndefined(res)) {
         this.userEmail = res.email;
+        this.connected = true
       }
     });
   }
@@ -41,7 +40,14 @@ export class RequestComponent implements OnInit {
   sendRequest() {
     this.loading = true;
     const products = (document.getElementById('input-request') as HTMLInputElement).value;
-    const msg = `${this.userEmail} requested ${products}`;
+    let msg: string;
+
+    if (this.connected) {
+      msg = `${this.userEmail} requested ${products}`;
+    } else {
+      const email = (document.getElementById('email-input') as HTMLInputElement).value;
+      msg = `${email} requested ${products}`;
+    }
 
     if (products) {
       this.slack.sendAlert('requests', msg).then(res => {

@@ -3,6 +3,7 @@
 .main-container {
   display: grid;
   align-content: center;
+  justify-content: center;
   width: 100vw;
   max-width: 100%;
 
@@ -19,7 +20,7 @@
       margin: $spacing-normal 0;
       resize: none;
       border: 1px solid $lightgrey;
-      border-radius: $spacing-xsmall;
+      border-radius: $spacing-xxsmall;
       height: 20vh;
       padding: $spacing-xsmall;
       letter-spacing: 0.8px;
@@ -52,6 +53,18 @@
         &:hover {
             background: $inputError;
         }
+    }
+
+    #email-input {
+      padding: $spacing-xsmall;
+      border-radius: $spacing-xxsmall;
+      border: 1px solid $lightgrey;
+      margin: $spacing-small auto;
+    }
+
+    p {
+      font-size: $font-xsmall;
+      color: $matteblack;
     }
   }
 }

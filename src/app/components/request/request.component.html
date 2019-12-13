@@ -4,6 +4,9 @@
   <section class="request-container">
     <h3>Product Request</h3>
 
+    <input type="text" name="email" id="email-input" *ngIf="!connected" placeholder="Email Address">
+    <p *ngIf="!connected">Enter your email address to receive a notfication when we update our inventory with your request.</p>
+
     <textarea name="input-request" id="input-request" placeholder="Ex: adidas Yeezy Boost 350 Clay; Air Jordan 1 High SB NYC To Paris; React Element 87 Hyper Fusion"></textarea>
 
     <button *ngIf="!error && !sent && !loading" class="btn request-btn" (click)="sendRequest()">Send Request</button>
