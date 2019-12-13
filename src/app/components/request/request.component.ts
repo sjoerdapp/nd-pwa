@@ -15,6 +15,7 @@ export class RequestComponent implements OnInit {
   loading = false;
   error = false;
   sent = false;
+  userEmail: string;
 
   constructor(
     private title: Title,
@@ -31,6 +32,8 @@ export class RequestComponent implements OnInit {
     this.auth.isConnected().then(res => {
       if (!res) {
         this.router.navigate(['login']);
+      } else {
+        this.userEmail = res.email;
       }
     });
   }
@@ -38,9 +41,10 @@ export class RequestComponent implements OnInit {
   sendRequest() {
     this.loading = true;
     const products = (document.getElementById('input-request') as HTMLInputElement).value;
+    const msg = `${this.userEmail} requested ${products}`;
 
     if (products) {
-      this.slack.sendAlert('requests', products).then(res => {
+      this.slack.sendAlert('requests', msg).then(res => {
         console.log(res);
         this.loading = false;
         this.sent = true;
