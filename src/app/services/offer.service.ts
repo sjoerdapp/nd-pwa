@@ -55,9 +55,11 @@ export class OfferService {
     const userDocRef = this.afs.firestore.collection(`users/${UID}/offers`).doc(`${offerID}`);
     const prodDocRef = this.afs.firestore.collection(`products/${pair.productID}/offers`).doc(`${offerID}`);
     const offersValRef = this.afs.firestore.doc(`users/${UID}`);
+    const offerRef = this.afs.firestore.collection(`offers`).doc(`${offerID}`);
 
     batch.set(userDocRef, this.userListing);
     batch.set(prodDocRef, this.productListing);
+    batch.set(offerRef, this.userListing); // add offer to offers collection
     batch.set(offersValRef, {
       offers: firebase.firestore.FieldValue.increment(1)
     }, { merge: true });
@@ -91,10 +93,17 @@ export class OfferService {
 
     const batch = this.afs.firestore.batch();
 
-    const offerRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('offers').doc(`${offerID}`);
+    const userOfferRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('offers').doc(`${offerID}`);
     const prodRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('offers').doc(`${offerID}`);
+    const offerRef = this.afs.firestore.collection(`offers`).doc(`${offerID}`);
 
     batch.update(offerRef, {
+      condition: condition,
+      price: price,
+      size: size
+    });
+
+    batch.update(userOfferRef, {
       condition: condition,
       price: price,
       size: size
@@ -125,12 +134,14 @@ export class OfferService {
 
     const batch = this.afs.firestore.batch();
 
-    const offerRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('offers').doc(`${offerID}`);
+    const userOfferRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('offers').doc(`${offerID}`);
     const prodRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('offers').doc(`${offerID}`);
     const userRef = this.afs.firestore.collection('users').doc(`${UID}`);
+    const offerRef = this.afs.firestore.collection(`offers`).doc(`${offerID}`);
 
-    batch.delete(offerRef);
+    batch.delete(userOfferRef);
     batch.delete(prodRef);
+    batch.delete(offerRef); // delete offer from offers collection
     batch.update(userRef, {
       offers: firebase.firestore.FieldValue.increment(-1)
     });

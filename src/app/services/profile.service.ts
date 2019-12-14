@@ -82,8 +82,9 @@ export class ProfileService {
 
     const batch = this.afs.firestore.batch();
 
-    const listingRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
+    const userListingRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
     const prodRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
+    const listingRef = this.afs.firestore.collection(`listings`).doc(`${listingID}`);
 
     const productRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
 
@@ -119,6 +120,12 @@ export class ProfileService {
       size: size
     });
 
+    batch.update(userListingRef, {
+      condition: condition,
+      price: price,
+      size: size
+    });
+
     batch.update(prodRef, {
       condition: condition,
       price: price,
@@ -145,10 +152,12 @@ export class ProfileService {
     const batch = this.afs.firestore.batch();
 
     const userListingRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
-    const listingRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
+    const productRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
     const userRef = this.afs.firestore.collection('users').doc(`${UID}`);
+    const listingRef = this.afs.firestore.collection(`listings`).doc(`${listingID}`);
 
     batch.delete(userListingRef);
+    batch.delete(productRef);
     batch.delete(listingRef);
     batch.update(userRef, {
       listed: firebase.firestore.FieldValue.increment(-1)

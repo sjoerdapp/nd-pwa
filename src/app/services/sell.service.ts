@@ -58,8 +58,10 @@ export class SellService {
     const userDocRef = this.afs.firestore.collection(`users/${UID}/listings`).doc(`${listingID}`);
     const prodDocRef = this.afs.firestore.collection(`products/${pair.productID}/listings`).doc(`${listingID}`);
     const listedValRef = this.afs.firestore.doc(`users/${UID}`);
+    const listingRef = this.afs.firestore.collection(`listings`).doc(`${listingID}`);
 
     batch.set(userDocRef, this.userListing); // add Listing to User Document
+    batch.set(listingRef, this.userListing); // add listing to listings collection
     batch.set(prodDocRef, this.productListing); // add Listing to Products Document
     batch.set(listedValRef, {
       listed: firebase.firestore.FieldValue.increment(1)
