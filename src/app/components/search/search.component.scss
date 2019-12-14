@@ -82,6 +82,17 @@
     }
 }
 
+.btn {
+    background: $black;
+    display: block;
+    margin: $spacing-normal auto;
+    padding: $spacing-small;
+
+    &:hover {
+        background: $matteblack;
+    }
+}
+
 // MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
@@ -89,6 +100,10 @@
         input {
             font-weight: $weight-black;
         }
+    }
+
+    .btn {
+        width: 50%;
     }
 }
 
@@ -98,6 +113,10 @@
             font-weight: $weight-black;
             font-size: $font-xxlarge;
         }
+    }
+
+    .btn {
+        width: 50%;
     }
 }
 
@@ -126,6 +145,10 @@
                 font-size: $font-xsmall;
             }
         }
+    }
+
+    .btn {
+        width: 30%;
     }
 }
 
@@ -157,6 +180,10 @@
             }
         }
     }
+
+    .btn {
+        width: 25%;
+    }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
@@ -187,6 +214,10 @@
             }
         }
     }
+
+    .btn {
+        width: 20%;
+    }
 }
 
 @media only screen and (min-width: 2000px) {
@@ -216,5 +247,9 @@
                 font-size: $font-normal;
             }
         }
+    }
+
+    .btn {
+        width: 15%;
     }
 }

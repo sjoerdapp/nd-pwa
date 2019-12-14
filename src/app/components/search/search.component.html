@@ -3,7 +3,7 @@
 <div class="main-container">
   <div class="search-bar-container">
     <button routerLink=".."><fa-icon [icon]="['fas', 'times']"></fa-icon></button>
-    <input type="text" id="search-input" placeholder="Search" autofocus (keyup)="search($event)">
+    <input type="text" id="search-input" placeholder="Search" autofocus (keyup)="search()">
   </div>
 
   <div class="search-items">
@@ -16,6 +16,8 @@
       <h5>{{ result.model }}</h5>
     </a>
   </div>
+
+  <button class="btn" (click)="moreProducts()" *ngIf="!searchLimit">More</button>
 </div>
 
 <app-footer></app-footer>

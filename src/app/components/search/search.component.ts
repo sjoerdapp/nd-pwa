@@ -20,6 +20,9 @@ export class SearchComponent implements OnInit {
 
   results;
 
+  nbPages: number = 1;
+  searchLimit: boolean = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -40,33 +43,44 @@ export class SearchComponent implements OnInit {
         (element as HTMLInputElement).value = this.queryParam;
       });
       this.index = this.algoliaClient.initIndex(environment.algolia.index);
-      this.index.search({
-        query: this.queryParam
-      }, (err, hits = {}) => {
-        if (err) throw err;
-
-        this.results = hits.hits;
-        //console.log(hits);
-      });
+      this.search();
     }
   }
 
-  search(event) {
+  search() {
     //console.log(event.target.value);
+
+    const term = (document.getElementById('search-input') as HTMLInputElement).value;
 
     this.router.navigate([],
       {
-        queryParams: { q: event.target.value }
+        queryParams: { q: term }
       });
 
     this.index.search({
-      query: event.target.value
+      query: term,
+      attributesToRetrieve: ['assetURL', 'model', 'productID'],
+      hitsPerPage: 48 * this.nbPages
+
     }, (err, hits = {}) => {
       if (err) throw err;
 
       this.results = hits.hits;
-      //console.log(hits);
+
+      if (hits.nbPages <= this.nbPages || hits.nbPages === 0) {
+        this.searchLimit = true;
+      } else {
+        this.searchLimit = false
+      }
+
+      console.log(this.nbPages);
+      console.log(hits);
     });
+  }
+
+  moreProducts() {
+    this.nbPages++;
+    this.search();
   }
 
 }
