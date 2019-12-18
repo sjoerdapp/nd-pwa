@@ -73,8 +73,6 @@ export class CheckoutComponent implements OnInit {
     this.isSelling = this.route.snapshot.queryParams.sell;
 
     if (!isUndefined(this.isSelling) && !isUndefined(this.route.snapshot.queryParams.product)) {
-      this.product = JSON.parse(this.route.snapshot.queryParams.product);
-      this.subtotal = this.product.price;
 
       if (isPlatformBrowser(this._platformId)) {
         gtag('event', 'begin_checkout', {
@@ -84,11 +82,13 @@ export class CheckoutComponent implements OnInit {
       }
 
       if (this.isSelling != 'true') {
+        this.getListing(this.route.snapshot.queryParams.product);
         this.isSelling = false;
         this.checkFreeShipping();
         this.initConfig();
       } else {
         this.isSelling = true;
+        this.getOffer(this.route.snapshot.queryParams.product);
       }
     } else {
       if (isUndefined(this.tID)) {
@@ -292,6 +292,38 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.total = this.subtotal + this.shippingPrice;
     }
+  }
+
+  getListing(listingID: string) {
+    this.checkoutService.getListing(listingID).then(res => {
+      if (isNullOrUndefined(res.data())) {
+        this.router.navigate(['page-not-found']);
+      } else {
+        this.product = res.data();
+        this.subtotal = this.product.price;
+        this.checkFreeShipping();
+
+        if (this.product.sellerID === this.user.uid) {
+          this.router.navigate(['page-not-found']);
+        }
+      }
+    });
+  }
+
+  getOffer(offerID: string) {
+    this.checkoutService.getOffer(offerID).then(res => {
+      if (isNullOrUndefined(res.data())) {
+        this.router.navigate(['page-not-found']);
+      } else {
+        this.product = res.data();
+        this.subtotal = this.product.price;
+        this.checkFreeShipping();
+
+        if (this.product.buyerID === this.user.uid) {
+          this.router.navigate(['page-not-found']);
+        }
+      }
+    });
   }
 
   checkUserAndTransaction(transactionID: string) {

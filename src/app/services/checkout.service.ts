@@ -268,4 +268,14 @@ export class CheckoutService {
   getPromoCode(cardID: string) {
     return this.afs.collection('nxtcards').doc(`${cardID}`).ref.get();
   }
+
+  getListing(listingID: string) {
+    const userID = listingID.split('-')[0];
+    return this.afs.collection(`users`).doc(`${userID}`).collection(`listings`).doc(`${listingID}`).ref.get();
+  }
+
+  getOffer(offerID: string) {
+    const userID = offerID.split(`-`)[0];
+    return this.afs.collection(`users`).doc(`${userID}`).collection(`offers`).doc(`${offerID}`).ref.get();
+  }
 }
