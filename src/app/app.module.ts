@@ -55,7 +55,6 @@ import { BlogHomeComponent } from './components/blog/blog-home/blog-home.compone
 import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
 import { DropComponent } from './components/special-drop/drop/drop.component';
 import { SnkrsComponent } from './components/snkrs/snkrs.component';
-import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { Dec182019Component } from './components/landing-pages/dec182019//dec182019.component';
 
 /** Font Awesome */
@@ -137,7 +136,6 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     BlogPostComponent,
     SnkrsComponent,
     SafeHtmlPipe,
-    HowItWorksComponent,
     Dec182019Component
   ],
   imports: [

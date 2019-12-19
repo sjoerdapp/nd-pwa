@@ -40,7 +40,6 @@ import { DropComponent } from './components/special-drop/drop/drop.component';
 import { BlogHomeComponent } from './components/blog/blog-home/blog-home.component';
 import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
 import { SnkrsComponent } from './components/snkrs/snkrs.component';
-import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { Dec182019Component } from './components/landing-pages/dec182019/dec182019.component';
 
 const routes: Routes = [
@@ -82,7 +81,6 @@ const routes: Routes = [
   { path: 'news', component: BlogHomeComponent },
   { path: 'news/:title', component: BlogPostComponent },
   { path: 'snkrs', component: SnkrsComponent },
-  { path: 'how-it-works', component: HowItWorksComponent },
   { path: 'here-is-the-perfect-solution-if-you-want-to-buy-sneakers', component: Dec182019Component },
   { path: '**', component: PageNotFoundComponent }
 ];
