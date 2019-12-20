@@ -56,7 +56,7 @@ app.get('*', (req, res) => {
   res.render('index', { req });
 });
 
-app.get('/blog', (req, res) => {
+app.get('/404', (req, res) => {
   res.render('index',{ req });
   res.status(404);
 });
