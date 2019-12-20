@@ -15,7 +15,7 @@ export class HowItWorksComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.title.setTitle(`How It Wokrs | NXTDROP: Buy and Sell Sneakers in Canada`);
+        this.title.setTitle(`How It Works | NXTDROP: Buy and Sell Sneakers in Canada`);
         this.seo.addTags('How It Works');
     }
 
