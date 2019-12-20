@@ -38,7 +38,7 @@
       {
         "source": "/blog",
         "destination": "/404",
-        "type": 404
+        "type": 301
       }
     ],
     "headers": [

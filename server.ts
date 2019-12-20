@@ -56,6 +56,11 @@ app.get('*', (req, res) => {
   res.render('index', { req });
 });
 
+app.get('/blog', (req, res) => {
+  res.render('index',{ req });
+  res.status(404);
+});
+
 // Start up the Node server
 /*app.listen(PORT, () => {
   console.log(`Node Express server listening on http://localhost:${PORT}`);
