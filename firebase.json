@@ -34,6 +34,11 @@
         "source": "/blog/nxtdrop-the-canadian-stockx-is-finally-here",
         "destination": "/news/nxtdrop-the-canadian-stockx-is-finally-here",
         "type": 301
+      },
+      {
+        "source": "/blog",
+        "destination": "/404",
+        "type": 404
       }
     ],
     "headers": [
