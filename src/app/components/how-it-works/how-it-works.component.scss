@@ -1,0 +1,413 @@
+@import "../../base_styles//base";
+
+.mission-statement {
+  background: $darkblue;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: $spacing-normal;
+  padding: $spacing-xlarge $spacing-large;
+  align-items: center;
+  justify-items: center;
+
+  h1,
+  p {
+    color: $white;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.buying,
+.selling {
+  background: $navyblue;
+
+  h1,
+  p {
+    color: $white;
+  }
+
+  section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    div {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+
+      button {
+        justify-self: center;
+        height: 80px;
+        width: 80px;
+        border-radius: 60px;
+        background: $white;
+        color: $black;
+        border: none;
+      }
+
+      p {
+        align-self: center;
+        justify-self: center;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.selling {
+  background: #89e289;
+  padding: $spacing-xlarge $spacing-large;
+}
+
+.cta {
+  background: $black;
+
+  p {
+    color: $white;
+    text-align: center;
+    margin: $spacing-xsmall auto;
+  }
+
+  .btn {
+    background: $white;
+    display: block;
+    margin: auto;
+    text-align: center;
+    padding: $spacing-normal;
+    color: $black;
+
+    &:hover {
+      color: $white;
+      background: $matteblack;
+    }
+  }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  .buying,
+  .selling {
+    padding: $spacing-xlarge 0;
+
+    h1 {
+      text-align: center;
+    }
+
+    section {
+      column-gap: $spacing-xsmall;
+      padding: $spacing-large 2.5%;
+      height: 250px;
+      width: 95%;
+      justify-content: center;
+      align-content: center;
+
+      div {
+        row-gap: $spacing-large;
+
+        button {
+          height: 50px;
+          width: 50px;
+          align-self: center;
+          justify-self: center;
+
+          fa-icon {
+            font-size: $font-xsmall;
+          }
+        }
+
+        p {
+          font-size: $font-xsmall;
+          align-self: center;
+          justify-self: center;
+        }
+      }
+    }
+  }
+
+  .cta {
+    padding: $spacing-large 0;
+
+    p {
+      font-size: $font-xxsmall;
+    }
+
+    .btn {
+      width: 70%;
+      font-size: $font-normal;
+    }
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+  .buying,
+  .selling {
+    padding: $spacing-xlarge 0;
+
+    h1 {
+      margin-left: 2.5%;
+    }
+
+    section {
+      column-gap: $spacing-xsmall;
+      padding: $spacing-large 5%;
+      height: 250px;
+      width: 90%;
+      justify-content: center;
+      align-content: center;
+
+      div {
+        row-gap: $spacing-large;
+
+        button {
+          height: 60px;
+          width: 60px;
+          align-self: center;
+          justify-self: center;
+
+          fa-icon {
+            font-size: $font-small;
+          }
+        }
+
+        p {
+          font-size: $font-xsmall;
+          align-self: center;
+          justify-self: center;
+        }
+      }
+    }
+  }
+
+  .cta {
+    padding: $spacing-large 0;
+
+    p {
+      font-size: $font-xxsmall;
+    }
+
+    .btn {
+      width: 60%;
+      font-size: $font-normal;
+    }
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  .buying,
+  .selling {
+    padding: $spacing-xlarge 0;
+
+    h1 {
+      margin-left: 2.5%;
+    }
+
+    section {
+      column-gap: $spacing-xsmall;
+      padding: $spacing-large 5%;
+      height: 250px;
+      width: 90%;
+      justify-content: center;
+      align-content: center;
+
+      div {
+        row-gap: $spacing-large;
+
+        button {
+          height: 70px;
+          width: 70px;
+          align-self: center;
+          justify-self: center;
+
+          fa-icon {
+            font-size: $font-normal;
+          }
+        }
+
+        p {
+          font-size: $font-small;
+          align-self: center;
+          justify-self: center;
+        }
+      }
+    }
+  }
+
+  .cta {
+    padding: $spacing-large 0;
+
+    p {
+      font-size: $font-xsmall;
+    }
+
+    .btn {
+      width: 50%;
+      font-size: $font-normal;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  .buying,
+  .selling {
+    padding: $spacing-xlarge 0;
+
+    h1 {
+      margin-left: 5%;
+    }
+
+    section {
+      column-gap: $spacing-xsmall;
+      padding: $spacing-large 10%;
+      height: 250px;
+      width: 80%;
+      justify-content: center;
+      align-content: center;
+
+      div {
+        row-gap: $spacing-large;
+
+        button {
+          height: 80px;
+          width: 80px;
+          align-self: center;
+          justify-self: center;
+
+          fa-icon {
+            font-size: $font-normal;
+          }
+        }
+
+        p {
+          font-size: $font-normal;
+          align-self: center;
+          justify-self: center;
+        }
+      }
+    }
+  }
+
+  .cta {
+    padding: $spacing-large 0;
+
+    p {
+      font-size: $font-normal;
+    }
+
+    .btn {
+      width: 40%;
+      font-size: $font-large;
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  .buying,
+  .selling {
+    padding: $spacing-xlarge 0;
+
+    h1 {
+      margin-left: 5%;
+      font-size: 54px;
+    }
+
+    section {
+      column-gap: $spacing-xsmall;
+      padding: $spacing-large 10%;
+      height: 30vh;
+      width: 80%;
+      justify-content: center;
+      align-content: center;
+
+      div {
+        row-gap: $spacing-xxlarge;
+
+        button {
+          height: 120px;
+          width: 120px;
+          align-self: center;
+          justify-self: center;
+
+          fa-icon {
+            font-size: $font-xxlarge;
+          }
+        }
+
+        p {
+          font-size: $font-xxlarge;
+          align-self: center;
+          justify-self: center;
+        }
+      }
+    }
+  }
+
+  .cta {
+    padding: $spacing-large 0;
+
+    p {
+      font-size: $font-normal;
+    }
+
+    .btn {
+      width: 30%;
+      font-size: $font-large;
+    }
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .buying,
+  .selling {
+    padding: $spacing-xlarge 0;
+
+    h1 {
+      margin-left: 5%;
+      font-size: 54px;
+    }
+
+    section {
+      column-gap: $spacing-xsmall;
+      padding: $spacing-large 10%;
+      height: 30vh;
+      width: 80%;
+      justify-content: center;
+      align-content: center;
+
+      div {
+        row-gap: $spacing-xxlarge;
+
+        button {
+          height: 120px;
+          width: 120px;
+          align-self: center;
+          justify-self: center;
+
+          fa-icon {
+            font-size: $font-xxlarge;
+          }
+        }
+
+        p {
+          font-size: $font-xxlarge;
+          align-self: center;
+          justify-self: center;
+        }
+      }
+    }
+  }
+
+  .cta {
+    padding: $spacing-large 0;
+
+    p {
+      font-size: $font-normal;
+    }
+
+    .btn {
+      width: 25%;
+      font-size: $font-large;
+    }
+  }
+}
