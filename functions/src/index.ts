@@ -795,7 +795,7 @@ exports.sendGiftCard = functions.https.onRequest((req, res) => {
 
         const msg: any = {
             to: req.body.email,
-            from: 'do-not-reply@nxtdrop.com',
+            from: ['do-not-reply@nxtdrop.com', 'NXTDROP'],
             templateId: 'd-c3466f43205846deaba1fde2fa5f0d5f',
             dynamic_template_data: {
                 message: req.body.message,
