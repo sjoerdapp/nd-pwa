@@ -800,7 +800,7 @@ exports.sendGiftCard = functions.https.onRequest((req, res) => {
             dynamic_template_data: {
                 message: req.body.message,
                 code: req.body.code,
-                expirationDate: new Date(req.body.expirationDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })
+                expirationDate: new Date(req.body.expirationDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true, timeZone: "America/New_York" })
             }
         }
 
