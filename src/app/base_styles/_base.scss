@@ -24,11 +24,12 @@ $productContainerHeight: 650px;
 .free-shipping {
   text-align: center;
   background: $black;
-  padding: $spacing-xsmall;
+  padding: $spacing-xsmall 0;
   position: fixed;
   top: 0;
   z-index: 1;
   width: 100vw;
+  max-width: 2000px;
 
   p {
     color: $white;
