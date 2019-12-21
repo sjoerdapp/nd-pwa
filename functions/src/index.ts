@@ -50,7 +50,7 @@ exports.orderCancellation = functions.https.onRequest((req, res) => {
 
                 const msg = {
                     to: email,
-                    from: 'do-not-reply@nxtdrop.com',
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
                     templateId: 'd-e044c539f9fc44e893c7b0de43757da2',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -89,7 +89,7 @@ exports.orderCancellation = functions.https.onRequest((req, res) => {
 
                 const msg = {
                     to: email,
-                    from: 'do-not-reply@nxtdrop.com',
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
                     templateId: 'd-3a33db14afc544b2b6507d6be937cff3',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -139,7 +139,7 @@ exports.sendShippingLabel = functions.https.onRequest((req, res) => {
 
                 const msg = {
                     to: email,
-                    from: 'do-not-reply@nxtdrop.com',
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
                     templateId: 'd-0215a6c29937473ea4b204b3d94fe073',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -189,7 +189,7 @@ exports.offerAcceptedReminder = functions.https.onRequest((req, res) => {
 
                 const msg = {
                     to: email,
-                    from: 'do-not-reply@nxtdrop.com',
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
                     templateId: 'd-1470cf9fcbd74918b5ce0c78db3005d2',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -239,7 +239,7 @@ exports.orderDelivered = functions.https.onRequest((req, res) => {
 
                 const msg = {
                     to: email,
-                    from: 'do-not-reply@nxtdrop.com',
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
                     templateId: 'd-2544c5b2779547ee9d5915e0c111e3f6',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -300,7 +300,7 @@ exports.verifiedShipped = functions.https.onRequest((req, res) => {
 
                 const msg = {
                     to: email,
-                    from: 'do-not-reply@nxtdrop.com',
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
                     templateId: 'd-80bb3123058f4d39b130b8e54510fd54',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -338,7 +338,7 @@ exports.verifiedShipped = functions.https.onRequest((req, res) => {
 
                 const msg = {
                     to: email,
-                    from: 'do-not-reply@nxtdrop.com',
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
                     templateId: 'd-41bb9f19ad2344f8b585ce6c1948a820',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -384,7 +384,7 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
 
                 const msg: any = {
                     to: email,
-                    from: 'do-not-reply@nxtdrop.com',
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
                     templateId: 'd-e920cad3da0d4e0b8f77501bdabe1d54',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -433,7 +433,7 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
 
                 const msg = {
                     to: email,
-                    from: 'orders@nxtdrop.com',
+                    from: { email: 'orders@nxtdrop.com', name: 'NXTDROP' },
                     templateId: 'd-3cb6d3dae09a4697b153d93e1fb15ab4',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -479,7 +479,7 @@ exports.productShipment = functions.https.onRequest((req, res) => {
 
                 const msg = {
                     to: email,
-                    from: 'do-not-reply@nxtdrop.com',
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
                     templateId: 'd-f3cb1b96abc148ca963c4ffac9b5c2c4',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -571,7 +571,7 @@ exports.changedPassword = functions.https.onRequest((req, res) => {
 
         const msg = {
             to: req.body.toEmail,
-            from: 'notifications@nxtdrop.com',
+            from: { email: 'notifications@nxtdrop.com', name: 'NXTDROP' },
             templateId: 'd-0911ed5ff8ee46e3982bd3d8074ce831',
             dynamic_template_data: {
                 name: req.body.toName,
@@ -599,7 +599,7 @@ exports.accountCreated = functions.https.onRequest((req, res) => {
 
         const msg = {
             to: req.body.toEmail,
-            from: 'notifications@nxtdrop.com',
+            from: { email: 'notifications@nxtdrop.com', name: 'NXTDROP' },
             templateId: 'd-35761f77395f4395bf843c0d9d2352d8',
             dynamic_template_data: {
                 name: req.body.toFirstName + ' ' + req.body.toLastName,
@@ -656,7 +656,7 @@ exports.resetPassword = functions.https.onRequest((req, res) => {
         }, { merge: true }).then(() => {
             const msg = {
                 to: req.body.toEmail,
-                from: 'notifications@nxtdrop.com',
+                from: { email: 'notifications@nxtdrop.com', name: 'NXTDROP' },
                 templateId: 'd-1630d61513f54005944c4abb4cb268ed',
                 dynamic_template_data: {
                     username: req.body.toUsername,
@@ -769,7 +769,7 @@ exports.snkrsInvitation = functions.https.onRequest((req, res) => {
 
         const msg = {
             to: req.body.email,
-            from: 'do-not-reply@nxtdrop.com',
+            from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
             templateId: 'd-e5e4d6fa0d1f4c6295a999bffc654cb1',
             dynamic_template_data: {
                 username: req.body.username,
@@ -795,12 +795,12 @@ exports.sendGiftCard = functions.https.onRequest((req, res) => {
 
         const msg: any = {
             to: req.body.email,
-            from: ['do-not-reply@nxtdrop.com', 'NXTDROP'],
+            from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
             templateId: 'd-c3466f43205846deaba1fde2fa5f0d5f',
             dynamic_template_data: {
                 message: req.body.message,
                 code: req.body.code,
-                expirationDate: new Date(req.body.expirationDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true, timeZone: "America/New_York" })
+                expirationDate: new Date(req.body.expirationDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true, timeZone: "America/New_York", timeZoneName: 'long' })
             }
         }
 
