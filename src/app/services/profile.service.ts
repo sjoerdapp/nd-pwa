@@ -36,10 +36,10 @@ export class ProfileService {
 
     if (isUndefined(startAfter)) {
       // tslint:disable-next-line: max-line-length
-      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('timestamp', 'desc').limit(6));
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('timestamp', 'desc').limit(60));
     } else {
       // tslint:disable-next-line: max-line-length
-      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('timestamp', 'desc').startAfter(startAfter).limit(6));
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`listings`, ref => ref.orderBy('timestamp', 'desc').startAfter(startAfter).limit(60));
     }
 
     return userRef.valueChanges();
@@ -55,10 +55,10 @@ export class ProfileService {
 
     if (isUndefined(startAfter)) {
       // tslint:disable-next-line: max-line-length
-      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`offers`, ref => ref.orderBy('timestamp', 'desc').limit(6));
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`offers`, ref => ref.orderBy('timestamp', 'desc').limit(60));
     } else {
       // tslint:disable-next-line: max-line-length
-      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`offers`, ref => ref.orderBy('timestamp', 'desc').startAfter(startAfter).limit(6));
+      userRef = this.afs.collection(`users`).doc(`${UID}`).collection(`offers`, ref => ref.orderBy('timestamp', 'desc').startAfter(startAfter).limit(60));
     }
 
     return userRef.valueChanges();
