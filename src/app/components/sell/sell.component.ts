@@ -305,10 +305,9 @@ export class SellComponent implements OnInit {
   }
 
   sellNow() {
-    const data = JSON.stringify(this.highestOffer);
     this.ngZone.run(() => {
       this.router.navigate([`../../checkout`], {
-        queryParams: { product: data, sell: true }
+        queryParams: { product: this.highestOffer.offerID, sell: true }
       });
     });
   }
