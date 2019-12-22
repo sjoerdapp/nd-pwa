@@ -24,8 +24,6 @@
   }
 
   .post-container {
-    width: 75%;
-    margin: $spacing-xlarge auto;
     p,
     a,
     figcaption,
@@ -45,8 +43,6 @@
     h1 {
       text-align: center;
       width: 80%;
-      margin: $spacing-xlarge auto;
-      font-size: 42px;
     }
 
     h2 {
@@ -72,13 +68,7 @@
     }
 
     .content {
-      width: 80%;
       margin: $spacing-xsmall auto;
-
-      iframe {
-        display: block;
-        margin: $spacing-normal auto;
-      }
 
       p {
         font-size: $font-normal;
@@ -208,10 +198,32 @@
 // MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
+  .post-container {
+    width: 100%;
+    margin: 0 auto $spacing-xlarge auto;
+
+    .title {
+      font-size: 26px;
+      margin: $spacing-normal auto;
+    }
+  }
+
   .content {
+    width: 100%;
+
+    figure {
+      width: 100% !important;
+    }
+
     iframe {
-      width: 100%;
-      height: 200px;
+      height: 180px;
+      width: 320px;
+      margin: $spacing-large auto 0 auto;
+      display: block;
+    }
+
+    p {
+      width: 90%;
     }
   }
 
@@ -241,14 +253,32 @@
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
-  h1 {
-    font-size: 20px;
+  .post-container {
+    width: 100%;
+    margin: 0 auto $spacing-xlarge auto;
+
+    .title {
+      font-size: 26px;
+      margin: $spacing-normal auto;
+    }
   }
 
   .content {
+    width: 100%;
+
+    figure {
+      width: 100% !important;
+    }
+
     iframe {
-      width: 80%;
-      height: 250px;
+      height: 210px;
+      width: 380px;
+      margin: $spacing-xlarge auto 0 auto;
+      display: block;
+    }
+
+    p {
+      width: 90%;
     }
   }
 
@@ -279,8 +309,14 @@
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
-  h1 {
-    font-size: 28px;
+  .post-container {
+    width: 90%;
+    margin: $spacing-xlarge auto;
+
+    .title {
+      font-size: 38px;
+      margin: $spacing-large auto;
+    }
   }
 
   .content {
@@ -290,9 +326,17 @@
       column-gap: $spacing-normal;
     }
 
+    width: 100%;
+
+    figure {
+      width: 100% !important;
+    }
+
     iframe {
+      height: 340px;
       width: 560px;
-      height: 320px;
+      margin: $spacing-xlarge auto 0 auto;
+      display: block;
     }
   }
 
@@ -327,8 +371,14 @@
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
-  h1 {
-    font-size: 36px;
+  .post-container {
+    width: 80%;
+    margin: $spacing-xlarge auto;
+
+    .title {
+      font-size: 42px;
+      margin: $spacing-xlarge auto;
+    }
   }
 
   .back-btn {
@@ -341,6 +391,8 @@
   }
 
   .content {
+    width: 100%;
+
     p {
       font-size: 18px !important;
     }
@@ -351,9 +403,15 @@
       column-gap: $spacing-normal;
     }
 
+    figure {
+      width: 80% !important;
+    }
+
     iframe {
-      width: 720px;
-      height: 420px;
+      height: 360px;
+      width: 560px;
+      margin: $spacing-xlarge auto 0 auto;
+      display: block;
     }
   }
 
@@ -388,6 +446,16 @@
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  .post-container {
+    width: 80%;
+    margin: $spacing-xlarge auto;
+
+    .title {
+      font-size: 46px;
+      margin: $spacing-xlarge auto;
+    }
+  }
+
   .back-btn {
     width: 15% !important;
   }
@@ -403,6 +471,8 @@
   }
 
   .content {
+    width: 100%;
+
     p {
       font-size: $font-large !important;
     }
@@ -413,9 +483,15 @@
       column-gap: $spacing-normal;
     }
 
+    figure {
+      width: 80% !important;
+    }
+
     iframe {
-      width: 1080px;
-      height: 720px;
+      height: 420px;
+      width: 720px;
+      margin: $spacing-xlarge auto 0 auto;
+      display: block;
     }
   }
 
@@ -450,6 +526,16 @@
 }
 
 @media only screen and (min-width: 2000px) {
+  .post-container {
+    width: 80%;
+    margin: $spacing-xlarge auto;
+
+    .title {
+      font-size: 46px;
+      margin: $spacing-xlarge auto;
+    }
+  }
+
   .back-btn {
     width: 15% !important;
   }
@@ -465,6 +551,8 @@
   }
 
   .content {
+    width: 100%;
+    
     p {
       font-size: $font-large !important;
     }
@@ -475,9 +563,15 @@
       column-gap: $spacing-normal;
     }
 
+    figure {
+      width: 80% !important;
+    }
+
     iframe {
-      width: 1080px;
-      height: 720px;
+      height: 420px;
+      width: 720px;
+      margin: $spacing-xlarge auto 0 auto;
+      display: block;
     }
   }
 
