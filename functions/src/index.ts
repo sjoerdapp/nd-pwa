@@ -821,3 +821,28 @@ exports.sendGiftCard = functions.https.onRequest((req, res) => {
         });
     });
 });
+
+exports.sendRequestConfirmation = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send('Forbidden!');
+        }
+
+        const msg: any = {
+            to: req.body.email,
+            from: { email: 'notifications@nxtdrop.com', name: 'NXTDROP' },
+            templateId: 'd-0e311dc7d6bf4bc9a285baf1e15b3e95',
+            dynamic_template_data: {
+                productURL: req.body.productURL
+            }
+        }
+
+        return sgMail.send(msg).then((content: any) => {
+            console.log(content);
+            return res.send(true);
+        }).catch((err: any) => {
+            console.error(err);
+            return res.send(false);
+        });
+    });
+});
