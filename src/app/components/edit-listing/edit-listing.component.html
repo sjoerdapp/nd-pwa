@@ -18,12 +18,6 @@
       </div>
     </div>
 
-    <div class="edit-price-input">
-      <button>CA<fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
-      <input type="text" value="{{ offerInfo.price }}" (keyup)="priceChanges($event)" id="priceInput">
-      <button>.00</button>
-    </div>
-
     <select *ngIf="!isWomen && !isGS" name="men-size" id="item-size" (change)="sizeChanges($event)">
       <option value="none" selected>Select Size</option>
       <option value="US4">US 4</option>
@@ -97,6 +91,32 @@
       <option value="US6.5Y">US 6.5Y</option>
       <option value="US7Y">US 7Y</option>
     </select>
+
+    <div class="edit-price-input">
+      <button>CA<fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
+      <input type="text" value="{{ offerInfo.price }}" (keyup)="priceChanges($event)" id="priceInput" mask="0{10}">
+      <button>.00</button>
+    </div>
+
+    <div class="seller-fees">
+      <div class="consignment">
+        <p>Consignment Fee (9.5%)</p>
+        <p *ngIf="consignmentFee > 0">- {{ consignmentFee | currency: 'CAD' }}</p>
+        <p *ngIf="consignmentFee == 0">CA$ --</p>
+      </div>
+
+      <div class="payment-processing">
+        <p>Payment Processing Fee (3%)</p>
+        <p *ngIf="paymentProcessingFee > 0">- {{ paymentProcessingFee | currency: 'CAD' }}</p>
+        <p *ngIf="paymentProcessingFee == 0">CA$ --</p>
+      </div>
+
+      <div class="total-payout">
+        <p>Total Payout</p>
+        <p *ngIf="payout > 0">{{ payout | currency: 'CAD' }}</p>
+        <p *ngIf="payout == 0">CA$ --</p>
+      </div>
+    </div>
 
     <div class="edit-btns">
       <button class="btn" routerLink="../../profile">Back</button>
