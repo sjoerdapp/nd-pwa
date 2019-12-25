@@ -34,6 +34,10 @@ export class EditListingComponent implements OnInit {
   isWomen = false;
   isGS = false;
 
+  consignmentFee = 0;
+  paymentProcessingFee =  0;
+  payout = 0;
+
   constructor(
     private route: ActivatedRoute,
     private profileService: ProfileService,
@@ -61,6 +65,7 @@ export class EditListingComponent implements OnInit {
           this.curSize = this.offerInfo.size;
 
           this.shoeSizes();
+          this.calculateSellerFees();
 
           this.sellService.getHighestOffer(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
             if (!data.empty) {
@@ -117,6 +122,7 @@ export class EditListingComponent implements OnInit {
     }
 
     this.curPrice = +$event.target.value;
+    this.calculateSellerFees();
   }
 
   sizeChanges($event) {
@@ -127,6 +133,12 @@ export class EditListingComponent implements OnInit {
     }
 
     this.curSize = $event.target.value;
+  }
+
+  private calculateSellerFees() {
+    this.consignmentFee = this.curPrice * 0.095;
+    this.paymentProcessingFee = this.curPrice * 0.03;
+    this.payout = this.curPrice - this.consignmentFee - this.paymentProcessingFee;
   }
 
   updateListing() {
