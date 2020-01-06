@@ -3,7 +3,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as algoliasearch from 'algoliasearch';
 import * as cryptoString from 'crypto-random-string';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 
 // initalizations
 admin.initializeApp();
@@ -44,7 +44,11 @@ exports.orderCancellation = functions.https.onRequest((req, res) => {
             const data = response.data();
             if (data) {
                 const email = data.email;
-                const total = req.body.price + req.body.shippingCost;
+                let shipping = 0;
+
+                if (!isNullOrUndefined(req.body.shippingCost)) {
+                    shipping = req.body.shippingCost;
+                }
 
                 console.log(`Order Cancellation Email Buyer to ${email}.`);
 
@@ -57,8 +61,8 @@ exports.orderCancellation = functions.https.onRequest((req, res) => {
                         size: req.body.size,
                         condition: req.body.condition,
                         subtotal: req.body.price,
-                        shipping: req.body.shippingCost,
-                        total: total,
+                        shipping,
+                        total: req.body.total,
                         assetURL: req.body.assetURL,
                         link: '',
                         cancellationNote: req.body.cancellationNote
@@ -844,5 +848,93 @@ exports.sendRequestConfirmation = functions.https.onRequest((req, res) => {
             console.error(err);
             return res.send(false);
         });
+    });
+});
+
+exports.deliveredForVerification = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send();
+        }
+
+        admin.firestore().collection(`users`).doc(`${req.body.buyerID}`).get().then(response => {
+            const data = response.data();
+            if (data) {
+                const email = data.email;
+                const total = req.body.price + req.body.shippingCost;
+
+                console.log(`Order Email Buyer to ${email}.`);
+
+                const msg: any = {
+                    to: email,
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                    templateId: 'd-f0264d6227614c95addb39e6264b2a09',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        subtotal: req.body.price,
+                        shipping: req.body.shippingCost,
+                        total: total,
+                        assetURL: req.body.assetURL,
+                        link: ''
+                    }
+                }
+
+                if (!isUndefined(req.body.discount)) {
+                    msg.dynamic_template_data.discount = req.body.discount;
+                    msg.dynamic_template_data.total = total - req.body.discount;
+                }
+
+                sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent to buyer`);
+                }).catch((err: any) => {
+                    console.error(`Could send email to buyer: ${err}`);
+                })
+            } else {
+                console.error(`buyer don't exist`);
+            }
+        }).catch(err => {
+            console.error(`error sending buyer email`);
+        });
+
+        admin.firestore().collection(`users`).doc(`${req.body.sellerID}`).get().then(response => {
+            const data = response.data();
+            if (data) {
+                const email = data.email;
+                const fee = req.body.price * 0.095;
+                const processing = req.body.price * 0.03;
+                const payout = req.body.price - fee - processing;
+
+                console.log(`Order Email Seller to ${email}.`);
+
+                const msg = {
+                    to: email,
+                    from: { email: 'orders@nxtdrop.com', name: 'NXTDROP' },
+                    templateId: 'd-9f39e7893ca54fbd878aa84de5c61bd4',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        assetURL: req.body.assetURL,
+                        fee: fee,
+                        processing: processing,
+                        payout: payout
+                    }
+                }
+
+                sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent to seller`);
+                }).catch((err: any) => {
+                    console.error(`Could send email to seller: ${err}`);
+                })
+            } else {
+                console.error(`buyer don't exist`);
+            }
+        }).catch(err => {
+            console.error(`error sending seller email`);
+        })
+
+        return res.status(200);
     });
 });

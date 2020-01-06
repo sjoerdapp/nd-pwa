@@ -54,7 +54,9 @@ export class CheckoutService {
         verified: false,
         shipped: false,
         delivered: false,
-        cancelled: false
+        cancelled: false,
+        shippedForVerification: false,
+        deliveredForAuthentication: false
       },
       paymentID,
       shippingCost,
@@ -154,7 +156,9 @@ export class CheckoutService {
         verified: false,
         shipped: false,
         delivered: false,
-        cancelled: false
+        cancelled: false,
+        shippedForVerification: false,
+        deliveredForAuthentication: false
       },
       paymentID: '',
       type: 'sold'
