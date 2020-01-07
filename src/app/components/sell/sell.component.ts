@@ -54,6 +54,10 @@ export class SellComponent implements OnInit {
 
   user: any;
 
+  consignmentFee = 0;
+  paymentProcessingFee =  0;
+  payout = 0;
+
   constructor(
     private sellService: SellService,
     private ngZone: NgZone,
@@ -153,10 +157,21 @@ export class SellComponent implements OnInit {
     if ($event.target.value != ``) {
       this.priceAdded = true;
       this.pairPrice = +$event.target.value;
+
+      this.calculateSellerFees();
     } else {
       this.priceAdded = false;
       this.pairPrice = NaN;
+      this.consignmentFee = 0;
+      this.payout = 0;
+      this.paymentProcessingFee = 0;
     }
+  }
+
+  private calculateSellerFees() {
+    this.consignmentFee = this.pairPrice * 0.095;
+    this.paymentProcessingFee = this.pairPrice * 0.03;
+    this.payout = this.pairPrice - this.consignmentFee - this.paymentProcessingFee;
   }
 
   private getPrice() {
@@ -305,10 +320,9 @@ export class SellComponent implements OnInit {
   }
 
   sellNow() {
-    const data = JSON.stringify(this.highestOffer);
     this.ngZone.run(() => {
       this.router.navigate([`../../checkout`], {
-        queryParams: { product: data, sell: true }
+        queryParams: { product: this.highestOffer.offerID, sell: true }
       });
     });
   }
