@@ -17,7 +17,8 @@
 }
 
 .buying,
-.selling {
+.selling,
+.mission {
   background: $navyblue;
 
   h1,
@@ -53,8 +54,34 @@
 }
 
 .selling {
-  background: #89e289;
+  background: #07ac07;
   padding: $spacing-xlarge $spacing-large;
+}
+
+.mission {
+  background: $white;
+  padding: $spacing-xlarge $spacing-large;
+
+  h1 {
+    color: $black;
+  }
+
+  section {
+
+    div {
+      button {
+        background: $black;
+
+        fa-icon {
+          color: $white;
+        }
+      }
+
+      p {
+        color: $black;
+      }
+    }
+  }
 }
 
 .cta {
@@ -114,7 +141,8 @@
   }
 
   .buying,
-  .selling {
+  .selling,
+  .mission {
     padding: $spacing-xlarge 0;
 
     h1 {
@@ -145,7 +173,7 @@
 
         p {
           font-size: $font-xsmall;
-          align-self: center;
+          align-self: flex-start;
           justify-self: center;
         }
       }
@@ -156,11 +184,11 @@
     padding: $spacing-large 0;
 
     p {
-      font-size: $font-xxsmall;
+      font-size: $font-xsmall;
     }
 
     .btn {
-      width: 70%;
+      width: 80%;
       font-size: $font-normal;
     }
   }
@@ -195,7 +223,8 @@
   }
 
   .buying,
-  .selling {
+  .selling,
+  .mission {
     padding: $spacing-xlarge 0;
 
     h1 {
@@ -226,7 +255,7 @@
 
         p {
           font-size: $font-xsmall;
-          align-self: center;
+          align-self: flex-start;
           justify-self: center;
         }
       }
@@ -237,11 +266,11 @@
     padding: $spacing-large 0;
 
     p {
-      font-size: $font-xxsmall;
+      font-size: $font-xsmall;
     }
 
     .btn {
-      width: 60%;
+      width: 70%;
       font-size: $font-normal;
     }
   }
@@ -276,7 +305,8 @@
   }
 
   .buying,
-  .selling {
+  .selling,
+  .mission {
     padding: $spacing-xlarge 0;
 
     h1 {
@@ -357,7 +387,8 @@
   }
 
   .buying,
-  .selling {
+  .selling,
+  .mission {
     padding: $spacing-xlarge 0;
 
     h1 {
@@ -365,7 +396,7 @@
     }
 
     section {
-      column-gap: $spacing-xsmall;
+      column-gap: $spacing-normal;
       padding: $spacing-large 10%;
       height: 250px;
       width: 80%;
@@ -382,7 +413,7 @@
           justify-self: center;
 
           fa-icon {
-            font-size: $font-normal;
+            font-size: $font-large;
           }
         }
 
@@ -438,7 +469,8 @@
   }
 
   .buying,
-  .selling {
+  .selling,
+  .mission {
     padding: $spacing-xlarge 0;
 
     h1 {
@@ -520,7 +552,8 @@
   }
 
   .buying,
-  .selling {
+  .selling,
+  .mission {
     padding: $spacing-xlarge 0;
 
     h1 {
