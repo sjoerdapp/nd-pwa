@@ -225,7 +225,7 @@ $productContainerHeight: 650px;
 // Separate Header & Footer
 .main-container {
   min-height: calc(100vh - #{$footerHeight});
-  padding-top: calc(#{$navHeight});
+  padding-top: calc(#{$navHeight + 5px});
 }
 
 // Settings btns
