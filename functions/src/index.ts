@@ -808,12 +808,18 @@ exports.sendGiftCard = functions.https.onRequest((req, res) => {
             }
         }
 
-        if (req.body.giftCard100) {
-            msg.dynamic_template_data.giftCard100 = true;
+        if (req.body.giftCard20) {
+            msg.dynamic_template_data.giftCard20 = true;
+        } else if (req.body.giftCard25) {
+            msg.dynamic_template_data.giftCard25 = true;
         } else if (req.body.giftCard50) {
             msg.dynamic_template_data.giftCard50 = true;
         } else if (req.body.giftCard75) {
             msg.dynamic_template_data.giftCard75 = true;
+        } else if (req.body.giftCard100) {
+            msg.dynamic_template_data.giftCard100 = true;
+        } else if (req.body.giftCard200) {
+            msg.dynamic_template_data.giftCard200 = true;
         }
 
         return sgMail.send(msg).then((content: any) => {
