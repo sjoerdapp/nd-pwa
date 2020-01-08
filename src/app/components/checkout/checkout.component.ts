@@ -34,7 +34,7 @@ export class CheckoutComponent implements OnInit {
   // cartItems = [];
 
   product: any = {}
-  shippingPrice = 0;
+  shippingPrice = 15;
   subtotal = 0;
   total = 0;
   discount = 0;
@@ -84,7 +84,6 @@ export class CheckoutComponent implements OnInit {
       if (this.isSelling != 'true') {
         this.getListing(this.route.snapshot.queryParams.product);
         this.isSelling = false;
-        this.checkFreeShipping();
         this.initConfig();
       } else {
         this.isSelling = true;
@@ -275,7 +274,7 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  private checkFreeShipping() {
+  /*private checkFreeShipping() {
     if (this.connected) {
       this.checkoutService.getFreeShipping().then(res => {
         res.subscribe(response => {
@@ -292,7 +291,7 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.total = this.subtotal + this.shippingPrice;
     }
-  }
+  }*/
 
   getListing(listingID: string) {
     this.checkoutService.getListing(listingID).then(res => {
@@ -301,7 +300,7 @@ export class CheckoutComponent implements OnInit {
       } else {
         this.product = res.data();
         this.subtotal = this.product.price;
-        this.checkFreeShipping();
+        this.total = this.subtotal + this.shippingPrice;
 
         if (this.product.sellerID === this.user.uid) {
           this.router.navigate(['page-not-found']);
@@ -317,7 +316,7 @@ export class CheckoutComponent implements OnInit {
       } else {
         this.product = res.data();
         this.subtotal = this.product.price;
-        this.checkFreeShipping();
+        this.total = this.subtotal + this.shippingPrice;
 
         if (this.product.buyerID === this.user.uid) {
           this.router.navigate(['page-not-found']);
@@ -332,7 +331,7 @@ export class CheckoutComponent implements OnInit {
         this.checkoutService.getTransaction(transactionID).subscribe(response => {
           this.product = response;
           this.subtotal = this.product.price;
-          this.checkFreeShipping();
+          this.total = this.subtotal + this.shippingPrice;
           this.initConfig();
         })
       } else {
