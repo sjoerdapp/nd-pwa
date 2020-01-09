@@ -1,153 +1,223 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 footer {
+  background: $black;
+  display: grid;
+  grid-template-rows: 1fr;
+  row-gap: $spacing-large;
+  align-items: center;
 
-    display: grid;
-    grid-template-rows: 5px 95px;
-    height: $footerHeight;
-    width: 100%;
-    background: $black;
-
-    .footer-logo {
-        margin-left: $spacing-small;
-        align-self: center;
-    }
+  .links {
+    display: inline;
 
     a {
-        background: transparent;
-        border: none;
-        align-self: center;
-        justify-self: center;
-        color: $white;
-        cursor: pointer;
-        @include vendor(transition, $transition-fast ease-in-out);
+      color: $white;
+      padding: 0;
 
-        &:hover {
-            color: $coolergrey;
-        }
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover {
+        color: $coolgrey;
+      }
     }
+  }
 
-    //double line
-    section {
-        grid-column: 1/6;
-    }
-
-    .instagram-btn {
-        grid-column: 3/4;
-
-        &:hover, :focus {
-            color: #e1306c;
-        }
-    }
-
-    .facebook-btn-footer {
-        grid-column: 4/5;
-
-        &:hover, :focus {
-            color: #3c5a99;
-        }
-    }
-
-    .twitter-btn {
-        grid-column: 5/6;
-
-        &:hover, :focus {
-            color: #38A1F3;
-        }
-    }
+  .end {
+    display: grid;
+    align-items: center;
 
     .social {
-        font-size: $font-xlarge;
+      a {
         color: $white;
-        align-self: baseline;
-        cursor: pointer;
+        @include vendor(transition, $transition-fast ease-in-out);
 
-        @include vendor(transition, $transition-normal ease-in-out);
+        margin-right: $spacing-normal;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        fa-icon {
+          font-size: $font-large;
+        }
+      }
+
+      .instagram-btn:hover {
+        color: $instagram;
+      }
+
+      .facebook-btn-footer:hover {
+        color: $facebook;
+      }
+
+      .twitter-btn:hover {
+        color: $twitter;
+      }
+
+      .youtube-btn:hover {
+        color: $youtube;
+      }
     }
+
+    p {
+      color: $white;
+      font-size: $font-xsmall;
+    }
+  }
 }
 
-// MEDIA QUERIES
-
 @media only screen and (min-width: 0px) and (max-width: 400px) {
-    footer {
-        grid-template-columns: 8fr 3fr 3fr 3fr 3fr;
-    }
+  footer {
+    padding: $spacing-normal;
 
-    a {
+    .links {
+      a {
+        margin-right: $spacing-normal;
         font-size: $font-xsmall;
+      }
     }
 
-    .footer-logo {
-        height: $spacing-large;
+    .end {
+      grid-template-rows: 1fr 1fr;
+      row-gap: $spacing-normal;
+
+      .social {
+        justify-self: center;
+      }
+
+      p {
+        justify-self: center;
+      }
     }
+  }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
-    footer {
-        grid-template-columns: 8fr 3fr 3fr 3fr 3fr;
-    }
+  footer {
+    padding: $spacing-normal;
 
-    a {
+    .links {
+      a {
+        margin-right: $spacing-normal;
         font-size: $font-xsmall;
+      }
     }
 
-    .footer-logo {
-        height: $spacing-large;
+    .end {
+      grid-template-rows: 1fr 1fr;
+      row-gap: $spacing-normal;
+
+      .social {
+        justify-self: center;
+      }
+
+      p {
+        justify-self: center;
+      }
     }
+  }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    footer {
-        grid-template-columns: 12fr 2fr 2fr 2fr 2fr;
-    }
-    
-    a {
+  footer {
+    padding: $spacing-large;
+
+    .links {
+      a {
+        margin-right: $spacing-small;
         font-size: $font-small;
+      }
     }
 
-    .footer-logo {
-        height: $spacing-xlarge;
+    .end {
+      grid-template-columns: 1fr 1fr;
+
+      .social {
+        justify-self: start;
+      }
+
+      p {
+        justify-self: end;
+      }
     }
+  }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    footer {
-        grid-template-columns: 12fr 2fr 2fr 2fr 2fr;
-    }
-    
-    a {
-        font-size: $font-normal;
+  footer {
+    padding: $spacing-xlarge;
+
+    .links {
+      a {
+        margin-right: $spacing-small;
+        font-size: $font-small;
+      }
     }
 
-    .footer-logo {
-        height: $spacing-xxlarge;
+    .end {
+      grid-template-columns: 1fr 1fr;
+
+      .social {
+        justify-self: start;
+      }
+
+      p {
+        justify-self: end;
+      }
     }
+  }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    footer {
-        grid-template-columns: 16fr 1fr 1fr 1fr 1fr;
-    }
-    
-    a {
+  footer {
+    padding: $spacing-xlarge;
+
+    .links {
+      a {
+        margin-right: $spacing-small;
         font-size: $font-normal;
+      }
     }
 
-    .footer-logo {
-        height: $spacing-xxlarge;
+    .end {
+      grid-template-columns: 1fr 1fr;
+
+      .social {
+        justify-self: start;
+      }
+
+      p {
+        justify-self: end;
+        font-size: $font-small !important;
+      }
     }
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    footer {
-        grid-template-columns: 16fr 1fr 1fr 1fr 1fr;
-    }
-    
-    a {
+  footer {
+    padding: $spacing-xlarge;
+
+    .links {
+      a {
+        margin-right: $spacing-small;
         font-size: $font-normal;
+      }
     }
 
-    .footer-logo {
-        height: $spacing-xxlarge;
+    .end {
+      grid-template-columns: 1fr 1fr;
+
+      .social {
+        justify-self: start;
+      }
+
+      p {
+        justify-self: end;
+        font-size: $font-small !important;
+      }
     }
+  }
 }
