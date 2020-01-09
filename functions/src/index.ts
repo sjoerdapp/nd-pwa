@@ -923,6 +923,7 @@ exports.deliveredForVerification = functions.https.onRequest((req, res) => {
                         size: req.body.size,
                         condition: req.body.condition,
                         assetURL: req.body.assetURL,
+                        subtotal: req.body.price,
                         fee: fee,
                         processing: processing,
                         payout: payout
