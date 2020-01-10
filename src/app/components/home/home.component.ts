@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ModalService } from 'src/app/services/modal.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 import { isPlatformBrowser } from '@angular/common';
 import { SEOService } from 'src/app/services/seo.service';
 
@@ -13,6 +13,8 @@ import { SEOService } from 'src/app/services/seo.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
+
+  connected: boolean = false;
 
   constructor(
     private title: Title,
@@ -27,6 +29,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.title.setTitle(`NXTDROP: Buy and Sell Sneakers in Canada`);
     this.seo.addTags('Home');
+
+    this.auth.isConnected().then(res => {
+      if(!isNullOrUndefined(res)) {
+        this.connected = true;
+      } else {
+        this.connected = false;
+      }
+    });
   }
 
   ngAfterViewInit() {

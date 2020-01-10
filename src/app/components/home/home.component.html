@@ -3,6 +3,18 @@
 <div class="main-container">
     <app-carousel></app-carousel>
 
+    <section class="how-it-works-banner" *ngIf="!connected">
+        <div class="banner-message">
+            <h1>New to NXTDROP?</h1>
+            <a routerLink="/how-it-works" class="ripple">See How It Works</a>
+        </div>
+
+        <div class="banner-image">
+            <img src="https://firebasestorage.googleapis.com/v0/b/nxtdrop.appspot.com/o/Jordan%206%20Retro%20Gatorade%20Green.png?alt=media&token=16914453-040b-4b71-9144-f0a8bada0713"
+                alt="Jordan 6 Retro Gatorade Green">
+        </div>
+    </section>
+
     <app-trending></app-trending>
 
     <app-new-releases></app-new-releases>

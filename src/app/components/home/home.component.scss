@@ -1,1 +1,193 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
+
+.how-it-works-banner {
+  position: relative;
+  top: -27px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: $lightergrey;
+
+  .banner-message {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+
+    h1 {
+      justify-self: center;
+      text-align: center;
+      align-self: flex-end;
+      letter-spacing: 1px;
+    }
+
+    a {
+      @include vendor(transition, $transition-fast ease-in-out);
+      align-self: flex-start;
+      justify-self: center;
+      border: none;
+      background: $black;
+      color: $white;
+      font-weight: $weight-black;
+      border-radius: $spacing-xxsmall;
+      cursor: pointer;
+
+      &:hover {
+        color: $black;
+        background: $green;
+      }
+    }
+  }
+
+  .banner-image {
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  .how-it-works-banner {
+    padding: $spacing-xlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-small;
+
+      h1 {
+        font-size: $font-normal;
+      }
+
+      a {
+        padding: $spacing-small $spacing-xsmall;
+        font-size: $font-xsmall;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 100px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+  .how-it-works-banner {
+    padding: $spacing-xlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-small;
+
+      h1 {
+        font-size: $font-normal;
+      }
+
+      a {
+        padding: $spacing-small $spacing-xsmall;
+        font-size: $font-xsmall;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 125px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  .how-it-works-banner {
+    padding: $spacing-xlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-normal;
+
+      h1 {
+        font-size: $font-large;
+      }
+
+      a {
+        padding: $spacing-small;
+        font-size: $font-small;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 150px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  .how-it-works-banner {
+    padding: $spacing-xlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-small;
+
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      a {
+        padding: $spacing-normal;
+        font-size: $font-normal;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 250px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  .how-it-works-banner {
+    padding: $spacing-xxlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-small;
+
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      a {
+        padding: $spacing-normal;
+        font-size: $font-normal;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 250px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .how-it-works-banner {
+    padding: $spacing-xxlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-small;
+
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      a {
+        padding: $spacing-normal;
+        font-size: $font-normal;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 250px;
+      }
+    }
+  }
+}
