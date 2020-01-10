@@ -32,6 +32,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.12.0",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@ngtools/webpack": "^8.3.22",
+    "@nguniversal/aspnetcore-engine": "^8.2.6",
     "@nguniversal/express-engine": "^8.2.6",
     "@nguniversal/module-map-ngfactory-loader": "8.1.1",
     "@sendgrid/helpers": "^6.4.0",
