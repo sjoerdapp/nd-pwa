@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import * as firebase from 'firebase/app';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Title } from '@angular/platform-browser';
 import { SEOService } from 'src/app/services/seo.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-activate-account',
@@ -19,9 +19,9 @@ export class ActivateAccountComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private afs: AngularFirestore,
     private title: Title,
-    private seo: SEOService
+    private seo: SEOService,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -29,13 +29,8 @@ export class ActivateAccountComponent implements OnInit {
     this.title.setTitle(`Activate Account | NXTDROP: Sell and Buy Sneakers in Canada`);
     this.seo.addTags('Activate Account');
 
-    this.afs.collection(`users`).doc(`${this.code}`).update({
-      isActive: true
-    }).then(() => {
-      this.good = true;
-    }).catch(err => {
-      // console.error(err);
-      this.error = true;
+    this.http.put(`${environment.cloud.url}activateAccount`, { code: this.code }).subscribe(res => {
+      res ? this.good = true : this.error = true;
     });
   }
 

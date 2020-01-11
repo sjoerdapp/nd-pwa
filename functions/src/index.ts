@@ -945,3 +945,22 @@ exports.deliveredForVerification = functions.https.onRequest((req, res) => {
         return res.status(200);
     });
 });
+
+exports.activateAccount = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method != 'PUT') {
+            return res.status(403).send(false);
+        }
+
+        const uid = req.body.code;
+
+        return admin.firestore().collection(`users`).doc(`${uid}`).update({
+            isActive: true
+        }).then(() => {
+            return res.status(200).send(true);
+        }).catch(err => {
+            console.error(err);
+            return res.status(200).send(false)
+        });
+    });
+});
