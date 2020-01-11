@@ -15,6 +15,7 @@ import { SEOService } from 'src/app/services/seo.service';
 export class HomeComponent implements OnInit, AfterViewInit {
 
   connected: boolean = false;
+  duties: number = 21482;
 
   constructor(
     private title: Title,
@@ -36,6 +37,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
       } else {
         this.connected = false;
       }
+    });
+
+    this.afs.collection(`transactions`).ref.where('boughtAt', '>=', 1577854800000).get().then(res => {
+      let prices = 0;
+
+      res.forEach(ele => {
+        prices += ele.data().total;
+      });
+
+      this.duties += prices;
+    });
+
+    this.afs.collection(`transactions`).ref.where('soldAt', '>=', 1577854800000).get().then(res => {
+      let prices = 0;
+
+      res.forEach(ele => {
+        prices += ele.data().total;
+      });
+
+      this.duties += prices;
     });
   }
 
