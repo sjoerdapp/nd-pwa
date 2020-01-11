@@ -15,6 +15,21 @@
         </div>
     </section>
 
+    <section class="last-sale-banner" routerLink="product/{{ lastSale.productID }}">
+        <h1>Last Sale</h1>
+
+        <div class="prod-description">
+            <img src="{{ lastSale.assetURL }}"
+                alt="{{ lastSale.model }}">
+            <p>{{ lastSale.model }}</p>
+        </div>
+
+        <div class="prod-specs">
+            <h3>{{ lastSale.price | currency:'CAD':'symbol':'3.0-0' }}</h3>
+            <p>{{ lastSale.size }}</p>
+        </div>
+    </section>
+
     <app-trending></app-trending>
 
     <section class="stat-banner">
