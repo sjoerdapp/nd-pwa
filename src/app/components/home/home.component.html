@@ -15,7 +15,43 @@
         </div>
     </section>
 
+    <section class="last-sale-banner" routerLink="product/{{ lastSale.productID }}">
+        <h1>Last Sale</h1>
+
+        <div class="prod-description">
+            <img src="{{ lastSale.assetURL }}"
+                alt="{{ lastSale.model }}">
+            <p>{{ lastSale.model }}</p>
+        </div>
+
+        <div class="prod-specs">
+            <h3>{{ lastSale.price | currency:'CAD':'symbol':'3.0-0' }}</h3>
+            <p>{{ lastSale.size }}</p>
+        </div>
+    </section>
+
     <app-trending></app-trending>
+
+    <section class="stat-banner">
+        <h1>How we have helped our users so far</h1>
+
+        <div class="stat-content">
+            <div class="duties">
+                <h3>{{ duties | currency:'CAD':'symbol':'3.0-0' }}</h3>
+                <p>Saved on Duties</p>
+            </div>
+
+            <img src="https://firebasestorage.googleapis.com/v0/b/nxtdrop.appspot.com/o/adidas%20Yeezy%20Boost%20Zebra.png.png?alt=media&token=890ba2a4-2764-4bf8-86d2-05b74ae25173"
+                alt="adidas Yeezy Boost 350 Zebra">
+
+            <div class="authRate">
+                <h3>100%</h3>
+                <p>Authentication Rate</p>
+            </div>
+        </div>
+
+        <h2>We can help you too</h2>
+    </section>
 
     <app-new-releases></app-new-releases>
 
