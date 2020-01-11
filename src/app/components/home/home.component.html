@@ -15,7 +15,7 @@
         </div>
     </section>
 
-    <section class="last-sale-banner" routerLink="product/{{ lastSale.productID }}">
+    <section routerLink="product/{{ lastSale.productID }}" [class]="connected ? 'last-sale-banner big-margin' : 'last-sale-banner'">
         <h1>Last Sale</h1>
 
         <div class="prod-description">

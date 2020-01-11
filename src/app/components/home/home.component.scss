@@ -94,6 +94,11 @@
   }
 }
 
+.big-margin {
+  margin: 0 auto !important;
+  margin-top: $spacing-xxlarge !important;
+}
+
 .last-sale-banner {
   margin: $spacing-normal auto;
   display: grid;
