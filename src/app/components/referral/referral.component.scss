@@ -1,0 +1,76 @@
+@import "../../base_styles//base";
+
+.main-container {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+
+  .referral-container {
+    display: grid;
+    width: 80vw;
+
+    h1 {
+      text-align: center;
+      font-size: $font-xlarge;
+      margin: $spacing-normal 0;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+    }
+
+    p {
+      color: $black;
+      font-size: $font-small;
+      text-align: center;
+    }
+
+    ol li {
+      color: $black;
+      font-size: $font-xsmall;
+      text-align: center;
+    }
+
+    input {
+      padding: $spacing-small;
+      border: 1px solid $lightgrey;
+      font-size: $font-normal;
+      margin: $spacing-normal 0 0 0;
+      width: 35%;
+      align-self: center;
+      justify-self: center;
+      border-radius: $spacing-xsmall;
+      text-align: center;
+    }
+
+    .disclaimer {
+      font-size: $font-xxsmall;
+      color: $coolgrey;
+      margin: $spacing-small 0;
+      text-align: center;
+    }
+
+    .btn {
+      margin: $spacing-normal 0;
+      width: 20%;
+      justify-self: center;
+      padding: $spacing-small;
+
+      &:hover {
+          background: $green;
+          color: $black;
+      }
+    }
+
+    .skip-btn {
+      justify-self: flex-end;
+      text-transform: uppercase;
+      color: $navyblue;
+      margin: $spacing-normal 0;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+        color: $black;
+      }
+    }
+  }
+}
