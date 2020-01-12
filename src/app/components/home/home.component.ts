@@ -16,7 +16,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   connected: boolean = false;
   duties: number = 21482;
-  lastSale: any;
+  lastSale: any = {
+    productID: '',
+    model: '',
+    assetURL: '',
+    size: '',
+    price: '',
+    time: 0
+  }
 
   constructor(
     private title: Title,
