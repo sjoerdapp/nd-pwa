@@ -60,8 +60,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.duties += prices;
     });
 
-    this.afs.collection(`lastSale`).ref.orderBy(`time`, `desc`).limit(1).get().then(res => {
-      this.lastSale = res.docs[0].data();
+    this.afs.collection(`lastSale`, ref => ref.where(`time`, `<=`, Date.now()).orderBy(`time`, `desc`).limit(1)).valueChanges().subscribe(res => {
+      res.forEach(ele => {
+        this.lastSale = ele;
+      });
     });
   }
 
