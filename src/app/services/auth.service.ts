@@ -239,7 +239,7 @@ export class AuthService {
             sold: 0,
             ordered: 0,
             offers: 0,
-            isActive: false
+            isActive: true
           };
 
           return this.createUserData(userData, userCredential);
