@@ -165,7 +165,7 @@ export class CheckoutService {
     };
 
     // delete listings
-    batch.delete(sellerRef.collection(`offers`).doc(`${product.offerID}`));
+    batch.delete(buyerRef.collection(`offers`).doc(`${product.offerID}`));
     batch.delete(prodRef.collection(`offers`).doc(`${product.offerID}`));
 
     // set ordered and sol fields
