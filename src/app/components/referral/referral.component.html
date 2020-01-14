@@ -7,12 +7,13 @@
             <li>More Listings + More Offers = Better Deals</li>
         </ol>
 
-        <input type="text" name="phone-number" id="phone-number" placeholder="(416) 123-4567" mask="(000) 000-0000">
+        <input type="text" name="phone-number" id="phone-number" placeholder="(416) 123-4567" prefix="+1 " mask="(000) 000-0000">
         <p class="disclaimer">Disclaimer: We do not store phone numbers, because your friend&apos;s privacy matters to us.</p>
 
-        <button class="btn ripple">Send Invite</button>
-        <!--<button class="btn">Invite Sent</button>
-        <button class="btn">Error</button>-->
+        <button class="btn ripple" *ngIf="!error && !loading && !sent" (click)="sendInvite()">Send Invite</button>
+        <button class="btn loading-btn" *ngIf="loading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
+        <button class="btn sent" *ngIf="sent">SMS Sent</button>
+        <button class="btn error-btn" *ngIf="error">Failed To Send</button>
 
         <p routerLink="/" class="skip-btn">Skip >>></p>
     </div>

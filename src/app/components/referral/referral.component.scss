@@ -55,8 +55,38 @@
       padding: $spacing-small;
 
       &:hover {
-          background: $green;
-          color: $black;
+        background: $green;
+        color: $black;
+      }
+    }
+
+    .loading-btn {
+      cursor: auto;
+
+      &:hover {
+        background: $navyblue;
+        color: $white;
+      }
+    }
+
+    .sent {
+      cursor: auto;
+      background: $green;
+      color: $black;
+
+      &:hover {
+        background: $green;
+        color: $black;
+      }
+    }
+
+    .error-btn {
+      cursor: auto;
+      background: $googleRed;
+
+      &:hover {
+        background: $googleRed;
+        color: $white;
       }
     }
 
