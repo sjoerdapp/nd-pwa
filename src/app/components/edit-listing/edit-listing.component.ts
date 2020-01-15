@@ -38,6 +38,8 @@ export class EditListingComponent implements OnInit {
   paymentProcessingFee =  0;
   payout = 0;
 
+  source: string = '../../';
+
   constructor(
     private route: ActivatedRoute,
     private profileService: ProfileService,
@@ -53,6 +55,7 @@ export class EditListingComponent implements OnInit {
     this.seo.addTags('Edit Listing');
     
     this.listingID = this.route.snapshot.params.id;
+    this.source = this.route.snapshot.queryParamMap.get('source');
     this.offerInfo = this.profileService.getListing(this.listingID).then(val => {
       val.subscribe(data => {
         if (isUndefined(data)) {
@@ -86,7 +89,7 @@ export class EditListingComponent implements OnInit {
     const patternGS = new RegExp(/.\(GS\)/);
     let type = 'item-size';
 
-    console.log(this.offerInfo.model.toUpperCase());
+    //console.log(this.offerInfo.model.toUpperCase());
     if (patternW.test(this.offerInfo.model.toUpperCase())) {
       //console.log(`women size`);
       this.isWomen = true;

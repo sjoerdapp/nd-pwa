@@ -119,7 +119,7 @@ export class ProductComponent implements OnInit {
     if (this.buyListings.length < 1) {
       this.productService.getBuy(this.productID).subscribe(data => {
         this.buyListings = data;
-        // console.log(this.buyListings);
+        console.log(this.buyListings);
         /*this.modalTimeout = setTimeout(() => {
           this.getModalCookie();
         }, 5000);*/
