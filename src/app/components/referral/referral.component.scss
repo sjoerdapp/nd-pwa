@@ -7,11 +7,9 @@
 
   .referral-container {
     display: grid;
-    width: 80vw;
 
     h1 {
       text-align: center;
-      font-size: $font-xlarge;
       margin: $spacing-normal 0;
       text-transform: uppercase;
       letter-spacing: 1.1px;
@@ -19,13 +17,11 @@
 
     p {
       color: $black;
-      font-size: $font-small;
       text-align: center;
     }
 
     ol li {
       color: $black;
-      font-size: $font-xsmall;
       text-align: center;
     }
 
@@ -34,7 +30,6 @@
       border: 1px solid $lightgrey;
       font-size: $font-normal;
       margin: $spacing-normal 0 0 0;
-      width: 35%;
       align-self: center;
       justify-self: center;
       border-radius: $spacing-xsmall;
@@ -44,13 +39,12 @@
     .disclaimer {
       font-size: $font-xxsmall;
       color: $coolgrey;
-      margin: $spacing-small 0;
+      margin: $spacing-small auto;
       text-align: center;
     }
 
     .btn {
       margin: $spacing-normal 0;
-      width: 20%;
       justify-self: center;
       padding: $spacing-small;
 
@@ -101,6 +95,172 @@
         text-decoration: underline;
         color: $black;
       }
+    }
+  }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  .referral-container {
+    width: 95vw;
+
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    p {
+      font-size: $font-small;
+    }
+
+    ol li {
+      font-size: $font-xsmall;
+    }
+
+    input {
+      width: 90%;
+    }
+
+    .disclaimer {
+      width: 80%;
+    }
+
+    .btn {
+      width: 70%;
+    }
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+  .referral-container {
+    width: 90vw;
+
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    p {
+      font-size: $font-small;
+    }
+
+    ol li {
+      font-size: $font-xsmall;
+    }
+
+    input {
+      width: 80%;
+    }
+
+    .disclaimer {
+      width: 70%;
+    }
+
+    .btn {
+      width: 40%;
+    }
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  .referral-container {
+    width: 80vw;
+
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    p {
+      font-size: $font-normal;
+    }
+
+    ol li {
+      font-size: $font-small;
+    }
+
+    input {
+      width: 70%;
+    }
+
+    .btn {
+      width: 30%;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  .referral-container {
+    width: 70vw;
+
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    p {
+      font-size: $font-normal;
+    }
+
+    ol li {
+      font-size: $font-small;
+    }
+
+    input {
+      width: 50%;
+    }
+
+    .btn {
+      width: 30%;
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  .referral-container {
+    width: 60vw;
+
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    p {
+      font-size: $font-normal;
+    }
+
+    ol li {
+      font-size: $font-small;
+    }
+
+    input {
+      width: 50%;
+    }
+
+    .btn {
+      width: 30%;
+    }
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .referral-container {
+    width: 60vw;
+
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    p {
+      font-size: $font-normal;
+    }
+
+    ol li {
+      font-size: $font-small;
+    }
+
+    input {
+      width: 50%;
+    }
+
+    .btn {
+      width: 30%;
     }
   }
 }
