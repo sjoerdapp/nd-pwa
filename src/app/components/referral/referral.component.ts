@@ -7,6 +7,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
+declare const gtag: any;
+
 @Component({
   selector: 'app-referral',
   templateUrl: './referral.component.html',
@@ -55,6 +57,11 @@ export class ReferralComponent implements OnInit {
             this.loading = false;
 
             if (message) {
+              
+              gtag('event', 'referral', {
+                'event_category': 'engagement'
+              });
+
               this.sent = true;
               this.cookie.delete('phoneInvitation');
               this.cookie.set('phoneInvitation', 'true', 100, '/', 'localhost', false);
