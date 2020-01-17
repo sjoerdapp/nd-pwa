@@ -34,9 +34,7 @@ sgClient.setApiKey(SENDGRID_API_KEY);
 const universal = require(`${process.cwd()}/dist/server`).app;
 
 // Twilio Init
-const accountSid = 'ACd10e767346152358183ef0d9406d46a2';
-const twilioAuthToken = 'a8a6607edc2f1079f3dd9b84e6afc018';
-const twClient = twilio(accountSid, twilioAuthToken);
+const twClient = twilio(env.twilio.sid, env.twilio.token);
 
 exports.ssr = functions.https.onRequest(universal);
 
