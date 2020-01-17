@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-referral',
@@ -22,12 +23,14 @@ export class ReferralComponent implements OnInit {
     private auth: AuthService,
     private http: HttpClient,
     private afs: AngularFirestore,
-    private routre: Router
+    private routre: Router,
+    private cookie: CookieService
   ) { }
 
   ngOnInit() {
+    this.cookie.delete('phoneInvitation');
+    this.cookie.set('phoneInvitation', 'true', 7, '/', 'localhost', false);
   }
-
 
   sendInvite() {
     this.loading = true;
@@ -35,13 +38,13 @@ export class ReferralComponent implements OnInit {
 
     this.auth.isConnected().then(res => {
 
-      if (isNullOrUndefined(res) || !isNaN(this.phoneNumber) || !isNullOrUndefined(this.phoneNumber)) {
+      if (isNullOrUndefined(res) || isNaN(this.phoneNumber) || isNullOrUndefined(this.phoneNumber)) {
         this.loading = false;
         this.error = true;
       } else {
         this.afs.collection(`users`).doc(`${res.uid}`).get().subscribe(response => {
           let name;
-          (isNullOrUndefined(response.data().lastName)) ? name = response.data().firstName + response.data().lastName : name = response.data().firstName;
+          (isNullOrUndefined(response.data().lastName)) ? name = response.data().firstName : name = response.data().firstName + response.data().lastName;
 
           const data = {
             phoneNumber: this.phoneNumber,
@@ -53,6 +56,8 @@ export class ReferralComponent implements OnInit {
 
             if (message) {
               this.sent = true;
+              this.cookie.delete('phoneInvitation');
+              this.cookie.set('phoneInvitation', 'true', 100, '/', 'localhost', false);
               this.routre.navigate(['..']);
             } else {
               this.error = true;

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 /** Components */
 import { AppComponent } from './app.component';
@@ -157,7 +158,9 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     HttpClientModule,
     NgxPayPalModule
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
