@@ -31,7 +31,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.0",
     "@fortawesome/free-regular-svg-icons": "^5.12.0",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
-    "@ngtools/webpack": "^8.3.22",
+    "@ngtools/webpack": "^8.3.23",
     "@nguniversal/aspnetcore-engine": "^8.2.6",
     "@nguniversal/express-engine": "^8.2.6",
     "@nguniversal/module-map-ngfactory-loader": "8.1.1",
@@ -53,6 +53,7 @@
     "https-proxy-agent": "^3.0.1",
     "lodash": "^4.17.15",
     "mixin-deep": "^2.0.1",
+    "ngx-cookie-service": "^2.3.0",
     "ngx-mask": "^8.1.7",
     "ngx-paypal": "^5.0.0",
     "paymentrails": "^0.9.7",
@@ -63,7 +64,7 @@
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.22",
+    "@angular-devkit/build-angular": "^0.803.23",
     "@angular/cli": "^8.3.22",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "^8.2.14",

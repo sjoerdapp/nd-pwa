@@ -39,6 +39,11 @@
         "source": "/blog",
         "destination": "/404",
         "type": 301
+      },
+      {
+        "source": "/welcome",
+        "destination": "/how-it-works?source=sms",
+        "type": 301
       }
     ],
     "headers": [

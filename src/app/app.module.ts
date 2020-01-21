@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 /** Components */
 import { AppComponent } from './app.component';
@@ -57,6 +58,7 @@ import { DropComponent } from './components/special-drop/drop/drop.component';
 import { SnkrsComponent } from './components/snkrs/snkrs.component';
 import { Dec182019Component } from './components/landing-pages/dec182019//dec182019.component';
 import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
+import { ReferralComponent } from './components/referral/referral.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -138,7 +140,8 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     SnkrsComponent,
     SafeHtmlPipe,
     Dec182019Component,
-    HowItWorksComponent
+    HowItWorksComponent,
+    ReferralComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -155,7 +158,9 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     HttpClientModule,
     NgxPayPalModule
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

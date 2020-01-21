@@ -3,6 +3,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as algoliasearch from 'algoliasearch';
 import * as cryptoString from 'crypto-random-string';
+import * as twilio from 'twilio';
 import { isUndefined, isNullOrUndefined } from 'util';
 
 // initalizations
@@ -25,12 +26,15 @@ const SENDGRID_API_KEY = env.sendgrid.key;
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(SENDGRID_API_KEY);
 
-//Sendgrid Web Api Setup
+// Sendgrid Web Api Setup
 const sgClient = require('@sendgrid/client');
 sgClient.setApiKey(SENDGRID_API_KEY);
 
 // Server-Side Rendering
 const universal = require(`${process.cwd()}/dist/server`).app;
+
+// Twilio Init
+const twClient = twilio(env.twilio.sid, env.twilio.token);
 
 exports.ssr = functions.https.onRequest(universal);
 
@@ -511,56 +515,27 @@ exports.productShipment = functions.https.onRequest((req, res) => {
 });
 
 // Email Invite
-exports.inviteEmail = functions.https.onRequest((req, res) => {
+exports.inviteFriend = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
         if (req.method !== 'POST') {
-            admin.firestore().collection(`users`).doc(`${req.body.uid}`).set({
-                shippingPromo: admin.firestore.FieldValue.delete()
-            }).catch(error => {
-                console.error(error);
-            });
-
             return res.status(403).send(false);
         }
 
-        console.log(`${req.body.from} send an invitation to ${req.body.to}`);
+        const name = req.body.name;
+        const phoneNumber = req.body.phoneNumber;
 
-        const msg = {
-            to: req.body.to,
-            from: req.body.from,
-            templateId: 'd-9edc13d3429c4a4fa8b50473cc4a536f',
-            dynamic_template_data: {
-                uid: req.body.uid,
-                to: req.body.from
-            }
-        }
 
-        return admin.firestore().collection(`users`).where('email', '==', `${req.body.to}`).get().then(response => {
-            if (response.docs.length === 0) {
-                return sgMail.send(msg).then((content: any) => {
-                    console.log(content);
-                    return res.send(true).status(200);
-                }).catch((err: any) => {
-                    console.error(err);
-
-                    admin.firestore().collection(`users`).doc(`${req.body.uid}`).set({
-                        shippingPromo: admin.firestore.FieldValue.delete()
-                    }).catch(error => {
-                        console.error(error);
-                    });
-
-                    return res.send(false).status(500);
-                });
-            } else {
-                admin.firestore().collection(`users`).doc(`${req.body.uid}`).set({
-                    shippingPromo: admin.firestore.FieldValue.delete()
-                }).catch(error => {
-                    console.error(error);
-                });
-
-                return res.send(false).status(500);
-            }
-        })
+        return twClient.messages.create({
+            body: `Your friend ${name} invited you to NXTDROP,the first Canadian online sneaker marketplace like StockX & GOAT. Visit nxtdrop.com/welcome to see how it works.`,
+            from: '+15873273010',
+            to: `${phoneNumber}`,
+        }).then(message => {
+            console.log(message);
+            return res.status(200).send(true);
+        }).catch(err => {
+            console.error(err);
+            return res.send(false);
+        });
     });
 });
 
