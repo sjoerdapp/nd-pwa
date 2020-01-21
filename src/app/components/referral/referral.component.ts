@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { SlackService } from 'src/app/services/slack.service';
 
 declare const gtag: any;
 
@@ -26,12 +27,13 @@ export class ReferralComponent implements OnInit {
     private http: HttpClient,
     private afs: AngularFirestore,
     private routre: Router,
-    private cookie: CookieService
+    private cookie: CookieService,
+    private slack: SlackService
   ) { }
 
   ngOnInit() {
     this.cookie.delete('phoneInvitation');
-    this.cookie.set('phoneInvitation', 'true', 7, '/', 'localhost', false);
+    this.cookie.set('phoneInvitation', 'true', 7, '/');
   }
 
   sendInvite() {
@@ -62,9 +64,11 @@ export class ReferralComponent implements OnInit {
                 'event_category': 'engagement'
               });
 
+              this.slack.sendAlert('others', `${res.uid} sent an invitation to ${this.phoneNumber}`);
+
               this.sent = true;
               this.cookie.delete('phoneInvitation');
-              this.cookie.set('phoneInvitation', 'true', 100, '/', 'localhost', false);
+              this.cookie.set('phoneInvitation', 'true', 100, '/');
               this.routre.navigate(['..']);
             } else {
               this.error = true;
