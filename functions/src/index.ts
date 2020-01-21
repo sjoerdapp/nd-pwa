@@ -526,7 +526,7 @@ exports.inviteFriend = functions.https.onRequest((req, res) => {
 
 
         return twClient.messages.create({
-            body: `Your friend ${name} invited you to NXTDROP,the first Canadian online sneaker marketplace like StockX & GOAT. Visit nxtdrop.com/how-it-works to see how it works.`,
+            body: `Your friend ${name} invited you to NXTDROP,the first Canadian online sneaker marketplace like StockX & GOAT. Visit nxtdrop.com/welcome to see how it works.`,
             from: '+15873273010',
             to: `${phoneNumber}`,
         }).then(message => {
