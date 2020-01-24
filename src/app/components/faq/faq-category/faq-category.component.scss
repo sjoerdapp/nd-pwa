@@ -1,0 +1,303 @@
+@import "../../../base_styles/base";
+
+.main-container {
+  h1 {
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  button {
+    margin: $spacing-large auto;
+    padding: $spacing-normal;
+    display: block;
+    background: $black;
+    font-size: $font-normal;
+    cursor: pointer;
+  }
+}
+
+.category-container {
+  .question {
+    padding: $spacing-normal;
+    border-bottom: 1px solid $lightgrey;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    cursor: pointer;
+
+    p {
+      align-self: flex-end;
+
+      &:last-child {
+        color: $coolgrey;
+      }
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  .main-container {
+    h1 {
+      margin: $spacing-normal;
+      font-size: $font-large;
+    }
+
+    button {
+      width: 80vw;
+
+      &:hover {
+        background: $black;
+      }
+    }
+  }
+
+  .category-container {
+    width: 95vw;
+    margin: $spacing-xsmall auto;
+
+    .question {
+      h2 {
+        font-size: $font-normal;
+      }
+
+      p {
+        font-size: $font-small;
+      }
+
+      &:hover {
+        background: none;
+
+        h2 {
+          color: $black;
+        }
+
+        p {
+          color: $coolgrey !important;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+  .main-container {
+    h1 {
+      margin: $spacing-normal;
+      font-size: $font-large;
+    }
+
+    button {
+      width: 60vw;
+
+      &:hover {
+        background: $black;
+      }
+    }
+  }
+
+  .category-container {
+    width: 90vw;
+    margin: $spacing-xsmall auto;
+
+    .question {
+      h2 {
+        font-size: $font-normal;
+      }
+
+      p {
+        font-size: $font-small;
+      }
+
+      &:hover {
+        background: none;
+
+        h2 {
+          color: $black;
+        }
+
+        p {
+          color: $coolgrey !important;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  .main-container {
+    h1 {
+      margin: $spacing-normal;
+      font-size: $font-large;
+    }
+
+    button {
+      width: 50vw;
+
+      &:hover {
+        background: $black;
+      }
+    }
+  }
+
+  .category-container {
+    width: 80vw;
+    margin: $spacing-xsmall auto;
+
+    .question {
+      h2 {
+        font-size: $font-normal;
+      }
+
+      p {
+        font-size: $font-small;
+      }
+
+      &:hover {
+        background: none;
+
+        h2 {
+          color: $black;
+        }
+
+        p {
+          color: $coolgrey !important;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  .main-container {
+    h1 {
+      margin: $spacing-large;
+      font-size: $font-xlarge;
+    }
+
+    button {
+      width: 30vw;
+
+      &:hover {
+        background: $matteblack;
+      }
+    }
+  }
+
+  .category-container {
+    width: 70vw;
+    margin: $spacing-xsmall auto;
+
+    .question {
+      h2 {
+        font-size: $font-large;
+      }
+
+      p {
+        font-size: $font-normal;
+      }
+
+      &:hover {
+        background: $black;
+
+        h2 {
+          color: $white;
+        }
+
+        p {
+          color: $white !important;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  .main-container {
+    h1 {
+      margin: $spacing-large;
+      font-size: $font-xlarge;
+    }
+
+    button {
+      width: 30vw;
+
+      &:hover {
+        background: $matteblack;
+      }
+    }
+  }
+
+  .category-container {
+    width: 60vw;
+    margin: $spacing-xsmall auto;
+
+    .question {
+      h2 {
+        font-size: $font-large;
+      }
+
+      p {
+        font-size: $font-normal;
+      }
+
+      &:hover {
+        background: $black;
+
+        h2 {
+          color: $white;
+        }
+
+        p {
+          color: $white !important;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .main-container {
+    h1 {
+      margin: $spacing-large;
+      font-size: $font-xxlarge;
+    }
+
+    button {
+      width: 20vw;
+
+      &:hover {
+        background: $matteblack;
+      }
+    }
+  }
+
+  .category-container {
+    width: 50vw;
+    margin: $spacing-xsmall auto;
+
+    .question {
+      h2 {
+        font-size: $font-xlarge;
+      }
+
+      p {
+        font-size: $font-normal;
+      }
+
+      &:hover {
+        background: $black;
+
+        h2 {
+          color: $white;
+        }
+
+        p {
+          color: $white !important;
+        }
+      }
+    }
+  }
+}

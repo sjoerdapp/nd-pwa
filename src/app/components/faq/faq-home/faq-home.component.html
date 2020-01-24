@@ -1,7 +1,16 @@
 <app-navbar></app-navbar>
 
 <section class="main-container">
-    Home
+    <section class="faq-home">
+        <h1>Frequently Asked Questions</h1>
+
+        <div class="categories">
+            <a routerLink="buying" class="btn"><fa-icon [icon]="['fas', 'hand-holding-usd']"></fa-icon> &nbsp; Buying</a>
+            <a routerLink="selling" class="btn"><fa-icon [icon]="['fas', 'tag']"></fa-icon> &nbsp; Selling</a>
+            <a routerLink="shipping" class="btn"><fa-icon [icon]="['fas', 'shipping-fast']"></fa-icon> &nbsp; Shipping</a>
+            <a routerLink="account" class="btn"><fa-icon [icon]="['fas', 'user-circle']"></fa-icon> &nbsp; Account</a>
+        </div>
+    </section>
 </section>
 
 <app-footer></app-footer>
