@@ -1,0 +1,15 @@
+<app-navbar></app-navbar>
+
+<section class="main-container">
+    <h1>FAQ {{ '| ' + category }} {{ '| ' + content.Q }}</h1>
+
+    <div class="post-container">
+        <h2>{{ content.Q }}</h2>
+
+        <p>{{ content.A }}</p>
+    </div>
+
+    <button class="btn" routerLink="..">Back</button>
+</section>
+
+<app-footer></app-footer>

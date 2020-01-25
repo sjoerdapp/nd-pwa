@@ -59,6 +59,9 @@ import { SnkrsComponent } from './components/snkrs/snkrs.component';
 import { Dec182019Component } from './components/landing-pages/dec182019//dec182019.component';
 import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { ReferralComponent } from './components/referral/referral.component';
+import { FaqHomeComponent } from './components/faq/faq-home/faq-home.component';
+import { FaqCategoryComponent } from './components/faq/faq-category/faq-category.component';
+import { FaqPostComponent } from './components/faq/faq-post/faq-post.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -142,6 +145,9 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     Dec182019Component,
     HowItWorksComponent,
     ReferralComponent
+    FaqHomeComponent,
+    FaqPostComponent,
+    FaqCategoryComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
