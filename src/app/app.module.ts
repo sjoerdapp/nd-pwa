@@ -144,7 +144,7 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     SafeHtmlPipe,
     Dec182019Component,
     HowItWorksComponent,
-    ReferralComponent
+    ReferralComponent,
     FaqHomeComponent,
     FaqPostComponent,
     FaqCategoryComponent
