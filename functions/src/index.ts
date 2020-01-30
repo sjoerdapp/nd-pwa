@@ -376,6 +376,91 @@ exports.verifiedShipped = functions.https.onRequest((req, res) => {
     });
 });
 
+exports.verifiedFailed = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send();
+        }
+
+        admin.firestore().collection(`users`).doc(`${req.body.buyerID}`).get().then(response => {
+            const data = response.data();
+
+            if (data) {
+                //const email = data.email;
+                const email = data.email;
+                const total = req.body.price + req.body.shippingCost;
+
+                console.log(`VerifiedFailed Email Buyer to ${email}.`);
+
+                const msg = {
+                    to: email,
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                    templateId: 'd-ab08e34c230b4e8b8370ff5090810bfa',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        subtotal: req.body.price,
+                        shipping: req.body.shippingCost,
+                        total: total,
+                        assetURL: req.body.assetURL,
+                    }
+                }
+
+                sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent to buyer`);
+                }).catch((err: any) => {
+                    console.error(`Could send email to buyer: ${err}`);
+                })
+            } else {
+                console.error(`buyer don't exist`);
+            }
+        }).catch(err => {
+            console.error(`error sending buyer email`);
+        });
+
+        admin.firestore().collection(`users`).doc(`${req.body.sellerID}`).get().then(response => {
+            const data = response.data();
+            if (data) {
+                const email = data.email;
+                const fee = req.body.price * 0.095;
+                const processing = req.body.price * 0.03;
+                const payout = req.body.price - fee - processing;
+
+                console.log(`VerifiedFailed Email Seller to ${email}.`);
+
+                const msg = {
+                    to: email,
+                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                    templateId: 'd-83cd9d7140b34bc7ae3bb1c5781c2315',
+                    dynamic_template_data: {
+                        model: req.body.model,
+                        size: req.body.size,
+                        condition: req.body.condition,
+                        assetURL: req.body.assetURL,
+                        fee: fee,
+                        processing: processing,
+                        payout: payout,
+                        price: req.body.price
+                    }
+                }
+
+                sgMail.send(msg).then((content: any) => {
+                    console.log(`email sent to seller`);
+                }).catch((err: any) => {
+                    console.error(`Could send email to seller: ${err}`);
+                })
+            } else {
+                console.error(`buyer don't exist`);
+            }
+        }).catch(err => {
+            console.error(`error sending seller email`);
+        })
+
+        return res.status(200);
+    });
+});
+
 exports.orderConfirmation = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
         if (req.method !== 'POST') {
