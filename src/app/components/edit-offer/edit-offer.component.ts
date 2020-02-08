@@ -65,7 +65,7 @@ export class EditOfferComponent implements OnInit {
           this.shoeSizes();
 
           this.sellService.getLowestListing(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
-            if (!data.empty) {
+            if (data.length > 0) {
               data.forEach(val => {
                 this.lowestListing = val.data().price;
               });

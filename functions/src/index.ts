@@ -868,7 +868,9 @@ exports.sendGiftCard = functions.https.onRequest((req, res) => {
             }
         }
 
-        if (req.body.giftCard20) {
+        if (req.body.giftCard15) {
+            msg.dynamic_template_data.giftCard15 = true;
+        } else if (req.body.giftCard20) {
             msg.dynamic_template_data.giftCard20 = true;
         } else if (req.body.giftCard25) {
             msg.dynamic_template_data.giftCard25 = true;

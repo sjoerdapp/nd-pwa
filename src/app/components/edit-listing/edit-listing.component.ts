@@ -71,7 +71,7 @@ export class EditListingComponent implements OnInit {
           this.calculateSellerFees();
 
           this.sellService.getHighestOffer(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
-            if (!data.empty) {
+            if (data.length > 0) {
               data.forEach(val => {
                 this.highestOffer = val.data().price;
               });

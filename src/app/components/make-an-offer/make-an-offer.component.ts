@@ -199,7 +199,7 @@ export class MakeAnOfferComponent implements OnInit {
     element.style.display = 'block';
 
     this.sellService.getHighestOffer(this.selectedPair.productID, this.pairCondition, this.pairSize).subscribe(data => {
-      if (!data.empty) {
+      if (data.length > 0) {
         data.forEach(val => {
           this.highestOffer = val.data().price;
         });
@@ -209,7 +209,7 @@ export class MakeAnOfferComponent implements OnInit {
     });
 
     this.sellService.getLowestListing(this.selectedPair.productID, this.pairCondition, this.pairSize).subscribe(data => {
-      if (!data.empty) {
+      if (data.length > 0) {
         data.forEach(val => {
           this.lowestListingPrice = val.data().price;
           this.lowestListing = val.data();
