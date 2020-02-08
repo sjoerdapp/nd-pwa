@@ -4,10 +4,10 @@ import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 import { Product } from 'src/app/models/product';
-import { isUndefined } from 'util';
-import { ModalService } from 'src/app/services/modal.service';
+import { isNullOrUndefined } from 'util';
 import { SEOService } from 'src/app/services/seo.service';
 import { isPlatformBrowser } from '@angular/common';
+import { SellService } from 'src/app/services/sell.service';
 
 declare const gtag: any;
 
@@ -20,6 +20,9 @@ export class ProductComponent implements OnInit {
 
   productID: string;
 
+  sizes: number[] = [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17];
+  sizeSuffix: string = '';
+
   productInfo: Product = {
     assetURL: '',
     model: '',
@@ -31,11 +34,14 @@ export class ProductComponent implements OnInit {
     colorway: ''
   };
 
-  buyListings = [];
-  offersListings = [];
-
-  showBuy = false;
-  showOffers = false;
+  offers = [];
+  currentOffer = {
+    LowestAsk: '',
+    HighestBid: ''
+  }
+  sizeSelected: string = '';
+  lowestAsk: any;
+  highestBid: any;
 
   modalTimeout;
 
@@ -47,23 +53,25 @@ export class ProductComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private title: Title,
-    private modalService: ModalService,
     private seo: SEOService,
     private ngZone: NgZone,
+    private sellService: SellService,
     @Inject(PLATFORM_ID) private platform_id: Object
   ) { }
 
   ngOnInit() {
     this.productID = this.route.snapshot.params.id;
 
+    this.getSizeSuffix();
+
     this.auth.isConnected().then(res => {
-      if (!isUndefined(res)) {
+      if (!isNullOrUndefined(res)) {
         this.UID = res.uid;
       }
     });
 
     this.productService.getProductInfo(this.productID).subscribe(data => {
-      if (isUndefined(data)) {
+      if (isNullOrUndefined(data)) {
         this.router.navigate([`page-not-found`]);
       } else {
         this.seo.addTags('Product', data);
@@ -72,6 +80,7 @@ export class ProductComponent implements OnInit {
       }
     });
 
+    this.getOffers();
     this.countView();
   }
 
@@ -84,6 +93,19 @@ export class ProductComponent implements OnInit {
       }
     });
   }*/
+
+  getSizeSuffix() {
+    const patternW = new RegExp(/.\(W\)/);
+    const patternGS = new RegExp(/.\(GS\)/);
+
+    if (patternW.test(this.productID.toUpperCase())) {
+      //console.log('Woman Size');
+      this.sizeSuffix = 'W';
+    } else if (patternGS.test(this.productID.toUpperCase())) {
+      //console.log(`GS size`);
+      this.sizeSuffix = 'Y';
+    }
+  }
 
   countView() {
     this.productService.countView(this.productID).catch(err => {
@@ -109,50 +131,6 @@ export class ProductComponent implements OnInit {
       });
     });
   }
-
-  navigationBuy() {
-    document.getElementById('buy-btn').style.background = '#383637';
-    document.getElementById('offers-btn').style.background = '#222021';
-
-    this.showBuy = true;
-    this.showOffers = false;
-    if (this.buyListings.length < 1) {
-      this.productService.getBuy(this.productID).subscribe(data => {
-        this.buyListings = data;
-        console.log(this.buyListings);
-        /*this.modalTimeout = setTimeout(() => {
-          this.getModalCookie();
-        }, 5000);*/
-      });
-    }
-  }
-
-  navigationOffers() {
-    document.getElementById('buy-btn').style.background = '#222021';
-    document.getElementById('offers-btn').style.background = '#383637';
-
-    this.showBuy = false;
-    this.showOffers = true;
-    if (this.offersListings.length < 1) {
-      this.productService.getOffers(this.productID).subscribe(data => {
-        this.offersListings = data;
-      });
-    }
-  }
-
-  /*private getModalCookie() {
-    const cookies = document.cookie.split(`;`);
-    cookies.forEach(element => {
-      element.split(`=`);
-
-      if (document.cookie.replace(/(?:(?:^|.*;\s*)modalOffer\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
-        this.modalService.openModal('makeOffer');
-        this.modalService.placeOffer(this.productInfo);
-        const expr = new Date(new Date().getTime() + 60 * 60000 * 24).toUTCString();
-        document.cookie = `modalOffer=true; expires=${expr}; path=/product/`
-      }
-    });
-  }*/
 
   share(social: string) {
     if (isPlatformBrowser(this.platform_id)) {
@@ -206,6 +184,71 @@ export class ProductComponent implements OnInit {
         document.getElementById('tooltiptext').style.visibility = 'none';
         document.getElementById('tooltiptext').style.opacity = '0';
       }, 3000);
+    }
+  }
+
+  getOffers() {
+    this.sizes.forEach(ele => {
+      let ask: any;
+      let bid: any;
+
+      const size = `US${ele}${this.sizeSuffix}`;
+
+      this.sellService.getHighestOffer(`${this.productID}`, 'new', size).subscribe(bidData => {
+        bid = bidData[0];
+
+        this.sellService.getLowestListing(`${this.productID}`, 'new', size).subscribe(askData => {
+          ask = askData[0];
+
+          const data = {
+            LowestAsk: ask,
+            HighestBid: bid,
+            size: size
+          }
+
+          this.offers.push(data);
+
+          if (!isNullOrUndefined(data.LowestAsk)) {
+            if (isNullOrUndefined(this.lowestAsk)) {
+              this.lowestAsk = data.LowestAsk;
+            } else if (this.lowestAsk.price > data.LowestAsk.price) {
+              this.lowestAsk = data.LowestAsk;
+            }
+          }
+
+          if (!isNullOrUndefined(data.HighestBid)) {
+            if (isNullOrUndefined(this.highestBid)) {
+              this.highestBid = data.HighestBid;
+            } else if (this.highestBid.price < data.HighestBid.price) {
+              this.highestBid = data.HighestBid;
+            }
+          }
+
+          if (this.sizes.length === this.offers.length) {
+            this.currentOffer.LowestAsk = this.lowestAsk;
+            this.currentOffer.HighestBid = this.highestBid;
+          }
+        });
+      });
+    });
+  }
+
+  selectSize(selected: any) {
+    const result = this.offers.find(({ size }) => size === selected);
+
+    if (selected === this.sizeSelected) {
+      this.sizeSelected = '';
+      this.currentOffer.LowestAsk = this.lowestAsk;
+      this.currentOffer.HighestBid = this.highestBid;
+      (document.getElementById(`${selected}`) as HTMLInputElement).classList.remove('selected');
+    } else {
+      if (this.sizeSelected != '') {
+        (document.getElementById(`${this.sizeSelected}`) as HTMLInputElement).classList.remove('selected');
+      }
+
+      this.currentOffer = Object.assign({}, result);
+      this.sizeSelected = selected;
+      (document.getElementById(`${selected}`) as HTMLInputElement).classList.add('selected');
     }
   }
 
