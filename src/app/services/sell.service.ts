@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Product } from '../models/product';
 import { AuthService } from './auth.service';
 import * as firebase from 'firebase/app';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -93,14 +93,20 @@ export class SellService {
     return prodRef.get();
   }*/
 
-  getHighestOffer(productID: string, condition: string, size: string) {
-    const offerRef = this.afs.collection(`products`).doc(`${productID}`).collection(`offers`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `desc`).limit(1));
-    return offerRef.get();
+  getHighestOffer(productID: string, condition: string, size?: string) {
+    let offerRef;
+
+    isNullOrUndefined(size) ? offerRef = this.afs.collection(`products`).doc(`${productID}`).collection(`offers`, ref => ref.where(`condition`, `==`, `${condition}`).orderBy(`price`, `desc`).limit(1)) : offerRef = this.afs.collection(`products`).doc(`${productID}`).collection(`offers`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `desc`).limit(1));
+
+    return offerRef.valueChanges();
   }
 
-  getLowestListing(productID: string, condition: string, size: string) {
-    const listingRef = this.afs.collection(`products`).doc(`${productID}`).collection(`listings`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `asc`).limit(1));
-    return listingRef.get();
+  getLowestListing(productID: string, condition: string, size?: string) {
+    let listingRef;
+
+    isNullOrUndefined(size) ? listingRef = this.afs.collection(`products`).doc(`${productID}`).collection(`listings`, ref => ref.where(`condition`, `==`, `${condition}`).orderBy(`price`, `asc`).limit(1)) : listingRef = this.afs.collection(`products`).doc(`${productID}`).collection(`listings`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `asc`).limit(1));
+
+    return listingRef.valueChanges();
   }
 
 }

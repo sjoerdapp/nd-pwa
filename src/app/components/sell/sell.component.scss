@@ -24,25 +24,270 @@
   align-self: baseline;
 }
 
-#sell-page-2,
-#sell-page-3,
-#sell-page-4 {
-  display: none;
-}
-
 #sell-page-3 {
-  h3 {
-    margin: $spacing-large auto;
-  }
-}
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 90vw;
+  height: $productContainerHeight;
+  column-gap: 0;
+  margin: 0 5vw;
 
-#sell-page-4 {
-  .pairStats {
-    margin-top: $spacing-normal;
+  .disabled {
+    background: $lightgrey !important;
+    cursor: not-allowed;
+
+    &:hover {
+      background: $lightgrey !important;
+    }
+  }
+
+  .product-info {
+    text-align: center;
     display: grid;
-    grid-template-columns: 1fr 1fr;
     align-items: center;
     justify-items: center;
+
+    img {
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+      background: $white;
+      border: none;
+      width: 80%;
+    }
+
+    .product-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: $spacing-normal;
+      align-self: flex-start;
+
+      h4 {
+        &:first-child {
+          color: $prodBtnPrimary2;
+        }
+
+        &:last-child {
+          color: $prodBtnPrimary;
+        }
+      }
+    }
+  }
+
+  .sizes {
+    background: $lightergrey;
+    overflow-y: auto;
+    padding: $spacing-small;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    column-gap: $spacing-xsmall;
+    row-gap: $spacing-xsmall;
+
+    .size {
+      @include vendor(transition, 0.2s ease-in);
+      padding: $spacing-xsmall;
+      border: 2px solid $black;
+      background: $white;
+      height: 70px;
+      width: 70px;
+      border-radius: $spacing-xxsmall;
+      cursor: pointer;
+      display: grid;
+      align-items: center;
+
+      #size,
+      #highestBid {
+        background: none;
+        font-weight: $weight-black;
+        font-size: $font-xsmall;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        height: 80%;
+        outline: none;
+      }
+
+      #size {
+        font-size: $font-normal;
+        letter-spacing: 1px;
+      }
+
+      #highestBid {
+        color: $prodBtnPrimary2;
+      }
+
+      &:hover {
+        background: $black;
+
+        #size {
+          color: $white;
+        }
+      }
+    }
+  }
+
+  .selling-form {
+    background: $lightergrey;
+    padding: $spacing-normal;
+
+    .size-display {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      width: 80%;
+      margin: $spacing-small auto;
+      align-items: center;
+      background: $white;
+      padding: $spacing-normal;
+      border: 1px solid $lightgrey;
+
+      h4 {
+        justify-self: center;
+        font-size: $font-large;
+      }
+
+      button {
+        justify-self: end;
+        background: $black;
+        padding: $spacing-small;
+        font-size: $font-small;
+        text-transform: uppercase;
+
+        &:hover {
+          background: $matteblack;
+        }
+      }
+    }
+
+    .offer-display {
+      width: 100%;
+      margin: $spacing-small auto;
+
+      .sell-now-container {
+        @extend .size-display;
+
+        div {
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          justify-items: center;
+          align-items: center;
+
+          h4 {
+            font-size: $font-normal;
+          }
+
+          p {
+            color: $prodBtnPrimary2;
+            font-size: $font-large;
+            font-weight: $weight-black;
+            justify-self: center;
+            text-align: center;
+          }
+        }
+
+        button {
+          background: $prodBtnPrimary2;
+
+          &:hover {
+            background: #f2635a;
+          }
+        }
+      }
+
+      .place-ask-container {
+        display: grid;
+        width: 80%;
+        margin: $spacing-small auto;
+        align-items: center;
+        background: $white;
+        padding: $spacing-normal;
+        border: 1px solid $lightgrey;
+
+        .seller-input {
+          display: grid;
+          grid-template-columns: 1fr 6fr;
+          margin: $spacing-small auto;
+          width: 100%;
+
+          button,
+          input {
+            @include vendor(transition, 0.25s ease-in-out);
+          }
+
+          button {
+            background: $lightergrey;
+            color: $black;
+            border: 1px solid $lightgrey;
+            border-right: 1px solid $lightergrey;
+            font-size: $font-normal;
+            font-weight: $weight-black;
+          }
+
+          input {
+            padding: $spacing-small;
+            border: 1px solid $lightgrey;
+            border-left: none;
+            font-size: $font-normal;
+          }
+
+          &:hover {
+            button,
+            input {
+              border-color: #f2635a;
+            }
+          }
+        }
+
+        .fee-calculator {
+          margin: $spacing-small auto;
+          width: 100%;
+
+          div {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: $spacing-small 0;
+            border-bottom: 1px dotted $black;
+
+            p {
+              align-self: center;
+              font-size: $font-small;
+
+              &:first-child {
+                justify-self: start;
+              }
+
+              &:last-child {
+                justify-self: end;
+              }
+            }
+
+            &:last-child {
+              border-bottom: none;
+            }
+          }
+
+          .payout {
+            font-weight: $weight-black;
+
+            p {
+              font-size: $font-normal;
+            }
+          }
+        }
+
+        .place-ask-btn {
+          width: 50%;
+          padding: $spacing-small;
+          text-transform: uppercase;
+          margin: $spacing-small auto;
+          background: $prodBtnPrimary2;
+
+          &:hover {
+            background: #f2635a;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -128,66 +373,6 @@
     }
   }
 
-  .sell-radios {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin: $spacing-normal auto;
-    align-items: center;
-    justify-items: center;
-
-    div {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-
-      label {
-        font-size: $font-small;
-      }
-    }
-  }
-
-  .sell-price-input {
-    width: 90%;
-    margin: $spacing-normal auto;
-    display: grid;
-    grid-template-columns: 10% 80% 10%;
-    background: $white;
-    border: 1px solid $lightgrey;
-    border-radius: $spacing-xxsmall;
-
-    input {
-      border: none;
-      height: inherit;
-      padding: $spacing-small;
-      font-size: $font-normal;
-      letter-spacing: 2px;
-      font-weight: $weight-black;
-    }
-
-    button {
-      border: none;
-      height: inherit;
-      background: $matteblack;
-      color: $white;
-
-      &:first-child {
-        border-top-left-radius: $spacing-xxsmall;
-        border-bottom-left-radius: $spacing-xxsmall;
-      }
-
-      &:last-child {
-        border-top-right-radius: $spacing-xxsmall;
-        border-bottom-right-radius: $spacing-xxsmall;
-      }
-    }
-  }
-
-  #item-size {
-    display: block;
-    height: 35px;
-    margin: $spacing-normal auto;
-  }
-
   .sell-btns {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -209,66 +394,6 @@
       &:last-child:hover {
         background: $matteblue;
       }
-    }
-  }
-
-  .error-btn {
-    background: $inputError;
-
-    &:hover {
-      background: $inputError !important;
-    }
-  }
-
-  .listed-btn {
-    background: $green;
-
-    &:hover {
-      background: $green !important;
-    }
-  }
-
-  .disabled {
-    background: $lightgrey;
-    cursor: not-allowed;
-
-    &:hover {
-      background: $lightgrey !important;
-    }
-  }
-
-  #page-2-back-btn-alt {
-    display: none;
-    background: $black;
-
-    &:hover {
-      background: $matteblack;
-    }
-  }
-
-  .seller-fees {
-    display: grid;
-
-    .consignment,
-    .payment-processing,
-    .total-payout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding: $spacing-small;
-
-      p {
-        color: $matteblack;
-
-        &:last-child {
-          color: #e93e2f;
-          justify-self: end;
-          font-weight: $weight-black;
-        }
-      }
-    }
-
-    .total-payout p:last-child {
-      color: #09dd09;
     }
   }
 }
@@ -306,34 +431,6 @@
     justify-items: center;
     justify-content: center;
   }
-
-  #sell-page-4 {
-    justify-self: center;
-
-    ol li {
-      font-size: $font-xxsmall;
-    }
-
-    .pairStats {
-      p {
-        font-size: $font-xsmall;
-      }
-    }
-
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
-
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-xsmall;
-    }
-  }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
@@ -367,34 +464,6 @@
     justify-self: center;
     justify-items: center;
   }
-
-  #sell-page-4 {
-    justify-self: center;
-
-    ol li {
-      font-size: $font-xsmall;
-    }
-
-    .pairStats {
-      p {
-        font-size: $font-normal;
-      }
-    }
-
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
-
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-xsmall;
-    }
-  }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
@@ -418,49 +487,11 @@
     }
   }
 
-  #item-size {
-    width: 60%;
-  }
-
-  .sell-radios {
-    label {
-      font-size: $font-normal !important;
-    }
-  }
-
   .sell-container {
     padding: 0 !important;
     width: 75vw;
     justify-self: center;
     justify-items: center;
-  }
-
-  #sell-page-4 {
-    justify-self: center;
-
-    ol li {
-      font-size: $font-small;
-    }
-
-    .pairStats {
-      p {
-        font-size: $font-large;
-      }
-    }
-
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
-
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-small;
-    }
   }
 }
 
@@ -485,49 +516,11 @@
     }
   }
 
-  #item-size {
-    width: 60%;
-  }
-
-  .sell-radios {
-    label {
-      font-size: $font-normal !important;
-    }
-  }
-
   .sell-container {
     padding: 0 !important;
     width: 60vw;
     justify-self: center;
     justify-items: center;
-  }
-
-  #sell-page-4 {
-    justify-self: center;
-
-    ol li {
-      font-size: $font-small;
-    }
-
-    .pairStats {
-      p {
-        font-size: $font-large;
-      }
-    }
-
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
-
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-normal;
-    }
   }
 }
 
@@ -552,49 +545,11 @@
     }
   }
 
-  #item-size {
-    width: 60%;
-  }
-
-  .sell-radios {
-    label {
-      font-size: $font-normal !important;
-    }
-  }
-
   .sell-container {
     padding: 0 !important;
     width: 50vw;
     justify-self: center;
     justify-items: center;
-  }
-
-  #sell-page-4 {
-    justify-self: center;
-
-    ol li {
-      font-size: $font-small;
-    }
-
-    .pairStats {
-      p {
-        font-size: $font-large;
-      }
-    }
-
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
-
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-normal;
-    }
   }
 }
 
@@ -632,48 +587,10 @@
     width: 60vw;
   }
 
-  #item-size {
-    width: 60%;
-  }
-
-  .sell-radios {
-    label {
-      font-size: $font-normal !important;
-    }
-  }
-
   .sell-container {
     padding: 0 !important;
     width: 45vw;
     justify-self: center;
     justify-items: center;
-  }
-
-  #sell-page-4 {
-    justify-self: center;
-
-    ol li {
-      font-size: $font-normal;
-    }
-
-    .pairStats {
-      p {
-        font-size: $font-large;
-      }
-    }
-
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
-
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-normal;
-    }
   }
 }
