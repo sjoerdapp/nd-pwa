@@ -90,6 +90,16 @@
               border-top: 1px solid $prodBtnSecondary;
             }
           }
+
+          .disabled {
+            color: #8ebff1;
+            cursor: default;
+
+            &:hover {
+              border-bottom: none !important;
+              border-left: none !important;
+            }
+          }
         }
       }
 
@@ -114,6 +124,16 @@
 
             &:last-child {
               border-top: 1px solid $prodBtnSecondary2;
+            }
+          }
+
+          .disabled {
+            color: #f69089;
+            cursor: default;
+
+            &:hover {
+              border-bottom: none !important;
+              border-left: none !important;
             }
           }
         }
