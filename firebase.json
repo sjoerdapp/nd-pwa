@@ -11,8 +11,7 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**",
-      "index.html"
+      "**/node_modules/**"
     ],
     "rewrites": [
       {
@@ -21,7 +20,7 @@
       },
       {
         "source": "**",
-        "function": "ssr"
+        "function": "/index.html"
       }
     ],
     "redirects": [
@@ -37,7 +36,7 @@
       },
       {
         "source": "/blog",
-        "destination": "/404",
+        "destination": "/news",
         "type": 301
       },
       {

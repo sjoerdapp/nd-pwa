@@ -5,7 +5,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 import { Product } from 'src/app/models/product';
 import { isUndefined } from 'util';
-import { ModalService } from 'src/app/services/modal.service';
 import { SEOService } from 'src/app/services/seo.service';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -47,7 +46,6 @@ export class ProductComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private title: Title,
-    private modalService: ModalService,
     private seo: SEOService,
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platform_id: Object
