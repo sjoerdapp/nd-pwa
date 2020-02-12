@@ -260,8 +260,10 @@ export class SellComponent implements OnInit {
       this.sellService.getHighestOffer(this.selectedPair.productID, 'new').subscribe(res => {
         this.HighestBid = res[0];
 
-        this.currentAsk = this.LowestAsk;
-        this.currentBid = this.HighestBid;
+        if (!this.selectedSize) {
+          this.currentAsk = this.LowestAsk;
+          this.currentBid = this.HighestBid;
+        }
       });
     });
   }

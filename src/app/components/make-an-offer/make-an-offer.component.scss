@@ -1,340 +1,599 @@
-@import '../../base_styles/base';
-
-#offer-page-2 {
-    display: none;
-    .pairStats {
-        margin-top: $spacing-normal;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
-        justify-items: center;
-    }
-}
+@import "../../base_styles/base";
 
 .main-container {
-    display: grid;
-
-    .offer-container {
-        align-self: center;
-    }
+  display: grid;
+  align-content: center;
 }
 
 .offer-container {
+  h3 {
+    text-align: center;
+  }
+
+  ol {
+    list-style-type: decimal;
+    font-size: $font-xsmall;
+    margin-left: $spacing-normal;
+    margin-top: $spacing-xsmall;
+  }
+
+  .prod-search {
+    @include vendor(transition, 0.25s ease-in-out);
+    display: block;
     padding: $spacing-small;
-    justify-self: center;
+    width: 90%;
+    margin: $spacing-normal auto;
+    border-radius: $spacing-xxsmall;
+    border: 1px solid $lightgrey;
 
-    h3 {
-        text-align: center;
+    &:focus,
+    &:hover {
+      border-color: $matteblack;
     }
+  }
 
-    ol {
-        list-style-type: decimal;
-        font-size: $font-xsmall;
-        margin-left: $spacing-normal;
-        margin-top: $spacing-xsmall;
-    }
+  .search-results {
+    width: 90%;
+    margin: $spacing-small auto;
+    border-radius: $spacing-xxsmall;
+    height: 400px;
+    overflow-y: auto;
 
-    .offer-radios {
+    .hit {
+      @include vendor(transition, 0.25s ease-in-out);
+      height: 60px;
+      display: grid;
+      grid-template-columns: 1fr 5fr;
+      align-items: center;
+      padding: $spacing-xxsmall;
+
+      &:hover {
+        cursor: pointer;
+
+        .hit-info {
+          h3 {
+            color: $green;
+          }
+        }
+      }
+
+      img {
+        height: inherit;
+        width: 100%;
+        object-fit: contain;
+      }
+
+      .hit-info {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        margin: $spacing-normal auto;
-        align-items: center;
-        justify-items: center;
+        grid-template-rows: 1fr 1fr;
+        padding-left: $spacing-xxsmall;
+
+        h3 {
+          text-align: left;
+          color: $black;
+          font-size: $font-xsmall;
+        }
+
+        h6 {
+          color: $matteblack;
+          font-size: $font-xxsmall;
+        }
+      }
+    }
+  }
+
+  .sell-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: $spacing-normal;
+    width: 90%;
+    margin: $spacing-large auto;
+
+    button {
+      padding: $spacing-small;
+
+      &:first-child {
+        background: $black;
+
+        &:hover {
+          background: $matteblack;
+        }
+      }
+
+      &:last-child:hover {
+        background: $matteblue;
+      }
+    }
+  }
+}
+
+#offer-page-1 {
+  h3 {
+    text-align: center;
+    margin: $spacing-large 0 $spacing-large 0;
+  }
+
+  #how-it-works-content {
+    div {
+      display: grid;
+      align-items: center;
+      margin: $spacing-large 0;
+
+      fa-icon {
+        justify-self: center;
+        color: $black;
+      }
+    }
+  }
+}
+
+#offer-page-2 {
+  align-self: baseline;
+}
+
+#offer-page-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 90vw;
+  height: $productContainerHeight;
+  column-gap: 0;
+  margin: 0 5vw;
+
+  .disabled {
+    background: $lightgrey !important;
+    cursor: not-allowed;
+
+    &:hover {
+      background: $lightgrey !important;
+    }
+  }
+
+  .product-info {
+    text-align: center;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+    img {
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+      background: $white;
+      border: none;
+      width: 80%;
+    }
+
+    .product-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: $spacing-normal;
+      align-self: flex-start;
+
+      h4 {
+        &:first-child {
+          color: $prodBtnPrimary;
+        }
+
+        &:last-child {
+          color: $prodBtnPrimary2;
+        }
+      }
+    }
+  }
+
+  .sizes {
+    background: $lightergrey;
+    overflow-y: auto;
+    padding: $spacing-small;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    column-gap: $spacing-xsmall;
+    row-gap: $spacing-xsmall;
+
+    .size {
+      @include vendor(transition, 0.2s ease-in);
+      padding: $spacing-xsmall;
+      border: 2px solid $black;
+      background: $white;
+      height: 70px;
+      width: 70px;
+      border-radius: $spacing-xxsmall;
+      cursor: pointer;
+      display: grid;
+      align-items: center;
+
+      #size,
+      #lowestAsk {
+        background: none;
+        font-weight: $weight-black;
+        font-size: $font-xsmall;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        height: 80%;
+        outline: none;
+      }
+
+      #size {
+        font-size: $font-normal;
+        letter-spacing: 1px;
+      }
+
+      #lowestAsk {
+        color: $prodBtnPrimary;
+      }
+
+      &:hover {
+        background: $black;
+
+        #size {
+          color: $white;
+        }
+      }
+    }
+  }
+
+  .bid-form {
+    background: $lightergrey;
+    padding: $spacing-normal;
+    display: grid;
+    align-items: center;
+
+    .size-display {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      width: 80%;
+      margin: $spacing-small auto;
+      align-items: center;
+      background: $white;
+      padding: $spacing-normal;
+      border: 1px solid $lightgrey;
+
+      h4 {
+        justify-self: center;
+        font-size: $font-large;
+      }
+
+      button {
+        justify-self: end;
+        background: $black;
+        padding: $spacing-small;
+        font-size: $font-small;
+        text-transform: uppercase;
+
+        &:hover {
+          background: $matteblack;
+        }
+      }
+    }
+
+    .offer-display {
+      width: 100%;
+      margin: $spacing-small auto;
+
+      .buy-now-container {
+        @extend .size-display;
 
         div {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          justify-items: center;
+          align-items: center;
 
-            label {
-               font-size: $font-small; 
-            }
-        }
-    }
+          h4 {
+            font-size: $font-normal;
+          }
 
-    .offer-price-input {
-        width: 90%;
-        margin: $spacing-normal auto;
-        display: grid;
-        grid-template-columns: 10% 80% 10%;
-        background: $white;
-        border: 1px solid $lightgrey;
-        border-radius: $spacing-xxsmall;
-
-        input {
-            border: none;
-            height: inherit;
-            padding: $spacing-small;
-            letter-spacing: 2px;
+          p {
+            color: $prodBtnPrimary;
+            font-size: $font-large;
             font-weight: $weight-black;
+            justify-self: center;
+            text-align: center;
+          }
         }
 
         button {
-            border: none;
-            height: inherit;
-            background: $matteblack;
-            color: $white;
+          background: $prodBtnPrimary;
 
-            &:first-child {
-                border-top-left-radius: $spacing-xxsmall;
-                border-bottom-left-radius: $spacing-xxsmall;
+          &:hover {
+            background: #61a6eb;
+          }
+        }
+      }
+
+      .place-bid-container {
+        display: grid;
+        width: 80%;
+        margin: $spacing-small auto;
+        align-items: center;
+        background: $white;
+        padding: $spacing-normal;
+        border: 1px solid $lightgrey;
+
+        .buyer-input {
+          display: grid;
+          grid-template-columns: 1fr 6fr;
+          margin: $spacing-small auto;
+          width: 100%;
+
+          button,
+          input {
+            @include vendor(transition, 0.25s ease-in-out);
+          }
+
+          button {
+            background: $prodBtnPrimary2;
+            color: $white;
+            border: 1px solid $lightgrey;
+            border-right: 1px solid $lightergrey;
+            font-size: $font-normal;
+            font-weight: $weight-black;
+          }
+
+          input {
+            padding: $spacing-small;
+            border: 1px solid $lightgrey;
+            border-left: none;
+            font-size: $font-normal;
+          }
+
+          &:hover {
+            button,
+            input {
+              border-color: #f2635a;
+            }
+          }
+        }
+
+        .fee-calculator {
+          margin: $spacing-small auto;
+          width: 100%;
+
+          div {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: $spacing-small 0;
+            border-bottom: 1px dotted $black;
+
+            p {
+              align-self: center;
+              font-size: $font-small;
+
+              &:first-child {
+                justify-self: start;
+              }
+
+              &:last-child {
+                justify-self: end;
+              }
             }
 
             &:last-child {
-                border-top-right-radius: $spacing-xxsmall;
-                border-bottom-right-radius: $spacing-xxsmall;
+              border-bottom: none;
             }
-        }
-    }
+          }
 
-    #item-size {
-        display: block;
-        height: 35px;
-        margin: $spacing-normal auto;
-    }
+          .total {
+            font-weight: $weight-black;
 
-    .offer-btns {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: $spacing-normal;
-        width: 90%;
-        margin: $spacing-large auto;
-
-        button {
-            padding: $spacing-small;
-
-            &:first-child {
-                background: $black;
-
-                &:hover {
-                    background: $matteblack;
-                }
+            p {
+              font-size: $font-normal;
             }
-
-            &:last-child:hover {
-                background: $matteblue;
-            }
+          }
         }
-    }
 
-    .disabled {
-        background: $lightgrey;
-        cursor: not-allowed;
+        .place-bid-btn {
+          width: 50%;
+          padding: $spacing-small;
+          text-transform: uppercase;
+          margin: $spacing-small auto;
+          background: $prodBtnPrimary2;
 
-        &:hover {
-            background: $lightgrey!important;
+          &:hover {
+            background: #f2635a;
+          }
         }
+
+        .buy-now-btn {
+          @extend .place-bid-btn;
+          background: $prodBtnPrimary;
+
+          &:hover {
+              background: #61a6eb;
+          }
+        }
+      }
     }
+  }
 }
 
 // MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
-    h3 {
-        font-size: $font-normal;
+  h3 {
+    font-size: $font-normal;
+  }
+
+  #offer-page-1 {
+    #how-it-works-content {
+      div {
+        grid-template-columns: 1fr 9fr;
+      }
+
+      h6 {
+        font-size: $font-xsmall;
+      }
     }
 
-    #item-size {
-        width: 80%;
+    .offer-btns {
+      margin: $spacing-large auto;
     }
+  }
 
-    .offer-container {
-        padding: 0!important;
-        width: 100vw;
-    }
-
-    ol li {
-        font-size: $font-xxsmall;
-    }
-
-    .pairStats {
-        p {
-            font-size: $font-xsmall;
-        }
-    }
-
-    .offer-price-input {
-        input {
-            font-size: $font-xsmall;
-        }
-
-        button {
-            font-size: $font-xxsmall;
-        }
-    }
+  .offer-container {
+    padding: 0 !important;
+    width: 98vw;
+    justify-items: center;
+    justify-content: center;
+  }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
-    h3 {
-        font-size: $font-normal;
-    }
+  h3 {
+    font-size: $font-normal;
+  }
 
-    #item-size {
-        width: 70%;
-    }
+  #offer-page-1 {
+    #how-it-works-content {
+      div {
+        grid-template-columns: 1fr 9fr;
+      }
 
-    .offer-container {
-        padding: 0!important;
-        width: 80vw;
-    }
-
-    ol li {
+      h6 {
         font-size: $font-xsmall;
+      }
     }
 
-    .pairStats {
-        p {
-            font-size: $font-xsmall;
-        }
+    .offer-btns {
+      margin: $spacing-large auto;
     }
+  }
 
-    .offer-price-input {
-        input {
-            font-size: $font-xsmall;
-        }
-
-        button {
-            font-size: $font-xsmall;
-        }
-    }
+  .offer-container {
+    padding: 0 !important;
+    width: 90vw;
+    justify-self: center;
+    justify-items: center;
+  }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    h3 {
-        font-size: $font-normal;
-    }
+  h3 {
+    font-size: $font-large;
+  }
 
-    #item-size {
-        width: 70%;
-    }
+  #offer-page-1 {
+    #how-it-works-content {
+      div {
+        grid-template-columns: 1fr 9fr;
+      }
 
-    .offer-container {
-        padding: 0!important;
-        width: 60vw;
-    }
-
-    ol li {
+      h6 {
         font-size: $font-xsmall;
+      }
     }
 
-    .pairStats {
-        p {
-            font-size: $font-small;
-        }
+    .offer-btns {
+      margin: $spacing-large auto;
     }
+  }
 
-    .offer-price-input {
-        input {
-            font-size: $font-small;
-        }
-
-        button {
-            font-size: $font-xsmall;
-        }
-    }
+  .offer-container {
+    padding: 0 !important;
+    width: 75vw;
+    justify-self: center;
+    justify-items: center;
+  }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    h3 {
-        font-size: $font-normal;
-    }
+  h3 {
+    font-size: $font-large;
+  }
 
-    #item-size {
-        width: 70%;
-    }
+  #offer-page-1 {
+    #how-it-works-content {
+      div {
+        grid-template-columns: 1fr 9fr;
+      }
 
-    .offer-container {
-        padding: 0!important;
-        width: 50vw;
-    }
-
-    ol li {
+      h6 {
         font-size: $font-xsmall;
+      }
     }
 
-    .pairStats {
-        p {
-            font-size: $font-small;
-        }
+    .offer-btns {
+      margin: $spacing-large auto;
     }
+  }
 
-    .offer-price-input {
-        input {
-            font-size: $font-small;
-        }
-
-        button {
-            font-size: $font-xsmall;
-        }
-    }
+  .offer-container {
+    padding: 0 !important;
+    width: 60vw;
+    justify-self: center;
+    justify-items: center;
+  }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    h3 {
-        font-size: $font-normal;
-    }
+  h3 {
+    font-size: $font-large;
+  }
 
-    #item-size {
-        width: 70%;
-    }
+  #offer-page-1 {
+    #how-it-works-content {
+      div {
+        grid-template-columns: 1fr 9fr;
+      }
 
-    .offer-container {
-        padding: 0!important;
-        width: 40vw;
-    }
-
-    ol li {
+      h6 {
         font-size: $font-xsmall;
+      }
     }
 
-    .pairStats {
-        p {
-            font-size: $font-small;
-        }
+    .offer-btns {
+      margin: $spacing-large auto;
     }
+  }
 
-    .offer-price-input {
-        input {
-            font-size: $font-small;
-        }
-
-        button {
-            font-size: $font-xsmall;
-        }
-    }
+  .offer-container {
+    padding: 0 !important;
+    width: 50vw;
+    justify-self: center;
+    justify-items: center;
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    h3 {
+  h3 {
+    font-size: $font-large;
+  }
+
+  #offer-page-1 {
+    width: 60vw;
+    justify-self: center;
+
+    #how-it-works-content {
+      div {
+        grid-template-columns: 2fr 8fr;
+      }
+
+      h6 {
+        font-size: $font-small;
+      }
+    }
+
+    .sell-btns {
+      margin: $spacing-large auto;
+
+      button {
         font-size: $font-normal;
+      }
     }
+  }
 
-    #item-size {
-        width: 70%;
-    }
+  #offer-page-2,
+  #offer-page-3 {
+    justify-self: center;
+    width: 60vw;
+  }
 
-    .offer-container {
-        padding: 0!important;
-        width: 40vw;
-    }
-
-    ol li {
-        font-size: $font-xsmall;
-    }
-
-    .pairStats {
-        p {
-            font-size: $font-small;
-        }
-    }
-
-    .offer-price-input {
-        input {
-            font-size: $font-small;
-        }
-
-        button {
-            font-size: $font-xsmall;
-        }
-    }
+  .offer-container {
+    padding: 0 !important;
+    width: 45vw;
+    justify-self: center;
+    justify-items: center;
+  }
 }

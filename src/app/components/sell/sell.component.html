@@ -24,7 +24,8 @@
     </div>
 
     <div class="sell-btns">
-      <button class="btn" routerLink="..">Back</button>
+      <button class="btn" *ngIf="selectedPair" routerLink="/product/{{ selectedPair.productID }}">Back</button>
+      <button class="btn" *ngIf="!selectedPair" routerLink="..">Back</button>
       <button class="btn" (click)="nextPage()">Next</button>
     </div>
   </section>
@@ -120,11 +121,14 @@
             </div>
           </div>
 
-          <button class="btn ripple place-ask-btn" *ngIf="priceAdded && (pairPrice > currentBid.price || !currentBid) && !loading && !listed" (click)="submitListing()">Place Ask</button>
+          <button class="btn ripple place-ask-btn"
+            *ngIf="priceAdded && (pairPrice > currentBid.price || !currentBid) && !loading && !listed"
+            (click)="submitListing()">Place Ask</button>
           <button class="btn ripple place-ask-btn disabled" *ngIf="!priceAdded">Place Ask</button>
-          <button class="btn ripple place-ask-btn" *ngIf="loading">Place Ask</button>
+          <button class="btn ripple place-ask-btn" *ngIf="loading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
           <button class="btn ripple place-ask-btn" *ngIf="listed">Listed</button>
-          <button class="btn ripple place-ask-btn" *ngIf="priceAdded && currentBid && pairPrice <= currentBid.price" (click)="sellNow()">Sell at Highest Bid</button>
+          <button class="btn ripple sell-now-btn" *ngIf="priceAdded && currentBid && pairPrice <= currentBid.price"
+            (click)="sellNow()">Sell Now</button>
         </div>
       </div>
 

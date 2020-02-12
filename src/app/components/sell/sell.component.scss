@@ -215,8 +215,8 @@
           }
 
           button {
-            background: $lightergrey;
-            color: $black;
+            background: $prodBtnPrimary;
+            color: $white;
             border: 1px solid $lightgrey;
             border-right: 1px solid $lightergrey;
             font-size: $font-normal;
@@ -233,7 +233,7 @@
           &:hover {
             button,
             input {
-              border-color: #f2635a;
+              border-color: #61a6eb;
             }
           }
         }
@@ -280,6 +280,15 @@
           padding: $spacing-small;
           text-transform: uppercase;
           margin: $spacing-small auto;
+          background: $prodBtnPrimary;
+
+          &:hover {
+            background: #61a6eb;
+          }
+        }
+
+        .sell-now-btn {
+          @extend .place-ask-btn;
           background: $prodBtnPrimary2;
 
           &:hover {
@@ -421,10 +430,6 @@
     }
   }
 
-  #item-size {
-    width: 80%;
-  }
-
   .sell-container {
     padding: 0 !important;
     width: 98vw;
@@ -452,10 +457,6 @@
     .sell-btns {
       margin: $spacing-large auto;
     }
-  }
-
-  #item-size {
-    width: 80%;
   }
 
   .sell-container {

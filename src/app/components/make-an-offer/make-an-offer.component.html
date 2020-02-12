@@ -2,139 +2,133 @@
 
 <div class="main-container">
 
-  <section class="offer-container" id="offer-page-1">
-    <h3>Condition and size?</h3>
+  <section class="offer-container" id="offer-page-1" *ngIf="showHowItWorks">
+    <h3>How It Works</h3>
 
-    <div class="offer-radios">
+    <div id="how-it-works-content">
       <div>
-        <input type="radio" name="condition" value="new" (change)="radioHandler($event)">
-        <label for="condition">New</label>
+        <fa-icon [icon]="['fas', 'hand-holding-usd']"></fa-icon>
+        <h6>Place a Bid</h6>
       </div>
 
       <div>
-        <input type="radio" name="condition" value="used" (change)="radioHandler($event)">
-        <label for="condition">Used</label>
+        <fa-icon [icon]="['fas', 'box']"></fa-icon>
+        <h6>When a seller accepts your offer, checkout the item. The seller will ship the item within 2 business days
+          and we'll authenticate it.</h6>
+      </div>
+
+      <div>
+        <fa-icon [icon]="['fas', 'shipping-fast']"></fa-icon>
+        <h6>Sit tight while we ship the verified authetic item to you</h6>
       </div>
     </div>
 
-    <select *ngIf="!isWomen && !isGS" name="size" id="item-size" (change)="sizeChanges($event)">
-      <option value="none" selected>Select Size</option>
-      <option value="US4">US 4</option>
-      <option value="US4.5">US 4.5</option>
-      <option value="US5">US 5</option>
-      <option value="US5.5">US 5.5</option>
-      <option value="US6">US 6</option>
-      <option value="US6.5">US 6.5</option>
-      <option value="US7">US 7</option>
-      <option value="US7.5">US 7.5</option>
-      <option value="US8">US 8</option>
-      <option value="US8.5">US 8.5</option>
-      <option value="US9">US 9</option>
-      <option value="US9.5">US 9.5</option>
-      <option value="US10">US 10</option>
-      <option value="US10.5">US 10.5</option>
-      <option value="US11">US 11</option>
-      <option value="US11.5">US 11.5</option>
-      <option value="US12">US 12</option>
-      <option value="US12.5">US 12.5</option>
-      <option value="US13">US 13</option>
-      <option value="US13.5">US 13.5</option>
-      <option value="US14">US 14</option>
-      <option value="US14.5">US 14.5</option>
-      <option value="US15">US 15</option>
-      <option value="US15.5">US 15.5</option>
-      <option value="US16">US 16</option>
-      <option value="US16.5">US 16.5</option>
-      <option value="US17">US 17</option>
-    </select>
-
-    <select *ngIf="isWomen" name="size" id="item-size" (change)="sizeChanges($event)">
-      <option value="none" selected>Select Size</option>
-      <option value="US4W">US 4W</option>
-      <option value="US4.5W">US 4.5W</option>
-      <option value="US5W">US 5W</option>
-      <option value="US5.5W">US 5.5W</option>
-      <option value="US6W">US 6W</option>
-      <option value="US6.5W">US 6.5W</option>
-      <option value="US7W">US 7W</option>
-      <option value="US7.5W">US 7.5W</option>
-      <option value="US8W">US 8W</option>
-      <option value="US8.5W">US 8.5W</option>
-      <option value="US9W">US 9W</option>
-      <option value="US9.5W">US 9.5W</option>
-      <option value="US10W">US 10W</option>
-      <option value="US10.5W">US 10.5W</option>
-      <option value="US11W">US 11W</option>
-      <option value="US11.5W">US 11.5W</option>
-      <option value="US12W">US 12W</option>
-      <option value="US12.5W">US 12.5W</option>
-      <option value="US13W">US 13W</option>
-      <option value="US13.5W">US 13.5W</option>
-      <option value="US14W">US 14W</option>
-      <option value="US14.5W">US 14.5W</option>
-      <option value="US15W">US 15W</option>
-      <option value="US15.5W">US 15.5W</option>
-      <option value="US16W">US 16W</option>
-      <option value="US16.5W">US 16.5W</option>
-      <option value="US17W">US 17W</option>
-    </select>
-
-    <select *ngIf="isGS" name="size" id="item-size" (change)="sizeChanges($event)">
-      <option value="none" selected>Select Size</option>
-      <option value="US3.5Y">US 3.5Y</option>
-      <option value="US4Y">US 4Y</option>
-      <option value="US4.5Y">US 4.5Y</option>
-      <option value="US5Y">US 5Y</option>
-      <option value="US5.5Y">US 5.5Y</option>
-      <option value="US6Y">US 6Y</option>
-      <option value="US6.5Y">US 6.5Y</option>
-      <option value="US7Y">US 7Y</option>
-    </select>
-
-    <div class="offer-btns">
-      <button class="btn" routerLink="/product/{{ selectedPair.productID }}">Cancel</button>
-      <button class="btn" (click)="goToPage2()" id="add-btn" *ngIf="nextToPage2">Next</button>
-      <button class="btn disabled" id="add-btn" *ngIf="!nextToPage2">Next</button>
+    <div class="sell-btns">
+      <button class="btn" *ngIf="selectedPair" routerLink="/product/{{ selectedPair.productID }}">Back</button>
+      <button class="btn" *ngIf="!selectedPair" routerLink="..">Back</button>
+      <button class="btn" (click)="nextPage()">Next</button>
     </div>
   </section>
 
-  <section class="offer-container" id="offer-page-2">
+  <section class="offer-container" id="offer-page-2" *ngIf="showSearch">
+    <h3>Select a product</h3>
+    <input autofocus type="text" (keyup)="searchChanged($event)" placeholder="Search for product" class="prod-search">
 
-    <h3>Almost Done...</h3>
+    <div *ngIf="showResults">
+      <div class="search-results">
+        <div *ngFor="let hit of results">
 
-    <ol>
-      <li>If a seller accepts your offer, he will ship the item within 2 business days.</li>
-      <li>Once we authenticate the item, we will ship them to you.</li>
-    </ol>
+          <div class="hit" (click)="selectPair(hit, true)">
+            <img src="{{ hit.assetURL }}">
 
-    <div class="pairStats">
-      <p *ngIf="highestOffer < 0">Highest Offer: --</p>
-      <p *ngIf="highestOffer > 0">Highest Offer: {{ highestOffer | currency: 'CAD' }}</p>
-      <p *ngIf="lowestListingPrice < 0">Lowest Price: --</p>
-      <p *ngIf="lowestListingPrice > 0">Lowest Price: {{ lowestListingPrice | currency: 'CAD' }}</p>
-    </div>
+            <div class="hit-info">
+              <h3>{{ hit.model }}</h3>
+              <h6>{{ hit.colorway }}</h6>
+            </div>
+          </div>
 
-    <div class="offer-price-input">
-      <button>CA<fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
-      <input type="text" placeholder="Enter Price" id="offer-price-input" (keyup)="priceChanges($event)">
-      <button>.00</button>
-    </div>
-
-    <div class="offer-btns">
-      <button class="btn" (click)="goToPage1()">Back</button>
-      <button class="btn disabled" id="add-btn" *ngIf="!error && !listed && !loading && !priceAdded">Finish</button>
-      <button class="btn" id="add-btn" (click)="submitOffer()"
-        *ngIf="!error && !listed && !loading && priceAdded && showFinish">Finish</button>
-      <button class="btn" id="add-btn" (click)="buyNow()"
-        *ngIf="!error && !listed && !loading && priceAdded && !showFinish">Buy at
-        {{ lowestListingPrice | currency: 'CAD' }}</button>
-      <button class="btn error-btn" *ngIf="error">Error</button>
-      <button class="btn listed-btn" *ngIf="listed">Offer Added</button>
-      <button class="btn" *ngIf="loading">
-        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
-      </button>
+        </div>
+      </div>
     </div>
   </section>
+
+  <section id="offer-page-3" *ngIf="showItem">
+    <div class="product-info">
+      <h1>{{ selectedPair.model }}</h1>
+
+      <div class="product-stats">
+        <h4 *ngIf="currentAsk">Lowest Ask: {{ currentAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h4>
+        <h4 *ngIf="!currentAsk">Lowest Ask: --</h4>
+        <h4 *ngIf="currentBid">Highest Bid: {{ currentBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h4>
+        <h4 *ngIf="!currentBid">Highest Bid: --</h4>
+      </div>
+
+      <img src="{{ selectedPair.assetURL }}" alt="{{ selectedPair.model }}">
+    </div>
+
+    <div class="sizes" *ngIf="!selectedSize">
+      <div class="size" id="{{ offer.size }}" *ngFor="let offer of offers" (click)="selectSize(offer.size)">
+        <button id="size">{{ offer.size }}</button>
+        <button id="lowestAsk"
+          *ngIf="offer.LowestAsk">{{ offer.LowestAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</button>
+        <button id="lowestAsk" *ngIf="!offer.LowestAsk">--</button>
+      </div>
+    </div>
+
+    <div class="bid-form" *ngIf="selectedSize">
+      <div class="offer-display">
+        <div class="buy-now-container">
+          <div>
+            <h4>Lowest Ask</h4>
+            <p *ngIf="currentAsk">{{ currentAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</p>
+            <p *ngIf="!currentAsk">--</p>
+          </div>
+
+          <button class="btn" *ngIf="currentAsk" (click)="sellNow()">Buy Now</button>
+          <button class="btn disabled" *ngIf="!currentAsk">Buy Now</button>
+        </div>
+
+        <div class="place-bid-container">
+          <div class="buyer-input">
+            <button>CA$</button>
+            <input type="text" name="input" id="input" placeholder="Enter Price" mask="0000000000"
+              (keyup)="priceChanges($event)">
+          </div>
+
+          <div class="fee-calculator">
+            <div class="shipping">
+              <p>Estimated Shipping</p>
+              <p *ngIf="total > 0">{{ shippingCost | currency: 'CAD' : 'symbol' : '1.2-2' }}</p>
+              <p *ngIf="total === 0">--</p>
+            </div>
+
+            <div class="total">
+              <p>Total</p>
+              <p *ngIf="total > 0">{{ total | currency: 'CAD' : 'symbol' : '1.2-2' }}</p>
+              <p *ngIf="total === 0">--</p>
+            </div>
+          </div>
+
+          <button class="btn ripple place-bid-btn"
+            *ngIf="priceAdded && (pairPrice < currentAsk.price || !currentAsk) && !loading && !listed"
+            (click)="submitOffer()">Place Bid</button>
+          <button class="btn ripple place-bid-btn disabled" *ngIf="!priceAdded">Place Bid</button>
+          <button class="btn ripple place-bid-btn" *ngIf="loading">
+            <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+          </button>
+          <button class="btn ripple place-bid-btn" *ngIf="listed">Listed</button>
+          <button class="btn ripple buy-now-btn" *ngIf="priceAdded && currentAsk && pairPrice >= currentAsk.price"
+            (click)="buyNow()">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="size-display">
+        <h4>{{ selectedSize }}</h4>
+        <button class="btn ripple" (click)="changeSize()">Change Size</button>
+      </div>
+    </div>
+  </section>
+
 </div>
 
 <app-footer></app-footer>
