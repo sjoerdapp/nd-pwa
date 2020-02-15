@@ -20,7 +20,7 @@
       },
       {
         "source": "**",
-        "function": "/index.html"
+        "destination": "/index.html"
       }
     ],
     "redirects": [
