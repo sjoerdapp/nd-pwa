@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div class="sell-btns">
+    <div class="offer-btns">
       <button class="btn" *ngIf="selectedPair" routerLink="/product/{{ selectedPair.productID }}">Back</button>
       <button class="btn" *ngIf="!selectedPair" routerLink="..">Back</button>
       <button class="btn" (click)="nextPage()">Next</button>
@@ -67,6 +67,11 @@
     </div>
 
     <div class="sizes" *ngIf="!selectedSize">
+      <div class="accessibility">
+        <h2>Select Size</h2>
+        <h3>U.S. Men Size | Lowest Ask</h3>
+      </div>
+      
       <div class="size" id="{{ offer.size }}" *ngFor="let offer of offers" (click)="selectSize(offer.size)">
         <button id="size">{{ offer.size }}</button>
         <button id="lowestAsk"
@@ -112,7 +117,7 @@
           <button class="btn ripple place-bid-btn"
             *ngIf="priceAdded && (pairPrice < currentAsk.price || !currentAsk) && !loading && !listed"
             (click)="submitOffer()">Place Bid</button>
-          <button class="btn ripple place-bid-btn disabled" *ngIf="!priceAdded">Place Bid</button>
+          <button class="btn place-bid-btn disabled" *ngIf="!priceAdded">Place Bid</button>
           <button class="btn ripple place-bid-btn" *ngIf="loading">
             <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
           </button>

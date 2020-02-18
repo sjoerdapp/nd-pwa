@@ -26,8 +26,7 @@
     border-radius: $spacing-xxsmall;
     border: 1px solid $lightgrey;
 
-    &:focus,
-    &:hover {
+    &:focus {
       border-color: $matteblack;
     }
   }
@@ -46,16 +45,6 @@
       grid-template-columns: 1fr 5fr;
       align-items: center;
       padding: $spacing-xxsmall;
-
-      &:hover {
-        cursor: pointer;
-
-        .hit-info {
-          h3 {
-            color: $green;
-          }
-        }
-      }
 
       img {
         height: inherit;
@@ -82,26 +71,23 @@
     }
   }
 
-  .sell-btns {
+  .offer-btns {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: $spacing-normal;
-    width: 90%;
     margin: $spacing-large auto;
 
     button {
       padding: $spacing-small;
+      text-transform: uppercase;
 
       &:first-child {
-        background: $black;
-
-        &:hover {
-          background: $matteblack;
-        }
+        background: $white;
+        color: $black;
       }
 
-      &:last-child:hover {
-        background: $matteblue;
+      &:last-child {
+        background: $black;
       }
     }
   }
@@ -114,6 +100,8 @@
   }
 
   #how-it-works-content {
+    margin: 0 auto;
+
     div {
       display: grid;
       align-items: center;
@@ -133,11 +121,7 @@
 
 #offer-page-3 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: 90vw;
-  height: $productContainerHeight;
   column-gap: 0;
-  margin: 0 5vw;
 
   .disabled {
     background: $lightgrey !important;
@@ -160,7 +144,6 @@
       object-fit: contain;
       background: $white;
       border: none;
-      width: 80%;
     }
 
     .product-stats {
@@ -184,20 +167,21 @@
   .sizes {
     background: $lightergrey;
     overflow-y: auto;
-    padding: $spacing-small;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     justify-items: center;
-    column-gap: $spacing-xsmall;
-    row-gap: $spacing-xsmall;
+
+    .accessibility {
+      align-self: flex-start;
+      padding: $spacing-small 0;
+      margin: 0 auto;
+      text-align: center;
+    }
 
     .size {
       @include vendor(transition, 0.2s ease-in);
       padding: $spacing-xsmall;
       border: 2px solid $black;
       background: $white;
-      height: 70px;
-      width: 70px;
       border-radius: $spacing-xxsmall;
       cursor: pointer;
       display: grid;
@@ -207,7 +191,6 @@
       #lowestAsk {
         background: none;
         font-weight: $weight-black;
-        font-size: $font-xsmall;
         border: none;
         cursor: pointer;
         text-align: center;
@@ -217,59 +200,40 @@
 
       #size {
         font-size: $font-normal;
-        letter-spacing: 1px;
       }
 
       #lowestAsk {
         color: $prodBtnPrimary;
-      }
-
-      &:hover {
-        background: $black;
-
-        #size {
-          color: $white;
-        }
       }
     }
   }
 
   .bid-form {
     background: $lightergrey;
-    padding: $spacing-normal;
     display: grid;
-    align-items: center;
+    align-content: center;
 
     .size-display {
       display: grid;
       grid-template-columns: 1fr 2fr;
-      width: 80%;
       margin: $spacing-small auto;
       align-items: center;
       background: $white;
-      padding: $spacing-normal;
       border: 1px solid $lightgrey;
 
       h4 {
         justify-self: center;
-        font-size: $font-large;
       }
 
       button {
         justify-self: end;
         background: $black;
         padding: $spacing-small;
-        font-size: $font-small;
         text-transform: uppercase;
-
-        &:hover {
-          background: $matteblack;
-        }
       }
     }
 
     .offer-display {
-      width: 100%;
       margin: $spacing-small auto;
 
       .buy-now-container {
@@ -281,13 +245,8 @@
           justify-items: center;
           align-items: center;
 
-          h4 {
-            font-size: $font-normal;
-          }
-
           p {
             color: $prodBtnPrimary;
-            font-size: $font-large;
             font-weight: $weight-black;
             justify-self: center;
             text-align: center;
@@ -296,27 +255,18 @@
 
         button {
           background: $prodBtnPrimary;
-
-          &:hover {
-            background: #61a6eb;
-          }
         }
       }
 
       .place-bid-container {
         display: grid;
-        width: 80%;
         margin: $spacing-small auto;
         align-items: center;
         background: $white;
-        padding: $spacing-normal;
         border: 1px solid $lightgrey;
 
         .buyer-input {
           display: grid;
-          grid-template-columns: 1fr 6fr;
-          margin: $spacing-small auto;
-          width: 100%;
 
           button,
           input {
@@ -328,22 +278,12 @@
             color: $white;
             border: 1px solid $lightgrey;
             border-right: 1px solid $lightergrey;
-            font-size: $font-normal;
             font-weight: $weight-black;
           }
 
           input {
-            padding: $spacing-small;
             border: 1px solid $lightgrey;
             border-left: none;
-            font-size: $font-normal;
-          }
-
-          &:hover {
-            button,
-            input {
-              border-color: #f2635a;
-            }
           }
         }
 
@@ -359,7 +299,6 @@
 
             p {
               align-self: center;
-              font-size: $font-small;
 
               &:first-child {
                 justify-self: start;
@@ -390,19 +329,11 @@
           text-transform: uppercase;
           margin: $spacing-small auto;
           background: $prodBtnPrimary2;
-
-          &:hover {
-            background: #f2635a;
-          }
         }
 
         .buy-now-btn {
           @extend .place-bid-btn;
           background: $prodBtnPrimary;
-
-          &:hover {
-              background: #61a6eb;
-          }
         }
       }
     }
@@ -413,13 +344,19 @@
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
   h3 {
-    font-size: $font-normal;
+    font-size: $font-large;
   }
 
   #offer-page-1 {
     #how-it-works-content {
+      width: 80%;
       div {
         grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-normal;
       }
 
       h6 {
@@ -428,6 +365,7 @@
     }
 
     .offer-btns {
+      width: 90%;
       margin: $spacing-large auto;
     }
   }
@@ -437,18 +375,162 @@
     width: 98vw;
     justify-items: center;
     justify-content: center;
+
+    .search-results {
+      .hit .hit-info {
+        h3 {
+          font-size: $font-xsmall;
+        }
+
+        h6 {
+          font-size: $font-xxsmall;
+        }
+      }
+    }
+  }
+
+  #offer-page-3 {
+    min-height: $productContainerHeight;
+    width: 100vw;
+
+    .btn {
+      font-size: $font-xsmall;
+    }
+
+    .product-info {
+      h1 {
+        font-size: $font-large;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-small;
+        }
+      }
+
+      img {
+        width: 50%;
+      }
+    }
+
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr;
+      padding: $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      .accessibility {
+        grid-column: 1 / 4;
+
+        h2 {
+          font-size: $font-normal;
+        }
+
+        h3 {
+          font-size: $font-xsmall;
+        }
+      }
+
+      .size {
+        height: 60px;
+        width: 60px;
+
+        #lowestAsk {
+          font-size: $font-xsmall;
+        }
+
+        #size {
+          font-size: $font-normal;
+        }
+      }
+    }
+
+    .bid-form {
+      max-width: 100%;
+
+      .size-display {
+        width: 80%;
+        padding: $spacing-xsmall;
+
+        h4 {
+          font-size: $font-large;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .buy-now-container {
+          width: 80%;
+
+          div {
+            h4 {
+              font-size: $font-small;
+            }
+
+            p {
+              font-size: $font-large;
+            }
+          }
+        }
+
+        .place-bid-container {
+          width: 80%;
+          padding: $spacing-xsmall;
+
+          .buyer-input {
+            width: 100%;
+            grid-template-columns: 1fr 5fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-small $spacing-xxsmall;
+              width: calc(100% - #{$spacing-xxsmall} - #{$spacing-xxsmall});
+              font-size: $font-small;
+            }
+
+            button {
+              font-size: $font-small;
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-small auto;
+
+            div {
+              p {
+                font-size: $font-xsmall;
+              }
+            }
+
+            .total {
+              p {
+                font-size: $font-small;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
   h3 {
-    font-size: $font-normal;
+    font-size: $font-large;
   }
 
   #offer-page-1 {
     #how-it-works-content {
+      width: 80%;
+
       div {
         grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-normal;
       }
 
       h6 {
@@ -457,6 +539,7 @@
     }
 
     .offer-btns {
+      width: 85%;
       margin: $spacing-large auto;
     }
   }
@@ -466,18 +549,160 @@
     width: 90vw;
     justify-self: center;
     justify-items: center;
+
+    .search-results .hit .hit-info {
+      h3 {
+        font-size: $font-xsmall;
+      }
+
+      h6 {
+        font-size: $font-xxsmall;
+      }
+    }
+  }
+
+  #offer-page-3 {
+    min-height: $productContainerHeight;
+    width: 90vw;
+    margin: 0 5vw;
+
+    .btn {
+      font-size: $font-xsmall;
+    }
+
+    .product-info {
+      h1 {
+        font-size: $font-large;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-small;
+        }
+      }
+
+      img {
+        width: 50%;
+      }
+    }
+
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding: $spacing-small $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      .accessibility {
+        grid-column: 1 / 5;
+
+        h2 {
+          font-size: $font-normal;
+        }
+
+        h3 {
+          font-size: $font-xsmall;
+        }
+      }
+
+      .size {
+        height: 60px;
+        width: 60px;
+
+        #lowestAsk {
+          font-size: $font-xsmall;
+        }
+
+        #size {
+          font-size: $font-normal;
+        }
+      }
+    }
+
+    .bid-form {
+      width: 100%;
+
+      .size-display {
+        width: 80%;
+        padding: $spacing-xsmall;
+
+        h4 {
+          font-size: $font-large;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .buy-now-container {
+          width: 80%;
+
+          div {
+            h4 {
+              font-size: $font-small;
+            }
+
+            p {
+              font-size: $font-large;
+            }
+          }
+        }
+
+        .place-bid-container {
+          width: 80%;
+          padding: $spacing-xsmall;
+
+          .buyer-input {
+            width: 100%;
+            grid-template-columns: 1fr 5fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-small $spacing-xxsmall;
+              width: calc(100% - #{$spacing-xxsmall} - #{$spacing-xxsmall});
+              font-size: $font-small;
+            }
+
+            button {
+              font-size: $font-small;
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-small auto;
+
+            div {
+              p {
+                font-size: $font-xsmall;
+              }
+            }
+
+            .total {
+              p {
+                font-size: $font-small;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
   h3 {
-    font-size: $font-large;
+    font-size: $font-xlarge;
   }
 
   #offer-page-1 {
     #how-it-works-content {
+      width: 90%;
       div {
         grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-normal;
       }
 
       h6 {
@@ -486,6 +711,7 @@
     }
 
     .offer-btns {
+      width: 75%;
       margin: $spacing-large auto;
     }
   }
@@ -495,27 +721,180 @@
     width: 75vw;
     justify-self: center;
     justify-items: center;
-  }
-}
 
-@media only screen and (min-width: 1200px) and (max-width: 1800px) {
-  h3 {
-    font-size: $font-large;
-  }
-
-  #offer-page-1 {
-    #how-it-works-content {
-      div {
-        grid-template-columns: 1fr 9fr;
+    .search-results .hit .hit-info {
+      h3 {
+        font-size: $font-small;
       }
 
       h6 {
         font-size: $font-xsmall;
       }
     }
+  }
+
+  #offer-page-3 {
+    grid-template-columns: 1fr 1fr;
+    height: $productContainerHeight;
+    width: 100vw;
+    margin: 0vw;
+
+    .btn {
+      font-size: $font-xsmall;
+    }
+
+    .product-info {
+      h1 {
+        font-size: $font-xlarge;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-normal;
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding: $spacing-small $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      .accessibility {
+        grid-column: 1 / 5;
+
+        h2 {
+          font-size: $font-normal;
+        }
+
+        h3 {
+          font-size: $font-xsmall;
+        }
+      }
+
+      .size {
+        height: 60px;
+        width: 60px;
+
+        #lowestAsk {
+          font-size: $font-xsmall;
+        }
+
+        #size {
+          font-size: $font-normal;
+        }
+      }
+    }
+
+    .bid-form {
+      width: 100%;
+
+      .size-display {
+        width: 80%;
+        padding: $spacing-small;
+
+        h4 {
+          font-size: $font-large;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .buy-now-container {
+          width: 80%;
+
+          div {
+            h4 {
+              font-size: $font-small;
+            }
+
+            p {
+              font-size: $font-large;
+            }
+          }
+        }
+
+        .place-bid-container {
+          width: 80%;
+          padding: $spacing-small;
+
+          .buyer-input {
+            width: 100%;
+            grid-template-columns: 1fr 5fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-small $spacing-xxsmall;
+              width: calc(100% - #{$spacing-xxsmall} - #{$spacing-xxsmall});
+              font-size: $font-small;
+            }
+
+            button {
+              font-size: $font-small;
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-small auto;
+
+            div {
+              p {
+                font-size: $font-small;
+              }
+            }
+
+            .total {
+              p {
+                font-size: $font-normal;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  h3 {
+    font-size: $font-xlarge;
+  }
+
+  #offer-page-1 {
+    #how-it-works-content {
+      div {
+        grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-large;
+      }
+
+      h6 {
+        font-size: $font-small;
+      }
+    }
 
     .offer-btns {
+      width: 70%;
       margin: $spacing-large auto;
+
+      button {
+        &:first-child:hover {
+          background: $lightergrey;
+        }
+
+        &:last-child:hover {
+          background: $matteblack;
+        }
+      }
     }
   }
 
@@ -524,27 +903,231 @@
     width: 60vw;
     justify-self: center;
     justify-items: center;
+
+    .search-results {
+      .hit {
+        .hit-info {
+          h3 {
+            font-size: $font-small;
+          }
+
+          h6 {
+            font-size: $font-xsmall;
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
+
+          .hit-info {
+            h3 {
+              color: $green;
+            }
+          }
+        }
+      }
+    }
+
+    .prod-search:hover {
+      border-color: $matteblack;
+    }
+  }
+
+  #offer-page-3 {
+    grid-template-columns: 1fr 1fr;
+    height: $productContainerHeight;
+    width: 95vw;
+    margin: 0 2.5vw;
+
+    .btn {
+      font-size: $font-small;
+    }
+
+    .product-info {
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-normal;
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      padding: $spacing-small $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      .accessibility {
+        grid-column: 1 / 6;
+
+        h2 {
+          font-size: $font-large;
+        }
+
+        h3 {
+          font-size: $font-small;
+        }
+      }
+
+      .size {
+        height: 70px;
+        width: 70px;
+
+        #lowestAsk {
+          font-size: $font-xsmall;
+        }
+
+        #size {
+          font-size: $font-normal;
+        }
+
+        &:hover {
+          background: $black;
+
+          #size {
+            color: $white;
+          }
+        }
+      }
+    }
+
+    .bid-form {
+      width: 100%;
+
+      .size-display {
+        width: 70%;
+        padding: $spacing-normal;
+
+        h4 {
+          font-size: $font-large;
+        }
+
+        button:hover {
+          background: $matteblack;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .buy-now-container {
+          width: 70%;
+
+          div {
+            h4 {
+              font-size: $font-small;
+            }
+
+            p {
+              font-size: $font-large;
+            }
+          }
+
+          button:hover {
+            background: #61a6eb;
+          }
+        }
+
+        .place-bid-container {
+          width: 70%;
+          padding: $spacing-normal;
+
+          .buyer-input {
+            width: 100%;
+            grid-template-columns: 1fr 6fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-small $spacing-xsmall;
+              width: calc(100% - #{$spacing-xsmall} - #{$spacing-xsmall});
+              font-size: $font-normal;
+            }
+
+            button {
+              font-size: $font-normal;
+            }
+
+            &:hover {
+              button,
+              input {
+                border-color: #f2635a;
+              }
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-small auto;
+
+            div {
+              p {
+                font-size: $font-small;
+              }
+            }
+
+            .total {
+              p {
+                font-size: $font-normal;
+              }
+            }
+          }
+
+          .place-bid-btn:hover {
+            background: #f2635a;
+          }
+
+          .buy-now-btn:hover {
+            background: #61a6eb;
+          }
+        }
+      }
+    }
   }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
   h3 {
-    font-size: $font-large;
+    font-size: $font-xxlarge;
   }
 
   #offer-page-1 {
     #how-it-works-content {
       div {
         grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-xlarge;
       }
 
       h6 {
-        font-size: $font-xsmall;
+        font-size: $font-normal;
       }
     }
 
     .offer-btns {
-      margin: $spacing-large auto;
+      width: 50%;
+      margin: $spacing-xlarge auto;
+
+      button {
+        padding: $spacing-normal !important;
+
+        &:first-child:hover {
+          background: $lightergrey;
+        }
+
+        &:last-child:hover {
+          background: $matteblack;
+        }
+      }
     }
   }
 
@@ -553,33 +1136,233 @@
     width: 50vw;
     justify-self: center;
     justify-items: center;
+
+    .search-results {
+      .hit {
+        .hit-info {
+          h3 {
+            font-size: $font-normal;
+          }
+
+          h6 {
+            font-size: $font-small;
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
+
+          .hit-info {
+            h3 {
+              color: $green;
+            }
+          }
+        }
+      }
+    }
+
+    .prod-search:hover {
+      border-color: $matteblack;
+    }
+  }
+
+  #offer-page-3 {
+    grid-template-columns: 1fr 1fr;
+    min-height: $productContainerHeight;
+    width: 95vw;
+    margin: 0 2.5vw;
+
+    .btn {
+      font-size: $font-normal;
+      padding: $spacing-normal !important;
+    }
+
+    .product-info {
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-normal;
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      padding: $spacing-small $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      .accessibility {
+        grid-column: 1 / 6;
+
+        h2 {
+          font-size: $font-large;
+        }
+
+        h3 {
+          font-size: $font-small;
+        }
+      }
+
+      .size {
+        height: 120px;
+        width: 120px;
+
+        #lowestAsk {
+          font-size: $font-normal;
+        }
+
+        #size {
+          font-size: $font-xlarge;
+        }
+
+        &:hover {
+          background: $black;
+
+          #size {
+            color: $white;
+          }
+        }
+      }
+    }
+
+    .bid-form {
+      width: 100%;
+      padding: $spacing-large 0;
+
+      .size-display {
+        width: 70%;
+        padding: $spacing-large;
+
+        h4 {
+          font-size: $font-xlarge;
+        }
+
+        button:hover {
+          background: $matteblack;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .buy-now-container {
+          width: 70%;
+
+          div {
+            h4 {
+              font-size: $font-normal;
+            }
+
+            p {
+              font-size: $font-xlarge;
+            }
+          }
+
+          button:hover {
+            background: #61a6eb;
+          }
+        }
+
+        .place-bid-container {
+          width: 70%;
+          padding: $spacing-large;
+
+          .buyer-input {
+            width: 100%;
+            grid-template-columns: 1fr 6fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-normal $spacing-small;
+              width: calc(100% - #{$spacing-small} - #{$spacing-small});
+              font-size: $font-large;
+            }
+
+            button {
+              font-size: $font-large;
+            }
+
+            &:hover {
+              button,
+              input {
+                border-color: #f2635a;
+              }
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-normal auto;
+
+            div {
+              p {
+                font-size: $font-normal;
+              }
+            }
+
+            .total {
+              p {
+                font-size: $font-large;
+              }
+            }
+          }
+
+          .place-bid-btn:hover {
+            background: #f2635a;
+          }
+
+          .buy-now-btn:hover {
+            background: #61a6eb;
+          }
+        }
+      }
+    }
   }
 }
 
 @media only screen and (min-width: 2000px) {
   h3 {
-    font-size: $font-large;
+    font-size: $font-xxlarge;
   }
 
   #offer-page-1 {
-    width: 60vw;
-    justify-self: center;
-
     #how-it-works-content {
       div {
-        grid-template-columns: 2fr 8fr;
+        grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-xxlarge;
       }
 
       h6 {
-        font-size: $font-small;
+        font-size: $font-large;
       }
     }
 
-    .sell-btns {
-      margin: $spacing-large auto;
+    .offer-btns {
+      width: 50%;
+      margin: $spacing-xlarge auto;
 
       button {
         font-size: $font-normal;
+        padding: $spacing-normal !important;
+
+        &:first-child:hover {
+          background: $lightergrey;
+        }
+
+        &:last-child:hover {
+          background: $matteblack;
+        }
       }
     }
   }
@@ -595,5 +1378,192 @@
     width: 45vw;
     justify-self: center;
     justify-items: center;
+
+    .search-results {
+      .hit {
+        .hit-info {
+          h3 {
+            font-size: $font-normal;
+          }
+
+          h6 {
+            font-size: $font-small;
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
+
+          .hit-info {
+            h3 {
+              color: $green;
+            }
+          }
+        }
+      }
+    }
+
+    .prod-search:hover {
+      border-color: $matteblack;
+    }
+  }
+
+  #offer-page-3 {
+    grid-template-columns: 1fr 1fr;
+    min-height: $productContainerHeight;
+    width: 2000px !important;
+
+    .btn {
+      font-size: $font-normal;
+      padding: $spacing-normal !important;
+    }
+
+    .product-info {
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-normal;
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      padding: $spacing-small $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      .accessibility {
+        grid-column: 1 / 6;
+
+        h2 {
+          font-size: $font-xlarge;
+        }
+
+        h3 {
+          font-size: $font-normal;
+        }
+      }
+
+      .size {
+        height: 120px;
+        width: 120px;
+
+        #lowestAsk {
+          font-size: $font-normal;
+        }
+
+        #size {
+          font-size: $font-xlarge;
+        }
+
+        &:hover {
+          background: $black;
+
+          #size {
+            color: $white;
+          }
+        }
+      }
+    }
+
+    .bid-form {
+      width: 100%;
+      padding: $spacing-large 0;
+
+      .size-display {
+        width: 70%;
+        padding: $spacing-large;
+
+        h4 {
+          font-size: $font-xlarge;
+        }
+
+        button:hover {
+          background: $matteblack;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .buy-now-container {
+          width: 70%;
+
+          div {
+            h4 {
+              font-size: $font-normal;
+            }
+
+            p {
+              font-size: $font-xlarge;
+            }
+          }
+
+          button:hover {
+            background: #61a6eb;
+          }
+        }
+
+        .place-bid-container {
+          width: 70%;
+          padding: $spacing-large;
+
+          .buyer-input {
+            width: 100%;
+            grid-template-columns: 1fr 6fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-normal $spacing-small;
+              width: calc(100% - #{$spacing-small} - #{$spacing-small});
+              font-size: $font-large;
+            }
+
+            button {
+              font-size: $font-large;
+            }
+
+            &:hover {
+              button,
+              input {
+                border-color: #f2635a;
+              }
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-normal auto;
+
+            div {
+              p {
+                font-size: $font-normal;
+              }
+            }
+
+            .total {
+              p {
+                font-size: $font-large;
+              }
+            }
+          }
+
+          .place-bid-btn:hover {
+            background: #f2635a;
+          }
+
+          .buy-now-btn:hover {
+            background: #61a6eb;
+          }
+        }
+      }
+    }
   }
 }

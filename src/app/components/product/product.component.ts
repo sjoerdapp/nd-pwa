@@ -249,6 +249,11 @@ export class ProductComponent implements OnInit {
       this.currentOffer = Object.assign({}, result);
       this.sizeSelected = selected;
       (document.getElementById(`${selected}`) as HTMLInputElement).classList.add('selected');
+
+      if (window.outerWidth < 800) {
+        document.body.scrollTop = 0; //For Safari
+        window.scrollTo({ top: 0, behavior: 'smooth' }); //For Chrome, Firefox, Opera and IE
+      }
     }
   }
 

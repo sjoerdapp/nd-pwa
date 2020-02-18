@@ -67,6 +67,11 @@
     </div>
 
     <div class="sizes" *ngIf="!selectedSize">
+      <div class="accessibility">
+        <h2>Select Size</h2>
+        <h3>U.S. Men Size | Highest Bid</h3>
+      </div>
+
       <div class="size" id="{{ offer.size }}" *ngFor="let offer of offers" (click)="selectSize(offer.size)">
         <button id="size">{{ offer.size }}</button>
         <button id="highestBid"
@@ -91,7 +96,7 @@
         <div class="place-ask-container">
           <div class="seller-input">
             <button>CA$</button>
-            <input type="text" name="input" id="input" placeholder="Enter Price" mask="0000000000"
+            <input type="text" name="input" id="input" placeholder="Enter Price" mask="0000000"
               (keyup)="priceChanges($event)">
           </div>
 
@@ -124,7 +129,7 @@
           <button class="btn ripple place-ask-btn"
             *ngIf="priceAdded && (pairPrice > currentBid.price || !currentBid) && !loading && !listed"
             (click)="submitListing()">Place Ask</button>
-          <button class="btn ripple place-ask-btn disabled" *ngIf="!priceAdded">Place Ask</button>
+          <button class="btn place-ask-btn disabled" *ngIf="!priceAdded">Place Ask</button>
           <button class="btn ripple place-ask-btn" *ngIf="loading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
           <button class="btn ripple place-ask-btn" *ngIf="listed">Listed</button>
           <button class="btn ripple sell-now-btn" *ngIf="priceAdded && currentBid && pairPrice <= currentBid.price"

@@ -94,6 +94,11 @@
     </div>
 
     <div class="product-offers">
+      <div class="accessibility">
+        <h2>Select Size</h2>
+        <h3>U.S. Men Size | Lowest Ask | Highest Bid</h3>
+      </div>
+
       <div class="product-offer" id="{{ offer.size }}" *ngFor="let offer of offers" (click)="selectSize(offer.size)">
         <button id="size">{{ offer.size }}</button>
 

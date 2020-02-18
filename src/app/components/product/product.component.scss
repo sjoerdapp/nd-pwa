@@ -10,8 +10,6 @@
   display: grid;
   grid-template-columns: 1fr;
   column-gap: $spacing-normal;
-  //border: 1px solid $lightgrey;
-  //border-bottom: none;
   margin: $spacing-normal auto;
 
   .product-info {
@@ -192,11 +190,16 @@
     display: grid;
     justify-items: center;
 
+    .accessibility {
+      align-self: flex-start;
+      width: 100%;
+      padding: $spacing-small 0;
+    }
+
     .product-offer {
       @include vendor(transition, 0.2s ease-in);
       padding: $spacing-xsmall;
       border: 2px solid $black;
-      background: $white;
       border-radius: $spacing-xxsmall;
       cursor: pointer;
       display: grid;
@@ -226,14 +229,6 @@
       #highestBid {
         color: $prodBtnPrimary2;
       }
-
-      &:hover {
-        background: $black;
-
-        #size {
-          color: $white;
-        }
-      }
     }
 
     .selected {
@@ -242,10 +237,6 @@
 
       #size {
         color: $white;
-      }
-
-      &:hover {
-        background: $matteblack;
       }
     }
   }
@@ -329,6 +320,18 @@
     row-gap: $spacing-xxsmall;
     padding: $spacing-small;
     grid-template-columns: 1fr 1fr 1fr;
+
+    .accessibility {
+      grid-column: 1 / 4;
+
+      h2 {
+        font-size: $font-normal;
+      }
+
+      h3 {
+        font-size: $font-xsmall;
+      }
+    }
 
     .product-offer {
       height: 70px;
@@ -449,6 +452,18 @@
     padding: $spacing-small;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
+    .accessibility {
+      grid-column: 1 / 5;
+
+      h2 {
+        font-size: $font-normal;
+      }
+
+      h3 {
+        font-size: $font-xsmall;
+      }
+    }
+
     .product-offer {
       height: 60px;
       width: 60px;
@@ -554,6 +569,18 @@
     padding: $spacing-small;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
+    .accessibility {
+      grid-column: 1 / 5;
+
+      h2 {
+        font-size: $font-normal;
+      }
+
+      h3 {
+        font-size: $font-xsmall;
+      }
+    }
+
     .product-offer {
       height: 60px;
       width: 60px;
@@ -634,6 +661,18 @@
     padding: $spacing-normal;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
+    .accessibility {
+      grid-column: 1 / 5;
+
+      h2 {
+        font-size: $font-large;
+      }
+
+      h3 {
+        font-size: $font-small;
+      }
+    }
+
     .product-offer {
       height: 90px;
       width: 90px;
@@ -645,6 +684,20 @@
 
       #size {
         font-size: $font-normal;
+      }
+
+      &:hover {
+        background: $black;
+
+        #size {
+          color: $white;
+        }
+      }
+    }
+
+    .selected {
+      &:hover {
+        background: $matteblack !important;
       }
     }
   }
@@ -714,6 +767,18 @@
     padding: $spacing-normal;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
+    .accessibility {
+      grid-column: 1 / 5;
+
+      h2 {
+        font-size: $font-large;
+      }
+
+      h3 {
+        font-size: $font-small;
+      }
+    }
+
     .product-offer {
       height: 120px;
       width: 120px;
@@ -725,6 +790,20 @@
 
       #size {
         font-size: $font-large;
+      }
+
+      &:hover {
+        background: $black;
+
+        #size {
+          color: $white;
+        }
+      }
+    }
+
+    .selected {
+      &:hover {
+        background: $matteblack !important;
       }
     }
   }
@@ -794,6 +873,18 @@
     padding: $spacing-normal;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
+    .accessibility {
+      grid-column: 1 / 5;
+
+      h2 {
+        font-size: $font-xlarge;
+      }
+
+      h3 {
+        font-size: $font-normal;
+      }
+    }
+
     .product-offer {
       height: 120px;
       width: 120px;
@@ -805,6 +896,20 @@
 
       #size {
         font-size: $font-large;
+      }
+
+      &:hover {
+        background: $black;
+
+        #size {
+          color: $white;
+        }
+      }
+    }
+
+    .selected {
+      &:hover {
+        background: $matteblack !important;
       }
     }
   }
