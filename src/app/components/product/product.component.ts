@@ -4,7 +4,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 import { Product } from 'src/app/models/product';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 import { SEOService } from 'src/app/services/seo.service';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -55,7 +55,7 @@ export class ProductComponent implements OnInit {
     this.productID = this.route.snapshot.params.id;
 
     this.auth.isConnected().then(res => {
-      if (!isUndefined(res)) {
+      if (!isNullOrUndefined(res)) {
         this.UID = res.uid;
       }
     });

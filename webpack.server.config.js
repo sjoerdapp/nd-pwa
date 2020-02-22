@@ -2,6 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const regex = /firebase\/(app|firestore)/;
 
 module.exports = {
   mode: 'none',
@@ -9,7 +10,14 @@ module.exports = {
     // This is our Express server for Dynamic universal
     server: './server.ts'
   },
-  externals: {},
+  externals: [/node_modules/, function (context, request, callback) {
+
+    // exclude firebase products from being bundled, so they will be loaded using require() at runtime.
+    if (regex.test(request)) {
+      return callback(null, 'commonjs ' + request);
+    }
+    callback();
+  }],
   target: 'node',
   resolve: { extensions: ['.ts', '.js'] },
   optimization: {
