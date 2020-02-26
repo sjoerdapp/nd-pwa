@@ -19,7 +19,7 @@ import { SettingsPayoutComponent } from './components/settings-payout/settings-p
 import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
 import { SellComponent } from './components/sell/sell.component';
 import { SearchComponent } from './components/search/search.component';
-//import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EditListingComponent } from './components/edit-listing/edit-listing.component';
 import { RequestComponent } from './components/request/request.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
@@ -66,7 +66,8 @@ const routes: Routes = [
   { path: 'transaction', component: TransactionReviewComponent },
   { path: 'sell', component: SellComponent },
   { path: 'search', component: SearchComponent },
-  // { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard/:id', component: DashboardComponent },
   { path: 'edit-listing/:id', component: EditListingComponent },
   { path: 'request', component: RequestComponent },
   { path: 'forgot-password', component: ForgetPasswordComponent },

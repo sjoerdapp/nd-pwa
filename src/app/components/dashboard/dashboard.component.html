@@ -2,54 +2,54 @@
   <app-navbar></app-navbar>
 
   <section class="dashboard-nav">
-    <a routerLink="/pending" active><button class="btn">Pending</button></a>
-    <a routerLink="/purchases"><button class="btn">Purchases</button></a>
-    <a routerLink="/sales"><button class="btn">Sales</button></a>
+    <a routerLink="/dashboard/purchases" (click)="getPurchases()"><button class="btn"
+        id="purchase-btn">Purchases</button></a>
+    <a routerLink="/dashboard/sales" (click)="getSales()"><button class="btn" id="sales-btn">Sales</button></a>
   </section>
 
   <section class="dashboard-stats">
-    <div class="dashboard-counter-offer">
-      <h6>Counter-Offer</h6>
-      <h5>2</h5>
+    <div class="dashboard-purchases">
+      <h6>Purchases</h6>
+      <h5 *ngIf="user">{{ user.ordered }}</h5>
+      <h5 *ngIf="!user">0</h5>
     </div>
 
     <div class="dashboard-sales">
       <h6>Sales</h6>
-      <h5>1</h5>
-    </div>
-
-    <div class="dashboard-purchases">
-      <h6>Purchases</h6>
-      <h5>1</h5>
+      <h5 *ngIf="user">{{ user.sold }}</h5>
+      <h5 *ngIf="!user">0</h5>
     </div>
   </section>
 
   <table>
     <tr>
       <th>Item</th>
+      <th>Purchase Date</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
 
-    <tr class="counter-offer-row">
-      <td>adidas Yeezy 350 Zebra, US9</td>
-      <td>No Answer Yet</td>
-      <td>Cancel</td>
-    </tr>
+    <div *ngIf="showSales">
+      <tr class="sales-row" *ngFor="let sale of sales">
+        <td>{{ sale.model + ', ' + sale.size }}</td>
+        <td *ngIf="sale.soldAt">{{ sale.soldAt }}</td>
+        <td *ngIf="sale.boughtAt">{{ sale.boughtAt }}</td>
+        <td>No Answer Yet</td>
+        <td>Cancel</td>
+      </tr>
+    </div>
 
-    <tr class="sales-row">
-      <td>Nike x OFF--WHITE AF1 Low Volt, US9</td>
-      <td>No Answer Yet</td>
-      <td>Cancel</td>
-    </tr>
-
-    <tr class="purchases-row">
-      <td>Jordan 4 Retro Black Laser, US9</td>
-      <td>Complete</td>
-      <td>View</td>
-    </tr>
+    <div *ngIf="showPurchases">
+      <tr class="purchases-row" *ngFor="let purchase of purchases">
+        <td>{{ purchase.model + ', ' + purchase.size }}</td>
+        <td *ngIf="purchase.soldAt">{{ purchase.soldAt }}</td>
+        <td *ngIf="purchase.boughtAt">{{ purchase.boughtAt }}</td>
+        <td>Complete</td>
+        <td>View</td>
+      </tr>
+    </div>
   </table>
 
-  <button class="btn dashboard-btn">See More</button>
+  <button class="btn dashboard-btn" *ngIf="showPurchases && purchases.length > 15 || showSales && sales.length > 15">See More</button>
 </div>
 <app-footer></app-footer>
