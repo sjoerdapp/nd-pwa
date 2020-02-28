@@ -19,6 +19,7 @@ import * as firebase from 'firebase/app';
 import { EmailService } from './email.service';
 import { isUndefined, isNullOrUndefined } from 'util';
 import { isPlatformBrowser } from '@angular/common';
+import { Observable } from 'rxjs';
 
 declare const gtag: any;
 
@@ -247,12 +248,16 @@ export class AuthService {
   }
 
   checkUsername(username) {
-    console.log('checkUsername() called');
+    //console.log('checkUsername() called');
     return this.afs.collection('users', ref => ref.where('username', '==', username));
   }
 
   checkEmail(email) {
-    console.log('checkEmail() called');
+    //console.log('checkEmail() called');
     return this.afs.collection('users', ref => ref.where('email', '==', email));
+  }
+
+  getUserData(uid: string) {
+    return this.afs.collection('users', ref => ref.where('uid', '==', `${uid}`).limit(1)).valueChanges() as Observable<User[]>;
   }
 }

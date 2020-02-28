@@ -21,7 +21,7 @@
     </div>
   </section>
 
-  <table>
+  <table *ngIf="showPurchases">
     <tr>
       <th>Item</th>
       <th>Purchase Date</th>
@@ -29,27 +29,46 @@
       <th>Action</th>
     </tr>
 
-    <div *ngIf="showSales">
-      <tr class="sales-row" *ngFor="let sale of sales">
-        <td>{{ sale.model + ', ' + sale.size }}</td>
-        <td *ngIf="sale.soldAt">{{ sale.soldAt }}</td>
-        <td *ngIf="sale.boughtAt">{{ sale.boughtAt }}</td>
-        <td>No Answer Yet</td>
-        <td>Cancel</td>
-      </tr>
-    </div>
+    <tr class="purchases-row" *ngFor="let purchase of purchases">
+      <td>{{ purchase.model + ', ' + purchase.size }}</td>
+      <td>{{ purchase.purchaseDate | date:'medium' }}</td>
+      <td>{{ printOrderStatus(purchase.status) }}</td>
 
-    <div *ngIf="showPurchases">
-      <tr class="purchases-row" *ngFor="let purchase of purchases">
-        <td>{{ purchase.model + ', ' + purchase.size }}</td>
-        <td *ngIf="purchase.soldAt">{{ purchase.soldAt }}</td>
-        <td *ngIf="purchase.boughtAt">{{ purchase.boughtAt }}</td>
-        <td>Complete</td>
-        <td>View</td>
-      </tr>
-    </div>
+      <td *ngIf="printOrderStatus(purchase.status) === 'awaiting seller confirmation'" [routerLink]="['/transaction']"
+        [queryParams]="{ transactionID: purchase.buyerID + '-' + purchase.sellerID + '-' + purchase.purchaseDate }">More
+        Details/Cancel</td>
+
+      <td *ngIf="printOrderStatus(purchase.status) != 'awaiting seller confirmation'" [routerLink]="['/transaction']"
+        [queryParams]="{ transactionID: purchase.buyerID + '-' + purchase.sellerID + '-' + purchase.purchaseDate }">More
+        Details
+      </td>
+    </tr>
   </table>
 
-  <button class="btn dashboard-btn" *ngIf="showPurchases && purchases.length > 15 || showSales && sales.length > 15">See More</button>
+  <table *ngIf="showSales">
+    <tr>
+      <th>Item</th>
+      <th>Purchase Date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+
+    <tr class="sales-row" *ngFor="let sale of sales">
+      <td>{{ sale.model + ', ' + sale.size }}</td>
+      <td>{{ sale.purchaseDate | date:'medium' }}</td>
+      <td>{{ printOrderStatus(sale.status) }}</td>
+
+      <td *ngIf="printOrderStatus(sale.status) === 'awaiting seller confirmation'" [routerLink]="['/transaction']"
+        [queryParams]="{ transactionID: sale.buyerID + '-' + sale.sellerID + '-' + sale.purchaseDate }">Confirm/Cancel
+      </td>
+
+      <td *ngIf="printOrderStatus(sale.status) != 'awaiting seller confirmation'" [routerLink]="['/transaction']"
+        [queryParams]="{ transactionID: sale.buyerID + '-' + sale.sellerID + '-' + sale.purchaseDate }">More Details
+      </td>
+    </tr>
+  </table>
+
+  <button class="btn dashboard-btn" *ngIf="showPurchases && purchases.length > 15 || showSales && sales.length > 15" (click)="more()">See
+    More</button>
 </div>
 <app-footer></app-footer>

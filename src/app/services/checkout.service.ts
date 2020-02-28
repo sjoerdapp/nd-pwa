@@ -50,13 +50,15 @@ export class CheckoutService {
       size: product.size,
       listedAt: product.timestamp,
       boughtAt,
+      purchaseDate: boughtAt,
       status: {
         verified: false,
         shipped: false,
         delivered: false,
         cancelled: false,
         shippedForVerification: false,
-        deliveredForAuthentication: false
+        deliveredForAuthentication: false,
+        sellerConfirmation: false
       },
       paymentID,
       shippingCost,
@@ -152,13 +154,15 @@ export class CheckoutService {
       size: product.size,
       listedAt: product.timestamp,
       soldAt,
+      purchaseDate: soldAt,
       status: {
         verified: false,
         shipped: false,
         delivered: false,
         cancelled: false,
         shippedForVerification: false,
-        deliveredForAuthentication: false
+        deliveredForAuthentication: false,
+        sellerConfirmation: true
       },
       paymentID: '',
       type: 'sold'

@@ -58,7 +58,9 @@ export class DashboardComponent implements OnInit {
 
     if (this.purchases.length === 0) {
       this.dashboardService.purchases(this.UID).subscribe(data => {
-        this.purchases = data;
+        data.forEach(doc => {
+          this.purchases.push(doc.data());
+        })
       });
     }
   }
@@ -71,8 +73,42 @@ export class DashboardComponent implements OnInit {
 
     if (this.sales.length === 0) {
       this.dashboardService.sales(this.UID).subscribe(data => {
-        this.sales = data;
+        data.forEach(doc => {
+          this.sales.push(doc.data());
+        })
       });
+    }
+  }
+
+  printOrderStatus(status) {
+    if (status.cancelled) {
+      return 'cancelled'
+    } else if (isNullOrUndefined(status.sellerConfirmation) && !status.shippedForVerification && !status.deliveredForAuthentication && !status.verified && !status.shipped && !status.delivered && !status.cancelled) {
+      return 'awaiting seller confirmation'
+    } else if (!status.shippedForVerification && status.sellerConfirmation && !status.deliveredForAuthentication && !status.verified && !status.shipped && !status.delivered && !status.cancelled) {
+      return 'waiting for seller to ship'
+    } else if (status.shippedForVerification && !status.deliveredForAuthentication && !status.verified && !status.shipped && !status.delivered && !status.cancelled) {
+      return 'en route to NXTDROP'
+    } else if (status.shippedForVerification && status.deliveredForAuthentication && !status.verified && !status.shipped && !status.delivered && !status.cancelled) {
+      return 'delivered to NXTDROP'
+    } else if (status.shippedForVerification && status.deliveredForAuthentication && status.verified && !status.shipped && !status.delivered && !status.cancelled) {
+      return 'authentication passed'
+    } else if (status.shippedForVerification && status.deliveredForAuthentication && status.verified && status.shipped && !status.delivered && !status.cancelled) {
+      return 'shipped to buyer'
+    } else if (status.shippedForVerification && status.deliveredForAuthentication && status.verified && status.shipped && status.delivered && !status.cancelled) {
+      return 'delivered to buyer'
+    }
+  }
+
+  more() {
+    if (this.showSales) {
+      this.dashboardService.sales(this.UID, this.sales[this.sales.length - 1].purchaseDate).subscribe(data => {
+        this.sales.concat(data.docs);
+      })
+    } else {
+      this.dashboardService.purchases(this.UID, this.sales[this.sales.length - 1].purchaseDate).subscribe(data => {
+        this.sales.concat(data.docs);
+      })
     }
   }
 

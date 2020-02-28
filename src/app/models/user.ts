@@ -15,7 +15,12 @@ export interface User {
     /* Payment Properties */
     firstName?: string;
     lastName?: string;
-    address?: string;
-    outToken?: string;
-    inToken?: string;
+    shippingAddress?: {
+        line1: string;
+        line2: string;
+        city: string;
+        province: string;
+        postalCode: string;
+        country: string;
+    }
 }
