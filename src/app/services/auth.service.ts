@@ -255,4 +255,8 @@ export class AuthService {
     console.log('checkEmail() called');
     return this.afs.collection('users', ref => ref.where('email', '==', email));
   }
+
+  getUserData(uid: string) {
+    return this.afs.collection(`users`).doc(`${uid}`).valueChanges();
+  }
 }

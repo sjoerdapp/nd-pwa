@@ -9,8 +9,30 @@ export interface User {
 
     // Optional
     username?: string;
-    dob? : string
+    dob?: string
     freeShipping?: boolean;
+    shippingAddress?: {
+        selling?: {
+            firstName: string,
+            lastName: string,
+            street: string,
+            line2: string,
+            city: string,
+            province: string,
+            postalCode: string,
+            country: string
+        },
+        buying?: {
+            firstName: string,
+            lastName: string,
+            street: string,
+            line2: string,
+            city: string,
+            province: string,
+            postalCode: string,
+            country: string
+        }
+    }
 
     /* Payment Properties */
     firstName?: string;

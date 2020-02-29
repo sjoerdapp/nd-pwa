@@ -30,13 +30,8 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 const sgClient = require('@sendgrid/client');
 sgClient.setApiKey(SENDGRID_API_KEY);
 
-// Server-Side Rendering
-const universal = require(`${process.cwd()}/dist/server`).app;
-
 // Twilio Init
 const twClient = twilio(env.twilio.sid, env.twilio.token);
-
-exports.ssr = functions.https.onRequest(universal);
 
 exports.orderCancellation = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
@@ -514,13 +509,14 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
             console.error(`error sending buyer email`);
         });
 
-        admin.firestore().collection(`users`).doc(`${req.body.sellerID}`).get().then(response => {
+        return admin.firestore().collection(`users`).doc(`${req.body.sellerID}`).get().then(response => {
             const data = response.data();
             if (data) {
                 const email = data.email;
                 const fee = req.body.price * 0.095;
                 const processing = req.body.price * 0.03;
                 const payout = req.body.price - fee - processing;
+                let transactionID;
 
                 console.log(`Order Email Seller to ${email}.`);
 
@@ -535,8 +531,18 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                         assetURL: req.body.assetURL,
                         fee: fee,
                         processing: processing,
-                        payout: payout
+                        payout: payout,
+                        sellerID: req.body.sellerID,
+                        tid: ''
                     }
+                }
+
+                if (req.body.type === 'sold') {
+                    transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.soldAt}`;
+                    msg.templateId = 'd-8650dfd5d93f4b16b594cf02c49e9070';
+                } else {
+                    transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.boughtAt}`;
+                    msg.dynamic_template_data.tid = transactionID;
                 }
 
                 sgMail.send(msg).then((content: any) => {
@@ -545,13 +551,13 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                     console.error(`Could send email to seller: ${err}`);
                 })
             } else {
-                console.error(`buyer don't exist`);
+                console.error(`Seller don't exist`);
             }
+
+            return res.status(200);
         }).catch(err => {
             console.error(`error sending seller email`);
         })
-
-        return res.status(200);
     });
 });
 

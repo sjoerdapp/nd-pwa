@@ -14,24 +14,7 @@ import { SEOService } from 'src/app/services/seo.service';
 export class SoldComponent implements OnInit {
 
   transactionID: string;
-  transaction: Transaction = {
-    assetURL: '',
-    soldAt: 0,
-    buyerID: '',
-    condition: '',
-    listedAt: 0,
-    offerID: '',
-    model: '',
-    paymentID: '',
-    price: 0,
-    productID: '',
-    sellerID: '',
-    shippingCost: 0,
-    size: '',
-    status: {},
-    type: '',
-    total: 0
-  };
+  transaction: Transaction;
   error = false;
 
   constructor(

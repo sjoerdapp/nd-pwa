@@ -1,60 +1,180 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .main-container {
-    display: grid;
-    align-content: center;
+  display: grid;
+  align-content: center;
 }
 
-h2, h6 {
-    text-align: center;
-    margin: $spacing-normal;
+h2,
+h6 {
+  text-align: center;
+  margin: $spacing-normal auto $spacing-xsmall auto;
+}
+
+p {
+  text-align: center;
+  margin: $spacing-small;
 }
 
 input {
-    display: block;
-    padding: $spacing-xsmall;
-    margin-bottom: $spacing-small;
-    border-radius: $spacing-xsmall;
-    border: 1px solid $lightgrey;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  padding: $spacing-xsmall;
+  margin-bottom: $spacing-small;
+  border-radius: $spacing-xsmall;
+  border: 1px solid $lightgrey;
+  margin-left: auto;
+  margin-right: auto;
 
-    &:focus {
-        border-color: $matteblack;
-    }
+  &:focus {
+    border-color: $matteblack;
+  }
 }
 
 .settings-btn {
-    width: 70%;
-    margin: $spacing-normal auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 5px;
+  margin: $spacing-normal auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 5px;
 }
 
-#ship-state, #ship-country {
-    display: block;
-    border: none;
-    width: 60%;
-    margin: 0 auto;
-    padding: $spacing-xsmall;
-    margin-bottom: $spacing-xsmall;
+#ship-state,
+#ship-country {
+  display: block;
+  border: none;
+  margin: 0 auto;
+  padding: $spacing-xsmall;
+  margin-bottom: $spacing-xsmall;
 }
 
 .disabled {
-    background: $lightgrey;
-    cursor: not-allowed;
+  background: $lightgrey;
+  cursor: not-allowed;
 
-    &:hover {
-        background: $lightgrey;
-    }
+  &:hover {
+    background: $lightgrey;
+  }
 }
 
 .error {
-    background: $inputError;
+  background: $inputError;
 }
 
 button {
-    outline: none;
+  outline: none;
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  input {
+    width: 90%;
+  }
+
+  #ship-state,
+  #ship-country {
+    width: 90%;
+  }
+
+  p {
+    font-size: $font-xxsmall;
+  }
+
+  .settings-btn {
+    width: 90%;
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+  input {
+    width: 70%;
+  }
+
+  #ship-state,
+  #ship-country {
+    width: 70%;
+  }
+
+  p {
+    font-size: $font-xsmall;
+  }
+
+  .settings-btn {
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  input {
+    width: 40%;
+  }
+
+  #ship-state,
+  #ship-country {
+    width: 40%;
+  }
+
+  p {
+    font-size: $font-xsmall;
+  }
+
+  .settings-btn {
+    width: 40%;
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  input {
+    width: 40%;
+  }
+
+  #ship-state,
+  #ship-country {
+    width: 40%;
+  }
+
+  p {
+    font-size: $font-xsmall;
+  }
+
+  .settings-btn {
+    width: 40%;
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  input {
+    width: 30%;
+  }
+
+  #ship-state,
+  #ship-country {
+    width: 30%;
+  }
+
+  p {
+    font-size: $font-small;
+  }
+
+  .settings-btn {
+    width: 30%;
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  input {
+    width: 25%;
+  }
+
+  #ship-state,
+  #ship-country {
+    width: 25%;
+  }
+
+  p {
+    font-size: $font-small;
+  }
+
+  .settings-btn {
+    width: 25%;
+  }
 }

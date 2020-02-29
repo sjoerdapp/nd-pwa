@@ -12,10 +12,10 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
 import { SettingsPasswordComponent } from './components/settings-password/settings-password.component';
-/*import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
-import { SettingsSellingComponent } from './components/settings-selling/settings-selling.component';
+//import { SettingsBuyingComponent } from './components/settings-buying/settings-buying.component';
+//import { SettingsSellingComponent } from './components/settings-selling/settings-selling.component';
 import { SettingsShippingComponent } from './components/settings-shipping/settings-shipping.component';
-import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';*/
+//import { SettingsPayoutComponent } from './components/settings-payout/settings-payout.component';
 import { TransactionReviewComponent } from './components/transaction-review/transaction-review.component';
 import { SellComponent } from './components/sell/sell.component';
 import { SearchComponent } from './components/search/search.component';
@@ -46,6 +46,7 @@ import { ReferralComponent } from './components/referral/referral.component';
 import { FaqHomeComponent } from './components/faq/faq-home/faq-home.component';
 import { FaqPostComponent } from './components/faq/faq-post/faq-post.component';
 import { FaqCategoryComponent } from './components/faq/faq-category/faq-category.component';
+import { SaleConfirmationComponent } from './components/sale-confirmation/sale-confirmation.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -59,9 +60,9 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'settings/profile', component: SettingsProfileComponent },
   { path: 'settings/password', component: SettingsPasswordComponent },
-  /*{ path: 'settings/buying', component: SettingsBuyingComponent },
-  { path: 'settings/selling', component: SettingsSellingComponent },
-  { path: 'settings/shipping', component: SettingsShippingComponent },*/
+  //{ path: 'settings/buying', component: SettingsBuyingComponent },
+  //{ path: 'settings/selling', component: SettingsSellingComponent },
+  { path: 'settings/shipping', component: SettingsShippingComponent },
   //{ path: 'settings/payout', component: SettingsPayoutComponent },
   { path: 'transaction', component: TransactionReviewComponent },
   { path: 'sell', component: SellComponent },
@@ -92,6 +93,7 @@ const routes: Routes = [
   { path: 'faq', component: FaqHomeComponent },
   { path: 'faq/:category', component: FaqCategoryComponent },
   { path: 'faq/:category/:post', component: FaqPostComponent },
+  { path: 'confirmation/:id/:seller', component: SaleConfirmationComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
