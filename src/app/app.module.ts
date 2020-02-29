@@ -55,6 +55,8 @@ import { BlogHomeComponent } from './components/blog/blog-home/blog-home.compone
 import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
 import { DropComponent } from './components/special-drop/drop/drop.component';
 import { SnkrsComponent } from './components/snkrs/snkrs.component';
+import { ListingsComponent } from './components/listings/listings.component';
+import { OffersComponent } from './components/offers/offers.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -134,7 +136,9 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     BlogHomeComponent,
     BlogPostComponent,
     SnkrsComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    ListingsComponent,
+    OffersComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
