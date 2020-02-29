@@ -1,0 +1,405 @@
+@import "../../../base_styles/base";
+
+.lp-content {
+  padding: auto $spacing-large;
+
+  h1 {
+    text-align: center;
+    margin: $spacing-large auto;
+    margin-top: 0;
+  }
+
+  img {
+    margin: auto;
+    display: block;
+    margin-bottom: $spacing-large;
+  }
+
+  .lp-text {
+    margin: auto;
+
+    h2 {
+      margin: $spacing-large auto;
+      margin-bottom: $spacing-normal;
+    }
+
+    ul {
+      li {
+        margin-bottom: $spacing-normal;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    iframe {
+      display: block;
+      margin: $spacing-normal auto;
+    }
+
+    h6 {
+        margin-top: $spacing-normal;
+    }
+
+    .instagram-media {
+      display: block;
+    }
+  }
+
+  h6 {
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .btn {
+    text-align: center;
+    margin: $spacing-large auto;
+    margin-bottom: $spacing-small;
+    display: block;
+    background: $darkblue;
+
+    &:hover {
+      background: $navyblue;
+      color: $white;
+    }
+  }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  .main-container {
+    margin: $spacing-normal $spacing-xsmall;
+  }
+
+  .lp-content {
+    h1 {
+      font-size: $font-normal;
+    }
+  }
+
+  .lp-text {
+    width: 90%;
+
+    h2 {
+      font-size: $font-small;
+    }
+
+    p {
+      font-size: $font-xsmall;
+      margin: auto $spacing-xxsmall;
+    }
+
+    ul {
+      padding: $spacing-small $spacing-normal;
+
+      li {
+        font-size: $font-xsmall;
+      }
+    }
+
+    iframe {
+      width: 100%;
+      height: 200px;
+    }
+
+    .instagram-media {
+      margin: $spacing-normal 0 !important;
+      width: 100% !important;
+    }
+  }
+
+  h6 {
+    font-size: 9px;
+  }
+
+  .btn {
+    width: 80%;
+    font-size: $font-xsmall;
+    padding: $spacing-normal $spacing-xsmall;
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+  .main-container {
+    margin: $spacing-normal $spacing-small;
+  }
+
+  .lp-content {
+    h1 {
+      font-size: $font-large;
+    }
+  }
+
+  .lp-text {
+    width: 90%;
+
+    h2 {
+      font-size: $font-normal;
+    }
+
+    p {
+      font-size: $font-small;
+      margin: auto $spacing-xxsmall;
+    }
+
+    ul {
+      padding: $spacing-small $spacing-normal;
+
+      li {
+        font-size: $font-small;
+      }
+    }
+
+    iframe {
+      width: 80%;
+      height: 250px;
+    }
+
+    .instagram-media {
+      margin: $spacing-normal auto !important;
+      width: 100% !important;
+    }
+  }
+
+  h6 {
+    font-size: 10px;
+  }
+
+  .btn {
+    width: 80%;
+    font-size: $font-xsmall;
+    padding: $spacing-normal $spacing-xsmall;
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  .main-container {
+    margin: $spacing-normal $spacing-normal;
+  }
+
+  .lp-content {
+    h1 {
+      font-size: $font-xlarge;
+    }
+
+    img {
+      width: 90%;
+    }
+  }
+
+  .lp-text {
+    width: 85%;
+
+    h2 {
+      font-size: $font-large;
+    }
+
+    p {
+      font-size: $font-normal;
+      margin: auto $spacing-small;
+    }
+
+    ul {
+      padding: $spacing-small $spacing-normal;
+
+      li {
+        font-size: $font-normal;
+      }
+    }
+
+    iframe {
+      width: 560px;
+      height: 320px;
+    }
+
+    .instagram-media {
+      margin: $spacing-normal auto !important;
+      width: 100% !important;
+    }
+  }
+
+  h6 {
+    font-size: 11px;
+  }
+
+  .btn {
+    width: 70%;
+    font-size: $font-small;
+    padding: $spacing-normal $spacing-xsmall;
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  .main-container {
+    margin: $spacing-xlarge $spacing-large;
+  }
+
+  .lp-content {
+    h1 {
+      font-size: $font-xlarge;
+    }
+
+    img {
+      width: 90%;
+    }
+  }
+
+  .lp-text {
+    width: 85%;
+
+    h2 {
+      font-size: $font-large;
+    }
+
+    p {
+      font-size: $font-normal;
+      margin: auto $spacing-normal;
+    }
+
+    ul {
+      padding: $spacing-small $spacing-normal;
+
+      li {
+        font-size: $font-normal;
+      }
+    }
+
+    iframe {
+      width: 720px;
+      height: 420px;
+    }
+
+    .instagram-media {
+      margin: $spacing-normal auto !important;
+      max-width: 720px !important;
+    }
+  }
+
+  h6 {
+    font-size: 11px;
+  }
+
+  .btn {
+    width: 40%;
+    font-size: $font-small;
+    padding: $spacing-normal $spacing-xsmall;
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  .main-container {
+    margin: $spacing-xlarge $spacing-large;
+  }
+
+  .lp-content {
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    img {
+      width: 90%;
+    }
+  }
+
+  .lp-text {
+    width: 85%;
+
+    h2 {
+      font-size: $font-xlarge;
+    }
+
+    p {
+      font-size: $font-large;
+      margin: auto $spacing-normal;
+    }
+
+    ul {
+      padding: $spacing-small $spacing-normal;
+
+      li {
+        font-size: $font-large;
+      }
+    }
+
+    iframe {
+      width: 1080px;
+      height: 720px;
+    }
+
+    .instagram-media {
+      margin: $spacing-normal auto !important;
+      width: 1080px !important;
+      max-width: 1080px !important;
+    }
+  }
+
+  h6 {
+    font-size: 14px;
+  }
+
+  .btn {
+    width: 40%;
+    font-size: $font-normal;
+    padding: $spacing-normal $spacing-xsmall;
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .main-container {
+    margin: $spacing-xlarge $spacing-large;
+  }
+
+  .lp-content {
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    img {
+      width: 90%;
+    }
+  }
+
+  .lp-text {
+    width: 85%;
+
+    h2 {
+      font-size: $font-xlarge;
+    }
+
+    p {
+      font-size: $font-large;
+      margin: auto $spacing-normal;
+    }
+
+    ul {
+      padding: $spacing-small $spacing-normal;
+
+      li {
+        font-size: $font-large;
+      }
+    }
+
+    iframe {
+      width: 1080px;
+      height: 720px;
+    }
+
+    .instagram-media {
+      margin: $spacing-normal auto !important;
+      width: 1080px !important;
+      max-width: 1080px !important;
+    }
+  }
+
+  h6 {
+    font-size: 14px;
+  }
+
+  .btn {
+    width: 40%;
+    font-size: $font-normal;
+    padding: $spacing-normal $spacing-xsmall;
+  }
+}

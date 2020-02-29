@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 /** Components */
 import { AppComponent } from './app.component';
@@ -57,6 +58,12 @@ import { DropComponent } from './components/special-drop/drop/drop.component';
 import { SnkrsComponent } from './components/snkrs/snkrs.component';
 import { ListingsComponent } from './components/listings/listings.component';
 import { OffersComponent } from './components/offers/offers.component';
+import { Dec182019Component } from './components/landing-pages/dec182019//dec182019.component';
+import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
+import { ReferralComponent } from './components/referral/referral.component';
+import { FaqHomeComponent } from './components/faq/faq-home/faq-home.component';
+import { FaqCategoryComponent } from './components/faq/faq-category/faq-category.component';
+import { FaqPostComponent } from './components/faq/faq-post/faq-post.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -64,9 +71,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 /** Icons imports */
 // tslint:disable-next-line: max-line-length
-import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard, faCog, faEnvelope, faLink, faMedal, faAsterisk } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faTimes, faShoppingCart, faUserCircle, faBars, faSearch, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard, faCog, faEnvelope, faLink, faMedal, faAsterisk, faShippingFast, faShieldAlt, faStoreAlt } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
-import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal, faCcVisa, faCcMastercard, faCcAmex, faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faTwitter, faInstagram, faGoogle, faPaypal, faCcVisa, faCcMastercard, faCcAmex, faFacebookF, faCanadianMapleLeaf, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
 // Firebase Setup
 import { AngularFireModule } from '@angular/fire';
@@ -138,7 +145,13 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     SnkrsComponent,
     SafeHtmlPipe,
     ListingsComponent,
-    OffersComponent
+    OffersComponent,
+    Dec182019Component,
+    HowItWorksComponent,
+    ReferralComponent,
+    FaqHomeComponent,
+    FaqPostComponent,
+    FaqCategoryComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -155,13 +168,15 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     HttpClientModule,
     NgxPayPalModule
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor() {
     // add icon to library to be used in components
     // tslint:disable-next-line: max-line-length
-    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard, faCcVisa, faCcMastercard, faCcAmex, faCog, faClock, faFacebookF, faEnvelope, faLink, faMedal, faAsterisk);
+    library.add(faBell, faBars, faShoppingCart, faUserCircle, faFacebook, faInstagram, faTwitter, faTimes, faGoogle, faSearch, faPaypal, faDollarSign, faCheckCircle, faQuestionCircle, faTag, faBox, faMoneyBillWave, faSpinner, faHandHoldingUsd, faExclamationCircle, faPhone, faHome, faCreditCard, faCcVisa, faCcMastercard, faCcAmex, faCog, faClock, faFacebookF, faEnvelope, faLink, faMedal, faAsterisk, faShippingFast, faShieldAlt, faStoreAlt, faCanadianMapleLeaf, faYoutube);
   }
 }

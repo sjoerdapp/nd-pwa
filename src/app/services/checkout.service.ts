@@ -54,7 +54,9 @@ export class CheckoutService {
         verified: false,
         shipped: false,
         delivered: false,
-        cancelled: false
+        cancelled: false,
+        shippedForVerification: false,
+        deliveredForAuthentication: false
       },
       paymentID,
       shippingCost,
@@ -154,14 +156,16 @@ export class CheckoutService {
         verified: false,
         shipped: false,
         delivered: false,
-        cancelled: false
+        cancelled: false,
+        shippedForVerification: false,
+        deliveredForAuthentication: false
       },
       paymentID: '',
       type: 'sold'
     };
 
     // delete listings
-    batch.delete(sellerRef.collection(`offers`).doc(`${product.offerID}`));
+    batch.delete(buyerRef.collection(`offers`).doc(`${product.offerID}`));
     batch.delete(prodRef.collection(`offers`).doc(`${product.offerID}`));
 
     // set ordered and sol fields
@@ -267,5 +271,15 @@ export class CheckoutService {
 
   getPromoCode(cardID: string) {
     return this.afs.collection('nxtcards').doc(`${cardID}`).ref.get();
+  }
+
+  getListing(listingID: string) {
+    const userID = listingID.split('-')[0];
+    return this.afs.collection(`users`).doc(`${userID}`).collection(`listings`).doc(`${listingID}`).ref.get();
+  }
+
+  getOffer(offerID: string) {
+    const userID = offerID.split(`-`)[0];
+    return this.afs.collection(`users`).doc(`${userID}`).collection(`offers`).doc(`${offerID}`).ref.get();
   }
 }

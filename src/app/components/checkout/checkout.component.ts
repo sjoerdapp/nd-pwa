@@ -34,7 +34,7 @@ export class CheckoutComponent implements OnInit {
   // cartItems = [];
 
   product: any = {}
-  shippingPrice = 0;
+  shippingPrice = 15;
   subtotal = 0;
   total = 0;
   discount = 0;
@@ -73,8 +73,6 @@ export class CheckoutComponent implements OnInit {
     this.isSelling = this.route.snapshot.queryParams.sell;
 
     if (!isUndefined(this.isSelling) && !isUndefined(this.route.snapshot.queryParams.product)) {
-      this.product = JSON.parse(this.route.snapshot.queryParams.product);
-      this.subtotal = this.product.price;
 
       if (isPlatformBrowser(this._platformId)) {
         gtag('event', 'begin_checkout', {
@@ -84,11 +82,12 @@ export class CheckoutComponent implements OnInit {
       }
 
       if (this.isSelling != 'true') {
+        this.getListing(this.route.snapshot.queryParams.product);
         this.isSelling = false;
-        this.checkFreeShipping();
         this.initConfig();
       } else {
         this.isSelling = true;
+        this.getOffer(this.route.snapshot.queryParams.product);
       }
     } else {
       if (isUndefined(this.tID)) {
@@ -275,7 +274,7 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  private checkFreeShipping() {
+  /*private checkFreeShipping() {
     if (this.connected) {
       this.checkoutService.getFreeShipping().then(res => {
         res.subscribe(response => {
@@ -292,6 +291,38 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.total = this.subtotal + this.shippingPrice;
     }
+  }*/
+
+  getListing(listingID: string) {
+    this.checkoutService.getListing(listingID).then(res => {
+      if (isNullOrUndefined(res.data())) {
+        this.router.navigate(['page-not-found']);
+      } else {
+        this.product = res.data();
+        this.subtotal = this.product.price;
+        this.total = this.subtotal + this.shippingPrice;
+
+        if (this.product.sellerID === this.user.uid) {
+          this.router.navigate(['page-not-found']);
+        }
+      }
+    });
+  }
+
+  getOffer(offerID: string) {
+    this.checkoutService.getOffer(offerID).then(res => {
+      if (isNullOrUndefined(res.data())) {
+        this.router.navigate(['page-not-found']);
+      } else {
+        this.product = res.data();
+        this.subtotal = this.product.price;
+        this.total = this.subtotal + this.shippingPrice;
+
+        if (this.product.buyerID === this.user.uid) {
+          this.router.navigate(['page-not-found']);
+        }
+      }
+    });
   }
 
   checkUserAndTransaction(transactionID: string) {
@@ -300,7 +331,7 @@ export class CheckoutComponent implements OnInit {
         this.checkoutService.getTransaction(transactionID).subscribe(response => {
           this.product = response;
           this.subtotal = this.product.price;
-          this.checkFreeShipping();
+          this.total = this.subtotal + this.shippingPrice;
           this.initConfig();
         })
       } else {

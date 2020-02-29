@@ -40,6 +40,12 @@ import { DropComponent } from './components/special-drop/drop/drop.component';
 import { BlogHomeComponent } from './components/blog/blog-home/blog-home.component';
 import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
 import { SnkrsComponent } from './components/snkrs/snkrs.component';
+import { Dec182019Component } from './components/landing-pages/dec182019/dec182019.component';
+import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
+import { ReferralComponent } from './components/referral/referral.component';
+import { FaqHomeComponent } from './components/faq/faq-home/faq-home.component';
+import { FaqPostComponent } from './components/faq/faq-post/faq-post.component';
+import { FaqCategoryComponent } from './components/faq/faq-category/faq-category.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -80,6 +86,12 @@ const routes: Routes = [
   { path: 'news', component: BlogHomeComponent },
   { path: 'news/:title', component: BlogPostComponent },
   { path: 'snkrs', component: SnkrsComponent },
+  { path: 'here-is-the-perfect-solution-if-you-want-to-buy-sneakers', component: Dec182019Component },
+  { path: 'how-it-works', component: HowItWorksComponent },
+  { path: 'invite-a-friend', component: ReferralComponent },
+  { path: 'faq', component: FaqHomeComponent },
+  { path: 'faq/:category', component: FaqCategoryComponent },
+  { path: 'faq/:category/:post', component: FaqPostComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

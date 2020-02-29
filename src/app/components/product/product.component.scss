@@ -102,8 +102,13 @@
     }
 
     .product-offer {
-      //border-bottom: 1px solid $lightgrey;
+      border-bottom: 1px solid $lightgrey;
+      padding-bottom: $spacing-normal;
       text-align: center;
+
+      &:last-child {
+        border-bottom: none;
+      }
 
       &:last-child {
         border-bottom: none;

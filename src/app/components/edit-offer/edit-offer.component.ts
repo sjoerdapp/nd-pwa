@@ -36,6 +36,8 @@ export class EditOfferComponent implements OnInit {
   isWomen = false;
   isGS = false;
 
+  source: string = '../../';
+
   constructor(
     private route: ActivatedRoute,
     private offerService: OfferService,
@@ -48,6 +50,7 @@ export class EditOfferComponent implements OnInit {
 
   ngOnInit() {
     this.listingID = this.route.snapshot.params.id;
+    this.source = this.route.snapshot.queryParamMap.get('source');
     this.offerInfo = this.offerService.getOffer(this.listingID).then(val => {
       val.subscribe(data => {
         if (isUndefined(data)) {

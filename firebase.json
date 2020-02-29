@@ -11,8 +11,7 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**",
-      "index.html"
+      "**/node_modules/**"
     ],
     "rewrites": [
       {
@@ -21,7 +20,7 @@
       },
       {
         "source": "**",
-        "function": "ssr"
+        "destination": "/index.html"
       }
     ],
     "redirects": [
@@ -34,6 +33,16 @@
         "source": "/blog/nxtdrop-the-canadian-stockx-is-finally-here",
         "destination": "/news/nxtdrop-the-canadian-stockx-is-finally-here",
         "type": 301
+      },
+      {
+        "source": "/blog",
+        "destination": "/news",
+        "type": 301
+      },
+      {
+        "source": "/welcome",
+        "destination": "/how-it-works?source=sms",
+        "type": 301
       }
     ],
     "headers": [
@@ -43,6 +52,10 @@
           {
             "key": "Cache-Control",
             "value": "no-cache, no-store, must-revalidate"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "deny"
           }
         ]
       }

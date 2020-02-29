@@ -99,7 +99,7 @@
     </select>
 
     <div class="edit-btns">
-      <button class="btn" routerLink="../../profile">Back</button>
+      <button class="btn" routerLink="/{{ source }}">Back</button>
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && showSaveChanges"
         [className]="conditionChanged || priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'"
         (click)="updateOffer()">Save Changes</button>

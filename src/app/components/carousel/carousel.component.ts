@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class CarouselComponent implements OnInit {
 
   typingTimer;
-  doneTypingInterval = 250;
+  doneTypingInterval = 1000;
 
   constructor(
     private router: Router,

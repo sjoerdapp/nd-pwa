@@ -1,15 +1,15 @@
-<div class="free-shipping">
-  <p>Free Shipping on your First Order</p>
-</div>
-
 <nav [class]="connected ? 'col-5' : 'col-4'">
   <button class="nav-hamburger" (click)="openMenu()">
     <fa-icon [icon]="['fas', 'bars']"></fa-icon>
   </button>
 
-  <a class="nav-home" routerLink="/">
-    <img src="../../../assets/Color w- letterspng.png" alt="NXTDROP, Inc. Logo">
-  </a>
+  <div class="nav-home">
+    <a routerLink="/"><img src="../../../assets/Color w- letterspng.png" alt="NXTDROP, Inc. Logo"></a>
+  </div>
+
+  <section class="search-bar">
+    <input type="text" name="search-bar" id="search-bar" placeholder="Seach for brand, color, etc." *ngIf="showSearchBar" (keyup)="search($event)">
+  </section>
 
   <section class="nav-icons" *ngIf="connected; else navBtns">
     <!--<button class="nav-notifications nav-icon">

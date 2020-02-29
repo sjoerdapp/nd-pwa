@@ -20,15 +20,15 @@
         <h5>{{ subtotal | currency: 'CAD' }}</h5>
       </div>
 
-      <div class="summary-auth">
-        <h5>Authentication Fee</h5>
-        <h5>FREE</h5>
-      </div>
-
       <div class="summary-shipping">
         <h5>Shipping</h5>
         <h5 *ngIf="shippingPrice > 0">{{ shippingPrice | currency: 'CAD' }}</h5>
         <h5 *ngIf="shippingPrice === 0">FREE</h5>
+      </div>
+
+      <div class="summary-auth">
+        <h5>Authentication Fee</h5>
+        <h5>FREE</h5>
       </div>
 
       <div class="summary-tax" *ngIf="promoApplied">

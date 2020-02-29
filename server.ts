@@ -24,9 +24,9 @@ import {join} from 'path';
 (global as any).XMLHttpRequest = require('xhr2');
 
 // Express server
-export const app = express();
+const app = express();
 
-//const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist/browser');
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
@@ -51,12 +51,33 @@ app.get('*.*', express.static(DIST_FOLDER, {
 }));
 
 // All regular routes use the Universal engine
+app.get('/blog/the-best-canadian-online-sneaker-stores', (req, res) => {
+  res.redirect(301, '/news/the-best-canadian-online-sneaker-stores');
+});
+
+app.get('/blog/nxtdrop-the-canadian-stockx-is-finally-here', (req, res) => {
+  res.redirect(301, '/news/nxtdrop-the-canadian-stockx-is-finally-here');
+});
+
+app.get('/blog', (req, res) => {
+  res.redirect(301, '/news');
+});
+
+app.get('/welcome', (req, res) => {
+  res.redirect(301, '/how-it-works?source=sms');
+});
+
+app.get('/404', (req, res) => {
+  res.render('index', { req });
+  res.status(404);
+});
+
 app.get('*', (req, res) => {
   console.log(req.url);
   res.render('index', { req });
 });
 
 // Start up the Node server
-/*app.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Node Express server listening on http://localhost:${PORT}`);
-});*/
+});

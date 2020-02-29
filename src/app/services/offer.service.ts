@@ -47,6 +47,7 @@ export class OfferService {
       size,
       offerID,
       timestamp,
+      productID: pair.productID,
       buyerID: UID
     };
 

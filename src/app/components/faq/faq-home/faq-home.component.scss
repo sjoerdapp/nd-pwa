@@ -1,0 +1,157 @@
+@import "../../../base_styles/base";
+
+.main-container {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.faq-home {
+  h1 {
+    text-align: center;
+    margin: $spacing-large auto;
+  }
+
+  .categories {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    a {
+      background: $black;
+      text-align: center;
+      color: $white;
+
+      fa-icon {
+        color: $white;
+      }
+
+      &:hover {
+        background: $matteblack;
+
+        fa-icon {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  .faq-home {
+    width: 95vw;
+
+    h1 {
+      font-size: $font-large;
+    }
+
+    .categories {
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      a {
+        padding: $spacing-normal $spacing-small;
+        font-size: $font-xsmall;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+  .faq-home {
+    width: 90vw;
+
+    h1 {
+      font-size: $font-large;
+    }
+
+    .categories {
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      a {
+        padding: $spacing-normal $spacing-small;
+        font-size: $font-small;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  .faq-home {
+    width: 80vw;
+
+    h1 {
+      font-size: $font-large;
+    }
+
+    .categories {
+      column-gap: $spacing-small;
+      row-gap: $spacing-normal;
+
+      a {
+        padding: $spacing-normal $spacing-small;
+        font-size: $font-small;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  .faq-home {
+    width: 75vw;
+
+    h1 {
+      font-size: $font-xlarge;
+    }
+
+    .categories {
+      column-gap: $spacing-normal;
+      row-gap: $spacing-normal;
+
+      a {
+        padding: $spacing-normal;
+        font-size: $font-normal;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  .faq-home {
+    width: 60vw;
+
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    .categories {
+      column-gap: $spacing-normal;
+      row-gap: $spacing-normal;
+
+      a {
+        padding: $spacing-large;
+        font-size: $font-normal;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .faq-home {
+    width: 50vw;
+
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    .categories {
+      column-gap: $spacing-large;
+      row-gap: $spacing-large;
+
+      a {
+        padding: $spacing-large;
+        font-size: $font-large;
+      }
+    }
+  }
+}

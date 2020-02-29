@@ -57,25 +57,11 @@ export class AuthService {
   async googleSignIn() {
     const provider = new auth.GoogleAuthProvider();
     this.oAuthLogin(provider);
-
-    if (isPlatformBrowser(this._platformId)) {
-      gtag('event', 'sign_up', {
-        'event_category': 'engagement',
-        'event_label': 'Google_SignUp'
-      });
-    }
   }
 
   async facebookSignIn() {
     const provider = new auth.FacebookAuthProvider();
     this.oAuthLogin(provider);
-
-    if (isPlatformBrowser(this._platformId)) {
-      gtag('event', 'sign_up', {
-        'event_category': 'engagement',
-        'event_label': 'Facebook_SignUp'
-      });
-    }
   }
 
   async emailSignUp(email: string, password: string, firstName: string, lastName: string, username: string, inviteCode?: string) {
@@ -138,6 +124,14 @@ export class AuthService {
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
+
+        if (isPlatformBrowser(this._platformId)) {
+          gtag('event', 'sign_up', {
+            'event_category': 'engagement',
+            'event_label': 'Social_Media_SignUp'
+          });
+        }
+
         if (this.handleAuthToken(credential.user)) {
           console.log('does exist');
           // console.log(this.handleAuthToken(credential.user));
@@ -239,7 +233,7 @@ export class AuthService {
             sold: 0,
             ordered: 0,
             offers: 0,
-            isActive: false
+            isActive: true
           };
 
           return this.createUserData(userData, userCredential);

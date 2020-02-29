@@ -150,10 +150,10 @@
   <section class="sell-container" id="sell-page-4">
     <h3>Almost Done...</h3>
 
-    <ol>
+    <!--<ol>
       <li>If your item does not pass our verification process, we will charge you 15% of the item price.</li>
       <li>We take a 12.5% consignment fee on all sales.</li>
-    </ol>
+    </ol>-->
 
     <div class="pairStats">
       <p *ngIf="highestOfferPrice == 0">Highest Offer: --</p>
@@ -164,8 +164,28 @@
 
     <div class="sell-price-input">
       <button>CA<fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
-      <input type="text" placeholder="Enter Price" id="sell-price-input" (keyup)="priceChanges($event)">
+      <input type="text" placeholder="Enter Price" id="sell-price-input" (keyup)="priceChanges($event)" mask="0{10}">
       <button>.00</button>
+    </div>
+
+    <div class="seller-fees">
+      <div class="consignment">
+        <p>Consignment Fee (9.5%)</p>
+        <p *ngIf="consignmentFee > 0">- {{ consignmentFee | currency: 'CAD' }}</p>
+        <p *ngIf="consignmentFee == 0">CA$ --</p>
+      </div>
+
+      <div class="payment-processing">
+        <p>Payment Processing Fee (3%)</p>
+        <p *ngIf="paymentProcessingFee > 0">- {{ paymentProcessingFee | currency: 'CAD' }}</p>
+        <p *ngIf="paymentProcessingFee == 0">CA$ --</p>
+      </div>
+
+      <div class="total-payout">
+        <p>Total Payout</p>
+        <p *ngIf="payout > 0">{{ payout | currency: 'CAD' }}</p>
+        <p *ngIf="payout == 0">CA$ --</p>
+      </div>
     </div>
 
     <div class="sell-btns">

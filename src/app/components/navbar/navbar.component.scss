@@ -1,205 +1,266 @@
-@import '../../base_styles/base';
-
-.col-4 {
-    display: grid;
-    grid-template-columns: 2fr 9fr 9fr;
-    height: $navHeight;
-}
-
-.col-5 {
-    display: grid;
-    grid-template-columns: 2fr 12fr 6fr;
-    height: $navHeight;
-}
+@import "../../base_styles/base";
 
 nav {
-    position: fixed;
-    top: 40px;
-    z-index: 1;
-    background: $white;
-    width: 100vw;
-    max-width: 100%;
-    
-    .nav-icons {
-        grid-column: 3/6;
-        display: grid;
-        grid-template-columns: 2fr 2fr 2fr;
+  position: fixed;
+  z-index: 2;
+  background: $white;
+  top: 0;
+  width: 100vw;
+  max-width: 100%;
+  display: grid;
+  height: $navHeight;
+
+  .search-bar {
+    align-self: center;
+    justify-self: center;
+
+    input {
+      @include vendor(transition, $transition-normal ease-in-out);
+      border: 1px solid $lightgrey;
+      border-radius: $spacing-xxsmall;
+      color: $black;
+
+      &:focus,
+      &:hover {
+        background: $lightergrey;
+      }
+    }
+  }
+
+  .nav-icons {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+  }
+
+  .nav-btns {
+    display: grid;
+    grid-template-columns: 3fr 3fr;
+  }
+
+  .nav-hamburger {
+    @include navbarItems;
+    @include vendor(transition, $transition-normal ease-in-out);
+
+    fa-icon {
+      font-size: $font-large;
     }
 
-    .nav-btns {
-        grid-column: 3/6;
-        display: grid;
-        grid-template-columns: 3fr 3fr;
-    }
+    &:hover {
+      background: $matteblue;
 
-    .nav-hamburger {
-        @include navbarItems;
-        @include vendor(transition, $transition-normal ease-in-out);
-
-        fa-icon {
-            font-size: $font-large;
-        }
-
-        &:hover {
-            background: $matteblue;
-
-            fa-icon {
-                color: $white;
-            }
-        }
-    }
-
-    .nav-home {
-        img {
-            display: block;
-            margin-top: ($navHeight - $spacing-xlarge) / 2;
-            margin-bottom: ($navHeight - $spacing-xlarge) / 2;
-            height: $spacing-xlarge;
-            cursor: pointer;
-        }
-    }
-
-    .nav-icon {
-        @include vendor(transition, $transition-fast ease-in-out);
-        @include navbarItems;
-        color: $darkblue;
-        display: grid;
-        justify-items: center;
-        align-items: center;
-
-        fa-icon {
-            font-size: $font-large;
-        }
-
-        fa-layers-counter {
-            font-size: $font-xxxlarge;
-            margin-bottom: $spacing-xlarge;
-        }
-
-        &:hover {
-            fa-icon {
-                @include vendor(transition, $transition-fast ease-in-out);
-                color: $matteblue;
-            }
-        }
-    }
-
-    .nav-signup, .nav-login {
-        font-size: $font-small;
-        font-weight: $weight-black;
-        letter-spacing: 2px;
-        background: $darkblue;
-        border: none;
-        margin: 15px 2.5px;
-        cursor: pointer;
+      fa-icon {
         color: $white;
-        text-align: center;
-        display: grid;
+      }
+    }
+  }
 
-        p {
-            justify-self: center;
-            align-self: center;
-        }
+  .nav-home {
+    display: grid;
+    a {
+      display: block;
+      margin-top: ($navHeight - $spacing-xlarge) / 2;
+      margin-bottom: ($navHeight - $spacing-xlarge) / 2;
+      height: $spacing-xlarge;
+      cursor: pointer;
+      justify-self: start;
 
-        &:hover {
-            background: $matteblue;
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
 
-            p {
-                color: $white;
-            }
-        }
+  .nav-icon {
+    @include vendor(transition, $transition-fast ease-in-out);
+    @include navbarItems;
+    color: $darkblue;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+    fa-icon {
+      font-size: $font-large;
     }
 
-    .nav-signup {
-        @include vendor(box-shadow,  2px 8px 10px -5px rgba(94,94,94,0.75));
-
-        p {
-            color: $white;
-        }
+    fa-layers-counter {
+      font-size: $font-xxxlarge;
+      margin-bottom: $spacing-xlarge;
     }
 
-    .nav-login {
-        background: none;
-        color: $darkblue;
+    &:hover {
+      fa-icon {
+        @include vendor(transition, $transition-fast ease-in-out);
+        color: $matteblue;
+      }
+    }
+  }
 
-        &:hover {
-            color: $white;
-        }
+  .nav-signup,
+  .nav-login {
+    font-size: $font-small;
+    font-weight: $weight-black;
+    letter-spacing: 2px;
+    background: $darkblue;
+    border: none;
+    margin: 15px 2.5px;
+    cursor: pointer;
+    color: $white;
+    text-align: center;
+    display: grid;
+
+    p {
+      justify-self: center;
+      align-self: center;
     }
 
+    &:hover {
+      background: $matteblue;
+
+      p {
+        color: $white;
+      }
+    }
+  }
+
+  .nav-signup {
+    @include vendor(box-shadow, 2px 8px 10px -5px rgba(94, 94, 94, 0.75));
+
+    p {
+      color: $white;
+    }
+  }
+
+  .nav-login {
+    background: none;
+    color: $darkblue;
+
+    &:hover {
+      color: $white;
+    }
+  }
 }
-
 
 // MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
-    .col-4 {
-        grid-template-columns: 3fr 6fr 11fr;
-    }
-    
-    .col-5 {
-        grid-template-columns: 3fr 8fr 9fr;
-    }
+  .col-4 {
+    grid-template-columns: 3fr 6fr 11fr;
+  }
 
-    .nav-home {
-        img {
-            height: $spacing-large!important;
-            margin-top: ($navHeight - $spacing-large) / 2!important;
-            margin-bottom: ($navHeight - $spacing-large) / 2!important;
-        }
-    }
+  .col-5 {
+    grid-template-columns: 3fr 8fr 9fr;
+  }
+
+  .search-bar {
+    display: none;
+  }
+
+  .nav-home {
+    align-self: center;
+  }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
-    .col-4 {
-        grid-template-columns: 1.5fr 10fr 8.5fr;
+  .col-4 {
+    grid-template-columns: 2fr 9fr 9fr;
+  }
+
+  .col-5 {
+    grid-template-columns: 2fr 11fr 7fr;
+  }
+
+  .search-bar {
+    display: none;
+
+    input {
+      width: 100%;
+      padding: $spacing-small;
+      font-size: $font-small;
     }
-    
-    .col-5 {
-        grid-template-columns: 2fr 12fr 6fr;
-    }
+  }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .col-4 {
-        grid-template-columns: 1.5fr 12.5fr 6fr;
+  .col-4 {
+    grid-template-columns: 1.5fr 2.5fr 10fr 6fr;
+  }
+
+  .col-5 {
+    grid-template-columns: 1.5fr 2.5fr 11fr 5fr;
+  }
+
+  .search-bar {
+    width: 80%;
+
+    input {
+      width: 100%;
+      padding: $spacing-small;
+      font-size: $font-small;
     }
-    
-    .col-5 {
-        grid-template-columns: 1.5fr 13.5fr 5fr;
-    }
+  }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    .col-4 {
-        grid-template-columns: 1fr 14fr 5fr;
+  .col-4 {
+    grid-template-columns: 1fr 2fr 12fr 5fr;
+  }
+
+  .col-5 {
+    grid-template-columns: 1fr 2fr 13fr 4fr;
+  }
+
+  .search-bar {
+    width: 50%;
+
+    input {
+      width: 100%;
+      padding: $spacing-small;
+      font-size: $font-small;
     }
-    
-    .col-5 {
-        grid-template-columns: 1fr 15fr 4fr;
-    }
+  }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    .col-4 {
-        grid-template-columns: 1fr 14fr 5fr;
+  .col-4 {
+    grid-template-columns: 1fr 2fr 12fr 5fr;
+  }
+
+  .col-5 {
+    grid-template-columns: 1fr 2fr 14fr 3fr;
+  }
+
+  .search-bar {
+    width: 50%;
+
+    input {
+      width: 100%;
+      padding: $spacing-small;
+      font-size: $font-small;
     }
-    
-    .col-5 {
-        grid-template-columns: 1fr 16fr 3fr;
-    }
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    .col-4 {
-        grid-template-columns: 1fr 14fr 5fr;
-    }
+  .col-4 {
+    grid-template-columns: 1fr 2fr 12fr 5fr;
+  }
 
-    .col-5 {
-        grid-template-columns: 1fr 16fr 3fr;
-    }
+  .col-5 {
+    grid-template-columns: 1fr 2fr 14fr 3fr;
+  }
 
-    nav {
-        max-width: 2000px;
+  .search-bar {
+    width: 50%;
+
+    input {
+      width: 100%;
+      padding: $spacing-small;
+      font-size: $font-normal;
     }
+  }
+
+  nav {
+    max-width: 2000px;
+  }
 }

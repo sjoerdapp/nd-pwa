@@ -1,1 +1,661 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
+
+.how-it-works-banner {
+  position: relative;
+  top: -27px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: $lightergrey;
+
+  .banner-message {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+
+    h1 {
+      justify-self: center;
+      text-align: center;
+      align-self: flex-end;
+      letter-spacing: 1px;
+    }
+
+    a {
+      @include vendor(transition, $transition-fast ease-in-out);
+      align-self: flex-start;
+      justify-self: center;
+      border: none;
+      background: $black;
+      color: $white;
+      font-weight: $weight-black;
+      border-radius: $spacing-xxsmall;
+      cursor: pointer;
+
+      &:hover {
+        color: $black;
+        background: $green;
+      }
+    }
+  }
+
+  .banner-image {
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.stat-banner {
+  margin: $spacing-xlarge 0 0 0;
+  display: grid;
+  background: $black;
+  row-gap: 0;
+
+  h1 {
+    text-align: center;
+    color: $white;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+  }
+
+  h2 {
+    text-align: center;
+    color: $white;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+  }
+
+  .stat-content {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    margin: $spacing-normal 0;
+
+    .duties,
+    .authRate {
+      padding: $spacing-xsmall;
+      border-radius: 110px;
+      background: $green;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      justify-items: center;
+
+      h3,
+      p {
+        color: $black;
+      }
+
+      h3 {
+        align-self: flex-end;
+      }
+
+      p {
+        align-self: flex-start;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.big-margin {
+  margin: 0 auto !important;
+  margin-top: $spacing-xxlarge !important;
+}
+
+.last-sale-banner {
+  margin: $spacing-normal auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border: 1px solid $lightgrey;
+  border-radius: $spacing-xsmall;
+  cursor: pointer;
+
+  h1 {
+    align-self: center;
+    justify-self: center;
+    color: $matteblue;
+  }
+
+  .prod-description {
+    align-self: center;
+    justify-self: center;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+    p {
+      text-align: center;
+    }
+  }
+
+  .prod-specs {
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+
+    h3 {
+      color: #07ac07;
+    }
+  }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 399.5px) {
+  .how-it-works-banner {
+    padding: $spacing-xlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-small;
+
+      h1 {
+        font-size: $font-normal;
+      }
+
+      a {
+        padding: $spacing-small $spacing-xsmall;
+        font-size: $font-xsmall;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 100px;
+      }
+    }
+  }
+
+  .stat-banner {
+    padding: $spacing-normal 0;
+
+    h1,
+    h2 {
+      font-size: $font-small;
+    }
+
+    .stat-content {
+      grid-template-rows: 1fr 1fr 1fr;
+
+      .duties,
+      .authRate {
+        height: 150px;
+        width: 150px;
+      }
+
+      h3 {
+        font-size: $font-normal;
+      }
+
+      p {
+        font-size: $font-xsmall;
+      }
+
+      img {
+        width: 40%;
+      }
+    }
+  }
+
+  .last-sale-banner {
+    width: 90vw;
+    padding: $spacing-small $spacing-xsmall;
+
+    h1 {
+      font-size: $font-small;
+    }
+
+    .prod-description {
+      row-gap: $spacing-xsmall;
+
+      img {
+        width: 75%;
+      }
+
+      p {
+        font-size: $font-xsmall;
+      }
+    }
+
+    .prod-specs {
+      h3 {
+        font-size: $font-normal;
+      }
+
+      p {
+        font-size: $font-xsmall;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 799.5px) {
+  .how-it-works-banner {
+    padding: $spacing-xlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-small;
+
+      h1 {
+        font-size: $font-normal;
+      }
+
+      a {
+        padding: $spacing-small $spacing-xsmall;
+        font-size: $font-xsmall;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 125px;
+      }
+    }
+  }
+
+  .stat-banner {
+    padding: $spacing-normal 0;
+
+    h1,
+    h2 {
+      font-size: $font-normal;
+    }
+
+    .stat-content {
+      grid-template-columns: 1fr 1fr 1fr;
+
+      .duties,
+      .authRate {
+        height: 125px;
+        width: 125px;
+      }
+
+      h3 {
+        font-size: $font-normal;
+      }
+
+      p {
+        font-size: $font-xsmall;
+      }
+
+      img {
+        width: 75%;
+      }
+    }
+  }
+
+  .last-sale-banner {
+    width: 90vw;
+    padding: $spacing-small $spacing-xsmall;
+
+    h1 {
+      font-size: $font-normal;
+    }
+
+    .prod-description {
+      row-gap: $spacing-xsmall;
+
+      img {
+        width: 60%;
+      }
+
+      p {
+        font-size: $font-xsmall;
+      }
+    }
+
+    .prod-specs {
+      h3 {
+        font-size: $font-large;
+      }
+
+      p {
+        font-size: $font-small;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1199px) {
+  .how-it-works-banner {
+    padding: $spacing-xlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-normal;
+
+      h1 {
+        font-size: $font-large;
+      }
+
+      a {
+        padding: $spacing-small;
+        font-size: $font-small;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 150px;
+      }
+    }
+  }
+
+  .stat-banner {
+    padding: $spacing-normal 0;
+
+    h1,
+    h2 {
+      font-size: $font-normal;
+    }
+
+    .stat-content {
+      grid-template-columns: 1fr 1fr 1fr;
+
+      .duties,
+      .authRate {
+        height: 150px;
+        width: 150px;
+      }
+
+      h3 {
+        font-size: $font-normal;
+      }
+
+      p {
+        font-size: $font-xsmall;
+      }
+
+      img {
+        width: 60%;
+      }
+    }
+  }
+
+  .last-sale-banner {
+    width: 70vw;
+    padding: $spacing-small $spacing-xsmall;
+
+    h1 {
+      font-size: $font-normal;
+    }
+
+    .prod-description {
+      row-gap: $spacing-xsmall;
+
+      img {
+        width: 60%;
+      }
+
+      p {
+        font-size: $font-xsmall;
+      }
+    }
+
+    .prod-specs {
+      h3 {
+        font-size: $font-large;
+      }
+
+      p {
+        font-size: $font-small;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1799.5px) {
+  .how-it-works-banner {
+    padding: $spacing-xlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-small;
+
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      a {
+        padding: $spacing-normal;
+        font-size: $font-normal;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 250px;
+      }
+    }
+  }
+
+  .stat-banner {
+    padding: $spacing-large 0;
+
+    h1,
+    h2 {
+      font-size: $font-normal;
+    }
+
+    .stat-content {
+      grid-template-columns: 1fr 1fr 1fr;
+
+      .duties,
+      .authRate {
+        height: 175px;
+        width: 175px;
+      }
+
+      h3 {
+        font-size: $font-large;
+      }
+
+      p {
+        font-size: $font-small;
+      }
+
+      img {
+        width: 50%;
+      }
+    }
+  }
+
+  .last-sale-banner {
+    width: 50vw;
+    padding: $spacing-small $spacing-xsmall;
+
+    h1 {
+      font-size: $font-large;
+    }
+
+    .prod-description {
+      row-gap: $spacing-xsmall;
+
+      img {
+        width: 60%;
+      }
+
+      p {
+        font-size: $font-xsmall;
+      }
+    }
+
+    .prod-specs {
+      h3 {
+        font-size: $font-large;
+      }
+
+      p {
+        font-size: $font-small;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 1999.5px) {
+  .how-it-works-banner {
+    padding: $spacing-xxlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-small;
+
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      a {
+        padding: $spacing-normal;
+        font-size: $font-normal;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 250px;
+      }
+    }
+  }
+
+  .stat-banner {
+    padding: $spacing-xlarge 0;
+
+    h1,
+    h2 {
+      font-size: $font-normal;
+    }
+
+    .stat-content {
+      grid-template-columns: 1fr 1fr 1fr;
+
+      .duties,
+      .authRate {
+        height: 250px;
+        width: 250px;
+        border-radius: 135px !important;
+      }
+
+      h3 {
+        font-size: $font-xlarge;
+      }
+
+      p {
+        font-size: $font-normal;
+      }
+
+      img {
+        width: 50%;
+      }
+    }
+  }
+
+  .last-sale-banner {
+    width: 50vw;
+    padding: $spacing-small $spacing-xsmall;
+
+    h1 {
+      font-size: $font-large;
+    }
+
+    .prod-description {
+      row-gap: $spacing-xsmall;
+
+      img {
+        width: 50%;
+      }
+
+      p {
+        font-size: $font-small;
+      }
+    }
+
+    .prod-specs {
+      h3 {
+        font-size: $font-xlarge;
+      }
+
+      p {
+        font-size: $font-normal;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .how-it-works-banner {
+    padding: $spacing-xxlarge 0;
+
+    .banner-message {
+      row-gap: $spacing-small;
+
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      a {
+        padding: $spacing-normal;
+        font-size: $font-normal;
+      }
+    }
+
+    .banner-image {
+      img {
+        height: 250px;
+      }
+    }
+  }
+
+  .stat-banner {
+    padding: $spacing-xlarge 0;
+
+    h1,
+    h2 {
+      font-size: $font-normal;
+    }
+
+    .stat-content {
+      grid-template-columns: 1fr 1fr 1fr;
+
+      .duties,
+      .authRate {
+        height: 250px;
+        width: 250px;
+        border-radius: 135px !important;
+      }
+
+      h3 {
+        font-size: $font-xlarge;
+      }
+
+      p {
+        font-size: $font-normal;
+      }
+
+      img {
+        width: 50%;
+      }
+    }
+  }
+
+  .last-sale-banner {
+    width: 50vw;
+    padding: $spacing-small $spacing-xsmall;
+
+    h1 {
+      font-size: $font-large;
+    }
+
+    .prod-description {
+      row-gap: $spacing-xsmall;
+
+      img {
+        width: 50%;
+      }
+
+      p {
+        font-size: $font-small;
+      }
+    }
+
+    .prod-specs {
+      h3 {
+        font-size: $font-xlarge;
+      }
+
+      p {
+        font-size: $font-normal;
+      }
+    }
+  }
+}

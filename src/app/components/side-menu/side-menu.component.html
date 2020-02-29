@@ -21,6 +21,10 @@
       </li>-->
 
       <li>
+        <a [routerLink]="['/search']" [queryParams]="{ q: '' }">Search</a>
+      </li>
+
+      <li>
         <a routerLink="/profile">Profile</a>
       </li>
 
@@ -29,19 +33,19 @@
       </li>
 
       <li>
-        <a routerLink="/request">Product Request</a>
-      </li>
-
-      <li>
         <a routerLink="/news">News</a>
       </li>
 
       <li>
-        <a routerLink="/snkrs">Name The SNKRS Contest</a>
+        <a routerLink="/invite-a-friend">Invite A Friend</a>
       </li>
 
+      <!--<li>
+        <a routerLink="/snkrs">Name The SNKRS Contest</a>
+      </li>-->
+
       <li>
-        <a routerLink="" (click)="auth.signOut(true)">Log out</a>
+        <a (click)="auth.signOut(true)">Log out</a>
       </li>
     </ul>
 
@@ -56,7 +60,7 @@
         </li>
 
         <li>
-          <a routerLink="/request">Product Request</a>
+          <a routerLink="/invite-a-friend">Invite A Friend</a>
         </li>
 
         <li>
@@ -71,11 +75,23 @@
       </li>
 
       <li>
-        <a routerLink="/support">Support</a>
+        <a routerLink="/how-it-works">How It Works</a>
       </li>
 
       <li>
         <a routerLink="/privacy">Privacy</a>
+      </li>
+
+      <li>
+        <a href="https://www.trustpilot.com/review/nxtdrop.com" target="_blank">Reviews</a>
+      </li>
+
+      <li>
+        <a routerLink="/faq">FAQ</a>
+      </li>
+
+      <li>
+        <a routerLink="/support">Support</a>
       </li>
     </ul>
   </section>

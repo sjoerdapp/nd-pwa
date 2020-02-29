@@ -77,7 +77,9 @@ export class SignupInformationComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     //console.log(this.accountCreated);
     if (!this.accountCreated) {
-      this.auth.signOut(false);
+      this.auth.isConnected().then(res => {
+        res.delete();
+      });
     }
   }
 

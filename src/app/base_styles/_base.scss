@@ -24,11 +24,12 @@ $productContainerHeight: 650px;
 .free-shipping {
   text-align: center;
   background: $black;
-  padding: $spacing-xsmall;
+  padding: $spacing-xsmall 0;
   position: fixed;
   top: 0;
   z-index: 1;
   width: 100vw;
+  max-width: 2000px;
 
   p {
     color: $white;
@@ -68,7 +69,7 @@ $productContainerHeight: 650px;
 
 //double line
 .blueLine {
-  background: $darkblue;
+  background: $navyblue;
   height: 2.5px;
   grid-column: 1/6;
 }
@@ -224,7 +225,7 @@ $productContainerHeight: 650px;
 // Separate Header & Footer
 .main-container {
   min-height: calc(100vh - #{$footerHeight});
-  padding-top: calc(#{$navHeight} + 45px);
+  padding-top: calc(#{$navHeight + 5px});
 }
 
 // Settings btns

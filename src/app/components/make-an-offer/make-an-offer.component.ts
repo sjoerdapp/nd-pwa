@@ -223,10 +223,9 @@ export class MakeAnOfferComponent implements OnInit {
   }
 
   buyNow() {
-    const data = JSON.stringify(this.lowestListing);
     this.ngZone.run(() => {
       this.router.navigate([`../../checkout`], {
-        queryParams: { product: data, sell: false }
+        queryParams: { product: this.lowestListing.listingID, sell: false }
       });
     });
   }
