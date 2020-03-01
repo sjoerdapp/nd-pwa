@@ -208,10 +208,6 @@ $productContainerHeight: 650px;
           }
         }
 
-        #window-price {
-          font-size: $font-xsmall;
-        }
-
         #window-model {
           font-size: $header-size-7;
           font-weight: $weight-bold;
@@ -379,6 +375,11 @@ $productContainerHeight: 650px;
             width: 75px;
           }
         }
+
+        #window-price,
+        #window-size {
+          font-size: $font-xsmall;
+        }
       }
     }
   }
@@ -395,6 +396,11 @@ $productContainerHeight: 650px;
             height: 100px;
             width: 100px;
           }
+        }
+
+        #window-price,
+        #window-size {
+          font-size: $font-xsmall;
         }
       }
     }
@@ -414,6 +420,11 @@ $productContainerHeight: 650px;
             width: 125px;
           }
         }
+
+        #window-price,
+        #window-size {
+          font-size: $font-small;
+        }
       }
     }
   }
@@ -432,6 +443,11 @@ $productContainerHeight: 650px;
             width: 150px;
           }
         }
+
+        #window-price,
+        #window-size {
+          font-size: $font-small;
+        }
       }
     }
   }
@@ -449,6 +465,11 @@ $productContainerHeight: 650px;
             height: 150px;
             width: 150px;
           }
+        }
+
+        #window-price,
+        #window-size {
+          font-size: $font-normal;
         }
       }
     }

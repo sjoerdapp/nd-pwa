@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HomeService } from 'src/app/services/home.service';
 
 @Component({
   selector: 'app-offers',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OffersComponent implements OnInit {
 
-  constructor() { }
+  latestBids = [];
+
+  constructor(
+    private homeService: HomeService
+  ) { }
 
   ngOnInit() {
+    this.homeService.getLatestBid().subscribe(bids => {
+      this.latestBids = bids;
+    })
   }
 
 }

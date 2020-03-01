@@ -12,21 +12,6 @@ export class HomeService {
   ) { }
 
   public getNewReleases() {
-    /*let newReleaseData = [];
-
-    this.afs.firestore.collection('products').orderBy('yearMade', 'desc').limit(10).get().then(snap => {
-      snap.forEach(doc => {
-        this.afs.firestore.collection('products').doc(doc.data().productID).collection('listings').orderBy('price', 'asc').limit(1).get().then(data => {
-          const dt = doc.data();
-          data.forEach(val => dt.lowestPrice = val.data().price);
-          newReleaseData.push(dt);
-        });
-      });
-    });
-
-    return of(newReleaseData);*/
-
-
     let t = new Date();
     const dd = String(t.getDate()).padStart(2, '0');
     const mm = String(t.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -39,20 +24,6 @@ export class HomeService {
   }
 
   public getDiscovery(after?) {
-    /*let discoveryData = [];
-
-    this.afs.firestore.collection('products').orderBy('discoveryRank', 'asc').limit(10).get().then(snap => {
-      snap.forEach(doc => {
-        this.afs.firestore.collection('products').doc(doc.data().productID).collection('listings').orderBy('price', 'asc').limit(1).get().then(data => {
-          const dt = doc.data();
-          data.forEach(val => dt.lowestPrice = val.data().price);
-          discoveryData.push(dt);
-        });
-      });
-    });
-
-    return of(discoveryData);*/
-
     if (isUndefined(after)) {
       after = 0;
     }
@@ -62,23 +33,16 @@ export class HomeService {
   }
 
   public getTrending() {
-    /*let trendingData = [];
-
-    // tslint:disable-next-line: max-line-length
-    this.afs.firestore.collection('products').orderBy('trendingRank', 'asc').limit(10).get().then(snap => {
-      snap.forEach(doc => {
-        this.afs.firestore.collection('products').doc(doc.data().productID).collection('listings').orderBy('price', 'asc').limit(1).get().then(data => {
-          const dt = doc.data();
-          data.forEach(val => dt.lowestPrice = val.data().price);
-          trendingData.push(dt);
-        });
-      });
-    });
-    
-    return of(trendingData);*/
-
     const trendingRef = this.afs.collection(`products`, ref => ref.orderBy(`trendingRank`, `asc`).limit(50));
     return trendingRef.get();
+  }
+
+  public getLatestAsk() {
+    return this.afs.collection(`listings`, ref => ref.orderBy('timestamp', 'desc').limit(30)).valueChanges();
+  }
+
+  public getLatestBid() {
+    return this.afs.collection(`offers`, ref => ref.orderBy('timestamp', 'desc').limit(30)).valueChanges();
   }
 
 }

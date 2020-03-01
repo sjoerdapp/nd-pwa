@@ -36,6 +36,7 @@ export class CheckoutService {
     const buyerRef = this.afs.firestore.collection(`users`).doc(`${UID}`);
     const prodRef = this.afs.firestore.collection(`products`).doc(`${id}`);
     const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`);
+    const listingRef = this.afs.firestore.collection(`listings`);
 
     const transactionData: Transaction = {
       assetURL: product.assetURL,
@@ -93,6 +94,7 @@ export class CheckoutService {
     // delete listings
     batch.delete(sellerRef.collection(`listings`).doc(`${product.listingID}`));
     batch.delete(prodRef.collection(`listings`).doc(`${product.listingID}`));
+    batch.delete(listingRef.doc(`${product.listingID}`));
 
     // set ordered and sol fields
     batch.set(buyerRef, {
@@ -138,6 +140,7 @@ export class CheckoutService {
     const sellerRef = this.afs.firestore.collection(`users`).doc(`${UID}`);
     const prodRef = this.afs.firestore.collection(`products`).doc(`${id}`);
     const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`);
+    const offerRef = this.afs.firestore.collection('offers');
 
     const transactionData: Transaction = {
       assetURL: product.assetURL,
@@ -167,6 +170,7 @@ export class CheckoutService {
     // delete listings
     batch.delete(buyerRef.collection(`offers`).doc(`${product.offerID}`));
     batch.delete(prodRef.collection(`offers`).doc(`${product.offerID}`));
+    batch.delete(offerRef.doc(`${product.offerID}`));
 
     // set ordered and sol fields
     batch.set(buyerRef, {
