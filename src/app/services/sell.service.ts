@@ -5,6 +5,8 @@ import { AuthService } from './auth.service';
 import * as firebase from 'firebase/app';
 import { isUndefined } from 'util';
 
+declare const gtag: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -79,6 +81,13 @@ export class SellService {
       return batch.commit()
         .then(() => {
           console.log('New Listing Added');
+
+          gtag('event', 'ask', {
+            'event_category': 'engagement',
+            'event_label': this.productListing.model,
+            'event_value': this.productListing.price
+          });
+
           return true;
         })
         .catch((err) => {

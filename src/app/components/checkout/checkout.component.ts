@@ -73,14 +73,6 @@ export class CheckoutComponent implements OnInit {
     this.isSelling = this.route.snapshot.queryParams.sell;
 
     if (!isUndefined(this.isSelling) && !isUndefined(this.route.snapshot.queryParams.product)) {
-
-      if (isPlatformBrowser(this._platformId)) {
-        gtag('event', 'begin_checkout', {
-          'event_category': 'ecommerce',
-          'event_label': this.product.model
-        });
-      }
-
       if (this.isSelling != 'true') {
         this.getListing(this.route.snapshot.queryParams.product);
         this.isSelling = false;
@@ -88,6 +80,13 @@ export class CheckoutComponent implements OnInit {
       } else {
         this.isSelling = true;
         this.getOffer(this.route.snapshot.queryParams.product);
+      }
+
+      if (isPlatformBrowser(this._platformId)) {
+        gtag('event', 'begin_checkout', {
+          'event_category': 'ecommerce',
+          'event_label': this.product.model
+        });
       }
     } else {
       if (isUndefined(this.tID)) {
@@ -193,8 +192,8 @@ export class CheckoutComponent implements OnInit {
           if (isPlatformBrowser(this._platformId)) {
             gtag('event', 'purchase', {
               'event_category': 'ecommerce',
-              'event_label': this.product.type,
-              'event_value': this.product.price + this.shippingPrice
+              'event_label': this.product.model,
+              'event_value': this.product.price
             });
           }
 
@@ -345,8 +344,8 @@ export class CheckoutComponent implements OnInit {
       if (isPlatformBrowser(this._platformId)) {
         gtag('event', 'item_sold', {
           'event_category': 'ecommerce',
-          'event_label': this.product.type,
-          'event_value': this.product.price + this.shippingPrice
+          'event_label': this.product.model,
+          'event_value': this.product.price
         });
       }
 
@@ -370,8 +369,8 @@ export class CheckoutComponent implements OnInit {
         if (isPlatformBrowser(this._platformId)) {
           gtag('event', 'purchase', {
             'event_category': 'ecommerce',
-            'event_label': this.product.type,
-            'event_value': this.product.price + this.shippingPrice
+            'event_label': this.product.model,
+            'event_value': this.product.price
           });
         }
 
