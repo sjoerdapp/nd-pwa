@@ -113,6 +113,12 @@ export class AuthService {
   async emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
+        this.isConnected().then(res => {
+          if (!isNullOrUndefined(res)) {
+            this.updateLastActivity(res.uid);
+          }
+        })
+
         return true;
       })
       .catch(error => {
@@ -147,6 +153,12 @@ export class AuthService {
   private handleAuthToken(user) {
     return this.checkEmail(user.email).get().subscribe((snapshot) => {
       const redirect = this.route.snapshot.queryParams.redirectTo;
+
+      this.isConnected().then(res => {
+        if (!isNullOrUndefined(res)) {
+          this.updateLastActivity(res.uid);
+        }
+      })
 
       if (snapshot.empty) {
         if (!isUndefined(redirect)) {
@@ -254,5 +266,11 @@ export class AuthService {
   checkEmail(email) {
     console.log('checkEmail() called');
     return this.afs.collection('users', ref => ref.where('email', '==', email));
+  }
+
+  updateLastActivity(userID: string) {
+    this.afs.collection('users').doc(`${userID}`).set({
+      lastActivity: Date.now()
+    }, { merge: true });
   }
 }
