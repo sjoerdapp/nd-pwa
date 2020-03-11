@@ -30,13 +30,8 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 const sgClient = require('@sendgrid/client');
 sgClient.setApiKey(SENDGRID_API_KEY);
 
-// Server-Side Rendering
-const universal = require(`${process.cwd()}/dist/server`).app;
-
 // Twilio Init
 const twClient = twilio(env.twilio.sid, env.twilio.token);
-
-exports.ssr = functions.https.onRequest(universal);
 
 exports.orderCancellation = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
@@ -623,6 +618,29 @@ exports.inviteFriend = functions.https.onRequest((req, res) => {
         });
     });
 });
+
+exports.smsNotifications = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send(false);
+        }
+
+        const phoneNumber = req.body.phoneNumber;
+        const msg = req.body.msg;
+
+        return twClient.messages.create({
+            body: `${msg}`,
+            from: '+15873273010',
+            to: `${phoneNumber}`,
+        }).then(message => {
+            console.log(message);
+            return res.status(200).send(true);
+        }).catch(err => {
+            console.error(err);
+            return res.send(false);
+        });
+    });
+})
 
 // Email when password is changed
 exports.changedPassword = functions.https.onRequest((req, res) => {
