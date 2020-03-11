@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit {
     console.log(url)
 
     if (url.length > 0) {
-      if (url[0].path === 'search') {
+      if (url[0].path === 'search' || url[0].path === 'home') {
         this.showSearchBar = false;
       } else {
         this.showSearchBar = true;
