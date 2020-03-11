@@ -65,6 +65,19 @@ export class SlackService {
           return false;
         });
       }
+      case 'bugreport': {
+        const endpoint = environment.slack.bugreport;
+
+        const payload = { "text": msg };
+
+        return this.http.post(endpoint, JSON.stringify(payload)).subscribe((res: any) => {
+          if (res.status === 200) {
+            return true;
+          }
+
+          return false;
+        });
+      }
     }
   }
 

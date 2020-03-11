@@ -8,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { SEOService } from 'src/app/services/seo.service';
+import { SlackService } from 'src/app/services/slack.service';
 
 declare const gtag: any;
 
@@ -62,7 +63,8 @@ export class CheckoutComponent implements OnInit {
     private title: Title,
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private _platformId: Object,
-    private seo: SEOService
+    private seo: SEOService,
+    private slack: SlackService
   ) { }
 
   ngOnInit() {
@@ -222,6 +224,7 @@ export class CheckoutComponent implements OnInit {
       },
       onError: err => {
         //console.log('OnError', err);
+        this.slack.sendAlert('bugreport', err)
       },
       onClick: (data, actions) => {
         //console.log('onClick', data, actions);
