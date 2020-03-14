@@ -2,7 +2,7 @@
 
   <img src="../../../assets/CarouselDuplicata3.png" alt="Carousel">
 
-  <div class="search-bar">
+  <div class="search-bar" *ngIf="!isMobile">
     <input type="text" name="search-field" id="search-field" placeholder="Search for brand, model, etc." (keyup)="search($event)">
     <fa-icon [icon]="['fas', 'search']"></fa-icon>
   </div>

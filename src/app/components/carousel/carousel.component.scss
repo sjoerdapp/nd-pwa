@@ -1,120 +1,121 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .carousel {
-    height: 27%;
-    width: 100vw;
+  height: 27%;
+  width: 100vw;
+  max-width: 100%;
+  position: relative;
+  background-color: $white;
+  overflow-x: visible;
+  margin-bottom: 20px;
+
+  img {
+    width: inherit;
+    height: inherit;
     max-width: 100%;
-    position: relative;
-    background-color: $white;
-    overflow-x: visible;
-    margin-bottom: 20px;
+    object-fit: contain;
+  }
 
-    img {
-        width: inherit;
-        height: inherit;
-        max-width: 100%;
-        object-fit: contain;
+  .search-bar {
+    position: absolute;
+    display: grid;
+    @include vendor(transition, 0.5s ease-in-out);
+
+    height: 35px;
+    background: $white;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: -20px;
+    align-items: center;
+    padding: 2px;
+    border-radius: 8px;
+    border: 0.5px solid $lightgrey;
+    z-index: 1;
+
+    &:hover,
+    &:focus-within {
+      @include vendor(box-shadow, 0px 0px 5px 0px rgba(0, 0, 0, 0.75));
     }
 
-    .search-bar {
-        position: absolute;
-        display: grid;
-        @include vendor(transition, 0.50s ease-in-out);
-
-        height: 35px;
-        background: $white;
-        margin: 0 auto;
-        left: 0;
-        right: 0;
-        bottom: -20px;
-        align-items: center;
-        padding: 2px;
-        border-radius: 8px;
-        border: 0.5px solid $lightgrey;
-        z-index: 1;
-
-        &:hover, &:focus-within {
-            @include vendor(box-shadow, 0px 0px 5px 0px rgba(0,0,0,0.75));
-        }
-
-        #search-field {
-            height: inherit;
-            border: none;
-            background: inherit;
-            padding-left: 5px;
-            border-right: none;
-        }
-
-        fa-icon {
-            margin-left: 2px;
-            color: $black;
-            opacity: 0.9;
-            align-self: center;
-        }
+    #search-field {
+      height: inherit;
+      border: none;
+      background: inherit;
+      padding-left: 5px;
+      border-right: none;
     }
+
+    fa-icon {
+      margin-left: 2px;
+      color: $black;
+      opacity: 0.9;
+      align-self: center;
+    }
+  }
 }
 
 // MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
-    .search-bar {
-        grid-template-columns: 90% 10%;
-        #search-field {
-            font-size: $font-xsmall;
-        }
+  .search-bar {
+    grid-template-columns: 90% 10%;
+    #search-field {
+      font-size: $font-xsmall;
     }
+  }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
-    .search-bar {
-        grid-template-columns: 92% 8%;
+  .search-bar {
+    grid-template-columns: 92% 8%;
 
-        #search-field {
-            font-size: $font-xsmall;
-        }
+    #search-field {
+      font-size: $font-xsmall;
     }
+  }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .search-bar {
-        width: 60%;
-        grid-template-columns: 92% 8%;
+  .search-bar {
+    width: 60%;
+    grid-template-columns: 92% 8%;
 
-        #search-field {
-            font-size: $font-small;
-        }
+    #search-field {
+      font-size: $font-small;
     }
+  }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    .search-bar {
-        width: 50%;
-        grid-template-columns: 92% 8%;
+  .search-bar {
+    width: 50%;
+    grid-template-columns: 92% 8%;
 
-        #search-field {
-            font-size: $font-small;
-        }
+    #search-field {
+      font-size: $font-small;
     }
+  }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    .search-bar {
-        width: 40%;
-        grid-template-columns: 92% 8%;
+  .search-bar {
+    width: 40%;
+    grid-template-columns: 92% 8%;
 
-        #search-field {
-            font-size: $font-small;
-        }
+    #search-field {
+      font-size: $font-small;
     }
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    .search-bar {
-        width: 30%;
-        grid-template-columns: 92% 8%;
+  .search-bar {
+    width: 30%;
+    grid-template-columns: 92% 8%;
 
-        #search-field {
-            font-size: $font-small;
-        }
+    #search-field {
+      font-size: $font-small;
     }
+  }
 }
