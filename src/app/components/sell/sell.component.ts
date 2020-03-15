@@ -55,7 +55,7 @@ export class SellComponent implements OnInit {
   user: any;
 
   consignmentFee = 0;
-  paymentProcessingFee =  0;
+  paymentProcessingFee = 0;
   payout = 0;
 
   constructor(
@@ -126,9 +126,10 @@ export class SellComponent implements OnInit {
     this.sellService.addListing(this.selectedPair, this.pairCondition, this.pairPrice, this.pairSize)
       .then((res) => {
         if (isPlatformBrowser(this._platformId)) {
-          gtag('event', 'listing_added', {
+          gtag('event', 'ask', {
             'event_category': 'engagement',
-            'event_label': this.selectedPair.model
+            'event_label': this.selectedPair.model,
+            'event_value': this.pairPrice
           });
         }
 
@@ -279,7 +280,7 @@ export class SellComponent implements OnInit {
 
       this.index.search({
         query: event.target.value
-      }, (err, hits = {}) => {
+      }, (err, hits: any = {}) => {
         if (err) throw err;
 
         this.results = hits.hits;

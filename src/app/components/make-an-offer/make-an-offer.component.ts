@@ -120,9 +120,10 @@ export class MakeAnOfferComponent implements OnInit {
     this.offerService.addOffer(this.selectedPair, this.pairCondition, this.pairPrice, this.pairSize).then(res => {
       if (res) {
         if (isPlatformBrowser(this._platformId)) {
-          gtag('event', 'offer_placed', {
+          gtag('event', 'ask', {
             'event_category': 'engagement',
-            'event_label': this.selectedPair.model
+            'event_label': this.selectedPair.model,
+            'event_value': this.pairPrice
           });
         }
 

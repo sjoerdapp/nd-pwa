@@ -130,14 +130,6 @@ export class AuthService {
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
-
-        if (isPlatformBrowser(this._platformId)) {
-          gtag('event', 'sign_up', {
-            'event_category': 'engagement',
-            'event_label': 'Social_Media_SignUp'
-          });
-        }
-
         if (this.handleAuthToken(credential.user)) {
           console.log('does exist');
           // console.log(this.handleAuthToken(credential.user));
@@ -247,6 +239,13 @@ export class AuthService {
             offers: 0,
             isActive: true
           };
+
+          if (isPlatformBrowser(this._platformId)) {
+            gtag('event', 'sign_up', {
+              'event_category': 'engagement',
+              'event_label': 'Social_Media_SignUp'
+            });
+          }
 
           return this.createUserData(userData, userCredential);
         })
