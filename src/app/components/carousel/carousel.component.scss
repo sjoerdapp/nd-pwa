@@ -1,120 +1,262 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .carousel {
-    height: 27%;
-    width: 100vw;
-    max-width: 100%;
-    position: relative;
-    background-color: $white;
-    overflow-x: visible;
-    margin-bottom: 20px;
+  width: 100vw;
+  max-width: 100%;
+  background-color: $black;
+  display: grid;
+  row-gap: 4rem;
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/nxtdrop.appspot.com/o/carousel%20v9.png?alt=media&token=9bc83d61-cf1a-4316-869e-f62a925db361);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
 
-    img {
-        width: inherit;
-        height: inherit;
-        max-width: 100%;
-        object-fit: contain;
+  h1 {
+    color: $white;
+    text-align: center;
+    justify-self: center;
+
+    span {
+      display: block;
+
+      &:last-child {
+        background: $green;
+        color: $black;
+        width: 90%;
+        margin: auto;
+      }
+    }
+  }
+
+  .search-bar {
+    @include vendor(transition, 0.5s ease-in-out);
+    height: 35px;
+    background: $white;
+    margin: 0 auto;
+    align-items: center;
+    padding: 0.4rem;
+    border-radius: 0.2rem;
+    border: 0.5px solid $lightgrey;
+    z-index: 1;
+
+    &:hover,
+    &:focus-within {
+      @include vendor(box-shadow, 0px 0px 5px 0px rgba(0, 0, 0, 0.75));
     }
 
-    .search-bar {
-        position: absolute;
-        display: grid;
-        @include vendor(transition, 0.50s ease-in-out);
-
-        height: 35px;
-        background: $white;
-        margin: 0 auto;
-        left: 0;
-        right: 0;
-        bottom: -20px;
-        align-items: center;
-        padding: 2px;
-        border-radius: 8px;
-        border: 0.5px solid $lightgrey;
-        z-index: 1;
-
-        &:hover, &:focus-within {
-            @include vendor(box-shadow, 0px 0px 5px 0px rgba(0,0,0,0.75));
-        }
-
-        #search-field {
-            height: inherit;
-            border: none;
-            background: inherit;
-            padding-left: 5px;
-            border-right: none;
-        }
-
-        fa-icon {
-            margin-left: 2px;
-            color: $black;
-            opacity: 0.9;
-            align-self: center;
-        }
+    #search-field {
+      height: 100%;
+      border: none;
+      background: inherit;
+      padding-left: 5px;
+      border-right: none;
     }
+
+    fa-icon {
+      color: $black;
+      font-weight: $weight-black;
+      opacity: 0.9;
+      align-self: center;
+      justify-self: center;
+    }
+  }
 }
 
 // MEDIA QUERIES
 
+@media only screen and (max-width: 767px) {
+}
+
 @media only screen and (min-width: 0px) and (max-width: 400px) {
-    .search-bar {
-        grid-template-columns: 90% 10%;
-        #search-field {
-            font-size: $font-xsmall;
+  .carousel {
+    height: 30vh;
+
+    h1 {
+      width: 100%;
+      align-self: center;
+
+      span {
+        &:first-child {
+          font-size: 1.8rem;
         }
+
+        &:last-child {
+          font-size: 1.6rem;
+        }
+      }
     }
+  }
+
+  .search-bar {
+    display: none;
+  }
 }
 
-@media only screen and (min-width: 400px) and (max-width: 800px) {
-    .search-bar {
-        grid-template-columns: 92% 8%;
+@media only screen and (min-width: 400px) and (max-width: 767px) {
+  .carousel {
+    height: 30vh;
 
-        #search-field {
-            font-size: $font-xsmall;
+    h1 {
+      width: 100%;
+      align-self: center;
+
+      span {
+        &:first-child {
+          font-size: 2rem;
         }
+
+        &:last-child {
+          font-size: 1.8rem;
+        }
+      }
     }
+  }
+
+  .search-bar {
+    display: none;
+  }
 }
 
-@media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .search-bar {
-        width: 60%;
-        grid-template-columns: 92% 8%;
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .carousel {
+    height: 50vh;
+    grid-template-rows: 3fr 2fr;
 
-        #search-field {
-            font-size: $font-small;
+    h1 {
+      width: 80%;
+      align-self: flex-end;
+
+      span {
+        &:first-child {
+          font-size: 3.4rem;
         }
+
+        &:last-child {
+          font-size: 3rem;
+        }
+      }
     }
+  }
+
+  .search-bar {
+    width: 60%;
+    display: grid;
+    grid-template-columns: 8% 92%;
+
+    #search-field {
+      font-size: 0.8rem;
+    }
+
+    fa-icon {
+      font-size: 0.8rem;
+    }
+  }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    .search-bar {
-        width: 50%;
-        grid-template-columns: 92% 8%;
+  .carousel {
+    grid-template-rows: 3fr 2fr;
+    height: 60vh;
 
-        #search-field {
-            font-size: $font-small;
+    h1 {
+      width: 60%;
+      align-self: flex-end;
+
+      span {
+        &:first-child {
+          font-size: 4rem;
         }
+
+        &:last-child {
+          font-size: 3.6rem;
+        }
+      }
     }
+  }
+
+  .search-bar {
+    width: 50%;
+    display: grid;
+    grid-template-columns: 7% 93%;
+
+    #search-field {
+      font-size: 0.8rem;
+    }
+
+    fa-icon {
+      font-size: 0.8rem;
+    }
+  }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    .search-bar {
-        width: 40%;
-        grid-template-columns: 92% 8%;
+  .carousel {
+    height: 70vh;
+    grid-template-rows: 3fr 2fr;
 
-        #search-field {
-            font-size: $font-small;
+    h1 {
+      width: 60%;
+      align-self: flex-end;
+
+      span {
+        &:first-child {
+          font-size: 4rem;
         }
+
+        &:last-child {
+          font-size: 3.6rem;
+        }
+      }
     }
+  }
+
+  .search-bar {
+    width: 40%;
+    display: grid;
+    grid-template-columns: 7% 93%;
+
+    #search-field {
+      font-size: 1rem;
+    }
+
+    fa-icon {
+      font-size: 1rem;
+    }
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    .search-bar {
-        width: 30%;
-        grid-template-columns: 92% 8%;
+  .carousel {
+    height: 72vh;
+    grid-template-rows: 3fr 2fr;
 
-        #search-field {
-            font-size: $font-small;
+    h1 {
+      width: 60%;
+      align-self: flex-end;
+
+      span {
+        &:first-child {
+          font-size: 4rem;
         }
+
+        &:last-child {
+          font-size: 3.6rem;
+        }
+      }
     }
+  }
+
+  .search-bar {
+    width: 30%;
+    display: grid;
+    grid-template-columns: 8% 92%;
+
+    #search-field {
+      font-size: 1rem;
+    }
+
+    fa-icon {
+      font-size: 1rem;
+    }
+  }
 }
