@@ -270,9 +270,9 @@ export class AuthService {
   }
 
   getUserData(uid: string) {
-    return this.afs.collection(`users`).doc(`${uid}`).valueChanges();
+    return this.afs.collection(`users`).doc(`${uid}`).valueChanges() as Observable<User>;
   }
-  
+
   updateLastActivity(userID: string) {
     this.afs.collection('users').doc(`${userID}`).set({
       lastActivity: Date.now()
