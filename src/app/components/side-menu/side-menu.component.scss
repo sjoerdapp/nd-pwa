@@ -1,95 +1,160 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .slide-menu {
-    @include vendor(transition, all 0.5s);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100vh;
-    z-index: 5;
-    overflow-x: hidden;
-    background: $black;
+  @include vendor(transition, all 0.5s);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100vh;
+  z-index: 5;
+  overflow-x: hidden;
+  background: $black;
 
-    .menu-header {
-        display: grid;
-        grid-template-rows: 59px 2.5px 2.5px;
-        min-height: $navHeight;
-        align-items: center;
-        position: relative;
+  .menu-header {
+    display: grid;
+    grid-template-rows: 59px 2.5px 2.5px;
+    min-height: $navHeight;
+    align-items: center;
+    position: relative;
 
-        img {
-            height: $spacing-xlarge;
-        }
-    
-        fa-icon {
-            color: $white;
-            font-size: $font-large;
-            justify-self: center;
-            @include vendor(transition, 500ms ease-in-out);
-
-            &:hover {
-                color: $matteblue;
-                cursor: pointer;
-            }
-        }
+    img {
+      height: $spacing-xlarge;
     }
 
-    .menu-content {
-        text-align: center;
-        position: relative;
-        height: calc(100vh - #{$navHeight});
-        display: grid;
-        align-content: center;
-        
-        & > ul li {
-            list-style-type: none;
-            margin: $spacing-small 0;
-            
-            a {
-                color: $white;
-                font-size: $font-xxlarge;
-                font-weight: $weight-black;
-                line-height: $spacing-xlarge;
-    
-                &:hover {
-                    color: $matteblue;
-                }
-            }
-        }
-    
-        .bottom-menus {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            margin: $spacing-xlarge 0;
-    
-            & > li a {
-                font-size: $font-normal;
-            }
-        }
+    fa-icon {
+      color: $white;
+      font-size: $font-large;
+      justify-self: center;
+      @include vendor(transition, 500ms ease-in-out);
+
+      &:hover {
+        color: $matteblue;
+        cursor: pointer;
+      }
     }
+  }
+
+  .menu-content {
+    text-align: center;
+    position: relative;
+    height: calc(100vh - #{$navHeight});
+    display: grid;
+    align-content: center;
+
+    & > ul li {
+      list-style-type: none;
+
+      a {
+        color: $white;
+        font-weight: $weight-black;
+        line-height: $spacing-xlarge;
+
+        &:hover {
+          color: $matteblue;
+        }
+      }
+    }
+
+    .bottom-menus {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
 }
 
-@media only screen and (min-width: 0px) and (max-width: 400px) {
-    .menu-header {
-        grid-template-columns: 2fr 18fr;
+@media only screen and (min-width: 0px) and (max-width: 399px) {
+  .menu-header {
+    grid-template-columns: 2fr 18fr;
+  }
+
+  .menu-content {
+    margin: $spacing-small 0;
+
+    ul li {
+      a {
+        font-size: $font-normal;
+      }
     }
+
+    .bottom-menus {
+      margin: $spacing-normal 0;
+
+      li a {
+        font-size: $font-xsmall;
+      }
+    }
+  }
 }
 
-@media only screen and (min-width: 400px) and (max-width: 800px) {
-    .menu-header {
-        grid-template-columns: 1.5fr 18.5fr;
+@media only screen and (min-width: 400px) and (max-width: 799px) {
+  .menu-header {
+    grid-template-columns: 1.5fr 18.5fr;
+  }
+
+  .menu-content {
+    margin: $spacing-small 0;
+
+    ul li {
+      a {
+        font-size: $font-normal;
+      }
     }
+
+    .bottom-menus {
+      margin: $spacing-normal 0;
+
+      li a {
+        font-size: $font-xsmall;
+      }
+    }
+  }
 }
 
-@media only screen and (min-width: 800px) and (max-width: 2000px) {
-    .menu-header {
-        grid-template-columns: 1fr 19fr;
+@media only screen and (min-width: 800px) and (max-width: 1999px) {
+  .menu-header {
+    grid-template-columns: 1fr 19fr;
+  }
+
+  .menu-content {
+    margin: $spacing-normal 0;
+
+    ul li {
+      a {
+        font-size: $font-xlarge;
+      }
     }
+
+    .bottom-menus {
+      margin: $spacing-large 0;
+
+      li a {
+        font-size: $font-normal;
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    .menu-header {
-        grid-template-columns: 1fr 19fr;
+  .menu-header {
+    grid-template-columns: 1fr 19fr;
+  }
+
+  .menu-content {
+    margin: $spacing-normal 0;
+
+    ul li {
+      a {
+        font-size: $font-xlarge;
+      }
     }
+
+    .bottom-menus {
+      margin: $spacing-large 0;
+
+      li a {
+        font-size: $font-normal;
+      }
+    }
+  }
 }

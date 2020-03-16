@@ -100,7 +100,6 @@
 }
 
 .last-sale-banner {
-  margin: $spacing-normal auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   border: 1px solid $lightgrey;
@@ -133,6 +132,14 @@
     h3 {
       color: #07ac07;
     }
+  }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (max-width: 767px) {
+  .last-sale-banner {
+    margin: $spacing-xsmall auto $spacing-normal auto !important;
   }
 }
 

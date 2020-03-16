@@ -32,6 +32,7 @@ export class AppComponent implements AfterViewInit {
         if (res != undefined) {
           gtag('set', { 'user_id': res.uid }); // Set the user ID using signed-in user_id.
           fbq('init', '247312712881625', { uid: res.uid });
+          this.auth.updateLastActivity(res.uid);
         } else {
           fbq('init', '247312712881625');
         }

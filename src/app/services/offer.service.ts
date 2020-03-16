@@ -4,6 +4,8 @@ import { Product } from '../models/product';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 
+declare const gtag: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -66,6 +68,13 @@ export class OfferService {
     return batch.commit()
       .then(() => {
         console.log('New Offer Added');
+
+        gtag('event', 'bid', {
+          'event_category': 'engagement',
+          'event_label': this.productListing.model,
+          'event_value': this.productListing.price
+        });
+
         return true;
       })
       .catch((err) => {
