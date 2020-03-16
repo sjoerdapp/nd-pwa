@@ -12,13 +12,9 @@ export class SettingsShippingService {
     private auth: AuthService
   ) { }
 
-  async getShippingInfo() {
-    return await this.auth.isConnected().then(res => {
-      const uid = res.uid;
-
-      const userRef = this.afs.collection(`users`).doc(`${uid}`);
-      return userRef.valueChanges();
-    });
+  getShippingInfo(userId: string) {
+    const userRef = this.afs.collection(`users`).doc(`${userId}`);
+    return userRef.valueChanges();
   }
 
   updateShippingInfo(userId: string, firstName: string, lastName: string, street: string, line: string, city: string, province: string, postalCode: string, country: string): Promise<boolean> {
@@ -28,23 +24,25 @@ export class SettingsShippingService {
     postalCode = postalCode.toUpperCase();
 
     return userRef.set({
-    shippingAddress: {
-      firstName,
-      lastName,
-      street,
-      line,
-      city,
-      province,
-      postalCode,
-      country
-    }
+      shippingAddress: {
+        selling: {
+          firstName,
+          lastName,
+          street,
+          line2: line,
+          city,
+          province,
+          postalCode,
+          country
+        }
+      }
     }, { merge: true })
-    .then(() => {
-      return true;
-    })
-    .catch(() => {
-      return false;
-    });
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        return false;
+      });
   }
 
 }

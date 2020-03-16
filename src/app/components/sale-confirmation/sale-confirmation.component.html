@@ -1,0 +1,91 @@
+<section class="main-container">
+    <div class="confirmation-container" *ngIf="user && transactionData">
+        <h1>Order Confirmation</h1>
+        <p>Confirm order to receive shipping label</p>
+
+        <div class="product-seller-info">
+            <div class="product-info">
+                <img src="{{ transactionData.assetURL }}" alt="{{ transactionData.model }}">
+                <p id="condition">{{ transactionData.condition + ', 100% authentic'}}</p>
+                <p id="model-size">{{ transactionData.model + ', ' + transactionData.size }}</p>
+                <p id="price">{{ transactionData.price | currency: 'CAD':'symbol':'1.0-0' }}</p>
+            </div>
+
+            <div class="seller-address">
+                <fa-icon [icon]="['fas', 'store-alt']"></fa-icon>
+                <div *ngIf="addressExist()">
+                    <p id="name">
+                        {{ user.shippingAddress.selling.firstName + ' ' + user.shippingAddress.selling.lastName }}
+                    </p>
+                    <p id="street">{{ user.shippingAddress.selling.street }}</p>
+                    <p id="line2" *ngIf="user.shippingAddress.selling.line2 != ''">
+                        {{ user.shippingAddress.selling.line2 }}</p>
+                    <p id="city-province-zip">
+                        {{ user.shippingAddress.selling.city + ' ' + user.shippingAddress.selling.province + ' ' + user.shippingAddress.selling.postalCode }}
+                    </p>
+                    <p id="country">{{ user.shippingAddress.selling.country }}</p>
+                </div>
+                <div *ngIf="!addressExist()">
+                    <p>No Address on File</p>
+                </div>
+                <button class="btn" *ngIf="addressExist() && !transactionData.status.sellerConfirmation && !transactionData.status.cancelled"
+                    (click)="goToSettings()">Change
+                    Address</button>
+                <button class="btn" *ngIf="!addressExist() && !transactionData.status.sellerConfirmation && !transactionData.status.cancelled"
+                    (click)="goToSettings()">Add Address</button>
+            </div>
+        </div>
+
+        <div class="seller-fees">
+            <div class="consignment">
+                <p>Consignment Fee (8.5%)</p>
+                <p *ngIf="consignmentFee > 0">{{ consignmentFee | currency: 'CAD':'symbol':'1.0-2' }}</p>
+                <p *ngIf="consignmentFee == 0">CA$ --</p>
+            </div>
+
+            <div class="payment-processing">
+                <p>Payment Proc. Fee (3%)</p>
+                <p *ngIf="paymentProcessingFee > 0">{{ paymentProcessingFee | currency: 'CAD':'symbol':'1.0-2' }}</p>
+                <p *ngIf="paymentProcessingFee == 0">CA$ --</p>
+            </div>
+
+            <div class="total-payout">
+                <p>Total Payout</p>
+                <p *ngIf="payout > 0">{{ payout | currency: 'CAD':'symbol':'1.0-2' }}</p>
+                <p *ngIf="payout == 0">CA$ --</p>
+            </div>
+        </div>
+
+        <div class="confirmation-btns"
+            *ngIf="!transactionData.status.cancelled && !transactionData.status.sellerConfirmation">
+            <button class="btn" (click)="cancelOrder()" *ngIf="!cancelLoading && !cancelError">Cancel Order</button>
+            <button class="btn" *ngIf="cancelLoading">
+                <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+            </button>
+            <button class="btn error-btn" *ngIf="cancelError">Error</button>
+
+            <button class="btn"
+                *ngIf="addressExist() && !confLoading && !confError"
+                (click)="confirmOrder()">Confirm Order</button>
+            <button class="btn disabled"
+                *ngIf="!addressExist() && !confLoading && !confError">Confirm
+                Order</button>
+            <button class="btn" *ngIf="confLoading">
+                <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+            </button>
+            <button class="btn error-btn" *ngIf="confError">Error</button>
+        </div>
+
+        <p *ngIf="transactionData.status.cancelled" id="cancelled">
+            Order Cancelled
+        </p>
+
+        <p *ngIf="transactionData.status.sellerConfirmation" id="confirmed">
+            Order Confirmed
+        </p>
+    </div>
+
+    <div class="confirmation-container" *ngIf="!user && !transactionData">
+        <fa-icon id="loading-icon" [icon]="['fas', 'circle-notch']" [spin]="true"></fa-icon>
+    </div>
+</section>

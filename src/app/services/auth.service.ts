@@ -258,6 +258,6 @@ export class AuthService {
   }
 
   getUserData(uid: string) {
-    return this.afs.collection('users', ref => ref.where('uid', '==', `${uid}`).limit(1)).valueChanges() as Observable<User[]>;
+    return this.afs.collection(`users`).doc(`${uid}`).valueChanges();
   }
 }
