@@ -23,6 +23,9 @@ export class SearchComponent implements OnInit {
   nbPages: number = 1;
   searchLimit: boolean = false;
 
+  typingTimer;
+  doneTypingInterval = 1000;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -52,30 +55,33 @@ export class SearchComponent implements OnInit {
 
     const term = (document.getElementById('search-input') as HTMLInputElement).value;
 
-    this.router.navigate([],
-      {
-        queryParams: { q: term }
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      this.router.navigate([],
+        {
+          queryParams: { q: term }
+        });
+
+      this.index.search({
+        query: term,
+        attributesToRetrieve: ['assetURL', 'model', 'productID'],
+        hitsPerPage: 48 * this.nbPages
+
+      }, (err, hits = {}) => {
+        if (err) throw err;
+
+        this.results = hits.hits;
+
+        if (hits.nbPages <= this.nbPages || hits.nbPages === 0) {
+          this.searchLimit = true;
+        } else {
+          this.searchLimit = false
+        }
+
+        //console.log(this.nbPages);
+        //console.log(hits);
       });
-
-    this.index.search({
-      query: term,
-      attributesToRetrieve: ['assetURL', 'model', 'productID'],
-      hitsPerPage: 48 * this.nbPages
-
-    }, (err, hits = {}) => {
-      if (err) throw err;
-
-      this.results = hits.hits;
-
-      if (hits.nbPages <= this.nbPages || hits.nbPages === 0) {
-        this.searchLimit = true;
-      } else {
-        this.searchLimit = false
-      }
-
-      console.log(this.nbPages);
-      console.log(hits);
-    });
+    }, this.doneTypingInterval);
   }
 
   moreProducts() {

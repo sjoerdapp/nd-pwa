@@ -31,12 +31,12 @@ export class BlogHomeComponent implements OnInit {
           slug: element.slug
         }
 
-        this.news.getFeaturedMedia(element._links["wp:featuredmedia"][0]["href"].replace('104.197.231.19', 'news.nxtdrop.com')).subscribe((response: any) => {
-          post.img = response.source_url.replace('104.197.231.19', 'news.nxtdrop.com');
+        this.news.getFeaturedMedia(element._links["wp:featuredmedia"][0]["href"].replace('35.224.86.123', 'news.nxtdrop.com')).subscribe((response: any) => {
+          post.img = response.source_url.replace('35.224.86.123', 'news.nxtdrop.com');
           post.alt_text = response.alt_text;
         });
 
-        this.news.getCategory(element._links["wp:term"][0]["href"].replace('104.197.231.19', 'news.nxtdrop.com')).subscribe((response: any) => {
+        this.news.getCategory(element._links["wp:term"][0]["href"].replace('35.224.86.123', 'news.nxtdrop.com')).subscribe((response: any) => {
           post.category = response[0].name;
         });
 
