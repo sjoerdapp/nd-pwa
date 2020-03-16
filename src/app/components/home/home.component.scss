@@ -96,10 +96,11 @@
 
 .big-margin {
   margin: 0 auto !important;
-  margin-top: $spacing-xxlarge !important;
+  margin-top: $spacing-large !important;
 }
 
 .last-sale-banner {
+  margin: 0 auto $spacing-normal auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   border: 1px solid $lightgrey;
