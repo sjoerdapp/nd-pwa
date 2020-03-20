@@ -1,226 +1,558 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .login-body {
-    padding: $spacing-small 0 0 0;
-    min-height: calc(100vh - #{$footerHeight});
-    width: 100vw;
-    max-width: 100%;
-    background: $black;
-    display: grid;
+  padding: $spacing-small 0 0 0;
+  min-height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  background: #fff;
+  display: grid;
 
-    .login-card {
-        justify-content: center;
-        align-self: center;
-        margin: 60px auto;
-        padding: 8px;
-        border-radius: 16px;
-        background: linear-gradient(-50.23deg, $darkblue 65%, $green 95%);
+  .login-card {
+    justify-content: center;
+    align-self: center;
+    margin: 0 auto;
+    background: linear-gradient(-50.23deg, $black 65%, $matteblack 95%);
 
-        img {
-            display: block;
-            height: 40px;
-            margin: 2.5px auto;
-        }
-
-        button {
-            display: block;
-            padding: 5px;
-            border: none;
-            border-radius: 8px;
-            font-weight: $weight-black;
-            margin: 5px auto;
-            cursor: pointer;
-            @include vendor(transition, all 0.25s ease-in-out);
-            border-radius: $spacing-xxsmall;
-
-            fa-icon {
-                float: left;
-                margin-left: 10px;
-                font-size: $font-normal;
-            }
-        }
-
-        input {
-            display: block;
-            margin: 5px auto;
-            height: 25px;
-            width: 90%;
-            border: none;
-            padding: $spacing-xsmall;
-            letter-spacing: 0.8px;
-            border-radius: $spacing-xxsmall;
-        }
-
-        p {
-            color: $white;
-            font-size: $font-xsmall;
-            text-align: center;
-        }
-
-        .login-btn {
-            height: 40px;
-            margin: $spacing-xsmall auto;
-            
-            cursor: pointer;
-            border-radius: $spacing-xxsmall;
-
-            &:hover {
-                background: $white;
-                color: $navyblue;
-            }
-        }
-
-        .loading {
-            @extend .login-btn;
-            display: grid;
-            background: $white;
-            color: $navyblue;
-
-            fa-icon {
-                justify-self: center;
-                align-self: center;
-            }
-        }
-
-        .error {
-            @extend .login-btn;
-            background: $inputError;
-            
-            &:hover {
-                background: $inputError;
-                color: $white;
-            }
-        }
-
-        .signup-btn {
-            height: 40px;
-            color: $black;
-            margin-top: 16px;
-            border-radius: $spacing-xxsmall;
-            background: $white;
-
-            &:hover {
-                background: $navyblue;
-                color: $white;
-            }
-        }
-
-        .forgotpwd-btn {
-            @extend .signup-btn;
-        }
+    img {
+      display: block;
+      height: 40px;
+      margin: 2.5px auto;
     }
+
+    button {
+      display: block;
+      border: none;
+      font-weight: $weight-black;
+      cursor: pointer;
+      @include vendor(transition, all 0.25s ease-in-out);
+      border-radius: $spacing-xxsmall;
+      text-transform: uppercase;
+
+      fa-icon {
+        float: left;
+        margin-left: 10px;
+        font-size: $font-normal;
+      }
+    }
+
+    input {
+      display: block;
+      height: 25px;
+      width: 90%;
+      border: none;
+      letter-spacing: 0.8px;
+      border-radius: $spacing-xxsmall;
+    }
+
+    p {
+      color: $white;
+      text-align: center;
+    }
+
+    .login-btn {
+      height: 40px;
+      background: $white;
+      color: $black;
+      cursor: pointer;
+      width: 50%;
+    }
+
+    .loading {
+      @extend .login-btn;
+      display: grid;
+      background: $white;
+      color: $black;
+
+      fa-icon {
+        justify-self: center;
+        align-self: center;
+      }
+    }
+
+    .error {
+      height: 40px;
+      cursor: pointer;
+      background: $inputError;
+      color: $white;
+      font-size: 0.6rem;
+
+      &:hover {
+        background: $inputError;
+        color: $white;
+      }
+    }
+
+    .signup-btn {
+      height: 40px;
+      color: $white;
+      border-radius: $spacing-xxsmall;
+      background: $black;
+      width: 80%;
+    }
+
+    .forgotpwd-btn {
+      @extend .signup-btn;
+    }
+  }
 }
 
 // MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
-    .login-card {
-        width: 95vw;
+  .login-card {
+    width: 95%;
+    padding: 4px;
+    border-radius: 4px;
 
-        .login-btn {
-            width: 80%;
-            font-size: $font-xsmall;
-        }
-
-        .signup-btn {
-            font-size: $font-xsmall;
-            width: 70%;
-        }
+    input {
+      padding: $spacing-xsmall;
+      font-size: 0.6rem;
+      margin: 8px auto;
     }
+
+    button {
+      font-size: 0.7rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .signup-btn {
+      margin: $spacing-normal auto;
+    }
+
+    .login-btn,
+    .forgotpwd-btn,
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .google-btn,
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+      font-size: 0.8rem;
+
+      &:hover {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
 }
 
-@media only screen and (min-width: 400px) and (max-width: 800px) {
-    .login-card {
-        width: 90vw;
+@media only screen and (min-width: 400px) and (max-width: 599.5px) {
+  .login-card {
+    width: 95%;
+    padding: 4px;
+    border-radius: 4px;
 
-        .login-btn {
-            width: 75%;
-            font-size: $font-xsmall;
-        }
-
-        .signup-btn {
-            font-size: $font-xsmall;
-            width: 65%;
-        }
+    input {
+      padding: $spacing-xsmall;
+      font-size: 0.8rem;
+      margin: 8px auto;
     }
+
+    button {
+      font-size: 0.8rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .signup-btn {
+      margin: $spacing-normal auto;
+    }
+
+    .login-btn,
+    .forgotpwd-btn,
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .google-btn,
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+      font-size: 0.8rem;
+
+      &:hover {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
 }
 
-@media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .login-card {
-        width: 50vw;
+@media only screen and (min-width: 600px) and (max-width: 799.5px) {
+  .login-card {
+    width: 70%;
+    padding: 6px;
+    border-radius: 4px;
 
-        .login-btn {
-            width: 70%;
-            font-size: $font-xsmall;
-        }
-
-        .signup-btn {
-            font-size: $font-xsmall;
-            width: 60%;
-        }
-
-        .facebook-btn, .google-btn {
-            padding: $spacing-small!important;
-        }
+    input {
+      padding: $spacing-xsmall;
+      font-size: 0.8rem;
+      margin: 8px auto;
     }
+
+    button {
+      font-size: 0.8rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .signup-btn {
+      margin: $spacing-normal auto;
+    }
+
+    .login-btn,
+    .forgotpwd-btn,
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .google-btn,
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+      font-size: 0.8rem;
+
+      &:hover {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    .login-card {
-        width: 35vw;
+@media only screen and (min-width: 800px) and (max-width: 999.5px) {
+  .login-card {
+    width: 55%;
+    padding: 8px;
+    border-radius: 6px;
 
-        .login-btn {
-            width: 65%;
-            font-size: $font-xsmall;
-        }
-
-        .signup-btn {
-            font-size: $font-xsmall;
-            width: 55%;
-        }
-
-        .facebook-btn, .google-btn {
-            padding: $spacing-small!important;
-        }
+    input {
+      padding: $spacing-xsmall;
+      font-size: 0.9rem;
+      margin: 10px auto;
     }
+
+    button {
+      font-size: 0.8rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .signup-btn {
+      margin: $spacing-normal auto;
+    }
+
+    .login-btn,
+    .forgotpwd-btn,
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .google-btn,
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+      font-size: 0.8rem;
+
+      &:hover {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
 }
 
-@media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    .login-card {
-        width: 35vw;
+@media only screen and (min-width: 1000px) and (max-width: 1199.5px) {
+  .login-card {
+    width: 40%;
+    padding: 8px;
+    border-radius: 6px;
 
-        .login-btn {
-            width: 60%;
-            font-size: $font-xsmall;
-        }
-
-        .signup-btn {
-            font-size: $font-xsmall;
-            width: 50%;
-        }
-
-        .facebook-btn, .google-btn {
-            padding: $spacing-small!important;
-        }
+    input {
+      padding: $spacing-xsmall;
+      font-size: 0.9rem;
+      margin: 10px auto;
     }
+
+    button {
+      font-size: 0.8rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .signup-btn {
+      margin: $spacing-normal auto;
+    }
+
+    .login-btn,
+    .forgotpwd-btn,
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .google-btn,
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+      font-size: 0.8rem;
+
+      &:hover {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1399.5px) {
+  .login-card {
+    width: 35%;
+    padding: 8px;
+    border-radius: 6px;
+
+    input {
+      padding: $spacing-small;
+      font-size: 0.9rem;
+      margin: 10px auto;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .signup-btn {
+      margin: $spacing-normal auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .login-btn,
+    .forgotpwd-btn {
+      margin: $spacing-small auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .google-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $googleRed;
+        color: $white;
+      }
+    }
+
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $facebook;
+        color: $white;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1400px) and (max-width: 1799.5px) {
+  .login-card {
+    width: 30%;
+    padding: 8px;
+    border-radius: 6px;
+
+    input {
+      padding: $spacing-small;
+      font-size: 0.9rem;
+      margin: 10px auto;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .signup-btn {
+      margin: $spacing-normal auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .login-btn,
+    .forgotpwd-btn {
+      margin: $spacing-small auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .google-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $googleRed;
+        color: $white;
+      }
+    }
+
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $facebook;
+        color: $white;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 1999.5px) {
+  .login-card {
+    width: 25%;
+    padding: 10px;
+    border-radius: 6px;
+
+    input {
+      padding: $spacing-small;
+      font-size: 0.9rem;
+      margin: 10px auto;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .signup-btn {
+      margin: $spacing-normal auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .login-btn,
+    .forgotpwd-btn {
+      margin: $spacing-small auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .google-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $googleRed;
+        color: $white;
+      }
+    }
+
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $facebook;
+        color: $white;
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    .login-card {
-        width: 35vw;
+  .login-card {
+    width: 25%;
+    padding: 10px;
+    border-radius: 6px;
 
-        .login-btn {
-            width: 70%;
-            font-size: $font-small;
-        }
-
-        .signup-btn {
-            font-size: $font-small;
-            width: 60%;
-        }
-
-        .facebook-btn, .google-btn {
-            padding: $spacing-small!important;
-        }
+    input {
+      padding: $spacing-small;
+      font-size: 1rem;
+      margin: 10px auto;
     }
+
+    button {
+      font-size: 1.2rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .signup-btn {
+      margin: $spacing-large auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .error {
+      margin: $spacing-normal auto;
+    }
+
+    .login-btn,
+    .forgotpwd-btn {
+      margin: $spacing-normal auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .google-btn {
+      margin: $spacing-small auto;
+
+      &:hover {
+        background: $googleRed;
+        color: $white;
+      }
+    }
+
+    .facebook-btn {
+      margin: $spacing-small auto;
+
+      &:hover {
+        background: $facebook;
+        color: $white;
+      }
+    }
+  }
 }

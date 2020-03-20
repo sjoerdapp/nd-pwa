@@ -1,210 +1,535 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .signup-body {
-    padding: $spacing-small 0 0 0;
-    min-height: calc(100vh - #{$footerHeight});
-    width: 100vw;
-    max-width: 100%;
-    background: $black;
-    display: grid;
+  padding: $spacing-small 0 0 0;
+  min-height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  background: #fff;
+  display: grid;
 
-    .signup-card {
-        justify-content: center;
-        align-self: center;
-        margin: 0 auto;
-        padding: 8px;
-        border-radius: 16px;
-        background: linear-gradient(-50.23deg, $darkblue 65%, $green 95%);
+  .signup-card {
+    justify-content: center;
+    align-self: center;
+    margin: 0 auto;
+    background: linear-gradient(-50.23deg, $black 65%, $matteblack 95%);
 
-        img {
-            display: block;
-            height: 40px;
-            margin: 2.5px auto;
-        }
-
-        button {
-            display: block;
-            padding: 5px;
-            border: none;
-            border-radius: $spacing-xxsmall;
-            font-size: $font-small;
-            font-weight: $weight-black;
-            margin: 5px auto;
-            cursor: pointer;
-            @include vendor(transition, all 0.25s ease-in-out);
-
-            fa-icon {
-                float: left;
-                margin-left: 10px;
-                font-size: $font-normal;
-            }
-        }
-
-        .input-error {
-            background: $inputError;
-        }
-
-        input {
-            display: block;
-            margin: 5px auto;
-            height: 25px;
-            width: 90%;
-            border: none;
-            border-radius: $spacing-xxsmall;
-            letter-spacing: 0.5px;
-        }
-
-        p {
-            color: $white;
-            font-size: $font-xsmall;
-            text-align: center;
-        }
-
-        .signup-btn {
-            margin: $spacing-xsmall auto;
-            width: 50%;
-            cursor: pointer;
-            padding: $spacing-xsmall;
-
-            &:hover {
-                background: $white;
-                color: $navyblue;
-            }
-        }
-
-        .loading {
-            @extend .signup-btn;
-            display: grid;
-            background: $white;
-            color: $navyblue;
-
-            fa-icon {
-                justify-self: center;
-                align-self: center;
-            }
-        }
-
-        .error {
-            @extend .signup-btn;
-            background: $inputError;
-            
-            &:hover {
-                background: $inputError;
-                color: $white;
-            }
-        }
-
-        .login-btn {
-            width: 80%;
-            background: $white;
-            color: $black;
-
-            &:hover {
-                background: $navyblue;
-                color: $white;
-            }
-        }
+    img {
+      display: block;
+      height: 40px;
+      margin: 2.5px auto;
     }
+
+    button {
+      display: block;
+      border: none;
+      border-radius: $spacing-xxsmall;
+      font-weight: $weight-black;
+      cursor: pointer;
+      @include vendor(transition, all 0.25s ease-in-out);
+      text-transform: uppercase;
+
+      fa-icon {
+        float: left;
+        margin-left: 10px;
+        font-size: $font-normal;
+      }
+    }
+
+    .input-error {
+      background: $inputError;
+    }
+
+    input {
+      display: block;
+      height: 25px;
+      width: 90%;
+      border: none;
+      border-radius: $spacing-xxsmall;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      color: $white;
+      text-align: center;
+
+      a {
+        color: $white;
+        text-decoration: underline;
+      }
+    }
+
+    .signup-btn {
+      width: 50%;
+      cursor: pointer;
+      background: $white;
+      color: $black;
+    }
+
+    .loading {
+      @extend .signup-btn;
+      display: grid;
+      background: $white;
+      color: $black;
+
+      fa-icon {
+        justify-self: center;
+        align-self: center;
+      }
+    }
+
+    .error {
+      width: 50%;
+      cursor: pointer;
+      background: $inputError;
+      color: $white;
+
+      &:hover {
+        background: $inputError;
+        color: $white;
+      }
+    }
+
+    .login-btn {
+      width: 90%;
+      background: $black;
+      color: $white;
+      margin: $spacing-normal auto;
+    }
+  }
 }
 
 // MEDIA QUERIES
 
-@media only screen and (min-width: 0px) and (max-width: 400px) {
-    .signup-card {
-        width: 95%;
+@media only screen and (min-width: 0px) and (max-width: 399.5px) {
+  .signup-card {
+    width: 95%;
+    border-radius: 4px;
+    padding: 4px;
 
-        input {
-            padding: $spacing-xsmall;
-        }
-    }    
-}
-
-@media only screen and (min-width: 400px) and (max-width: 800px) {
-    .signup-card {
-        width: 90%;
-
-        input {
-            padding: $spacing-small;
-        }
-    }   
-}
-
-@media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .signup-card {
-        width: 50%;
-
-        input {
-            padding: $spacing-small;
-        }
-
-        .login-btn {
-            padding: $spacing-small!important;
-        }
+    input {
+      padding: $spacing-xsmall;
+      font-size: 0.6rem;
+      margin: 8px auto;
     }
+
+    button {
+      font-size: 0.7rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      font-size: 0.6rem;
+    }
+
+    .signup-btn,
+    .login-btn,
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .google-btn,
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    .signup-card {
-        width: 35%;
+@media only screen and (min-width: 400px) and (max-width: 599.5px) {
+  .signup-card {
+    width: 95%;
+    border-radius: 4px;
+    padding: 4px;
 
-        input {
-            padding: $spacing-small;
-        }
-
-        .facebook-btn, .google-btn {
-            padding: $spacing-small!important;
-        }
-
-        .signup-btn {
-            padding: $spacing-small!important;
-        }
-
-        .login-btn {
-            padding: $spacing-small!important;
-        }
+    input {
+      padding: $spacing-xsmall;
+      font-size: 0.8rem;
+      margin: 8px auto;
     }
+
+    button {
+      font-size: 0.8rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      font-size: 0.6rem;
+    }
+
+    .signup-btn,
+    .login-btn,
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .google-btn,
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
 }
 
-@media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    .signup-card {
-        width: 35%;
+@media only screen and (min-width: 600px) and (max-width: 799.5px) {
+  .signup-card {
+    width: 75%;
+    border-radius: 4px;
+    padding: 6px;
 
-        input {
-            padding: $spacing-small;
-        }
-
-        .facebook-btn, .google-btn {
-            padding: $spacing-small!important;
-        }
-
-        .signup-btn {
-            padding: $spacing-small!important;
-        }
-
-        .login-btn {
-            padding: $spacing-small!important;
-        }
+    input {
+      padding: $spacing-xsmall;
+      font-size: 0.8rem;
+      margin: 8px auto;
     }
+
+    button {
+      font-size: 0.8rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+
+    .signup-btn,
+    .login-btn,
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .google-btn,
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 999.5px) {
+  .signup-card {
+    width: 60%;
+    border-radius: 6px;
+    padding: 8px;
+
+    input {
+      padding: $spacing-xsmall;
+      font-size: 0.9rem;
+      margin: 10px auto;
+    }
+
+    button {
+      font-size: 0.8rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+
+    .signup-btn,
+    .login-btn,
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .google-btn,
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1199.5px) {
+  .signup-card {
+    width: 50%;
+    border-radius: 6px;
+    padding: 8px;
+
+    input {
+      padding: $spacing-xsmall;
+      font-size: 0.9rem;
+      margin: 10px auto;
+    }
+
+    button {
+      font-size: 0.8rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+
+    .signup-btn,
+    .login-btn,
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .google-btn,
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $white;
+        color: $black;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1399.5px) {
+  .signup-card {
+    width: 40%;
+    border-radius: 6px;
+    padding: 8px;
+
+    input {
+      padding: $spacing-small;
+      font-size: 0.9rem;
+      margin: 10px auto;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .signup-btn,
+    .login-btn {
+      margin: $spacing-small auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .google-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $googleRed;
+        color: $white;
+      }
+    }
+
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $facebook;
+        color: $white;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1400px) and (max-width: 1799.5px) {
+  .signup-card {
+    width: 35%;
+    border-radius: 6px;
+    padding: 8px;
+
+    input {
+      padding: $spacing-small;
+      font-size: 0.9rem;
+      margin: 10px auto;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .signup-btn,
+    .login-btn {
+      margin: $spacing-small auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .google-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $googleRed;
+        color: $white;
+      }
+    }
+
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $facebook;
+        color: $white;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 1999.5px) {
+  .signup-card {
+    width: 30%;
+    border-radius: 6px;
+    padding: 10px;
+
+    input {
+      padding: $spacing-small;
+      font-size: 0.9rem;
+      margin: 10px auto;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+
+    .error {
+      margin: $spacing-small auto;
+    }
+
+    .signup-btn,
+    .login-btn {
+      margin: $spacing-small auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .google-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $googleRed;
+        color: $white;
+      }
+    }
+
+    .facebook-btn {
+      margin: $spacing-xsmall auto;
+
+      &:hover {
+        background: $facebook;
+        color: $white;
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    .signup-card {
-        width: 35%;
+  .signup-card {
+    width: 30%;
+    border-radius: 6px;
+    padding: 10px;
 
-        input {
-            padding: $spacing-small;
-        }
-
-        .facebook-btn, .google-btn {
-            padding: $spacing-small!important;
-        }
-
-        .signup-btn {
-            padding: $spacing-small!important;
-        }
-
-        .login-btn {
-            padding: $spacing-small!important;
-        }
+    input {
+      padding: $spacing-small;
+      font-size: 1rem;
+      margin: 10px auto;
     }
+
+    button {
+      font-size: 1.2rem;
+      padding: $spacing-small;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    .error {
+      margin: $spacing-normal auto;
+    }
+
+    .signup-btn,
+    .login-btn {
+      margin: $spacing-normal auto;
+
+      &:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+    }
+
+    .google-btn {
+      margin: $spacing-small auto;
+
+      &:hover {
+        background: $googleRed;
+        color: $white;
+      }
+    }
+
+    .facebook-btn {
+      margin: $spacing-small auto;
+
+      &:hover {
+        background: $facebook;
+        color: $white;
+      }
+    }
+  }
 }

@@ -1,4 +1,4 @@
-<nav [class]="connected ? 'col-5' : 'col-4'">
+<nav class="navbar" *ngIf="!isMobile">
   <button class="nav-hamburger" (click)="openMenu()">
     <fa-icon [icon]="['fas', 'bars']"></fa-icon>
   </button>
@@ -7,51 +7,91 @@
     <a routerLink="/"><img src="../../../assets/Color w- letterspng.png" alt="NXTDROP, Inc. Logo"></a>
   </div>
 
-  <section class="search-bar">
-    <input type="text" name="search-bar" id="search-bar" placeholder="Seach for brand, color, etc." *ngIf="showSearchBar" (keyup)="search($event)">
-  </section>
+  <div class="search-bar">
+    <input type="text" name="search-bar" id="search-bar" placeholder="Seach for brand, color, etc." *ngIf="showSearchBar"
+      (keyup)="search($event)">
+  </div>
 
-  <section class="nav-icons" *ngIf="connected; else navBtns">
-    <!--<button class="nav-notifications nav-icon">
-      <a (click)="openNotificationTab()">
-        <fa-icon [icon]="['fas', 'bell']"></fa-icon>
-      </a>
-    </button>
-        
-    <button class="nav-cart nav-icon">
-      <a routerLink="/cart">
-        <fa-layers>
-          <fa-icon [icon]="['fas', 'shopping-cart']"></fa-icon>
-          <fa-layers-counter content="{{ userInfo.cartItems }}"></fa-layers-counter>
-        </fa-layers>
-      </a>
-    </button>-->
+  <ul class="links">
+    <li>
+      <a routerLink="/how-it-works">How It Works</a>
+    </li>
 
-    <a class="nav-profile nav-icon" routerLink="/sell" title="Sell">
-     <fa-icon [icon]="['fas', 'tag']"></fa-icon>
-    </a>
-      
-    <a class="nav-profile nav-icon" routerLink="/profile" title="Profile">
-      <fa-icon [icon]="['fas', 'user-circle']"></fa-icon>
-    </a>
+    <li class="dropdown">
+      <a>About</a>
 
-    <a class="nav-profile nav-icon" routerLink="/settings" title="Settings">
-      <fa-icon [icon]="['fas', 'cog']"></fa-icon>
-    </a>
-  </section>
+      <ul class="dropdown-menu">
+        <li>
+          <a routerLink="/faq">FAQ</a>
+        </li>
 
-  <ng-template #navBtns>
-    <section class="nav-btns">
-      <a class="btn nav-login" routerLink="/login">
-        <p>LOG IN</p>
-      </a>
-      
-      <a class="btn nav-signup" routerLink="/signup">
-        <p>SIGN UP</p>
-      </a>
-    </section>
-  </ng-template>
-  
+        <li>
+          <a href="https://www.trustpilot.com/review/nxtdrop.com" target="_blank">Reviews</a>
+        </li>
+
+        <li>
+          <a routerLink="/support">Support</a>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a routerLink="/sell">Sell</a>
+    </li>
+
+    <li class="dropdown" *ngIf="connected">
+      <a>My Account</a>
+
+      <ul class="dropdown-menu">
+        <li>
+          <a routerLink="/profile">Profile</a>
+        </li>
+
+        <li>
+          <a routerLink="/dashboard">Dashboard</a>
+        </li>
+
+        <li>
+          <a routerLink="/settings">Settings</a>
+        </li>
+
+        <li>
+          <a (click)="auth.signOut(true)">Log Out</a>
+        </li>
+      </ul>
+    </li>
+
+    <li *ngIf="!connected">
+      <a routerLink="/login">Log In</a>
+    </li>
+  </ul>
+
+  <div class="blueLine"></div>
+  <div class="greenLine"></div>
+</nav>
+
+<nav class="navbar" *ngIf="isMobile">
+  <button class="nav-hamburger" (click)="openMenu()">
+    <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+  </button>
+
+  <div class="nav-home" *ngIf="!showSearchBar">
+    <a routerLink="/"><img src="../../../assets/Color w- letterspng.png" alt="NXTDROP, Inc. Logo"></a>
+  </div>
+
+  <div class="search-bar" *ngIf="showSearchBar">
+    <input type="text" name="search-bar" id="search-bar" placeholder="Seach for brand, color, etc."
+      (keyup)="search($event)">
+  </div>
+
+  <button class="nav-search" (click)="openSearch()" *ngIf="!showSearchBar">
+    <fa-icon [icon]="['fas', 'search']"></fa-icon>
+  </button>
+
+  <button class="nav-search" (click)="openSearch()" *ngIf="showSearchBar">
+    <fa-icon [icon]="['fas', 'times']"></fa-icon>
+  </button>
+
   <div class="blueLine"></div>
   <div class="greenLine"></div>
 </nav>

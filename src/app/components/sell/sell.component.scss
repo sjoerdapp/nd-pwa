@@ -7,6 +7,8 @@
   }
 
   #how-it-works-content {
+    margin: 0 auto;
+
     div {
       display: grid;
       align-items: center;
@@ -24,25 +26,223 @@
   align-self: baseline;
 }
 
-#sell-page-2,
-#sell-page-3,
-#sell-page-4 {
-  display: none;
-}
-
 #sell-page-3 {
-  h3 {
-    margin: $spacing-large auto;
-  }
-}
+  display: grid;
+  column-gap: 0;
 
-#sell-page-4 {
-  .pairStats {
-    margin-top: $spacing-normal;
+  .disabled {
+    background: $lightgrey !important;
+    cursor: not-allowed;
+
+    &:hover {
+      background: $lightgrey !important;
+    }
+  }
+
+  .product-info {
+    text-align: center;
     display: grid;
-    grid-template-columns: 1fr 1fr;
     align-items: center;
     justify-items: center;
+
+    img {
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+      background: $white;
+      border: none;
+    }
+
+    .product-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: $spacing-normal;
+      align-self: flex-start;
+
+      h4 {
+        &:first-child {
+          color: $prodBtnPrimary2;
+        }
+
+        &:last-child {
+          color: $prodBtnPrimary;
+        }
+      }
+    }
+  }
+
+  .sizes {
+    background: $lightergrey;
+    overflow-y: auto;
+    display: grid;
+    justify-items: center;
+
+    .accessibility {
+      align-self: flex-start;
+      padding: $spacing-small 0;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .size {
+      @include vendor(transition, 0.2s ease-in);
+      padding: $spacing-xsmall;
+      border: 2px solid $black;
+      background: $white;
+      border-radius: $spacing-xxsmall;
+      cursor: pointer;
+      display: grid;
+      align-items: center;
+
+      #size,
+      #highestBid {
+        background: none;
+        font-weight: $weight-black;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        height: 80%;
+        outline: none;
+      }
+
+      #size {
+        letter-spacing: 1px;
+      }
+
+      #highestBid {
+        color: $prodBtnPrimary2;
+      }
+    }
+  }
+
+  .selling-form {
+    background: $lightergrey;
+    display: grid;
+    align-content: center;
+
+    .size-display {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      margin: $spacing-small auto;
+      align-items: center;
+      background: $white;
+      border: 1px solid $lightgrey;
+
+      h4 {
+        justify-self: center;
+      }
+
+      button {
+        justify-self: end;
+        background: $black;
+        padding: $spacing-small;
+        text-transform: uppercase;
+      }
+    }
+
+    .offer-display {
+      margin: $spacing-small auto;
+
+      .sell-now-container {
+        @extend .size-display;
+
+        div {
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          justify-items: center;
+          align-items: center;
+
+          p {
+            color: $prodBtnPrimary2;
+            font-weight: $weight-black;
+            justify-self: center;
+            text-align: center;
+          }
+        }
+
+        button {
+          background: $prodBtnPrimary2;
+        }
+      }
+
+      .place-ask-container {
+        display: grid;
+        margin: $spacing-small auto;
+        align-items: center;
+        background: $white;
+        border: 1px solid $lightgrey;
+
+        .seller-input {
+          display: grid;
+
+          button,
+          input {
+            @include vendor(transition, 0.25s ease-in-out);
+          }
+
+          button {
+            background: $prodBtnPrimary;
+            color: $white;
+            border: 1px solid $lightgrey;
+            border-right: 1px solid $lightergrey;
+            font-weight: $weight-black;
+          }
+
+          input {
+            border: 1px solid $lightgrey;
+            border-left: none;
+          }
+        }
+
+        .fee-calculator {
+          width: 100%;
+
+          div {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: $spacing-small 0;
+            border-bottom: 1px dotted $black;
+
+            p {
+              align-self: center;
+
+              &:first-child {
+                justify-self: start;
+              }
+
+              &:last-child {
+                justify-self: end;
+              }
+            }
+
+            &:last-child {
+              border-bottom: none;
+            }
+          }
+
+          .payout {
+            font-weight: $weight-black;
+
+            p {
+              font-size: $font-normal;
+            }
+          }
+        }
+
+        .place-ask-btn {
+          width: 50%;
+          padding: $spacing-small;
+          text-transform: uppercase;
+          margin: $spacing-small auto;
+          background: $prodBtnPrimary;
+        }
+
+        .sell-now-btn {
+          @extend .place-ask-btn;
+          background: $prodBtnPrimary2;
+        }
+      }
+    }
   }
 }
 
@@ -72,8 +272,7 @@
     border-radius: $spacing-xxsmall;
     border: 1px solid $lightgrey;
 
-    &:focus,
-    &:hover {
+    &:focus {
       border-color: $matteblack;
     }
   }
@@ -93,16 +292,6 @@
       align-items: center;
       padding: $spacing-xxsmall;
 
-      &:hover {
-        cursor: pointer;
-
-        .hit-info {
-          h3 {
-            color: $green;
-          }
-        }
-      }
-
       img {
         height: inherit;
         width: 100%;
@@ -117,158 +306,33 @@
         h3 {
           text-align: left;
           color: $black;
-          font-size: $font-xsmall;
         }
 
         h6 {
           color: $matteblack;
-          font-size: $font-xxsmall;
         }
       }
     }
-  }
-
-  .sell-radios {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin: $spacing-normal auto;
-    align-items: center;
-    justify-items: center;
-
-    div {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-
-      label {
-        font-size: $font-small;
-      }
-    }
-  }
-
-  .sell-price-input {
-    width: 90%;
-    margin: $spacing-normal auto;
-    display: grid;
-    grid-template-columns: 10% 80% 10%;
-    background: $white;
-    border: 1px solid $lightgrey;
-    border-radius: $spacing-xxsmall;
-
-    input {
-      border: none;
-      height: inherit;
-      padding: $spacing-small;
-      font-size: $font-normal;
-      letter-spacing: 2px;
-      font-weight: $weight-black;
-    }
-
-    button {
-      border: none;
-      height: inherit;
-      background: $matteblack;
-      color: $white;
-
-      &:first-child {
-        border-top-left-radius: $spacing-xxsmall;
-        border-bottom-left-radius: $spacing-xxsmall;
-      }
-
-      &:last-child {
-        border-top-right-radius: $spacing-xxsmall;
-        border-bottom-right-radius: $spacing-xxsmall;
-      }
-    }
-  }
-
-  #item-size {
-    display: block;
-    height: 35px;
-    margin: $spacing-normal auto;
   }
 
   .sell-btns {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: $spacing-normal;
-    width: 90%;
     margin: $spacing-large auto;
 
     button {
       padding: $spacing-small;
+      text-transform: uppercase;
 
       &:first-child {
+        background: $white;
+        color: $black;
+      }
+
+      &:last-child {
         background: $black;
-
-        &:hover {
-          background: $matteblack;
-        }
       }
-
-      &:last-child:hover {
-        background: $matteblue;
-      }
-    }
-  }
-
-  .error-btn {
-    background: $inputError;
-
-    &:hover {
-      background: $inputError !important;
-    }
-  }
-
-  .listed-btn {
-    background: $green;
-
-    &:hover {
-      background: $green !important;
-    }
-  }
-
-  .disabled {
-    background: $lightgrey;
-    cursor: not-allowed;
-
-    &:hover {
-      background: $lightgrey !important;
-    }
-  }
-
-  #page-2-back-btn-alt {
-    display: none;
-    background: $black;
-
-    &:hover {
-      background: $matteblack;
-    }
-  }
-
-  .seller-fees {
-    display: grid;
-
-    .consignment,
-    .payment-processing,
-    .total-payout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding: $spacing-small;
-
-      p {
-        color: $matteblack;
-
-        &:last-child {
-          color: #e93e2f;
-          justify-self: end;
-          font-weight: $weight-black;
-        }
-      }
-    }
-
-    .total-payout p:last-child {
-      color: #09dd09;
     }
   }
 }
@@ -277,13 +341,19 @@
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
   h3 {
-    font-size: $font-normal;
+    font-size: $font-large;
   }
 
   #sell-page-1 {
     #how-it-works-content {
+      width: 80%;
       div {
         grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-normal;
       }
 
       h6 {
@@ -292,12 +362,9 @@
     }
 
     .sell-btns {
+      width: 90%;
       margin: $spacing-large auto;
     }
-  }
-
-  #item-size {
-    width: 80%;
   }
 
   .sell-container {
@@ -305,46 +372,162 @@
     width: 98vw;
     justify-items: center;
     justify-content: center;
+
+    .search-results {
+      .hit .hit-info {
+        h3 {
+          font-size: $font-xsmall;
+        }
+
+        h6 {
+          font-size: $font-xxsmall;
+        }
+      }
+    }
   }
 
-  #sell-page-4 {
-    justify-self: center;
+  #sell-page-3 {
+    min-height: $productContainerHeight;
+    width: 100vw;
 
-    ol li {
-      font-size: $font-xxsmall;
+    .btn {
+      font-size: $font-xsmall;
     }
 
-    .pairStats {
-      p {
-        font-size: $font-xsmall;
+    .product-info {
+      h1 {
+        font-size: $font-large;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-small;
+        }
+      }
+
+      img {
+        width: 50%;
       }
     }
 
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr;
+      padding: $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
 
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-xsmall;
+      .accessibility {
+        grid-column: 1 / 4;
+
+        h2 {
+          font-size: $font-normal;
+        }
+
+        h3 {
+          font-size: $font-xsmall;
+        }
+      }
+
+      .size {
+        height: 60px;
+        width: 60px;
+
+        #highestBid {
+          font-size: $font-xsmall;
+        }
+
+        #size {
+          font-size: $font-normal;
+        }
+      }
+    }
+
+    .selling-form {
+      max-width: 100%;
+
+      .size-display {
+        width: 80%;
+        padding: $spacing-xsmall;
+
+        h4 {
+          font-size: $font-large;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .sell-now-container {
+          width: 80%;
+
+          div {
+            h4 {
+              font-size: $font-small;
+            }
+
+            p {
+              font-size: $font-large;
+            }
+          }
+        }
+
+        .place-ask-container {
+          width: 80%;
+          padding: $spacing-xsmall;
+
+          .seller-input {
+            width: 100%;
+            grid-template-columns: 1fr 5fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-small $spacing-xxsmall;
+              width: calc(100% - #{$spacing-xxsmall} - #{$spacing-xxsmall});
+              font-size: $font-small;
+            }
+
+            button {
+              font-size: $font-small;
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-small auto;
+
+            div {
+              p {
+                font-size: $font-xsmall;
+              }
+            }
+
+            .payout {
+              p {
+                font-size: $font-small;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
   h3 {
-    font-size: $font-normal;
+    font-size: $font-large;
   }
 
   #sell-page-1 {
     #how-it-works-content {
+      width: 80%;
+
       div {
         grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-normal;
       }
 
       h6 {
@@ -353,12 +536,9 @@
     }
 
     .sell-btns {
+      width: 85%;
       margin: $spacing-large auto;
     }
-  }
-
-  #item-size {
-    width: 80%;
   }
 
   .sell-container {
@@ -366,46 +546,160 @@
     width: 90vw;
     justify-self: center;
     justify-items: center;
+
+    .search-results .hit .hit-info {
+      h3 {
+        font-size: $font-xsmall;
+      }
+
+      h6 {
+        font-size: $font-xxsmall;
+      }
+    }
   }
 
-  #sell-page-4 {
-    justify-self: center;
+  #sell-page-3 {
+    min-height: $productContainerHeight;
+    width: 90vw;
+    margin: 0 5vw;
 
-    ol li {
+    .btn {
       font-size: $font-xsmall;
     }
 
-    .pairStats {
-      p {
-        font-size: $font-normal;
+    .product-info {
+      h1 {
+        font-size: $font-large;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-small;
+        }
+      }
+
+      img {
+        width: 50%;
       }
     }
 
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding: $spacing-small $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
 
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-xsmall;
+      .accessibility {
+        grid-column: 1 / 5;
+
+        h2 {
+          font-size: $font-normal;
+        }
+
+        h3 {
+          font-size: $font-xsmall;
+        }
+      }
+
+      .size {
+        height: 60px;
+        width: 60px;
+
+        #highestBid {
+          font-size: $font-xsmall;
+        }
+
+        #size {
+          font-size: $font-normal;
+        }
+      }
+    }
+
+    .selling-form {
+      width: 100%;
+
+      .size-display {
+        width: 80%;
+        padding: $spacing-xsmall;
+
+        h4 {
+          font-size: $font-large;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .sell-now-container {
+          width: 80%;
+
+          div {
+            h4 {
+              font-size: $font-small;
+            }
+
+            p {
+              font-size: $font-large;
+            }
+          }
+        }
+
+        .place-ask-container {
+          width: 80%;
+          padding: $spacing-xsmall;
+
+          .seller-input {
+            width: 100%;
+            grid-template-columns: 1fr 5fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-small $spacing-xxsmall;
+              width: calc(100% - #{$spacing-xxsmall} - #{$spacing-xxsmall});
+              font-size: $font-small;
+            }
+
+            button {
+              font-size: $font-small;
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-small auto;
+
+            div {
+              p {
+                font-size: $font-xsmall;
+              }
+            }
+
+            .payout {
+              p {
+                font-size: $font-small;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
   h3 {
-    font-size: $font-large;
+    font-size: $font-xlarge;
   }
 
   #sell-page-1 {
     #how-it-works-content {
+      width: 90%;
       div {
         grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-normal;
       }
 
       h6 {
@@ -414,17 +708,8 @@
     }
 
     .sell-btns {
+      width: 75%;
       margin: $spacing-large auto;
-    }
-  }
-
-  #item-size {
-    width: 60%;
-  }
-
-  .sell-radios {
-    label {
-      font-size: $font-normal !important;
     }
   }
 
@@ -433,183 +718,160 @@
     width: 75vw;
     justify-self: center;
     justify-items: center;
+
+    .search-results .hit .hit-info {
+      h3 {
+        font-size: $font-small;
+      }
+
+      h6 {
+        font-size: $font-xsmall;
+      }
+    }
   }
 
-  #sell-page-4 {
-    justify-self: center;
+  #sell-page-3 {
+    grid-template-columns: 1fr 1fr;
+    height: $productContainerHeight;
+    width: 100vw;
+    margin: 0vw;
 
-    ol li {
-      font-size: $font-small;
+    .btn {
+      font-size: $font-xsmall;
     }
 
-    .pairStats {
-      p {
-        font-size: $font-large;
+    .product-info {
+      h1 {
+        font-size: $font-xlarge;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-normal;
+        }
+      }
+
+      img {
+        width: 100%;
       }
     }
 
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding: $spacing-small $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
 
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-small;
+      .accessibility {
+        grid-column: 1 / 5;
+
+        h2 {
+          font-size: $font-normal;
+        }
+
+        h3 {
+          font-size: $font-xsmall;
+        }
+      }
+
+      .size {
+        height: 60px;
+        width: 60px;
+
+        #highestBid {
+          font-size: $font-xsmall;
+        }
+
+        #size {
+          font-size: $font-normal;
+        }
+      }
+    }
+
+    .selling-form {
+      width: 100%;
+
+      .size-display {
+        width: 80%;
+        padding: $spacing-small;
+
+        h4 {
+          font-size: $font-large;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .sell-now-container {
+          width: 80%;
+
+          div {
+            h4 {
+              font-size: $font-small;
+            }
+
+            p {
+              font-size: $font-large;
+            }
+          }
+        }
+
+        .place-ask-container {
+          width: 80%;
+          padding: $spacing-small;
+
+          .seller-input {
+            width: 100%;
+            grid-template-columns: 1fr 5fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-small $spacing-xxsmall;
+              width: calc(100% - #{$spacing-xxsmall} - #{$spacing-xxsmall});
+              font-size: $font-small;
+            }
+
+            button {
+              font-size: $font-small;
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-small auto;
+
+            div {
+              p {
+                font-size: $font-small;
+              }
+            }
+
+            .payout {
+              p {
+                font-size: $font-normal;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
   h3 {
-    font-size: $font-large;
+    font-size: $font-xlarge;
   }
 
   #sell-page-1 {
     #how-it-works-content {
       div {
         grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
       }
 
-      h6 {
-        font-size: $font-xsmall;
-      }
-    }
-
-    .sell-btns {
-      margin: $spacing-large auto;
-    }
-  }
-
-  #item-size {
-    width: 60%;
-  }
-
-  .sell-radios {
-    label {
-      font-size: $font-normal !important;
-    }
-  }
-
-  .sell-container {
-    padding: 0 !important;
-    width: 60vw;
-    justify-self: center;
-    justify-items: center;
-  }
-
-  #sell-page-4 {
-    justify-self: center;
-
-    ol li {
-      font-size: $font-small;
-    }
-
-    .pairStats {
-      p {
+      fa-icon {
         font-size: $font-large;
-      }
-    }
-
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
-
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-normal;
-    }
-  }
-}
-
-@media only screen and (min-width: 1800px) and (max-width: 2000px) {
-  h3 {
-    font-size: $font-large;
-  }
-
-  #sell-page-1 {
-    #how-it-works-content {
-      div {
-        grid-template-columns: 1fr 9fr;
-      }
-
-      h6 {
-        font-size: $font-xsmall;
-      }
-    }
-
-    .sell-btns {
-      margin: $spacing-large auto;
-    }
-  }
-
-  #item-size {
-    width: 60%;
-  }
-
-  .sell-radios {
-    label {
-      font-size: $font-normal !important;
-    }
-  }
-
-  .sell-container {
-    padding: 0 !important;
-    width: 50vw;
-    justify-self: center;
-    justify-items: center;
-  }
-
-  #sell-page-4 {
-    justify-self: center;
-
-    ol li {
-      font-size: $font-small;
-    }
-
-    .pairStats {
-      p {
-        font-size: $font-large;
-      }
-    }
-
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
-    }
-  }
-
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
-      font-size: $font-normal;
-    }
-  }
-}
-
-@media only screen and (min-width: 2000px) {
-  h3 {
-    font-size: $font-large;
-  }
-
-  #sell-page-1 {
-    width: 60vw;
-    justify-self: center;
-
-    #how-it-works-content {
-      div {
-        grid-template-columns: 2fr 8fr;
       }
 
       h6 {
@@ -618,10 +880,486 @@
     }
 
     .sell-btns {
+      width: 70%;
       margin: $spacing-large auto;
 
       button {
+        &:first-child:hover {
+          background: $lightergrey;
+        }
+
+        &:last-child:hover {
+          background: $matteblack;
+        }
+      }
+    }
+  }
+
+  .sell-container {
+    padding: 0 !important;
+    width: 60vw;
+    justify-self: center;
+    justify-items: center;
+
+    .search-results {
+      .hit {
+        .hit-info {
+          h3 {
+            font-size: $font-small;
+          }
+
+          h6 {
+            font-size: $font-xsmall;
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
+
+          .hit-info {
+            h3 {
+              color: $prodBtnPrimary2;
+            }
+          }
+        }
+      }
+    }
+
+    .prod-search:hover {
+      border-color: $matteblack;
+    }
+  }
+
+  #sell-page-3 {
+    grid-template-columns: 1fr 1fr;
+    height: $productContainerHeight;
+    width: 95vw;
+    margin: 0 2.5vw;
+
+    .btn {
+      font-size: $font-small;
+    }
+
+    .product-info {
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-normal;
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      padding: $spacing-small $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      .accessibility {
+        grid-column: 1 / 6;
+
+        h2 {
+          font-size: $font-large
+        }
+
+        h3 {
+          font-size: $font-small;
+        }
+      }
+
+      .size {
+        height: 70px;
+        width: 70px;
+
+        #highestBid {
+          font-size: $font-xsmall;
+        }
+
+        #size {
+          font-size: $font-normal;
+        }
+
+        &:hover {
+          background: $black;
+
+          #size {
+            color: $white;
+          }
+        }
+      }
+    }
+
+    .selling-form {
+      width: 100%;
+
+      .size-display {
+        width: 70%;
+        padding: $spacing-normal;
+
+        h4 {
+          font-size: $font-large;
+        }
+
+        button:hover {
+          background: $matteblack;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .sell-now-container {
+          width: 70%;
+
+          div {
+            h4 {
+              font-size: $font-small;
+            }
+
+            p {
+              font-size: $font-large;
+            }
+          }
+
+          button:hover {
+            background: #f2635a;
+          }
+        }
+
+        .place-ask-container {
+          width: 70%;
+          padding: $spacing-normal;
+
+          .seller-input {
+            width: 100%;
+            grid-template-columns: 1fr 6fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-small $spacing-xsmall;
+              width: calc(100% - #{$spacing-xsmall} - #{$spacing-xsmall});
+              font-size: $font-normal;
+            }
+
+            button {
+              font-size: $font-normal;
+            }
+
+            &:hover {
+              button,
+              input {
+                border-color: #61a6eb;
+              }
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-small auto;
+
+            div {
+              p {
+                font-size: $font-small;
+              }
+            }
+
+            .payout {
+              p {
+                font-size: $font-normal;
+              }
+            }
+          }
+
+          .place-ask-btn:hover {
+            background: #61a6eb;
+          }
+
+          .sell-now-btn:hover {
+            background: #f2635a;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  h3 {
+    font-size: $font-xxlarge;
+  }
+
+  #sell-page-1 {
+    #how-it-works-content {
+      div {
+        grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-xlarge;
+      }
+
+      h6 {
         font-size: $font-normal;
+      }
+    }
+
+    .sell-btns {
+      width: 50%;
+      margin: $spacing-xlarge auto;
+
+      button {
+        padding: $spacing-normal !important;
+
+        &:first-child:hover {
+          background: $lightergrey;
+        }
+
+        &:last-child:hover {
+          background: $matteblack;
+        }
+      }
+    }
+  }
+
+  .sell-container {
+    padding: 0 !important;
+    width: 50vw;
+    justify-self: center;
+    justify-items: center;
+
+    .search-results {
+      .hit {
+        .hit-info {
+          h3 {
+            font-size: $font-normal;
+          }
+
+          h6 {
+            font-size: $font-small;
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
+
+          .hit-info {
+            h3 {
+              color: $green;
+            }
+          }
+        }
+      }
+    }
+
+    .prod-search:hover {
+      border-color: $matteblack;
+    }
+  }
+
+  #sell-page-3 {
+    grid-template-columns: 1fr 1fr;
+    min-height: $productContainerHeight;
+    width: 95vw;
+    margin: 0 2.5vw;
+
+    .btn {
+      font-size: $font-normal;
+      padding: $spacing-normal !important;
+    }
+
+    .product-info {
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-normal;
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      padding: $spacing-small $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      .accessibility {
+        grid-column: 1 / 6;
+
+        h2 {
+          font-size: $font-large;
+        }
+
+        h3 {
+          font-size: $font-small;
+        }
+      }
+
+      .size {
+        height: 120px;
+        width: 120px;
+
+        #highestBid {
+          font-size: $font-normal;
+        }
+
+        #size {
+          font-size: $font-xlarge;
+        }
+
+        &:hover {
+          background: $black;
+
+          #size {
+            color: $white;
+          }
+        }
+      }
+    }
+
+    .selling-form {
+      width: 100%;
+      padding: $spacing-large 0;
+
+      .size-display {
+        width: 70%;
+        padding: $spacing-large;
+
+        h4 {
+          font-size: $font-xlarge;
+        }
+
+        button:hover {
+          background: $matteblack;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .sell-now-container {
+          width: 70%;
+
+          div {
+            h4 {
+              font-size: $font-normal;
+            }
+
+            p {
+              font-size: $font-xlarge;
+            }
+          }
+
+          button:hover {
+            background: #f2635a;
+          }
+        }
+
+        .place-ask-container {
+          width: 70%;
+          padding: $spacing-large;
+
+          .seller-input {
+            width: 100%;
+            grid-template-columns: 1fr 6fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-normal $spacing-small;
+              width: calc(100% - #{$spacing-small} - #{$spacing-small});
+              font-size: $font-large;
+            }
+
+            button {
+              font-size: $font-large;
+            }
+
+            &:hover {
+              button,
+              input {
+                border-color: #61a6eb;
+              }
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-normal auto;
+
+            div {
+              p {
+                font-size: $font-normal;
+              }
+            }
+
+            .payout {
+              p {
+                font-size: $font-large;
+              }
+            }
+          }
+
+          .place-ask-btn:hover {
+            background: #61a6eb;
+          }
+
+          .sell-now-btn:hover {
+            background: #f2635a;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  h3 {
+    font-size: $font-xxlarge;
+  }
+
+  #sell-page-1 {
+    #how-it-works-content {
+      div {
+        grid-template-columns: 1fr 9fr;
+        column-gap: $spacing-normal;
+      }
+
+      fa-icon {
+        font-size: $font-xxlarge;
+      }
+
+      h6 {
+        font-size: $font-large;
+      }
+    }
+
+    .sell-btns {
+      width: 50%;
+      margin: $spacing-xlarge auto;
+
+      button {
+        font-size: $font-normal;
+        padding: $spacing-normal !important;
+
+        &:first-child:hover {
+          background: $lightergrey;
+        }
+
+        &:last-child:hover {
+          background: $matteblack;
+        }
       }
     }
   }
@@ -632,48 +1370,197 @@
     width: 60vw;
   }
 
-  #item-size {
-    width: 60%;
-  }
-
-  .sell-radios {
-    label {
-      font-size: $font-normal !important;
-    }
-  }
-
   .sell-container {
     padding: 0 !important;
     width: 45vw;
     justify-self: center;
     justify-items: center;
-  }
 
-  #sell-page-4 {
-    justify-self: center;
+    .search-results {
+      .hit {
+        .hit-info {
+          h3 {
+            font-size: $font-normal;
+          }
 
-    ol li {
-      font-size: $font-normal;
-    }
+          h6 {
+            font-size: $font-small;
+          }
+        }
 
-    .pairStats {
-      p {
-        font-size: $font-large;
+        &:hover {
+          cursor: pointer;
+
+          .hit-info {
+            h3 {
+              color: $green;
+            }
+          }
+        }
       }
     }
 
-    .sell-price-input,
-    .pairStats,
-    .sell-btns {
-      width: inherit;
+    .prod-search:hover {
+      border-color: $matteblack;
     }
   }
 
-  .consignment,
-  .payment-processing,
-  .total-payout {
-    p {
+  #sell-page-3 {
+    grid-template-columns: 1fr 1fr;
+    min-height: $productContainerHeight;
+    width: 2000px !important;
+
+    .btn {
       font-size: $font-normal;
+      padding: $spacing-normal !important;
+    }
+
+    .product-info {
+      h1 {
+        font-size: $font-xxlarge;
+      }
+
+      .product-stats {
+        h4 {
+          font-size: $font-normal;
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .sizes {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      padding: $spacing-small $spacing-xsmall;
+      column-gap: $spacing-xsmall;
+      row-gap: $spacing-xsmall;
+
+      .accessibility {
+        grid-column: 1 / 6;
+
+        h2 {
+          font-size: $font-xlarge;
+        }
+
+        h3 {
+          font-size: $font-normal;
+        }
+      }
+
+      .size {
+        height: 120px;
+        width: 120px;
+
+        #highestBid {
+          font-size: $font-normal;
+        }
+
+        #size {
+          font-size: $font-xlarge;
+        }
+
+        &:hover {
+          background: $black;
+
+          #size {
+            color: $white;
+          }
+        }
+      }
+    }
+
+    .selling-form {
+      width: 100%;
+      padding: $spacing-large 0;
+
+      .size-display {
+        width: 70%;
+        padding: $spacing-large;
+
+        h4 {
+          font-size: $font-xlarge;
+        }
+
+        button:hover {
+          background: $matteblack;
+        }
+      }
+
+      .offer-display {
+        width: 100%;
+
+        .sell-now-container {
+          width: 70%;
+
+          div {
+            h4 {
+              font-size: $font-normal;
+            }
+
+            p {
+              font-size: $font-xlarge;
+            }
+          }
+
+          button:hover {
+            background: #f2635a;
+          }
+        }
+
+        .place-ask-container {
+          width: 70%;
+          padding: $spacing-large;
+
+          .seller-input {
+            width: 100%;
+            grid-template-columns: 1fr 6fr;
+            margin: $spacing-small auto;
+
+            input {
+              padding: $spacing-normal $spacing-small;
+              width: calc(100% - #{$spacing-small} - #{$spacing-small});
+              font-size: $font-large;
+            }
+
+            button {
+              font-size: $font-large;
+            }
+
+            &:hover {
+              button,
+              input {
+                border-color: #61a6eb;
+              }
+            }
+          }
+
+          .fee-calculator {
+            margin: $spacing-normal auto;
+
+            div {
+              p {
+                font-size: $font-normal;
+              }
+            }
+
+            .payout {
+              p {
+                font-size: $font-large;
+              }
+            }
+          }
+
+          .place-ask-btn:hover {
+            background: #61a6eb;
+          }
+
+          .sell-now-btn:hover {
+            background: #f2635a;
+          }
+        }
+      }
     }
   }
 }

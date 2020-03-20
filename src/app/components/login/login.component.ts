@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
 
   loading = false;
   error = false;
+  usernameError = false;
 
   constructor(
     private auth: AuthService,
@@ -47,22 +48,43 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     // console.log('login() called');
 
-    if (this.email.value || this.password.value) {
-      return this.auth.emailLogin(this.email.value, this.password.value).then(res => {
-        if (!res) {
-          this.showError();
-        } else {
-          const redirect = this.route.snapshot.queryParams.redirectTo;
-
-          if (!isUndefined(redirect)) {
-            this.router.navigateByUrl(`${redirect}`);
+    if (new RegExp('^.+@.+\.[a-zA-Z]{2,5}$').test(this.email.value)) {
+      if (this.email.value || this.password.value) {
+        this.auth.emailLogin(this.email.value, this.password.value).then(res => {
+          if (!res) {
+            this.showError();
           } else {
-            this.router.navigate(['/home']);
+            this.redirect();
           }
-        }
-      });
+        });
+      } else {
+        this.showError();
+      }
     } else {
-      this.showError();
+      this.usernameError = true;
+      this.auth.checkUsername(this.email.value).get().subscribe(res => {
+        if (res.docs.length < 1) {
+          this.showError()
+        } else {
+          this.auth.emailLogin(res.docs[0].get('email'), this.password.value).then(res => {
+            if (!res) {
+              this.showError();
+            } else {
+              this.redirect();
+            }
+          });
+        }
+      })
+    }
+  }
+
+  private redirect() {
+    const redirect = this.route.snapshot.queryParams.redirectTo;
+
+    if (!isUndefined(redirect)) {
+      this.router.navigateByUrl(redirect);
+    } else {
+      this.router.navigate(['/home']);
     }
   }
 
@@ -71,6 +93,7 @@ export class LoginComponent implements OnInit {
     this.error = true;
     setTimeout(() => {
       this.error = false;
+      this.usernameError = false;
     }, 2500);
   }
 

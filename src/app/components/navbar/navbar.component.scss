@@ -11,8 +11,8 @@ nav {
   height: $navHeight;
 
   .search-bar {
+    width: 100%;
     align-self: center;
-    justify-self: center;
 
     input {
       @include vendor(transition, $transition-normal ease-in-out);
@@ -27,30 +27,13 @@ nav {
     }
   }
 
-  .nav-icons {
-    display: grid;
-    grid-template-columns: 2fr 2fr 2fr;
-  }
-
-  .nav-btns {
-    display: grid;
-    grid-template-columns: 3fr 3fr;
-  }
-
-  .nav-hamburger {
+  .nav-hamburger,
+  .nav-search {
     @include navbarItems;
     @include vendor(transition, $transition-normal ease-in-out);
 
-    fa-icon {
-      font-size: $font-large;
-    }
-
     &:hover {
-      background: $matteblue;
-
-      fa-icon {
-        color: $white;
-      }
+      background: $lightergrey;
     }
   }
 
@@ -70,89 +53,96 @@ nav {
     }
   }
 
-  .nav-icon {
-    @include vendor(transition, $transition-fast ease-in-out);
-    @include navbarItems;
-    color: $darkblue;
-    display: grid;
-    justify-items: center;
-    align-items: center;
+  .links {
+    align-self: center;
+    justify-self: right;
+    margin-right: $spacing-large;
 
-    fa-icon {
-      font-size: $font-large;
-    }
-
-    fa-layers-counter {
-      font-size: $font-xxxlarge;
-      margin-bottom: $spacing-xlarge;
-    }
-
-    &:hover {
-      fa-icon {
-        @include vendor(transition, $transition-fast ease-in-out);
-        color: $matteblue;
+    .dropdown:hover {
+      .dropdown-menu {
+        display: block;
       }
     }
-  }
 
-  .nav-signup,
-  .nav-login {
-    font-size: $font-small;
-    font-weight: $weight-black;
-    letter-spacing: 2px;
-    background: $darkblue;
-    border: none;
-    margin: 15px 2.5px;
-    cursor: pointer;
-    color: $white;
-    text-align: center;
-    display: grid;
+    li {
+      display: inline-block;
+      list-style-type: none;
+      margin: 0 $spacing-small;
 
-    p {
-      justify-self: center;
-      align-self: center;
-    }
-
-    &:hover {
-      background: $matteblue;
-
-      p {
-        color: $white;
+      a {
+        color: $black;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
       }
-    }
-  }
 
-  .nav-signup {
-    @include vendor(box-shadow, 2px 8px 10px -5px rgba(94, 94, 94, 0.75));
+      .dropdown-menu {
+        z-index: 1000;
+        position: absolute;
+        display: none;
+        top: 60%;
+        float: left;
+        min-width: 110px;
+        padding: 5px;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background: $white;
+        background-clip: padding-box;
+        border: 1px solid $lightergrey;
+        border-radius: $spacing-xsmall;
+        @include vendor(box-shadow, 0 6px 12px rgba(0,0,0,.175));
 
-    p {
-      color: $white;
-    }
-  }
+        li {
+          display: block;
+          margin: 0 !important;
+          font-weight: 400 !important;
+          text-align: left;
+          cursor: pointer;
 
-  .nav-login {
-    background: none;
-    color: $darkblue;
-
-    &:hover {
-      color: $white;
+          a {
+            padding: $spacing-small;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            color: $matteblack;
+          }
+        }
+      }
     }
   }
 }
 
 // MEDIA QUERIES
 
-@media only screen and (min-width: 0px) and (max-width: 399px) {
-  .col-4 {
-    grid-template-columns: 3fr 6fr 11fr;
+@media only screen and (min-width: 0px) and (max-width: 399.5px) {
+  .navbar {
+    grid-template-columns: 1fr 3fr 1fr;
   }
 
-  .col-5 {
-    grid-template-columns: 3fr 8fr 9fr;
+  .nav-home {
+    justify-self: center;
+  }
+
+  .nav-search,
+  .nav-hamburger {
+    fa-icon {
+      font-size: 1rem;
+    }
   }
 
   .search-bar {
-    display: none;
+    justify-self: center;
+    height: calc(#{$navHeight});
+    display: grid;
+    align-items: center;
+
+    input {
+      width: calc(95% - #{$spacing-xxsmall} - #{$spacing-xxsmall});
+      margin: auto 5%;
+      padding: $spacing-small $spacing-xxsmall;
+      font-size: .7rem;
+    }
   }
 
   .nav-home {
@@ -160,102 +150,194 @@ nav {
   }
 }
 
-@media only screen and (min-width: 400px) and (max-width: 799px) {
-  .col-4 {
-    grid-template-columns: 2fr 9fr 9fr;
+@media only screen and (min-width: 400px) and (max-width: 767.5px) {
+  .navbar {
+    grid-template-columns: 1fr 5fr 1fr;
   }
 
-  .col-5 {
-    grid-template-columns: 2fr 11fr 7fr;
+  .nav-home {
+    justify-self: center;
+  }
+
+  .nav-search,
+  .nav-hamburger {
+    fa-icon {
+      font-size: 1.2rem;
+    }
   }
 
   .search-bar {
-    display: none;
+    justify-self: center;
+    height: calc(#{$navHeight});
+    display: grid;
+    align-items: center;
 
     input {
-      width: 100%;
-      padding: $spacing-small;
-      font-size: $font-small;
+      width: calc(95% - #{$spacing-xsmall} - #{$spacing-xsmall});
+      margin: auto 5%;
+      padding: $spacing-small $spacing-xsmall;
+      font-size: .8rem;
     }
   }
 }
 
-@media only screen and (min-width: 800px) and (max-width: 1199px) {
-  .col-4 {
-    grid-template-columns: 1.5fr 2.5fr 10fr 6fr;
+@media only screen and (min-width: 768px) and (max-width: 1199.5px) {
+  .navbar {
+    grid-template-columns: 1.5fr 2.5fr 6fr 10fr;
   }
 
-  .col-5 {
-    grid-template-columns: 1.5fr 2.5fr 11fr 5fr;
+  .nav-search,
+  .nav-hamburger {
+    fa-icon {
+      font-size: 1.5rem;
+    }
   }
 
   .search-bar {
-    width: 80%;
-
     input {
-      width: 100%;
+      width: 90%;
+      margin-left: 10%;
       padding: $spacing-small;
-      font-size: $font-small;
+      font-size: 0.7rem;
+    }
+  }
+
+  .links {
+    li {
+      a {
+        font-size: 0.8rem;
+      }
+    }
+
+    .dropdown-menu {
+      li {
+        a {
+          font-size: 0.7rem;
+        }
+      }
     }
   }
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1799px) {
-  .col-4 {
-    grid-template-columns: 1fr 2fr 12fr 5fr;
+@media only screen and (min-width: 1200px) and (max-width: 1799.5px) {
+  .navbar {
+    grid-template-columns: 1fr 2fr 5fr 7fr;
   }
 
-  .col-5 {
-    grid-template-columns: 1fr 2fr 13fr 4fr;
+  .nav-search,
+  .nav-hamburger {
+    fa-icon {
+      font-size: 1.5rem;
+    }
   }
 
   .search-bar {
-    width: 50%;
-
     input {
-      width: 100%;
+      width: 80%;
       padding: $spacing-small;
-      font-size: $font-small;
+      font-size: 0.8rem;
+    }
+  }
+
+  .links {
+    li {
+      a {
+        font-size: 0.95rem;
+      }
+    }
+
+    .dropdown-menu {
+      li {
+        a {
+          font-size: 0.8rem;
+        }
+
+        &:hover {
+          background: $lightergrey;
+        }
+      }
     }
   }
 }
 
-@media only screen and (min-width: 1800px) and (max-width: 1999px) {
-  .col-4 {
-    grid-template-columns: 1fr 2fr 12fr 5fr;
+@media only screen and (min-width: 1800px) and (max-width: 1999.5px) {
+  .navbar {
+    grid-template-columns: 1fr 2fr 10fr 7fr;
   }
 
-  .col-5 {
-    grid-template-columns: 1fr 2fr 14fr 3fr;
+  .nav-search,
+  .nav-hamburger {
+    fa-icon {
+      font-size: 1.5rem;
+    }
   }
 
   .search-bar {
-    width: 50%;
-
     input {
       width: 100%;
       padding: $spacing-small;
-      font-size: $font-small;
+      font-size: 1rem;
+    }
+  }
+
+  .links {
+    li {
+      a {
+        font-size: 1.2rem;
+      }
+    }
+
+    .dropdown-menu {
+      li {
+        a {
+          font-size: 1rem;
+        }
+
+        &:hover {
+          background: $lightergrey;
+        }
+      }
     }
   }
 }
 
 @media only screen and (min-width: 2000px) {
-  .col-4 {
-    grid-template-columns: 1fr 2fr 12fr 5fr;
+  .navbar {
+    grid-template-columns: 1fr 2fr 10fr 7fr;
   }
 
-  .col-5 {
-    grid-template-columns: 1fr 2fr 14fr 3fr;
+  .nav-search,
+  .nav-hamburger {
+    fa-icon {
+      font-size: 1.5rem;
+    }
   }
 
   .search-bar {
-    width: 50%;
-
     input {
       width: 100%;
       padding: $spacing-small;
-      font-size: $font-normal;
+      font-size: 1.2rem;
+    }
+  }
+
+  .links {
+    li {
+      a {
+        font-size: 1.4rem;
+      }
+    }
+
+    .dropdown-menu {
+      li {
+        a {
+          font-size: 1.2rem;
+        }
+
+        &:hover {
+          background: $lightergrey;
+        }
+      }
     }
   }
 

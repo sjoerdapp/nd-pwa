@@ -1,159 +1,152 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .dashboard-nav {
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  a {
     width: 100%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
 
-    a {
-        width: 100%;
-
-        &:first-child > button {
-            border-bottom-left-radius: $spacing-xxsmall;
-        }
-
-        &:last-child > button {
-            border-bottom-right-radius: $spacing-xxsmall;
-        }
-
-        &:active {
-            button {
-                background: $matteblack;
-            }
-        }
-
-        button {
-            width: inherit;
-            padding: $spacing-small;
-            background: $black;
-            border-radius: 0px;
-    
-            &:hover {
-                background: $matteblack;
-            }
-        }
+    &:first-child > button {
+      border-bottom-left-radius: $spacing-xxsmall;
     }
+
+    &:last-child > button {
+      border-bottom-right-radius: $spacing-xxsmall;
+    }
+
+    button {
+      width: inherit;
+      padding: $spacing-small;
+      background: $white;
+      color: $black;
+      border-radius: 0px;
+
+      &:hover {
+        background: $matteblack;
+        color: $white;
+      }
+    }
+
+    .active {
+      background: $black;
+      color: $white;
+
+      &:hover {
+        background: $matteblack;
+        color: $white;
+      }
+    }
+  }
 }
 
 .dashboard-stats {
-    width: 90%;
-    margin: $spacing-normal auto;
-    border: 1px solid $lightgrey;
+  width: 50%;
+  margin: $spacing-normal auto;
+  border: 1px solid $lightgrey;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  padding: $spacing-small;
+  border-radius: $spacing-xxsmall;
+
+  .dashboard-purchases,
+  .dashboard-sales {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    text-align: center;
-    padding: $spacing-small;
-    border-radius: $spacing-xxsmall;
+    grid-template-rows: 1fr 1fr;
 
-    .dashboard-counter-offer, .dashboard-purchases, .dashboard-sales {
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-
-        h6 {
-            font-weight: $weight-black;
-            font-size: $font-small;
-        }
-
-        h5 {
-            font-size: $font-large;
-        }
+    h6 {
+      font-weight: $weight-black;
+      font-size: $font-small;
     }
 
-    .dashboard-counter-offer {
-        h5, h6 {
-            color: $darkblue;
-        }
+    h5 {
+      font-size: $font-large;
     }
+  }
 
-    .dashboard-sales {
-        h5, h6 {
-            color: $green;
-        }
+  .dashboard-sales {
+    h5,
+    h6 {
+      color: #ef4135;
     }
+  }
 
-    .dashboard-purchases {
-        h5, h6 {
-            color: $matteblack;
-        }
+  .dashboard-purchases {
+    h5,
+    h6 {
+      color: #3c91e6;
     }
+  }
 }
 
 table {
-    width: 100vw;
-    max-width: 100%;
-    margin: $spacing-normal 0;
-    border-collapse: collapse;
+  width: 100vw;
+  max-width: 100%;
+  margin: $spacing-normal 0;
+  border-collapse: collapse;
 
-    th {
-        font-size: $font-xsmall;
-        color: $black;
-        border: 1px solid $black;
+  th {
+    font-size: $font-xsmall;
+    color: $black;
+    border: 1px solid $black;
 
-        &:first-child {
-            border-left: none;
-        }
-
-        &:last-child {
-            border-right: none;
-        }
+    &:first-child {
+      border-left: none;
     }
 
-    tr > td {
-        font-size: $font-xsmall;
-        text-align: center;
-        color: $white;
-        padding: $spacing-xsmall 0;
-        cursor: pointer;
-
-        &:last-child {
-            @include vendor(transition, 0.25s ease-in-out);
-            background: inherit;
-            border: none;
-            color: $white;
-            cursor: pointer;
-            letter-spacing: 1px;
-            font-weight: $weight-black;
-        }
+    &:last-child {
+      border-right: none;
     }
+  }
 
-    .counter-offer-row {
-        background: $darkblue;
+  tr > td {
+    font-size: $font-xsmall;
+    font-weight: $weight-black;
+    text-align: center;
+    color: $white;
+    padding: $spacing-xsmall 0;
+    cursor: pointer;
 
-        td:last-child:hover {
-            background: $matteblue;
-        }
+    &:last-child {
+      @include vendor(transition, 0.25s ease-in-out);
+      background: inherit;
+      border: none;
+      color: $white;
+      cursor: pointer;
+      letter-spacing: 1px;
+      font-weight: $weight-black;
     }
+  }
 
-    .sales-row {
-        background: $green;
-        
-        td {
-            color: $matteblack;
+  .sales-row {
+    background: #ef4135;
 
-            &:last-child {
-                color: $matteblack;
-
-                &:hover {
-                    background: $mintgreen;
-                }
-            }
-        }
+    td:last-child:hover {
+      background: #f2635a;
     }
+  }
 
-    .purchases-row {
-        background: $matteblack;
+  .purchases-row {
+    background: #3c91e6;
 
-        td:last-child:hover {
-            background: $coolgrey;
-        }
+    td:last-child:hover {
+      background: #61a6eb;
     }
+  }
 }
 
 .dashboard-btn {
-    display: block;
-    padding: $spacing-small;
-    font-size: $font-normal;
-    width: 75%;
-    margin: $spacing-xlarge auto;
+  display: block;
+  padding: $spacing-small;
+  font-size: $font-normal;
+  width: 20%;
+  margin: $spacing-xlarge auto;
+  background: $black;
+
+  &:hover {
+    background: $matteblack;
+  }
 }

@@ -24,18 +24,10 @@
     margin: $spacing-large auto;
   }
 
-  .edit-radios {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin: $spacing-normal auto;
-    align-items: center;
-    justify-items: center;
-
-    div {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-    }
+  .condition {
+    text-align: center;
+    font-weight: $weight-black;
+    font-size: 1.1rem;
   }
 
   .edit-price-input {
@@ -90,6 +82,7 @@
 
     button {
       padding: $spacing-small;
+      text-transform: uppercase;
 
       &:first-child {
         background: $black;
@@ -122,10 +115,15 @@
     }
 
     .updated-btn {
-      background: $green;
+      background: $white;
+
+      fa-icon {
+        color: $green;
+        font-size: 1rem;
+      }
 
       &:hover {
-        background: $green !important;
+        background: $white !important;
       }
     }
   }

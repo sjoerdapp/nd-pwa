@@ -1,10 +1,11 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, HostListener, PLATFORM_ID, Inject } from '@angular/core';
 import { NotificationsComponent } from '../notifications/notifications.component';
 import { AuthService } from '../../services/auth.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { isNullOrUndefined } from 'util';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   providers: [NotificationsComponent],
@@ -13,6 +14,17 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+
+  isMobile: boolean = false;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (event.target.innerWidth < 768) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
+  }
 
   connected: boolean;
   showSearchBar: boolean = false;
@@ -29,24 +41,25 @@ export class NavbarComponent implements OnInit {
     private afs: AngularFirestore,
     private route: ActivatedRoute,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
 
   ngOnInit() {
-    this.auth.checkStatus().then(value => {
-      this.checkUser().then(res => {
-        if (res) {
-          this.connected = value;
-        } else {
-          this.connected = false;
-        }
-      })
-    });
+    this.auth.isConnected().then(res => {
+      if (res) {
+        this.connected = true;
+      } else {
+        this.connected = false;
+      }
+    })
+
+    this.checkWidth();
 
     const url = this.route.snapshot.url;
     console.log(url)
 
-    if (url.length > 0) {
+    if (url.length > 0 && !this.isMobile) {
       if (url[0].path === 'search' || url[0].path === 'home') {
         this.showSearchBar = false;
       } else {
@@ -102,5 +115,19 @@ export class NavbarComponent implements OnInit {
         });
       }, this.doneTypingInterval);
     }
+  }
+
+  checkWidth() {
+    if (isPlatformBrowser(this._platformId)) {
+      if (window.innerWidth < 768) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    }
+  }
+
+  openSearch() {
+    this.showSearchBar = !this.showSearchBar;
   }
 }

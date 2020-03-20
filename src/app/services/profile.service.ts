@@ -84,7 +84,6 @@ export class ProfileService {
 
     const listingRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
     const prodRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
-
     const productRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
 
     let prices = [];

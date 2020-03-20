@@ -1,0 +1,564 @@
+@import "../../base_styles//base";
+
+.main-container {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+
+  .confirmation-container {
+    text-align: center;
+    display: grid;
+
+    #loading-icon {
+      font-size: 75px;
+      color: $lightgrey;
+    }
+
+    .product-seller-info {
+      display: grid;
+      align-items: center;
+      justify-items: center;
+
+      .product-info {
+        img {
+          margin: auto;
+          background: $lightgrey;
+        }
+
+        #price {
+          font-weight: $weight-black;
+        }
+      }
+
+      .seller-address {
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        margin: $spacing-small auto;
+        row-gap: $spacing-small;
+
+        fa-icon {
+          color: $matteblack;
+        }
+
+        button {
+          padding: $spacing-small;
+          background: $black;
+        }
+      }
+    }
+
+    .seller-fees {
+      display: grid;
+      justify-self: center;
+
+      div {
+        border-bottom: 1px solid $lightgrey;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: $spacing-small;
+        align-items: center;
+
+        p {
+          &:first-child {
+            text-align: left;
+          }
+
+          &:last-child {
+            text-align: right;
+          }
+        }
+
+        &:last-child {
+          border: none;
+
+          p {
+            font-weight: $weight-black;
+          }
+        }
+      }
+    }
+
+    .confirmation-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: $spacing-small;
+      margin: $spacing-large auto;
+
+      .disabled {
+        background: $lightgrey;
+        cursor: not-allowed;
+
+        &:hover {
+          background: $lightgrey;
+        }
+      }
+
+      button {
+        padding: $spacing-small;
+        background: $black;
+        color: $white;
+
+        &:first-child {
+          background: $white;
+          color: $black;
+        }
+      }
+    }
+
+    #confirmed,
+    #cancelled {
+      font-size: $font-large;
+      margin: $spacing-large auto;
+      text-align: center;
+      font-weight: $weight-black;
+    }
+
+    #confirmed {
+      color: $matteblack;
+    }
+
+    #cancelled {
+      color: $googleRed;
+    }
+  }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  .confirmation-container {
+    h1 {
+      font-size: $font-large;
+    }
+
+    p {
+      font-size: $font-small;
+    }
+
+    .product-seller-info {
+      grid-template-rows: 1fr 1fr;
+
+      .product-info {
+        img {
+          width: 50%;
+        }
+
+        #model-size,
+        #condition {
+          font-size: $font-small;
+        }
+
+        #price {
+          font-size: $font-normal;
+        }
+      }
+
+      .seller-address {
+        fa-icon {
+          font-size: $font-normal;
+        }
+
+        p {
+          font-size: $font-small;
+        }
+
+        button {
+          font-size: $font-xsmall;
+        }
+      }
+    }
+
+    .seller-fees {
+      width: 90%;
+
+      div {
+        p {
+          font-size: $font-xsmall;
+        }
+
+        &:last-child {
+          p {
+            font-size: $font-small;
+          }
+        }
+      }
+    }
+
+    .confirmation-btns {
+      width: 90%;
+    }
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+  .confirmation-container {
+    h1 {
+      font-size: $font-xlarge;
+    }
+
+    p {
+      font-size: $font-normal;
+    }
+
+    .product-seller-info {
+      grid-template-rows: 1fr 1fr;
+
+      .product-info {
+        img {
+          width: 50%;
+        }
+
+        #model-size,
+        #condition {
+          font-size: $font-small;
+        }
+
+        #price {
+          font-size: $font-normal;
+        }
+      }
+
+      .seller-address {
+        fa-icon {
+          font-size: $font-normal;
+        }
+
+        p {
+          font-size: $font-small;
+        }
+
+        button {
+          font-size: $font-xsmall;
+        }
+      }
+    }
+
+    .seller-fees {
+      width: 90%;
+
+      div {
+        p {
+          font-size: $font-xsmall;
+        }
+
+        &:last-child {
+          p {
+            font-size: $font-small;
+          }
+        }
+      }
+    }
+
+    .confirmation-btns {
+      width: 90%;
+    }
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  .confirmation-container {
+    h1 {
+      font-size: $font-xlarge;
+    }
+
+    p {
+      font-size: $font-normal;
+    }
+
+    .product-seller-info {
+      grid-template-columns: 1fr 1fr;
+      margin: $spacing-large auto;
+
+      .product-info {
+        img {
+          width: 40%;
+        }
+
+        #model-size,
+        #condition {
+          font-size: $font-normal;
+        }
+
+        #price {
+          font-size: $font-large;
+        }
+      }
+
+      .seller-address {
+        fa-icon {
+          font-size: $font-large;
+        }
+
+        p {
+          font-size: $font-small;
+        }
+
+        button {
+          font-size: $font-xsmall;
+        }
+      }
+    }
+
+    .seller-fees {
+      width: 80%;
+
+      div {
+        p {
+          font-size: $font-small;
+        }
+
+        &:last-child {
+          p {
+            font-size: $font-normal;
+          }
+        }
+      }
+    }
+
+    .confirmation-btns {
+      width: 80%;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+  .confirmation-container {
+    h1 {
+      font-size: $font-xlarge;
+    }
+
+    p {
+      font-size: $font-normal;
+    }
+
+    .product-seller-info {
+      grid-template-columns: 1fr 1fr;
+      margin: $spacing-large auto;
+
+      .product-info {
+        img {
+          width: 20%;
+        }
+
+        #model-size,
+        #condition {
+          font-size: $font-normal;
+        }
+
+        #price {
+          font-size: $font-large;
+        }
+      }
+
+      .seller-address {
+        fa-icon {
+          font-size: $font-large;
+        }
+
+        p {
+          font-size: $font-small;
+        }
+
+        button {
+          font-size: $font-xsmall;
+
+          &:hover {
+            background: $matteblack !important;
+          }
+        }
+      }
+    }
+
+    .seller-fees {
+      width: 80%;
+
+      div {
+        p {
+          font-size: $font-small;
+        }
+
+        &:last-child {
+          p {
+            font-size: $font-normal;
+          }
+        }
+      }
+    }
+
+    .confirmation-btns {
+      width: 50%;
+
+      button:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+
+      .disabled:hover {
+        background: $lightgrey !important;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 2000px) {
+  .confirmation-container {
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    p {
+      font-size: $font-large;
+    }
+
+    .product-seller-info {
+      grid-template-columns: 1fr 1fr;
+      margin: $spacing-large auto;
+      width: 50%;
+
+      .product-info {
+        img {
+          width: 30%;
+        }
+
+        #model-size,
+        #condition {
+          font-size: $font-large;
+        }
+
+        #price {
+          font-size: $font-xlarge;
+        }
+      }
+
+      .seller-address {
+        fa-icon {
+          font-size: $font-xlarge;
+        }
+
+        p {
+          font-size: $font-normal;
+        }
+
+        button {
+          font-size: $font-small;
+
+          &:hover {
+            background: $matteblack !important;
+          }
+        }
+      }
+    }
+
+    .seller-fees {
+      width: 60%;
+
+      div {
+        p {
+          font-size: $font-normal;
+        }
+
+        &:last-child {
+          p {
+            font-size: $font-large;
+          }
+        }
+      }
+    }
+
+    .confirmation-btns {
+      width: 30%;
+      font-size: $font-normal;
+
+      button:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+
+      .disabled:hover {
+        background: $lightgrey !important;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .confirmation-container {
+    h1 {
+      font-size: $font-xxlarge;
+    }
+
+    p {
+      font-size: $font-large;
+    }
+
+    .product-seller-info {
+      grid-template-columns: 1fr 1fr;
+      margin: $spacing-large auto;
+      width: 50%;
+
+      .product-info {
+        img {
+          width: 30%;
+        }
+
+        #model-size,
+        #condition {
+          font-size: $font-large;
+        }
+
+        #price {
+          font-size: $font-xlarge;
+        }
+      }
+
+      .seller-address {
+        fa-icon {
+          font-size: $font-xlarge;
+        }
+
+        p {
+          font-size: $font-normal;
+        }
+
+        button {
+          font-size: $font-small;
+
+          &:hover {
+            background: $matteblack !important;
+          }
+        }
+      }
+    }
+
+    .seller-fees {
+      width: 60%;
+
+      div {
+        p {
+          font-size: $font-normal;
+        }
+
+        &:last-child {
+          p {
+            font-size: $font-large;
+          }
+        }
+      }
+    }
+
+    .confirmation-btns {
+      width: 30%;
+      font-size: $font-normal;
+
+      button:hover {
+        background: $matteblack !important;
+        color: $white !important;
+      }
+
+      .disabled:hover {
+        background: $lightgrey !important;
+      }
+    }
+  }
+}

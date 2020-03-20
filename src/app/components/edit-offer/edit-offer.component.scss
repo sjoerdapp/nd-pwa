@@ -1,232 +1,230 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .main-container {
-    display: grid;
-    align-content: center;
-    width: 100vw;
-    max-width: 100%;
+  display: grid;
+  align-content: center;
+  width: 100vw;
+  max-width: 100%;
 }
 
 .edit-container {
-    width: 95vw;
-    justify-self: center;
-    margin: $spacing-normal 0;
+  width: 95vw;
+  justify-self: center;
+  margin: $spacing-normal 0;
 
-    h3 {
-        text-align: center;
-        letter-spacing: 1px;
+  h3 {
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  img {
+    display: block;
+    background: $white;
+    object-fit: contain;
+    margin: $spacing-large auto;
+  }
+
+  .condition {
+    text-align: center;
+    font-weight: $weight-black;
+    font-size: 1.1rem;
+  }
+
+  .edit-price-input {
+    margin: $spacing-large auto;
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    background: $white;
+    border: 1px solid $lightgrey;
+    border-radius: $spacing-xxsmall;
+
+    input {
+      border: none;
+      height: inherit;
+      padding: $spacing-small;
+      font-size: $font-normal;
+      letter-spacing: 2px;
+      font-weight: $weight-black;
     }
 
-    img {
-        display: block;
-        background: $white;
-        object-fit: contain;
-        margin: $spacing-large auto;
+    button {
+      border: none;
+      height: inherit;
+      background: $matteblack;
+      color: $white;
+
+      &:first-child {
+        border-top-left-radius: $spacing-xxsmall;
+        border-bottom-left-radius: $spacing-xxsmall;
+      }
+
+      &:last-child {
+        border-top-right-radius: $spacing-xxsmall;
+        border-bottom-right-radius: $spacing-xxsmall;
+      }
     }
+  }
 
-    .edit-radios {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        margin: $spacing-normal auto;
-        align-items: center;
-        justify-items: center;
+  select {
+    display: block;
+    width: 50%;
+    height: 35px;
+    margin: $spacing-normal auto;
+  }
 
-        div {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-        }
-    }
+  .edit-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: $spacing-normal;
+    width: 90%;
+    margin: $spacing-large auto;
+    margin-top: $spacing-xlarge;
 
-    .edit-price-input {
-        margin: $spacing-large auto;
-        display: grid;
-        grid-template-columns: 10% 80% 10%;
-        background: $white;
-        border: 1px solid $lightgrey;
-        border-radius: $spacing-xxsmall;
+    button {
+      padding: $spacing-small;
+      text-transform: uppercase;
 
-        input {
-            border: none;
-            height: inherit;
-            padding: $spacing-small;
-            font-size: $font-normal;
-            letter-spacing: 2px;
-            font-weight: $weight-black;
-        }
-
-        button {
-            border: none;
-            height: inherit;
-            background: $matteblack;
-            color: $white;
-
-            &:first-child {
-                border-top-left-radius: $spacing-xxsmall;
-                border-bottom-left-radius: $spacing-xxsmall;
-            }
-
-            &:last-child {
-                border-top-right-radius: $spacing-xxsmall;
-                border-bottom-right-radius: $spacing-xxsmall;
-            }
-        }
-    }
-
-    select {
-        display: block;
-        width: 50%;
-        height: 35px;
-        margin: $spacing-normal auto;
-    }
-
-    .edit-btns {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: $spacing-normal;
-        width: 90%;
-        margin: $spacing-large auto;
-        margin-top: $spacing-xlarge;
-
-        button {
-            padding: $spacing-small;
-
-            &:first-child {
-                background: $black;
-
-                &:hover {
-                    background: $matteblack;
-                }
-            }
-
-            &:last-child:hover {
-                background: $matteblue;
-            }
-        }
-
-        .disabled-btn {
-            background: $lightgrey;
-            cursor: not-allowed;
-
-            &:hover {
-                background: $lightgrey!important;
-            }
-        }
-
-        .error-btn {
-            background: $inputError;
-
-            &:hover {
-                background: $inputError!important;
-            }
-        }
-
-        .updated-btn {
-            background: $green;
-
-            &:hover {
-                background: $green!important;
-            }
-        }
-    }
-
-    #delete-btn {
-        color: $googleRed;
-        display: block;
-        margin: auto;
-        background: none;
-        font-size: $font-normal;
-        font-weight: $weight-black;
-        text-align: center;
-        border: none;
-        cursor: pointer;
+      &:first-child {
+        background: $black;
 
         &:hover {
-            text-decoration: underline;
+          background: $matteblack;
         }
+      }
+
+      &:last-child:hover {
+        background: $matteblue;
+      }
     }
+
+    .disabled-btn {
+      background: $lightgrey;
+      cursor: not-allowed;
+
+      &:hover {
+        background: $lightgrey !important;
+      }
+    }
+
+    .error-btn {
+      background: $inputError;
+
+      &:hover {
+        background: $inputError !important;
+      }
+    }
+
+    .updated-btn {
+      background: $white;
+
+      fa-icon {
+        color: $green;
+        font-size: 1rem;
+      }
+
+      &:hover {
+        background: $white !important;
+      }
+    }
+  }
+
+  #delete-btn {
+    color: $googleRed;
+    display: block;
+    margin: auto;
+    background: none;
+    font-size: $font-normal;
+    font-weight: $weight-black;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 // MEDIA QUERIES
 
 @media only screen and (min-width: 0px) and (max-width: 400px) {
-   .edit-container {
-        img {
-            width: 175px;
-            height: 175px;
-        }   
+  .edit-container {
+    img {
+      width: 175px;
+      height: 175px;
+    }
 
-        .edit-price-input {
-            width: 100%;
-        }
+    .edit-price-input {
+      width: 100%;
+    }
 
-        .edit-radios {
-            label {
-                font-size: $font-small;
-            }
-        }
-   }
+    .edit-radios {
+      label {
+        font-size: $font-small;
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 400px) and (max-width: 800px) {
-    .edit-container {
-        img {
-            width: 200px;
-            height: 200px;
-        } 
+  .edit-container {
+    img {
+      width: 200px;
+      height: 200px;
+    }
 
-        .edit-price-input {
-            width: 100%;
-        }
+    .edit-price-input {
+      width: 100%;
+    }
 
-        .edit-radios {
-            label {
-                font-size: $font-normal;
-            }
-        }
-   }
+    .edit-radios {
+      label {
+        font-size: $font-normal;
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
-    .edit-container {
-        img {
-            width: 200px;
-            height: 200px;
-        }
+  .edit-container {
+    img {
+      width: 200px;
+      height: 200px;
+    }
 
-        width: 70vw;
-    }   
+    width: 70vw;
+  }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    .edit-container {
-        img {
-            width: 225px;
-            height: 225px;
-        }
+  .edit-container {
+    img {
+      width: 225px;
+      height: 225px;
+    }
 
-        width: 60vw;
-    }  
+    width: 60vw;
+  }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    .edit-container {
-        img {
-            width: 250px;
-            height: 250px;
-        }
+  .edit-container {
+    img {
+      width: 250px;
+      height: 250px;
+    }
 
-        width: 50vw;
-    } 
+    width: 50vw;
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    .edit-container {
-        img {
-            width: 275px;
-            height: 275px;
-        }
+  .edit-container {
+    img {
+      width: 275px;
+      height: 275px;
+    }
 
-        width: 50vw;
-    }    
+    width: 50vw;
+  }
 }

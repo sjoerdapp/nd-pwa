@@ -27,30 +27,41 @@ export class SellComponent implements OnInit {
 
   showResults = false;
 
+  showHowItWorks: boolean = true;
+  showSearch: boolean = false;
+  showItem: boolean = false;
+
+  sizes: {[keys: string]: number[]} = {
+    "M": [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17],
+    "W": [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12],
+    "GS": [3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7]
+  };
+  sizeType: string = 'M';
+  sizeSuffix: string = '';
+
+  offers = [];
+
   inputLength = 0; // Length of search box input
 
   selectedPair: Product; // Listing Product object
+  selectedSize: string = '';
 
-  highestOfferPrice: number;
-  lowestListing: number;
-  highestOffer: any;
+  HighestBid: any = NaN;
+  LowestAsk: any = NaN;
+  currentBid: any = NaN;
+  currentAsk: any = NaN;
 
   // Listing Information
   pairCondition: string;
   pairPrice: number;
   pairSize: string;
 
-  nextToPage4 = false;
   priceAdded = false;
 
   // Page 4 boolean
   loading = false;
   listed = false;
   error = false;
-
-  // shoe type W or GS
-  isWomen = false;
-  isGS = false;
 
   user: any;
 
@@ -79,35 +90,30 @@ export class SellComponent implements OnInit {
     // Skip the first page and serves the third page
     this.activatedRoute.queryParams.subscribe(params => {
       if (!isUndefined(params.sneaker)) {
-        let element = document.getElementById('sell-page-1');
-        element.style.display = 'none';
+        this.selectPair(JSON.parse(params.sneaker), false);
 
-        document.getElementById('page-2-back-btn').style.display = 'none';
-        document.getElementById('page-2-back-btn-alt').style.display = 'block';
-
-        const pair = JSON.parse(params.sneaker);
-        this.selectPair(pair);
+        if (!isNullOrUndefined(params.size)) {
+          this.selectSize(params.size);
+        }
       }
     });
 
     // check if the user is connected and redirect if not
     this.auth.isConnected().then(res => {
-      if (isNull(res)) {
-        this.router.navigate([`login`]);
-      }
+      if (!isNull(res)) {
+        this.user = res;
 
-      this.user = res;
-
-      // redirect is phone number verification not verified
-      if (isNullOrUndefined(res.phoneNumber) && res.email != "momarcisse0@gmail.com") {
-        if (this.activatedRoute.snapshot.queryParams.sneaker) {
-          this.router.navigate(['../phone-verification'], {
-            queryParams: { redirectTo: `product/${this.selectedPair.productID}` }
-          });
-        } else {
-          this.router.navigate(['../phone-verification'], {
-            queryParams: { redirectTo: `sell` }
-          });
+        // redirect is phone number verification not verified
+        if (isNullOrUndefined(res.phoneNumber) && res.email != "momarcisse0@gmail.com") {
+          if (this.activatedRoute.snapshot.queryParams.sneaker) {
+            this.router.navigate(['../phone-verification'], {
+              queryParams: { redirectTo: `product/${this.selectedPair.productID}` }
+            });
+          } else {
+            this.router.navigate(['../phone-verification'], {
+              queryParams: { redirectTo: `sell` }
+            });
+          }
         }
       }
     });
@@ -115,7 +121,7 @@ export class SellComponent implements OnInit {
 
   submitListing() {
     this.pairPrice = this.getPrice();
-    this.pairSize = this.getSize();
+    this.pairSize = this.selectedSize;
     this.loading = true;
 
     if (isNaN(this.pairPrice)) {
@@ -123,7 +129,7 @@ export class SellComponent implements OnInit {
       return;
     }
 
-    this.sellService.addListing(this.selectedPair, this.pairCondition, this.pairPrice, this.pairSize)
+    this.sellService.addListing(this.selectedPair, 'new', this.pairPrice, this.pairSize)
       .then((res) => {
         if (isPlatformBrowser(this._platformId)) {
           gtag('event', 'ask', {
@@ -142,16 +148,6 @@ export class SellComponent implements OnInit {
           this.addError();
         }
       });
-  }
-
-  radioHandler(event: any) {
-    this.pairCondition = event.target.value;
-    this.disableBtn();
-  }
-
-  sizeChanges($event) {
-    this.pairSize = (document.getElementById('item-size') as HTMLInputElement).value;
-    this.disableBtn()
   }
 
   priceChanges($event) {
@@ -176,15 +172,11 @@ export class SellComponent implements OnInit {
   }
 
   private getPrice() {
-    const price = (document.getElementById('sell-price-input') as HTMLInputElement).value;
+    const price = (document.getElementById('input') as HTMLInputElement).value;
     return +price;
   }
 
-  private getSize() {
-    return (document.getElementById('item-size') as HTMLInputElement).value;
-  }
-
-  selectPair(pair) {
+  selectPair(pair: Product, updateURL: boolean) {
     this.selectedPair = {
       productID: pair.productID,
       brand: pair.brand,
@@ -202,72 +194,79 @@ export class SellComponent implements OnInit {
     console.log(pair.model.toUpperCase());
     if (patternW.test(pair.model.toUpperCase())) {
       //console.log('Woman Size');
-      this.isWomen = true;
+      this.sizeSuffix = 'W';
+      this.sizeType = 'W';
     } else if (patternGS.test(pair.model.toUpperCase())) {
       //console.log(`GS size`);
-      this.isGS = true;
-    }
-
-    let element = document.getElementById('sell-page-2');
-    element.style.display = 'none';
-
-    element = document.getElementById('sell-page-3');
-    element.style.display = 'block';
-  }
-
-  goToPage2(firstPage: boolean) {
-    if (firstPage) {
-      let element = document.getElementById('sell-page-1');
-      element.style.display = 'none';
-
-      element = document.getElementById('sell-page-2');
-      element.style.display = 'block';
+      this.sizeSuffix = 'Y';
+      this.sizeType = 'GS';
     } else {
-      let element = document.getElementById('sell-page-3');
-      element.style.display = 'none';
+      this.sizeType = 'M';
+    }
 
-      element = document.getElementById('sell-page-2');
-      element.style.display = 'block';
+    if (updateURL) {
+      this.router.navigate([], {
+        queryParams: { sneaker: JSON.stringify(this.selectedPair) }
+      }).then(() => {
+        this.goToItemPage();
+      })
     }
   }
 
-  goToPage3() {
-    let element = document.getElementById('sell-page-3');
-    element.style.display = 'block';
-
-    element = document.getElementById('sell-page-4');
-    element.style.display = 'none';
+  nextPage() {
+    if (isNullOrUndefined(this.selectedPair)) {
+      this.showHowItWorks = false;
+      this.showSearch = true;
+    } else {
+      this.goToItemPage();
+    }
   }
 
-  goToPage4() {
-    let element = document.getElementById('sell-page-3');
-    element.style.display = 'none';
+  goToItemPage() {
+    this.showSearch = false;
+    this.showHowItWorks = false;
+    this.showItem = true;
 
-    element = document.getElementById('sell-page-4');
-    element.style.display = 'block';
+    this.getOffers();
+  }
 
-    this.sellService.getHighestOffer(this.selectedPair.productID, this.pairCondition, this.pairSize).subscribe(data => {
-      if (!data.empty) {
-        data.forEach(val => {
-          this.highestOfferPrice = val.data().price;
-          this.highestOffer = val.data();
+  getOffers() {
+    if (this.offers.length < 1) {
+      this.sizes[`${this.sizeType}`].forEach(ele => {
+        let bid: any;
+        const size = `US${ele}${this.sizeSuffix}`;
+
+        this.sellService.getHighestOffer(this.selectedPair.productID, 'new', size).subscribe(bidData => {
+          bid = bidData[0];
+
+          const data = {
+            HighestBid: bid,
+            size: size
+          }
+
+          this.offers.push(data);
+
+          if (this.sizes[`${this.sizeType}`].length === this.offers.length) {
+            this.getProductStats();
+          }
         });
-      } else {
-        this.highestOfferPrice = 0;
-      }
-    });
+      });
+    }
+  }
 
-    this.sellService.getLowestListing(this.selectedPair.productID, this.pairCondition, this.pairSize).subscribe(data => {
-      if (!data.empty) {
-        data.forEach(val => {
-          this.lowestListing = val.data().price;
-        });
-      } else {
-        this.lowestListing = 0;
-      }
-    });
+  getProductStats() {
+    this.sellService.getLowestListing(this.selectedPair.productID, 'new').subscribe(response => {
+      this.LowestAsk = response[0];
 
-    // console.log(`highestOffer: ${this.highestOffer} and lowestListing: ${this.lowestListing}`);
+      this.sellService.getHighestOffer(this.selectedPair.productID, 'new').subscribe(res => {
+        this.HighestBid = res[0];
+
+        if (!this.selectedSize) {
+          this.currentAsk = this.LowestAsk;
+          this.currentBid = this.HighestBid;
+        }
+      });
+    });
   }
 
   searchChanged(event) {
@@ -306,26 +305,48 @@ export class SellComponent implements OnInit {
 
     setTimeout(() => {
       return this.ngZone.run(() => {
-        return this.router.navigate(['../profile']);
+        return this.router.navigate([`/product/${this.selectedPair.productID}`]);
       });
     }, 2500);
-  }
-
-  disableBtn() {
-    console.log(`disableBtn() called`);
-    if (!isUndefined(this.pairCondition) && !isUndefined(this.pairSize) && this.pairSize != 'none') {
-      this.nextToPage4 = true;
-    } else {
-      this.nextToPage4 = false;
-    }
   }
 
   sellNow() {
     this.ngZone.run(() => {
       this.router.navigate([`../../checkout`], {
-        queryParams: { product: this.highestOffer.offerID, sell: true }
+        queryParams: { product: this.currentBid.offerID, sell: true }
       });
     });
+  }
+
+  selectSize(size: string) {
+    this.selectedSize = size;
+
+    this.sellService.getHighestOffer(this.selectedPair.productID, 'new', this.selectedSize).subscribe(res => {
+      if (isNullOrUndefined(res[0])) {
+        this.currentBid = NaN;
+      } else {
+        this.currentBid = res[0];
+      }
+    });
+
+    this.sellService.getLowestListing(this.selectedPair.productID, 'new', this.selectedSize).subscribe(res => {
+      if (isNullOrUndefined(res[0])) {
+        this.currentAsk = NaN;
+      } else {
+        this.currentAsk = res[0];
+      }
+    });
+  }
+
+  changeSize() {
+    this.selectedSize = '';
+    this.currentBid = this.HighestBid;
+    this.currentAsk = this.LowestAsk;
+    this.priceAdded = false;
+    this.pairPrice = NaN;
+    this.consignmentFee = 0;
+    this.payout = 0;
+    this.paymentProcessingFee = 0;
   }
 
 }

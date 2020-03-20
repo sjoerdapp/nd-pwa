@@ -23,6 +23,7 @@ a {
     background: $black;
     color: $white;
     text-align: center;
+    text-transform: uppercase;
     @include vendor(transition, 0.25s ease-in-out);
 
     &:hover {

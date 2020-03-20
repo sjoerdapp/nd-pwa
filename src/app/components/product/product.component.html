@@ -4,16 +4,68 @@
   <section class="product-container">
     <div class="product-info">
       <div class="product-btns">
-        <a class="btn" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json }">Sell This Product
-          <fa-icon [icon]="['fas', 'tag']"></fa-icon></a>
-        <a class="btn" routerLink="/make-an-offer" [queryParams]="{ sneaker: productInfo | json }">Make an Offer
-          <fa-icon [icon]="['fas', 'hand-holding-usd']"></fa-icon></a>
+        <div class="buy-bid">
+          <div class="lowestAsk" *ngIf="currentOffer.LowestAsk && !sizeSelected">
+            <h3>{{ currentOffer.LowestAsk.size }}</h3>
+            <h2>{{ currentOffer.LowestAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h2>
+            <h3>Lowest Ask</h3>
+          </div>
+
+          <div class="lowestAsk" *ngIf="sizeSelected">
+            <h3>{{ sizeSelected }}</h3>
+            <h2 *ngIf="currentOffer.LowestAsk">{{ currentOffer.LowestAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h2>
+            <h2 *ngIf="!currentOffer.LowestAsk">--</h2>
+            <h3>Lowest Ask</h3>
+          </div>
+
+          <div class="lowestAsk" *ngIf="!currentOffer.LowestAsk && !sizeSelected">
+            <h3>--</h3>
+            <h2>--</h2>
+            <h3>Lowest Ask</h3>
+          </div>
+
+          <div>
+            <button *ngIf="currentOffer.LowestAsk" [routerLink]="['/checkout']" [queryParams]="{ product: currentOffer.LowestAsk.listingID, sell: false }">Buy Now</button>
+            <button *ngIf="!currentOffer.LowestAsk" class="disabled">Buy Now</button>
+            <button *ngIf="!sizeSelected" [routerLink]="['/make-an-offer']" [queryParams]="{ sneaker: productInfo | json }">Place Bid</button>
+            <button *ngIf=sizeSelected [routerLink]="['/make-an-offer']" [queryParams]="{ sneaker: productInfo | json, size: sizeSelected }">Place Bid</button>
+          </div>
+        </div>
+
+        <div class="sell-ask">
+          <div class="highestBid" *ngIf="currentOffer.HighestBid && !sizeSelected">
+            <h3>{{ currentOffer.HighestBid.size }}</h3>
+            <h2>{{ currentOffer.HighestBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h2>
+            <h3>Highest Bid</h3>
+          </div>
+
+          <div class="highestBid" *ngIf="sizeSelected">
+            <h3>{{ sizeSelected }}</h3>
+            <h2 *ngIf="currentOffer.HighestBid">{{ currentOffer.HighestBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h2>
+            <h2 *ngIf="!currentOffer.HighestBid">--</h2>
+            <h3>Highest Bid</h3>
+          </div>
+
+          <div class="highestBid" *ngIf="!currentOffer.HighestBid && !sizeSelected">
+            <h3>--</h3>
+            <h2>--</h2>
+            <h3>Highest Bid</h3>
+          </div>
+
+          <div>
+            <button *ngIf="currentOffer.HighestBid" [routerLink]="['/checkout']" [queryParams]="{ product: currentOffer.HighestBid.offerID, sell: true }">Sell Now</button>
+            <button *ngIf="!currentOffer.HighestBid" class="disabled">Sell Now</button>
+            <button *ngIf="!sizeSelected" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json }">Place Ask</button>
+            <button *ngIf="sizeSelected" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json, size: sizeSelected }">Place Ask</button>
+          </div>
+        </div>
       </div>
 
-      <p>Guaranteed Authentic <fa-icon [icon]="['fas', 'check-circle']"></fa-icon>
-      </p>
-
       <img src="{{ productInfo.assetURL }}" alt="{{ productInfo.model }}">
+
+      <a routerLink="/faq/buying/are-the-items-authentic" class="auth">Guaranteed Authentic <fa-icon
+          [icon]="['fas', 'check-circle']"></fa-icon>
+      </a>
 
       <div class="share-btns">
         <a href="https://www.facebook.com/sharer/sharer.php?app_id=316718239101883&u=https://nxtdrop.com/product/{{ productID }}&display=popup&ref=plugin"
@@ -41,53 +93,24 @@
       </div>
     </div>
 
-    <section>
-      <div class="product-navigation">
-        <button class="btn" id="buy-btn" (click)="navigationBuy()">View Listings</button>
-        <button class="btn" id="offers-btn" (click)="navigationOffers()">View Offerings</button>
+    <div class="product-offers">
+      <div class="accessibility">
+        <h2>Select Size</h2>
+        <h3 *ngIf="sizeSuffix == ''">U.S. Men Size | Lowest Ask | Highest Bid</h3>
+        <h3 *ngIf="sizeSuffix == 'Y'">U.S. Youth Size | Lowest Ask | Highest Bid</h3>
+        <h3 *ngIf="sizeSuffix == 'W'">U.S. Women Size | Lowest Ask | Highest Bid</h3>
       </div>
 
-      <div class="product-offers" *ngIf="showBuy && buyListings.length >= 1">
-        <div class="product-offer" *ngFor="let buyListing of buyListings">
-          <h6>{{ buyListing.condition }}</h6>
+      <div class="product-offer" id="{{ offer.size }}" *ngFor="let offer of offers" (click)="selectSize(offer.size)">
+        <button id="size">{{ offer.size }}</button>
 
-          <div class="offer-specs">
-            <h2 id="offer-size">{{ buyListing.size }}</h2>
-            <h2 id="offer-price">{{ buyListing.price | currency: 'CAD' }}</h2>
-          </div>
+        <button id="lowestAsk" *ngIf="offer.LowestAsk">{{ offer.LowestAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</button>
+        <button id="lowestAsk" *ngIf="!offer.LowestAsk">--</button>
 
-          <a [routerLink]="['/checkout']" [queryParams]="{ product: buyListing.listingID, sell: false }" class="btn"
-            *ngIf="UID != buyListing.sellerID">Buy Now</a>
-          <a [routerLink]="['/edit-listing', buyListing.listingID]" [queryParams]="{ source: 'product/' + productID }"
-            class="btn" *ngIf="UID === buyListing.sellerID">Edit Listing</a>
-        </div>
+        <button id="highestBid" *ngIf="offer.HighestBid">{{ offer.HighestBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</button>
+        <button id="highestBid" *ngIf="!offer.HighestBid">--</button>
       </div>
-
-
-      <div class="product-offers" *ngIf="showBuy && buyListings.length < 1">
-        <p>Sorry, there are no listings at this moment.</p>
-      </div>
-
-      <div class="product-offers" *ngIf="showOffers && offersListings.length >= 1">
-        <div class="product-offer" *ngFor="let offerListing of offersListings">
-          <h6>{{ offerListing.condition }}</h6>
-
-          <div class="offer-specs">
-            <h2 id="offer-size">{{ offerListing.size }}</h2>
-            <h2 id="offer-price">{{ offerListing.price | currency: 'CAD' }}</h2>
-          </div>
-
-          <a class="btn" [routerLink]="['/checkout']" [queryParams]="{ product: offerListing.offerID, sell: true }"
-            class="btn" *ngIf="UID != offerListing.buyerID">Sell Now</a>
-          <a class="btn" [routerLink]="['/edit-offer', offerListing.offerID]" [queryParams]="{ source: 'product/' + productID }" class="btn"
-            *ngIf="UID === offerListing.buyerID">Edit Offer</a>
-        </div>
-      </div>
-
-      <div class="product-offers" *ngIf="showOffers && offersListings.length < 1">
-        <p>Sorry, there are no offers at this moment.</p>
-      </div>
-    </section>
+    </div>
   </section>
 
   <app-modal></app-modal>

@@ -2,10 +2,10 @@
   <div class="signup-card">
     <a routerLink=".."><img src="../../../assets/Negativepng.png" alt="NXTDROP, Inc. Logo Negative Symbol"></a>
 
-    <button class="facebook-btn" (click)="auth.facebookSignIn()">
+    <!--<button class="facebook-btn" (click)="auth.facebookSignIn()">
       <fa-icon [icon]="['fab', 'facebook']"></fa-icon>
       <h3>Sign in with Facebook</h3>
-    </button>
+    </button>-->
 
     <button class="google-btn" (click)="auth.googleSignIn()">
       <fa-icon [icon]="['fab', 'google']"></fa-icon>
@@ -19,17 +19,20 @@
     <form [formGroup]="signupForm" (ngSubmit)="signup()">
       <input type="text" placeholder="First Name" formControlName="firstName" [className]="firstName.invalid && firstName.dirty ? 'input-error' : ''">
       <input type="text" placeholder="Last Name" formControlName="lastName" [className]="lastName.invalid && lastName.dirty ? 'input-error' : ''">
-      <input type="text" placeholder="Username" formControlName="username" [className]="username.invalid && username.dirty ? 'input-error' : ''">
+      <input type="text" placeholder="Username" formControlName="username" [className]="username.invalid && username.dirty ? 'input-error' : ''" [patterns]="customPatterns" mask="0*">
       <input type="email" placeholder="Email" formControlName="email" [className]="email.invalid && email.dirty ? 'input-error' : ''">
       <input type="password" placeholder="Password" formControlName="password" [className]="password.invalid && password.dirty ? 'input-error' : ''">
+
       <button type="submit" class="btn signup-btn" *ngIf="!loading && !error">Sign Up</button>
+
       <button type="submit" class="btn loading" *ngIf="loading">
         <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
       </button>
+
       <button type="submit" class="btn error" *ngIf="error">Error</button>
     </form>
 
-    <p>By signing up, you agree to our Terms and Privacy Policy.</p>
+    <p>By signing up, you agree to our <a routerLink="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.</p>
 
     <button routerLink="/login" class="login-btn">Have an account? Log in</button>
   </div>

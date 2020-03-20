@@ -38,6 +38,8 @@ export class CustomValidators {
 })
 export class SignUpComponent implements OnInit {
 
+  public customPatterns = { '0': { pattern: new RegExp('\[a-zA-Z0-9._\]+') } };
+
   signupForm: FormGroup;
 
   inviteCode: string;
@@ -96,7 +98,7 @@ export class SignUpComponent implements OnInit {
           this.error = true;
           setTimeout(() => {
             this.error = false;
-          }, 2500);
+          }, 2000);
         }
       });
     } else {
@@ -106,7 +108,7 @@ export class SignUpComponent implements OnInit {
           this.error = true;
           setTimeout(() => {
             this.error = false;
-          }, 2500);
+          }, 2000);
         }
       });
     }

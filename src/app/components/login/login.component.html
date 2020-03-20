@@ -1,34 +1,40 @@
 <section class="login-body">
   <div class="login-card">
-      <a routerLink="/"><img src="../../../assets/Negativepng.png" alt="NXTDROP, Inc. Logo Negative Symbol"></a>
+    <a routerLink="/"><img src="../../../assets/Negativepng.png" alt="NXTDROP, Inc. Logo Negative Symbol"></a>
 
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <input type="text" placeholder="Email" formControlName="email">
-        <input type="password" placeholder="Password" formControlName="password">
-        <button class="btn login-btn" *ngIf="!loading && !error">Log in</button>
-        <button class="btn loading" *ngIf="loading">
-          <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
-        </button>
-        <button class="btn error" *ngIf="error">Error</button>
-      </form>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <input type="email" placeholder="Email" formControlName="email">
+      <input type="password" placeholder="Password" formControlName="password">
 
-      <button class="forgotpwd-btn" routerLink="/forgot-password">Forgot my password</button>
+      <button class="btn login-btn" *ngIf="!loading && !error">Log in</button>
 
-      <div class="divider">
-        <h2>OR</h2>
-      </div>
+      <button class="btn loading" *ngIf="loading">
+        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+      </button>
 
-      <button class="facebook-btn" (click)="facebookSign()">
+      <button class="btn error" *ngIf="error">
+        <span *ngIf="!usernameError">Email/Password Invalid</span>
+        <span *ngIf="usernameError">Username/Password Invalid</span>
+      </button>
+    </form>
+
+    <button class="forgotpwd-btn" routerLink="/forgot-password">Forgot my password</button>
+
+    <div class="divider">
+      <h2>OR</h2>
+    </div>
+
+    <!--<button class="facebook-btn" (click)="facebookSign()">
         <fa-icon [icon]="['fab', 'facebook']"></fa-icon>
         <h3>Sign in with Facebook</h3>
-      </button>
-      
-      <button class="google-btn" (click)="googleSign()">
-          <fa-icon [icon]="['fab', 'google']"></fa-icon>
-          <h3>Sign in with Google</h3>
-      </button>
+      </button>-->
 
-      <button class="signup-btn" routerLink="/signup">Don&apos;t have an account? Sign up</button>
+    <button class="google-btn" (click)="googleSign()">
+      <fa-icon [icon]="['fab', 'google']"></fa-icon>
+      <h3>Sign in with Google</h3>
+    </button>
+
+    <button class="signup-btn" routerLink="/signup">Don&apos;t have an account? Sign up</button>
   </div>
 
 </section>
