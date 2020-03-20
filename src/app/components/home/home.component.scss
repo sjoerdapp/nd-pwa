@@ -72,7 +72,7 @@
     .authRate {
       padding: $spacing-xsmall;
       border-radius: 110px;
-      background: $green;
+      background: $white;
       display: grid;
       grid-template-rows: 1fr 1fr;
       justify-items: center;
@@ -100,7 +100,7 @@
 }
 
 .last-sale-banner {
-  margin: 0 auto $spacing-normal auto;
+  margin: $spacing-normal auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   border: 1px solid $lightgrey;

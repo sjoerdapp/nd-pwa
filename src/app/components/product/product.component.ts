@@ -20,7 +20,11 @@ export class ProductComponent implements OnInit {
 
   productID: string;
 
-  sizes: number[] = [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17];
+  sizes: {[key: string]: number[]} = {
+    'M': [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17],
+    'Y': [3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7],
+    'W': [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12]
+  };
   sizeSuffix: string = '';
 
   productInfo: Product = {
@@ -95,8 +99,8 @@ export class ProductComponent implements OnInit {
   }*/
 
   getSizeSuffix() {
-    const patternW = new RegExp(/.\(W\)/);
-    const patternGS = new RegExp(/.\(GS\)/);
+    const patternW = new RegExp(/.W$/);
+    const patternGS = new RegExp(/.GS$/);
 
     if (patternW.test(this.productID.toUpperCase())) {
       //console.log('Woman Size');
@@ -188,7 +192,19 @@ export class ProductComponent implements OnInit {
   }
 
   getOffers() {
-    this.sizes.forEach(ele => {
+    let suffix;
+
+    if (this.sizeSuffix === 'W') {
+      suffix = this.sizeSuffix;
+    } else if (this.sizeSuffix === 'Y') {
+      suffix = this.sizeSuffix;
+    } else {
+      suffix = 'M';
+    }
+
+    console.log(this.sizes[suffix]);
+
+    this.sizes[suffix].forEach(ele => {
       let ask: any;
       let bid: any;
 
@@ -224,7 +240,7 @@ export class ProductComponent implements OnInit {
             }
           }
 
-          if (this.sizes.length === this.offers.length) {
+          if (this.sizes[suffix].length === this.offers.length) {
             this.currentOffer.LowestAsk = this.lowestAsk;
             this.currentOffer.HighestBid = this.highestBid;
           }
@@ -249,11 +265,8 @@ export class ProductComponent implements OnInit {
       this.currentOffer = Object.assign({}, result);
       this.sizeSelected = selected;
       (document.getElementById(`${selected}`) as HTMLInputElement).classList.add('selected');
-
-      if (window.outerWidth < 800) {
-        document.body.scrollTop = 0; //For Safari
-        window.scrollTo({ top: 0, behavior: 'smooth' }); //For Chrome, Firefox, Opera and IE
-      }
+      document.body.scrollTop = 0; //For Safari
+      window.scrollTo({ top: 0, behavior: 'smooth' }); //For Chrome, Firefox, Opera and IE
     }
   }
 

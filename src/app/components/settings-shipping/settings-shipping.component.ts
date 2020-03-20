@@ -211,7 +211,7 @@ export class SettingsShippingComponent implements OnInit {
     if (isUndefined(this.redirectURI)) {
       this.router.navigate(['/settings']);
     } else {
-      this.router.navigate([`../../${this.redirectURI}`]);
+      this.router.navigateByUrl(this.redirectURI);
     }
   }
 

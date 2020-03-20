@@ -27,6 +27,8 @@ export class TransactionReviewComponent implements OnInit {
   confError: boolean = false;
   cancelError: boolean = false;
 
+  redirectTo: string;
+
   constructor(
     private route: ActivatedRoute,
     private TranService: TransactionService,
@@ -45,6 +47,7 @@ export class TransactionReviewComponent implements OnInit {
         this.error = true;
       } else {
         this.transactionID = this.route.snapshot.queryParams.transactionID;
+        this.redirectTo = this.route.snapshot.queryParams.redirectTo;
         this.getData();
         this.getUserData(res.uid);
       }
@@ -76,21 +79,14 @@ export class TransactionReviewComponent implements OnInit {
     this.TranService.removeFreeShipping();
   }
 
-  confirmOrder() {
-    this.confLoading = true;
-
-    if (!isNullOrUndefined(this.user.shippingAddress)) {
-      this.router.navigate(['/profile']);
+  confirmCancel() {
+    if (!this.redirectTo) {
+      this.router.navigate([`confirmation/${this.transactionID}/${this.user.uid}`], {
+        queryParams: { redirectTo: 'transaction?transactionID=' + this.transactionID }
+      })
     } else {
-      this.TranService.confirmOrder(this.transactionID).then(res => {
-        this.confLoading = false;
-        if (!res) {
-          this.confError = true;
-        }
-
-        setTimeout(() => {
-          this.confError = false
-        }, 1500)
+      this.router.navigate([`confirmation/${this.transactionID}/${this.user.uid}`], {
+        queryParams: { redirectTo: 'transaction?transactionID=' + this.transactionID + '&redirectTo=' + this.redirectTo }
       })
     }
   }

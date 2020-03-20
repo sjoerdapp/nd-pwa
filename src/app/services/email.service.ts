@@ -33,7 +33,7 @@ export class EmailService {
   }
 
   sendResetLink(email: string) {
-    return this.afs.collection(`users`).ref.where(`email`, `==`, `${email}`).limit(1).get().then(res => {
+    return this.afs.collection(`userVerification`).ref.where(`email`, `==`, `${email}`).limit(1).get().then(res => {
       if (!res.empty) {
         const endpoint = `${environment.cloud.url}resetPassword`;
         const data = {

@@ -38,21 +38,26 @@
     }
 
     .sent-btn {
-        @extend .request-btn;
-        background: $green;
+      @extend .request-btn;
+      background: $white;
 
-        &:hover {
-            background: $green;
-        }
+      fa-icon {
+        color: $green;
+        font-size: 1rem;
+      }
+
+      &:hover {
+        background: $white;
+      }
     }
 
     .error-btn {
-        @extend .request-btn;
-        background: $inputError;
+      @extend .request-btn;
+      background: $inputError;
 
-        &:hover {
-            background: $inputError;
-        }
+      &:hover {
+        background: $inputError;
+      }
     }
 
     #email-input {

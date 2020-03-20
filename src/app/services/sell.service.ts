@@ -56,7 +56,7 @@ export class SellService {
     };
 
     const batch = this.afs.firestore.batch();
-    console.log(timestamp);
+    //console.log(timestamp);
 
     const userDocRef = this.afs.firestore.collection(`users/${UID}/listings`).doc(`${listingID}`);
     const prodDocRef = this.afs.firestore.collection(`products/${pair.productID}/listings`).doc(`${listingID}`);

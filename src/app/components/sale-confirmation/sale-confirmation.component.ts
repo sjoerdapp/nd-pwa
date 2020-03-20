@@ -82,6 +82,12 @@ export class SaleConfirmationComponent implements OnInit {
         setTimeout(() => {
           this.confError = false;
         }, 2000);
+      } else {
+        if (this.route.snapshot.queryParams.redirectTo) {
+          setTimeout(() => {
+            this.router.navigateByUrl(this.route.snapshot.queryParams.redirectTo)
+          }, 2000);
+        }
       }
     })
   }
@@ -97,6 +103,12 @@ export class SaleConfirmationComponent implements OnInit {
         setTimeout(() => {
           this.cancelError = false;
         }, 2000);
+      } else {
+        if (this.route.snapshot.queryParams.redirectTo) {
+          setTimeout(() => {
+            this.router.navigateByUrl(this.route.snapshot.queryParams.redirectTo)
+          }, 2000);
+        }
       }
     })
   }

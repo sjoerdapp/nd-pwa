@@ -121,7 +121,7 @@ export class CheckoutService {
         return transactionID;
       })
       .catch(err => {
-        //console.error(err);
+        console.error(err);
         return false;
       })
   }

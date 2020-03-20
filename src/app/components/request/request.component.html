@@ -12,7 +12,7 @@
     <button *ngIf="!error && !sent && !loading" class="btn request-btn" (click)="sendRequest()">Send Request</button>
     <button *ngIf="loading" class="btn request-btn"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
     <button *ngIf="error" class="btn error-btn">Error</button>
-    <button *ngIf="sent" class="btn sent-btn">Sent</button>
+    <button *ngIf="sent" class="btn sent-btn"><fa-icon [icon]="['fas', 'check']"></fa-icon></button>
   </section>
 </div>
 

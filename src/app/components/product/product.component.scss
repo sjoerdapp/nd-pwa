@@ -46,8 +46,6 @@
       margin: 0 auto;
       background: $black;
       border-radius: $spacing-xxsmall;
-      padding: $spacing-xxsmall 0;
-      width: 100%;
 
       h4 {
         font-weight: $weight-bold;
@@ -256,17 +254,17 @@
       .lowestAsk,
       .highestBid {
         h3 {
-          font-size: $font-xsmall;
+          font-size: .6rem;
         }
 
         h2 {
-          font-size: $font-small;
+          font-size: .7rem;
         }
       }
 
       div {
         button {
-          font-size: $font-xsmall;
+          font-size: .6rem;
 
           &:hover {
             border-left: none !important;
@@ -299,7 +297,7 @@
 
   .product-info {
     .auth {
-      font-size: $font-xxsmall;
+      font-size: .5rem;
       width: 40%;
     }
 
@@ -308,9 +306,13 @@
     }
 
     .product-specs {
+      padding: $spacing-xsmall;
+      width: 90%;
+      
       h4 {
-        font-size: $font-xsmall;
+        font-size: .55rem;
         width: 100%;
+        font-weight: $weight-black;
       }
     }
   }
@@ -325,11 +327,11 @@
       grid-column: 1 / 4;
 
       h2 {
-        font-size: $font-normal;
+        font-size: 1rem;
       }
 
       h3 {
-        font-size: $font-xsmall;
+        font-size: .8rem;
       }
     }
 
@@ -408,25 +410,7 @@
 
   .product-info {
     .auth {
-      font-size: $font-xxsmall;
-      width: 40%;
-    }
-
-    img {
-      width: 60%;
-    }
-
-    .product-specs {
-      h4 {
-        font-size: $font-xsmall;
-        width: 100%;
-      }
-    }
-  }
-
-  .product-info {
-    .auth {
-      font-size: $font-xsmall;
+      font-size: .6rem;
       width: 60%;
     }
 
@@ -435,9 +419,13 @@
     }
 
     .product-specs {
+      padding: $spacing-xsmall;
+      width: 90%;
+      
       h4 {
-        font-size: $font-xsmall;
+        font-size: .7rem;
         width: 100%;
+        font-weight: $weight-black;
       }
     }
 
@@ -456,11 +444,11 @@
       grid-column: 1 / 5;
 
       h2 {
-        font-size: $font-normal;
+        font-size: 1rem;
       }
 
       h3 {
-        font-size: $font-xsmall;
+        font-size: .8rem;
       }
     }
 
@@ -487,6 +475,7 @@
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
   .product-container {
     grid-template-columns: 1fr 1fr;
+    height: $productContainerHeight;
   }
 
   .product-btns {
@@ -552,8 +541,10 @@
     }
 
     .product-specs {
+      width: 100%;
+
       h4 {
-        font-size: $font-xsmall;
+        font-size: .7rem;
         width: 100%;
       }
     }
@@ -595,20 +586,17 @@
       }
     }
   }
-
-  .product-container {
-    height: $productContainerHeight;
-  }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1800px) {
   .product-container {
     grid-template-columns: 4fr 3fr;
+    height: $productContainerHeight;
   }
 
   .product-btns {
-    width: 80%;
-    column-gap: $spacing-xsmall;
+    width: 90%;
+    column-gap: $spacing-small;
 
     .buy-bid,
     .sell-ask {
@@ -640,10 +628,13 @@
     }
 
     img {
-      width: 80%;
+      width: 60%;
     }
 
     .product-specs {
+      width: 100%;
+      padding: $spacing-xsmall 0;
+
       h4 {
         font-size: $font-small;
         width: 100%;
@@ -701,19 +692,16 @@
       }
     }
   }
-
-  .product-container {
-    height: $productContainerHeight;
-  }
 }
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
   .product-container {
     grid-template-columns: 4fr 3fr;
+    height: $productContainerHeight;
   }
 
   .product-btns {
-    width: 70%;
+    width: 85%;
     column-gap: $spacing-xsmall;
 
     .buy-bid,
@@ -750,6 +738,9 @@
     }
 
     .product-specs {
+      width: 100%;
+      padding: $spacing-xsmall 0;
+
       h4 {
         font-size: $font-normal;
         width: 100%;
@@ -807,20 +798,17 @@
       }
     }
   }
-
-  .product-container {
-    min-height: $productContainerHeight;
-  }
 }
 
 @media only screen and (min-width: 2000px) {
   .product-container {
     grid-template-columns: 4fr 3fr;
+    height: $productContainerHeight;
   }
 
   .product-btns {
-    width: 70%;
-    column-gap: $spacing-xsmall;
+    width: 80%;
+    column-gap: $spacing-small;
 
     .buy-bid,
     .sell-ask {
@@ -856,6 +844,9 @@
     }
 
     .product-specs {
+      width: 100%;
+      padding: $spacing-xsmall 0;
+
       h4 {
         font-size: $font-normal;
         width: 100%;
@@ -912,9 +903,5 @@
         background: $matteblack !important;
       }
     }
-  }
-
-  .product-container {
-    min-height: $productContainerHeight;
   }
 }

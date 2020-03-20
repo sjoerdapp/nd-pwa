@@ -42,7 +42,7 @@ export class ForgetPasswordComponent implements OnInit {
           setTimeout(() => {
             this.error = false;
             this.sent = false;
-          }, 2000);
+          }, 10000);
         });
       });
     }

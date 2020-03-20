@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
   printOrderStatus(status) {
     if (status.cancelled) {
       return 'cancelled'
-    } else if (isNullOrUndefined(status.sellerConfirmation) && !status.shippedForVerification && !status.deliveredForAuthentication && !status.verified && !status.shipped && !status.delivered && !status.cancelled) {
+    } else if (isNullOrUndefined(status.sellerConfirmation) || !status.sellerConfirmation && !status.shippedForVerification && !status.deliveredForAuthentication && !status.verified && !status.shipped && !status.delivered && !status.cancelled) {
       return 'awaiting seller confirmation'
     } else if (!status.shippedForVerification && status.sellerConfirmation && !status.deliveredForAuthentication && !status.verified && !status.shipped && !status.delivered && !status.cancelled) {
       return 'waiting for seller to ship'

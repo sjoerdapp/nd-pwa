@@ -22,7 +22,7 @@ export class EditOfferComponent implements OnInit {
   error = false;
   updated = false;
 
-  conditionChanged = false;
+  //conditionChanged = false;
   priceChanged = false;
   sizeChanged = false;
 
@@ -57,7 +57,7 @@ export class EditOfferComponent implements OnInit {
           this.router.navigate(['page-not-found']);
         } else {
           this.offerInfo = data.data();
-          (document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
+          //(document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
           this.curCondition = this.offerInfo.condition;
           this.curPrice = this.offerInfo.price;
           this.curSize = this.offerInfo.size;
@@ -104,7 +104,7 @@ export class EditOfferComponent implements OnInit {
     }, 500);
   }
 
-  conditionChanges($event) {
+  /*conditionChanges($event) {
     if (this.offerInfo.condition != $event.target.value && this.conditionChanged == false) {
       this.conditionChanged = true;
     } else if (this.offerInfo.condition == $event.target.value && this.conditionChanged == true) {
@@ -112,7 +112,7 @@ export class EditOfferComponent implements OnInit {
     }
 
     this.curCondition = $event.target.value;
-  }
+  }*/
 
   priceChanges($event) {
     if (this.offerInfo.price != $event.target.value && this.priceChanged == false) {
@@ -137,11 +137,11 @@ export class EditOfferComponent implements OnInit {
   }
 
   updateOffer() {
-    const condition = this.curCondition;
+    const condition = 'new';
     const price = this.curPrice;
     const size = this.curSize;
 
-    if (this.conditionChanged || this.priceChanged || this.sizeChanged) {
+    if (this.priceChanged || this.sizeChanged) {
       this.loading = true;
 
       if (isNaN(price)) {
@@ -186,7 +186,7 @@ export class EditOfferComponent implements OnInit {
 
     setTimeout(() => {
       this.updated = false;
-      this.conditionChanged = false;
+      //this.conditionChanged = false;
       this.priceChanged = false;
       this.sizeChanged = false;
     }, 2500);

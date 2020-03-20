@@ -188,13 +188,22 @@ export class AuthService {
   }
 
   private createUserData(user: User, userCred: auth.UserCredential) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    const userRef = this.afs.firestore.doc(`users/${user.uid}`);
+    const userVerificationRef = this.afs.firestore.doc(`userVerification/${user.uid}`);
     const redirect = this.route.snapshot.queryParams.redirectTo;
 
-    return userRef.set(user, { merge: true })
+    const batch = this.afs.firestore.batch();
+
+    batch.set(userRef, user, { merge: true });
+    batch.set(userVerificationRef, {
+      uid: user.uid,
+      username: user.username,
+      email: user.email
+    }, { merge: true });
+
+    return batch.commit()
       .then(() => {
         console.log('User information updated');
-        this.signOut(false);
         this.emailService.activateAccount();
 
         if (!isUndefined(redirect)) {
@@ -259,14 +268,14 @@ export class AuthService {
     }
   }
 
-  checkUsername(username) {
+  checkUsername(username: string) {
     //console.log('checkUsername() called');
-    return this.afs.collection('users', ref => ref.where('username', '==', username));
+    return this.afs.collection('userVerification', ref => ref.where('username', '==', username));
   }
 
-  checkEmail(email) {
+  checkEmail(email: string) {
     //console.log('checkEmail() called');
-    return this.afs.collection('users', ref => ref.where('email', '==', email));
+    return this.afs.collection('userVerification', ref => ref.where('email', '==', email));
   }
 
   getUserData(uid: string) {

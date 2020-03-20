@@ -6,17 +6,7 @@
 
     <img src="{{ offerInfo.assetURL }}" alt="{{ offerInfo.productID }}">
 
-    <div class="edit-radios">
-      <div>
-        <input type="radio" name="edit-offer" id="radio-new" (change)="conditionChanges($event)" value="new">
-        <label for="edit-offer">New</label>
-      </div>
-
-      <div>
-        <input type="radio" name="edit-offer" id="radio-used" (change)="conditionChanges($event)" value="used">
-        <label for="edit-offer">Used</label>
-      </div>
-    </div>
+    <p class="condition">Condition: New & 100% Authentic</p>
 
     <div class="edit-price-input">
       <button>CA<fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
@@ -100,16 +90,21 @@
 
     <div class="edit-btns">
       <button class="btn" routerLink="/{{ source }}">Back</button>
+
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && showSaveChanges"
         [className]="conditionChanged || priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'"
         (click)="updateOffer()">Save Changes</button>
+
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && !showSaveChanges" class="btn"
         (click)="buyNow()">Buy at {{ lowestListing | currency: 'CAD' }}</button>
+
       <button id="save-changes-btn" class="btn" *ngIf="loading">
         <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
       </button>
+
       <button id="save-changes-btn" class="btn error-btn" *ngIf="error">Error</button>
-      <button id="save-changes-btn" class="btn updated-btn" *ngIf="updated">Updated</button>
+
+      <button id="save-changes-btn" class="btn updated-btn" *ngIf="updated"><fa-icon [icon]="['fas', 'check']"></fa-icon></button>
     </div>
 
     <button id="delete-btn" (click)="deleteOffer()">Delete</button>

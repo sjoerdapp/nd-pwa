@@ -12,7 +12,7 @@
 // variables
 $navHeight: 90px;
 $footerHeight: 150px;
-$productContainerHeight: 650px;
+$productContainerHeight: calc(100vh - #{$navHeight});
 
 * {
   outline: none;
@@ -70,13 +70,13 @@ $productContainerHeight: 650px;
 
 //double line
 .blueLine {
-  background: $navyblue;
+  background: $black;
   height: 2.5px;
   grid-column: 1/6;
 }
 
 .greenLine {
-  background: $green;
+  background: $matteblack;
   height: 2.5px;
   grid-column: 1/6;
 }

@@ -17,28 +17,26 @@
       border-bottom-right-radius: $spacing-xxsmall;
     }
 
-    &:active {
-      button {
-        background: $matteblack;
-      }
-    }
-
     button {
       width: inherit;
       padding: $spacing-small;
-      background: $black;
+      background: $white;
+      color: $black;
       border-radius: 0px;
 
       &:hover {
         background: $matteblack;
+        color: $white;
       }
     }
 
     .active {
-      background: $matteblack;
+      background: $black;
+      color: $white;
 
       &:hover {
-        background: $black;
+        background: $matteblack;
+        color: $white;
       }
     }
   }

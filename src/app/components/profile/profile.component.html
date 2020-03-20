@@ -19,7 +19,7 @@
 
       <div class="profile-btns">
         <a class="btn" routerLink="/settings">Settings</a>
-        <a class="btn" routerLink="/settings/profile">Edit Profile</a>
+        <a class="btn" routerLink="/dashboard">Dashboard</a>
       </div>
     </div>
 
@@ -33,8 +33,8 @@
   </div>
 
   <div class="profile-navigation">
-    <button class="btn" id="listingsBtn" (click)="showListings()">Listings</button>
-    <button class="btn" id="offersBtn" (click)="showOffers()">Offers</button>
+    <button class="btn" id="listingsBtn" (click)="showListings()">Selling</button>
+    <button class="btn" id="offersBtn" (click)="showOffers()">Buying</button>
   </div>
 
   <div *ngIf="listingNav else showOffer">
