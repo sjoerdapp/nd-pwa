@@ -99,8 +99,8 @@ export class ProductComponent implements OnInit {
   }*/
 
   getSizeSuffix() {
-    const patternW = new RegExp(/.W$/);
-    const patternGS = new RegExp(/.GS$/);
+    const patternW = new RegExp(/.+\-W$/);
+    const patternGS = new RegExp(/.+\-GS$/);
 
     if (patternW.test(this.productID.toUpperCase())) {
       //console.log('Woman Size');
