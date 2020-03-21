@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { debounceTime, take, map } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isUndefined } from 'util';
 import { SEOService } from 'src/app/services/seo.service';
 
@@ -52,7 +52,9 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private title: Title,
     private route: ActivatedRoute,
-    private seo: SEOService
+    private seo: SEOService,
+    private router: Router,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -96,9 +98,9 @@ export class SignUpComponent implements OnInit {
         if (!res) {
           this.loading = false;
           this.error = true;
-          setTimeout(() => {
-            this.error = false;
-          }, 2000);
+          this.reset()
+        } else {
+          this.redirect()
         }
       });
     } else {
@@ -106,12 +108,32 @@ export class SignUpComponent implements OnInit {
         if (!res) {
           this.loading = false;
           this.error = true;
-          setTimeout(() => {
-            this.error = false;
-          }, 2000);
+          this.reset()
+        } else {
+          this.redirect()
         }
       });
     }
+  }
+
+  redirect() {
+    const redirect = this.route.snapshot.queryParams.redirectTo;
+
+    if (!isUndefined(redirect)) {
+      return this.ngZone.run(() => {
+        return this.router.navigateByUrl(`${redirect}`);
+      });
+    } else {
+      return this.ngZone.run(() => {
+        return this.router.navigate(['/home']);
+      });
+    }
+  }
+
+  reset() {
+    setTimeout(() => {
+      this.error = false;
+    }, 2000);
   }
 
   // Getters

@@ -66,9 +66,7 @@ export class EditOfferComponent implements OnInit {
 
           this.sellService.getLowestListing(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
             if (data.length > 0) {
-              data.forEach(val => {
-                this.lowestListing = val.data().price;
-              });
+              this.lowestListing = data[0].price
             } else {
               this.lowestListing = -1;
             }
@@ -115,9 +113,13 @@ export class EditOfferComponent implements OnInit {
   }*/
 
   priceChanges($event) {
-    if (this.offerInfo.price != $event.target.value && this.priceChanged == false) {
-      this.priceChanged = true;
-    } else if ((this.offerInfo.price == $event.target.value || $event.target.value == '') && this.priceChanged == true) {
+    if ($event.target.value != '' && +$event.target.value >= 40) {
+      if (this.offerInfo.price != $event.target.value && this.priceChanged == false) {
+        this.priceChanged = true;
+      } else if ((this.offerInfo.price == $event.target.value) && this.priceChanged == true) {
+        this.priceChanged = false;
+      }
+    } else {
       this.priceChanged = false;
     }
 

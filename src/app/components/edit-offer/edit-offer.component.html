@@ -14,6 +14,8 @@
       <button>.00</button>
     </div>
 
+    <p class="min">The minimum bid is CA$40</p>
+
     <select *ngIf="!isWomen && !isGS" name="men-size" id="item-size" (change)="sizeChanges($event)">
       <option value="none" selected>Select Size</option>
       <option value="US4">US 4</option>
@@ -64,16 +66,6 @@
       <option value="US11W">US 11W</option>
       <option value="US11.5W">US 11.5W</option>
       <option value="US12W">US 12W</option>
-      <option value="US12.5W">US 12.5W</option>
-      <option value="US13W">US 13W</option>
-      <option value="US13.5W">US 13.5W</option>
-      <option value="US14W">US 14W</option>
-      <option value="US14.5W">US 14.5W</option>
-      <option value="US15W">US 15W</option>
-      <option value="US15.5W">US 15.5W</option>
-      <option value="US16W">US 16W</option>
-      <option value="US16.5W">US 16.5W</option>
-      <option value="US17W">US 17W</option>
     </select>
 
     <select *ngIf="isGS" name="gs-size" id="item-size-gs" (change)="sizeChanges($event)">
@@ -92,7 +84,7 @@
       <button class="btn" routerLink="/{{ source }}">Back</button>
 
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && showSaveChanges"
-        [className]="conditionChanged || priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'"
+        [className]="priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'"
         (click)="updateOffer()">Save Changes</button>
 
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && !showSaveChanges" class="btn"

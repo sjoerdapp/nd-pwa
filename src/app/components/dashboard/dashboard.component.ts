@@ -59,7 +59,10 @@ export class DashboardComponent implements OnInit {
     if (this.purchases.length === 0) {
       this.dashboardService.purchases(this.UID).subscribe(data => {
         data.forEach(doc => {
-          this.purchases.push(doc.data());
+          const d = doc.data();
+          d.id = doc.id;
+          this.purchases.push(d);
+          console.log(d)
         })
       });
     }
@@ -74,7 +77,10 @@ export class DashboardComponent implements OnInit {
     if (this.sales.length === 0) {
       this.dashboardService.sales(this.UID).subscribe(data => {
         data.forEach(doc => {
-          this.sales.push(doc.data());
+          const d = doc.data();
+          d.id = doc.id;
+          this.sales.push(d);
+          console.log(d)
         })
       });
     }

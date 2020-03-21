@@ -31,7 +31,7 @@
   }
 
   .edit-price-input {
-    margin: $spacing-large auto;
+    margin: $spacing-large auto 0 auto;
     display: grid;
     grid-template-columns: 10% 80% 10%;
     background: $white;
@@ -63,6 +63,13 @@
         border-bottom-right-radius: $spacing-xxsmall;
       }
     }
+  }
+
+  .min {
+    margin-top: $spacing-small;
+    font-size: .8rem;
+    text-align: center;
+    color: $coolgrey;
   }
 
   select {

@@ -42,9 +42,15 @@ export class HomeComponent implements OnInit {
       if (!isNullOrUndefined(res)) {
         this.connected = true;
 
-        if (!this.cookie.check('phoneInvitation')) {
-          this.router.navigate(['invite-a-friend']);
+        console.log(res.providerData)
+
+        if(res.providerData[0].providerId == 'google.com' && res.providerData.length === 1) {
+          this.router.navigate(['additional-information'])
         }
+
+        /*if (!this.cookie.check('phoneInvitation')) {
+          this.router.navigate(['invite-a-friend']);
+        }*/
       } else {
         this.connected = false;
       }

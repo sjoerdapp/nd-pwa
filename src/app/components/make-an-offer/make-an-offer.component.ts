@@ -274,7 +274,7 @@ export class MakeAnOfferComponent implements OnInit {
   }
 
   priceChanges($event) {
-    if ($event.target.value != ``) {
+    if ($event.target.value != `` && +$event.target.value >= 40) {
       this.priceAdded = true;
       this.pairPrice = +$event.target.value;
 

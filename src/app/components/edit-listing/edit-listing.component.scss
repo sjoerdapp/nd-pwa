@@ -31,9 +31,8 @@
   }
 
   .edit-price-input {
-    margin: $spacing-large auto;
+    margin: $spacing-large auto 0 auto;
     display: grid;
-    grid-template-columns: 10% 80% 10%;
     background: $white;
     border: 1px solid $lightgrey;
     border-radius: $spacing-xxsmall;
@@ -65,6 +64,11 @@
     }
   }
 
+  .min {
+    text-align: center;
+    color: $coolgrey;
+  }
+
   select {
     display: block;
     width: 50%;
@@ -77,7 +81,6 @@
     grid-template-columns: 1fr 1fr;
     grid-column-gap: $spacing-normal;
     width: 90%;
-    margin: $spacing-large auto;
     margin-top: $spacing-xlarge;
 
     button {
@@ -173,7 +176,7 @@
 
 // MEDIA QUERIES
 
-@media only screen and (min-width: 0px) and (max-width: 400px) {
+@media only screen and (min-width: 0px) and (max-width: 399.5px) {
   .edit-container {
     img {
       width: 175px;
@@ -182,11 +185,30 @@
 
     .edit-price-input {
       width: 100%;
+      grid-template-columns: 15% 70% 15%;
+
+      fa-icon,
+      button,
+      input {
+        font-size: 0.6rem !important;
+      }
+    }
+
+    .min {
+      margin: $spacing-xsmall;
+      font-size: 0.6rem;
     }
 
     .edit-radios {
       label {
         font-size: $font-small;
+      }
+    }
+
+    .edit-btns {
+      margin: $spacing-normal auto;
+      button {
+        font-size: 0.7rem;
       }
     }
   }
@@ -200,7 +222,7 @@
   }
 }
 
-@media only screen and (min-width: 400px) and (max-width: 800px) {
+@media only screen and (min-width: 400px) and (max-width: 799.5px) {
   .edit-container {
     img {
       width: 200px;
@@ -209,11 +231,30 @@
 
     .edit-price-input {
       width: 100%;
+      grid-template-columns: 15% 70% 15%;
+
+      fa-icon,
+      button,
+      input {
+        font-size: 0.7rem !important;
+      }
+    }
+
+    .min {
+      margin: $spacing-xsmall;
+      font-size: 0.6rem;
     }
 
     .edit-radios {
       label {
         font-size: $font-normal;
+      }
+    }
+
+    .edit-btns {
+      margin: $spacing-normal auto;
+      button {
+        font-size: 0.7rem;
       }
     }
   }
@@ -227,14 +268,43 @@
   }
 }
 
-@media only screen and (min-width: 800px) and (max-width: 1200px) {
+@media only screen and (min-width: 800px) and (max-width: 1199.5px) {
   .edit-container {
+    width: 70vw;
+
     img {
       width: 200px;
       height: 200px;
     }
 
-    width: 70vw;
+    .edit-price-input {
+      width: 100%;
+      grid-template-columns: 10% 80% 10%;
+
+      fa-icon,
+      button,
+      input {
+        font-size: 0.8rem !important;
+      }
+    }
+
+    .min {
+      margin: $spacing-xsmall;
+      font-size: 0.7rem;
+    }
+
+    .edit-radios {
+      label {
+        font-size: $font-normal;
+      }
+    }
+
+    .edit-btns {
+      margin: $spacing-normal auto;
+      button {
+        font-size: 0.8rem;
+      }
+    }
   }
 
   .consignment,
@@ -246,14 +316,43 @@
   }
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1800px) {
+@media only screen and (min-width: 1200px) and (max-width: 1799.5px) {
   .edit-container {
+    width: 60vw;
+
     img {
       width: 225px;
       height: 225px;
     }
 
-    width: 60vw;
+    .edit-price-input {
+      width: 100%;
+      grid-template-columns: 10% 80% 10%;
+
+      fa-icon,
+      button,
+      input {
+        font-size: 1rem !important;
+      }
+    }
+
+    .min {
+      margin: $spacing-xsmall;
+      font-size: 0.8rem;
+    }
+
+    .edit-radios {
+      label {
+        font-size: $font-normal;
+      }
+    }
+
+    .edit-btns {
+      margin: $spacing-normal auto;
+      button {
+        font-size: 1rem;
+      }
+    }
   }
 
   .consignment,
@@ -267,12 +366,41 @@
 
 @media only screen and (min-width: 1800px) and (max-width: 2000px) {
   .edit-container {
+    width: 50vw;
+
     img {
       width: 250px;
       height: 250px;
     }
 
-    width: 50vw;
+    .edit-price-input {
+      width: 100%;
+      grid-template-columns: 10% 80% 10%;
+
+      fa-icon,
+      button,
+      input {
+        font-size: 1.2rem !important;
+      }
+    }
+
+    .min {
+      margin: $spacing-xsmall;
+      font-size: 0.8rem;
+    }
+
+    .edit-radios {
+      label {
+        font-size: $font-normal;
+      }
+    }
+
+    .edit-btns {
+      margin: $spacing-normal auto;
+      button {
+        font-size: 1.2rem;
+      }
+    }
   }
 
   .consignment,
@@ -286,12 +414,41 @@
 
 @media only screen and (min-width: 2000px) {
   .edit-container {
+    width: 50vw;
+    
     img {
       width: 275px;
       height: 275px;
     }
 
-    width: 50vw;
+    .edit-price-input {
+      width: 100%;
+      grid-template-columns: 10% 80% 10%;
+
+      fa-icon,
+      button,
+      input {
+        font-size: 1.2rem !important;
+      }
+    }
+
+    .min {
+      margin: $spacing-xsmall;
+      font-size: 0.8rem;
+    }
+
+    .edit-radios {
+      label {
+        font-size: $font-normal;
+      }
+    }
+
+    .edit-btns {
+      margin: $spacing-normal auto;
+      button {
+        font-size: 1.2rem;
+      }
+    }
   }
 
   .consignment,

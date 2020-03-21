@@ -151,14 +151,13 @@ export class SellComponent implements OnInit {
   }
 
   priceChanges($event) {
-    if ($event.target.value != ``) {
+    if ($event.target.value != `` && +$event.target.value >= 40) {
       this.priceAdded = true;
       this.pairPrice = +$event.target.value;
-
       this.calculateSellerFees();
     } else {
       this.priceAdded = false;
-      this.pairPrice = NaN;
+      this.pairPrice = 0;
       this.consignmentFee = 0;
       this.payout = 0;
       this.paymentProcessingFee = 0;

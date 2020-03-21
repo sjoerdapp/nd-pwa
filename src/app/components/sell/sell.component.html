@@ -129,9 +129,15 @@
           <button class="btn ripple place-ask-btn"
             *ngIf="priceAdded && (pairPrice > currentBid.price || !currentBid) && !loading && !listed"
             (click)="submitListing()">Place Ask</button>
+
           <button class="btn place-ask-btn disabled" *ngIf="!priceAdded">Place Ask</button>
-          <button class="btn ripple place-ask-btn" *ngIf="loading"><fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon></button>
+
+          <button class="btn ripple place-ask-btn" *ngIf="loading">
+            <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+          </button>
+
           <button class="btn ripple place-ask-btn" *ngIf="listed">Listed</button>
+
           <button class="btn ripple sell-now-btn" *ngIf="priceAdded && currentBid && pairPrice <= currentBid.price"
             (click)="sellNow()">Sell Now</button>
         </div>

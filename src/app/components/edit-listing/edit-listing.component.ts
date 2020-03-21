@@ -24,6 +24,7 @@ export class EditListingComponent implements OnInit {
   //conditionChanged = false;
   priceChanged = false;
   sizeChanged = false;
+  showSaveChanges: boolean = true;
 
   highestOffer: number;
 
@@ -35,7 +36,7 @@ export class EditListingComponent implements OnInit {
   isGS = false;
 
   consignmentFee = 0;
-  paymentProcessingFee =  0;
+  paymentProcessingFee = 0;
   payout = 0;
 
   source: string = '../../';
@@ -53,7 +54,7 @@ export class EditListingComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle('Edit Listing | NXTDROP: Sell and Buy Authentic Sneakers in Canada');
     this.seo.addTags('Edit Listing');
-    
+
     this.listingID = this.route.snapshot.params.id;
     this.source = this.route.snapshot.queryParamMap.get('source');
     this.offerInfo = this.profileService.getListing(this.listingID).then(val => {
@@ -72,11 +73,9 @@ export class EditListingComponent implements OnInit {
 
           this.sellService.getHighestOffer(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
             if (data.length > 0) {
-              data.forEach(val => {
-                this.highestOffer = val.data().price;
-              });
+              this.highestOffer = data[0].price
             } else {
-              this.highestOffer = 0;
+              this.highestOffer = -1;
             }
           });
         }
@@ -118,14 +117,20 @@ export class EditListingComponent implements OnInit {
   }*/
 
   priceChanges($event) {
-    if (this.offerInfo.price != $event.target.value && this.priceChanged == false) {
-      this.priceChanged = true;
-    } else if ((this.offerInfo.price == $event.target.value || $event.target.value == '') && this.priceChanged == true) {
+    if ($event.target.value != '' && +$event.target.value >= 40) {
+      if (this.offerInfo.price != $event.target.value && this.priceChanged == false) {
+        this.priceChanged = true;
+      } else if ((this.offerInfo.price == $event.target.value) && this.priceChanged == true) {
+        this.priceChanged = false;
+      }
+    } else {
       this.priceChanged = false;
     }
 
     this.curPrice = +$event.target.value;
+    
     this.calculateSellerFees();
+    this.showSaveChangesBtn();
   }
 
   sizeChanges($event) {
@@ -198,6 +203,22 @@ export class EditListingComponent implements OnInit {
       this.priceChanged = false;
       this.sizeChanged = false;
     }, 2500);
+  }
+
+  showSaveChangesBtn() {
+    if (this.curPrice <= this.highestOffer) {
+      if (this.highestOffer != -1) {
+        this.showSaveChanges = false;
+      } else {
+        this.showSaveChanges = true;
+      }
+    } else {
+      if (this.highestOffer != -1) {
+        this.showSaveChanges = true;
+      } else {
+        this.showSaveChanges = true;
+      }
+    }
   }
 
 }

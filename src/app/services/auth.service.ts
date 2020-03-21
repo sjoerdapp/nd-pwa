@@ -182,7 +182,6 @@ export class AuthService {
   private createUserData(user: User, userCred: auth.UserCredential) {
     const userRef = this.afs.firestore.doc(`users/${user.uid}`);
     const userVerificationRef = this.afs.firestore.doc(`userVerification/${user.uid}`);
-    const redirect = this.route.snapshot.queryParams.redirectTo;
 
     const batch = this.afs.firestore.batch();
 
@@ -198,15 +197,7 @@ export class AuthService {
         console.log('User information updated');
         this.emailService.activateAccount();
 
-        if (!isUndefined(redirect)) {
-          return this.ngZone.run(() => {
-            return this.router.navigateByUrl(`${redirect}`);
-          });
-        } else {
-          return this.ngZone.run(() => {
-            return this.router.navigate(['/home']);
-          });
-        }
+        return true;
       })
       .catch((error) => {
         console.error('Error: ', error);
@@ -261,6 +252,7 @@ export class AuthService {
         })
         .catch((error) => {
           console.error('Account linking error', error);
+          return false;
         });
     } else {
       return Promise.resolve(false);
