@@ -20,7 +20,6 @@
     //border-bottom: 1px solid $lightgrey;
 
     .auth {
-      margin: 0 auto;
       color: $white;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -32,6 +31,13 @@
       fa-icon {
         margin-left: $spacing-xxsmall;
       }
+    }
+
+    .return {
+      color: $black;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
     }
 
     img {
@@ -254,17 +260,17 @@
       .lowestAsk,
       .highestBid {
         h3 {
-          font-size: .6rem;
+          font-size: 0.6rem;
         }
 
         h2 {
-          font-size: .7rem;
+          font-size: 0.7rem;
         }
       }
 
       div {
         button {
-          font-size: .6rem;
+          font-size: 0.6rem;
 
           &:hover {
             border-left: none !important;
@@ -297,8 +303,14 @@
 
   .product-info {
     .auth {
-      font-size: .5rem;
+      margin: $spacing-xsmall auto;
+      font-size: 0.5rem;
       width: 60%;
+    }
+
+    .return {
+      margin: $spacing-xsmall auto;
+      font-size: 0.8rem;
     }
 
     img {
@@ -308,9 +320,9 @@
     .product-specs {
       padding: $spacing-xsmall;
       width: 90%;
-      
+
       h4 {
-        font-size: .55rem;
+        font-size: 0.55rem;
         width: 100%;
         font-weight: $weight-black;
       }
@@ -331,7 +343,7 @@
       }
 
       h3 {
-        font-size: .8rem;
+        font-size: 0.8rem;
       }
     }
 
@@ -410,8 +422,14 @@
 
   .product-info {
     .auth {
-      font-size: .6rem;
+      margin: $spacing-xsmall auto;
+      font-size: 0.6rem;
       width: 50%;
+    }
+
+    .return {
+      font-size: 0.9rem;
+      margin: $spacing-xsmall auto;
     }
 
     img {
@@ -421,9 +439,9 @@
     .product-specs {
       padding: $spacing-xsmall;
       width: 90%;
-      
+
       h4 {
-        font-size: .7rem;
+        font-size: 0.7rem;
         width: 100%;
         font-weight: $weight-black;
       }
@@ -448,7 +466,7 @@
       }
 
       h3 {
-        font-size: .8rem;
+        font-size: 0.8rem;
       }
     }
 
@@ -475,7 +493,8 @@
 @media only screen and (min-width: 800px) and (max-width: 1199.5px) {
   .product-container {
     grid-template-columns: 1fr 1fr;
-    height: $productContainerHeight;
+    min-height: calc($productContainerHeight * 0.75);
+    max-height: $productContainerHeight;
   }
 
   .product-btns {
@@ -532,8 +551,14 @@
 
   .product-info {
     .auth {
+      margin: $spacing-xxsmall auto;
       font-size: $font-xsmall;
       width: 60%;
+    }
+
+    .return {
+      font-size: 0.9rem;
+      margin: $spacing-xxsmall auto;
     }
 
     img {
@@ -544,7 +569,7 @@
       width: 100%;
 
       h4 {
-        font-size: .7rem;
+        font-size: 0.7rem;
         width: 100%;
       }
     }
@@ -623,8 +648,18 @@
 
   .product-info {
     .auth {
+      margin: $spacing-xxsmall auto;
       font-size: $font-xsmall;
       width: 35%;
+    }
+
+    .return {
+      font-size: 1rem;
+      margin: $spacing-xxsmall auto;
+
+      &:hover {
+        color: $coolgrey !important;
+      }
     }
 
     img {
@@ -729,8 +764,18 @@
 
   .product-info {
     .auth {
+      margin: $spacing-xxsmall auto;
       font-size: $font-normal;
       width: 35%;
+    }
+
+    .return {
+      font-size: 1rem;
+      margin: $spacing-xxsmall auto;
+
+      &:hover {
+        color: $coolgrey !important;
+      }
     }
 
     img {
@@ -835,8 +880,18 @@
 
   .product-info {
     .auth {
+      margin: $spacing-xxsmall auto;
       font-size: $font-normal;
       width: 35%;
+    }
+
+    .return {
+      font-size: 1.2rem;
+      margin: $spacing-xxsmall auto;
+
+      &:hover {
+        color: $coolgrey !important;
+      }
     }
 
     img {
