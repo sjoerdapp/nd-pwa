@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 declare global {
   interface Window { Trustpilot: any; }
 }
-
-window.Trustpilot = window.Trustpilot || {};
 
 @Component({
   selector: 'app-trustbox',
@@ -13,11 +12,16 @@ window.Trustpilot = window.Trustpilot || {};
 })
 export class TrustboxComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    @Inject(PLATFORM_ID) private _platformId: Object
+  ) { }
 
   ngOnInit() {
-    const trustboxRef = document.getElementById('trustbox');
-    window.Trustpilot.loadFromElement(trustboxRef);
+    if (isPlatformBrowser(this._platformId)) {
+      window.Trustpilot = window.Trustpilot || {};
+      const trustboxRef = document.getElementById('trustbox');
+      window.Trustpilot.loadFromElement(trustboxRef);
+    }
   }
 
 }

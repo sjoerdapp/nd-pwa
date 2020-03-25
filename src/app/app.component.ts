@@ -14,8 +14,6 @@ declare global {
   interface Window { Intercom: any; }
 }
 
-window.Intercom = window.Intercom || {};
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -37,6 +35,7 @@ export class AppComponent implements AfterViewInit {
     );
 
     if (isPlatformBrowser(this._platformId)) {
+      window.Intercom = window.Intercom || {};
       this.auth.isConnected().then(res => {
         if (res != undefined) {
           gtag('set', { 'user_id': res.uid }); // Set the user ID using signed-in user_id.
@@ -53,8 +52,6 @@ export class AppComponent implements AfterViewInit {
               user_id: res.uid,
               user_hash: data.hash
             });
-
-            window.Intercom('showNewMessage');
           });
         } else {
           fbq('init', '247312712881625');
@@ -73,9 +70,9 @@ export class AppComponent implements AfterViewInit {
           'page_path': event.urlAfterRedirects
         });
         fbq('track', 'PageView');
+        window.Intercom("update");
       }
       this.seo.createCanonicalLink();
-      window.Intercom("update");
     });
   }
 
