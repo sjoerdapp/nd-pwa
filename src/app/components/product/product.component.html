@@ -13,7 +13,8 @@
 
           <div class="lowestAsk" *ngIf="sizeSelected">
             <h3>{{ sizeSelected }}</h3>
-            <h2 *ngIf="currentOffer.LowestAsk">{{ currentOffer.LowestAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h2>
+            <h2 *ngIf="currentOffer.LowestAsk">{{ currentOffer.LowestAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}
+            </h2>
             <h2 *ngIf="!currentOffer.LowestAsk">--</h2>
             <h3>Lowest Ask</h3>
           </div>
@@ -25,10 +26,13 @@
           </div>
 
           <div>
-            <button *ngIf="currentOffer.LowestAsk" [routerLink]="['/checkout']" [queryParams]="{ product: currentOffer.LowestAsk.listingID, sell: false }">Buy Now</button>
+            <button *ngIf="currentOffer.LowestAsk" [routerLink]="['/checkout']"
+              [queryParams]="{ product: currentOffer.LowestAsk.listingID, sell: false }">Buy Now</button>
             <button *ngIf="!currentOffer.LowestAsk" class="disabled">Buy Now</button>
-            <button *ngIf="!sizeSelected" [routerLink]="['/make-an-offer']" [queryParams]="{ sneaker: productInfo | json }">Place Bid</button>
-            <button *ngIf=sizeSelected [routerLink]="['/make-an-offer']" [queryParams]="{ sneaker: productInfo | json, size: sizeSelected }">Place Bid</button>
+            <button *ngIf="!sizeSelected" [routerLink]="['/make-an-offer']"
+              [queryParams]="{ sneaker: productInfo | json }">Place Bid</button>
+            <button *ngIf=sizeSelected [routerLink]="['/make-an-offer']"
+              [queryParams]="{ sneaker: productInfo | json, size: sizeSelected }">Place Bid</button>
           </div>
         </div>
 
@@ -41,7 +45,8 @@
 
           <div class="highestBid" *ngIf="sizeSelected">
             <h3>{{ sizeSelected }}</h3>
-            <h2 *ngIf="currentOffer.HighestBid">{{ currentOffer.HighestBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h2>
+            <h2 *ngIf="currentOffer.HighestBid">
+              {{ currentOffer.HighestBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h2>
             <h2 *ngIf="!currentOffer.HighestBid">--</h2>
             <h3>Highest Bid</h3>
           </div>
@@ -53,13 +58,18 @@
           </div>
 
           <div>
-            <button *ngIf="currentOffer.HighestBid" [routerLink]="['/checkout']" [queryParams]="{ product: currentOffer.HighestBid.offerID, sell: true }">Sell Now</button>
+            <button *ngIf="currentOffer.HighestBid" [routerLink]="['/checkout']"
+              [queryParams]="{ product: currentOffer.HighestBid.offerID, sell: true }">Sell Now</button>
             <button *ngIf="!currentOffer.HighestBid" class="disabled">Sell Now</button>
-            <button *ngIf="!sizeSelected" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json }">Place Ask</button>
-            <button *ngIf="sizeSelected" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json, size: sizeSelected }">Place Ask</button>
+            <button *ngIf="!sizeSelected" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json }">Place
+              Ask</button>
+            <button *ngIf="sizeSelected" [routerLink]="['/sell']"
+              [queryParams]="{ sneaker: productInfo | json, size: sizeSelected }">Place Ask</button>
           </div>
         </div>
       </div>
+
+      <app-trustbox></app-trustbox>
 
       <img src="{{ productInfo.assetURL }}" alt="{{ productInfo.model }}">
 
@@ -106,10 +116,12 @@
       <div class="product-offer" id="{{ offer.size }}" *ngFor="let offer of offers" (click)="selectSize(offer.size)">
         <button id="size">{{ offer.size }}</button>
 
-        <button id="lowestAsk" *ngIf="offer.LowestAsk">{{ offer.LowestAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</button>
+        <button id="lowestAsk"
+          *ngIf="offer.LowestAsk">{{ offer.LowestAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</button>
         <button id="lowestAsk" *ngIf="!offer.LowestAsk">--</button>
 
-        <button id="highestBid" *ngIf="offer.HighestBid">{{ offer.HighestBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</button>
+        <button id="highestBid"
+          *ngIf="offer.HighestBid">{{ offer.HighestBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</button>
         <button id="highestBid" *ngIf="!offer.HighestBid">--</button>
       </div>
     </div>

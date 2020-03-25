@@ -63,6 +63,7 @@ import { FaqHomeComponent } from './components/faq/faq-home/faq-home.component';
 import { FaqCategoryComponent } from './components/faq/faq-category/faq-category.component';
 import { FaqPostComponent } from './components/faq/faq-post/faq-post.component';
 import { SaleConfirmationComponent } from './components/sale-confirmation/sale-confirmation.component';
+import { TrustboxComponent } from './components/trustbox/trustbox.component';
 
 /** Font Awesome */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -149,7 +150,8 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     FaqHomeComponent,
     FaqPostComponent,
     FaqCategoryComponent,
-    SaleConfirmationComponent
+    SaleConfirmationComponent,
+    TrustboxComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

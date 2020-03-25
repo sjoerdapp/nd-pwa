@@ -243,6 +243,7 @@ exports.orderDelivered = functions.https.onRequest((req, res) => {
                 const msg = {
                     to: email,
                     from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                    bcc: { email: 'nxtdrop.com+e17f9774a6@invite.trustpilot.com' },
                     templateId: 'd-2544c5b2779547ee9d5915e0c111e3f6',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -342,6 +343,7 @@ exports.verifiedShipped = functions.https.onRequest((req, res) => {
                 const msg = {
                     to: email,
                     from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                    bcc: { email: 'nxtdrop.com+e17f9774a6@invite.trustpilot.com' },
                     templateId: 'd-41bb9f19ad2344f8b585ce6c1948a820',
                     dynamic_template_data: {
                         model: req.body.model,
