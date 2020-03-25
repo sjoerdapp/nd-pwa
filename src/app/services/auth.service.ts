@@ -20,6 +20,8 @@ import { EmailService } from './email.service';
 import { isUndefined, isNullOrUndefined } from 'util';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 declare const gtag: any;
 
@@ -37,6 +39,7 @@ export class AuthService {
     private route: ActivatedRoute,
     private ngZone: NgZone,
     private emailService: EmailService,
+    private http: HttpClient,
     @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
 
@@ -44,6 +47,10 @@ export class AuthService {
     await this.afAuth.auth.signOut()
       .then(() => {
         console.log('Signed Out');
+        window.Intercom('shutdown')
+        window.Intercom("boot", {
+          app_id: "w1p7ooc8"
+        });
         if (redirect) {
           return this.ngZone.run(() => {
             return this.router.navigate(['/bye']);
@@ -117,6 +124,16 @@ export class AuthService {
         this.isConnected().then(res => {
           if (!isNullOrUndefined(res)) {
             this.updateLastActivity(res.uid);
+
+            this.http.put(`${environment.cloud.url}IntercomData`, { uid: res.uid }).subscribe((data: any) => {
+              window.Intercom("update", {
+                "name": `${data.firstName} ${data.lastName}`, // Full name
+                "email": res.email, // Email address
+                "created_at": res.metadata.creationTime, // Signup date as a Unix timestamp
+                "user_id": res.uid,
+                "user_hash": data.hash
+              });
+            });
           }
         })
 
@@ -150,6 +167,16 @@ export class AuthService {
       this.isConnected().then(res => {
         if (!isNullOrUndefined(res)) {
           this.updateLastActivity(res.uid);
+
+          this.http.put(`${environment.cloud.url}IntercomData`, { uid: res.uid }).subscribe((data: any) => {
+            window.Intercom("update", {
+              "name": `${data.firstName} ${data.lastName}`, // Full name
+              "email": user.email, // Email address
+              "created_at": res.metadata.creationTime, // Signup date as a Unix timestamp
+              "user_id": res.uid,
+              "user_hash": data.hash
+            });
+          });
         }
       })
 
@@ -196,6 +223,16 @@ export class AuthService {
       .then(() => {
         console.log('User information updated');
         this.emailService.activateAccount();
+
+        this.http.put(`${environment.cloud.url}IntercomData`, { uid: user.uid }).subscribe((data: any) => {
+          window.Intercom("update", {
+            "name": `${user.firstName} ${user.lastName}`, // Full name
+            "email": user.email, // Email address
+            "created_at": userCred.user.metadata.creationTime, // Signup date as a Unix timestamp
+            "user_id": user.uid,
+            "user_hash": data.hash
+          });
+        });
 
         return true;
       })

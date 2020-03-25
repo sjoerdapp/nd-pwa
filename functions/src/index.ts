@@ -5,6 +5,7 @@ import * as algoliasearch from 'algoliasearch';
 import * as cryptoString from 'crypto-random-string';
 import * as twilio from 'twilio';
 import { isUndefined, isNullOrUndefined } from 'util';
+import * as crypto from 'crypto';
 
 // initalizations
 admin.initializeApp();
@@ -1055,5 +1056,36 @@ exports.activateAccount = functions.https.onRequest((req, res) => {
             console.error(err);
             return res.status(200).send(false)
         });
+    });
+});
+
+exports.IntercomData = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method != 'PUT') {
+            return res.status(403).send(false);
+        }
+
+        const uid = req.body.uid;
+
+        return admin.firestore().collection('users').doc(`${uid}`).get().then(userData => {
+            const hash = crypto.createHmac('sha256', env.intercom.hmackey).update(uid).digest('hex');
+
+            const uData = userData.data();
+
+            if (isUndefined(uData)) {
+                return res.status(200).send(false);
+            } else {
+                const data = {
+                    firstName: uData.firstName,
+                    lastName: uData.lastName,
+                    hash: hash
+                }
+
+                return res.status(200).send(data);
+            }
+        }).catch(err => {
+            console.error(err)
+            return res.status(200).send(false);
+        })
     });
 });

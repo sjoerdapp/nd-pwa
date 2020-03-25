@@ -4,9 +4,17 @@ import { filter } from 'rxjs/operators';
 import { AuthService } from './services/auth.service';
 import { SEOService } from './services/seo.service';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 declare const gtag: any;
 declare const fbq: any;
+
+declare global {
+  interface Window { Intercom: any; }
+}
+
+window.Intercom = window.Intercom || {};
 
 @Component({
   selector: 'app-root',
@@ -19,8 +27,9 @@ export class AppComponent implements AfterViewInit {
     private router: Router,
     private auth: AuthService,
     private seo: SEOService,
+    private http: HttpClient,
     @Inject(PLATFORM_ID) private _platformId: Object
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     const navEndEvents = this.router.events.pipe(
@@ -33,8 +42,25 @@ export class AppComponent implements AfterViewInit {
           gtag('set', { 'user_id': res.uid }); // Set the user ID using signed-in user_id.
           fbq('init', '247312712881625', { uid: res.uid });
           this.auth.updateLastActivity(res.uid);
+
+          this.http.put(`${environment.cloud.url}IntercomData`, { uid: res.uid }).subscribe((data: any) => {
+            console.log(data)
+            window.Intercom("boot", {
+              app_id: "w1p7ooc8",
+              name: `${data.firstName} ${data.lastName}`, // Full name
+              email: res.email, // Email address
+              created_at: res.metadata.creationTime, // Signup date as a Unix timestamp
+              user_id: res.uid,
+              user_hash: data.hash
+            });
+
+            window.Intercom('showNewMessage');
+          });
         } else {
           fbq('init', '247312712881625');
+          window.Intercom("boot", {
+            app_id: "w1p7ooc8"
+          });
         }
       }).catch(err => {
         console.error(err);
@@ -49,6 +75,7 @@ export class AppComponent implements AfterViewInit {
         fbq('track', 'PageView');
       }
       this.seo.createCanonicalLink();
+      window.Intercom("update");
     });
   }
 
