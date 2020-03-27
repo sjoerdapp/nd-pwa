@@ -2,7 +2,7 @@
 
 .signup-body {
   padding: $spacing-small 0 0 0;
-  min-height: 100vh;
+  min-height: calc(100vh - 220px);
   width: 100vw;
   max-width: 100%;
   background: #fff;
