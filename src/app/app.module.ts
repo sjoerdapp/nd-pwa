@@ -91,6 +91,7 @@ import { NgxMaskModule } from 'ngx-mask';
 
 import { NgxPayPalModule } from 'ngx-paypal';
 import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
+import { NewsletterComponent } from './components/newsletter/newsletter.component';
 
 @NgModule({
   declarations: [
@@ -151,7 +152,8 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
     FaqPostComponent,
     FaqCategoryComponent,
     SaleConfirmationComponent,
-    TrustboxComponent
+    TrustboxComponent,
+    NewsletterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

@@ -1089,3 +1089,36 @@ exports.IntercomData = functions.https.onRequest((req, res) => {
         })
     });
 });
+
+exports.addToNewsletter = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method != 'PUT') {
+            return res.status(403).send(false);
+        }
+
+        const firstRequest = {
+            method: 'POST',
+            url: '/v3/contactdb/recipients',
+            body: [{
+                "email": req.body.email
+            }]
+        };
+
+        return sgClient.request(firstRequest).then(([firstResponse, firstBody]: any) => {
+            console.log(firstBody.persisted_recipients[0])
+            const r = {
+                method: 'POST',
+                url: `/v3/contactdb/lists/11551126/recipients/${firstBody.persisted_recipients[0]}`,
+            }
+
+            return sgClient.request(r).then(([secondResponse, secondBody]: any) => {
+                console.log(`Added to Newsletter list: ${secondResponse.statusCode}`);
+                return res.status(200).send(true)
+            });
+        }).catch((err: any) => {
+            console.error(err);
+            return res.status(200).send(false)
+        })
+
+    });
+});
