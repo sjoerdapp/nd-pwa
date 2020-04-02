@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Title } from '@angular/platform-browser';
 import { SlackService } from 'src/app/services/slack.service';
 import { isPlatformBrowser } from '@angular/common';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 import * as algoliasearch from 'algoliasearch';
 import { environment } from 'src/environments/environment';
 
@@ -31,7 +31,7 @@ export class MakeAnOfferComponent implements OnInit {
   //Size Setup
   sizes: {[keys: string]: number[]} = {
     "M": [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17],
-    "W": [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12],
+    "W": [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5],
     "GS": [3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7]
   };
   sizeType: string = 'M';
@@ -78,12 +78,12 @@ export class MakeAnOfferComponent implements OnInit {
     private title: Title,
     private slack: SlackService,
     @Inject(PLATFORM_ID) private _platformId: Object,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Make an Offer | NXTDROP: Buy and Sell Sneakers in Canada`);
-    this.seo.addTags('Make an Offer');
+    this.meta.addTags('Make an Offer');
 
     this.index = this.algoliaClient.initIndex(environment.algolia.index);
 
@@ -256,7 +256,7 @@ export class MakeAnOfferComponent implements OnInit {
     this.offerService.addOffer(this.selectedPair, 'new', this.pairPrice, this.pairSize).then(res => {
       if (res) {
         if (isPlatformBrowser(this._platformId)) {
-          gtag('event', 'ask', {
+          gtag('event', 'bid', {
             'event_category': 'engagement',
             'event_label': this.selectedPair.model,
             'event_value': this.pairPrice

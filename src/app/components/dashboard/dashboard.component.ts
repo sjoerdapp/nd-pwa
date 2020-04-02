@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { isUndefined, isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from 'util';
 import { User } from 'src/app/models/user';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -24,12 +24,13 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private auth: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.auth.isConnected().then(res => {
-      if (!isUndefined(res)) {
+      if (!isNullOrUndefined(res)) {
         this.UID = res.uid;
 
         this.getUserData();
@@ -39,6 +40,10 @@ export class DashboardComponent implements OnInit {
         } else {
           this.getPurchases();
         }
+      } else {
+        this.router.navigate(['login'], {
+          queryParams: { redirectTo: this.router.url }
+        });
       }
     });
   }

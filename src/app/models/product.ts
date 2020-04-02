@@ -10,4 +10,6 @@ export class Product {
     lowestPrice?: number;
     retailPrice?: number;
     views?: number;
+    sizes?: Array<number>;
+    SKU?: string;
 }

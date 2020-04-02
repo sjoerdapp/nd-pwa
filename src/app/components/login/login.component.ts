@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isUndefined } from 'util';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 
 @Component({
   selector: 'app-login',
@@ -25,12 +25,12 @@ export class LoginComponent implements OnInit {
     private title: Title,
     private route: ActivatedRoute,
     private router: Router,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Log In | NXTDROP: Buy and Sell Sneakers in Canada`);
-    this.seo.addTags('Log In');
+    this.meta.addTags('Log In');
 
     console.log(this.route.snapshot.queryParams.redirectTo);
 

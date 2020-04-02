@@ -4,7 +4,7 @@ import { isNullOrUndefined } from 'util';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { Transaction } from 'src/app/models/transaction';
 import { Title } from '@angular/platform-browser';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
 
@@ -33,14 +33,14 @@ export class TransactionReviewComponent implements OnInit {
     private route: ActivatedRoute,
     private TranService: TransactionService,
     private title: Title,
-    private seo: SEOService,
+    private meta: MetaService,
     private auth: AuthService,
     private router: Router
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Transaction Review | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.seo.addTags('Transaction Review');
+    this.meta.addTags('Transaction Review');
 
     this.auth.isConnected().then(res => {
       if (isNullOrUndefined(res) || isNullOrUndefined(this.route.snapshot.queryParams.transactionID)) {

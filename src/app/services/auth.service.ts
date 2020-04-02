@@ -86,7 +86,8 @@ export class AuthService {
             sold: 0,
             ordered: 0,
             offers: 0,
-            isActive: false
+            isActive: false,
+            creation_date: Date.parse(user.user.metadata.creationTime)
           };
 
           if (!isUndefined(inviteCode)) {
@@ -275,7 +276,8 @@ export class AuthService {
             sold: 0,
             ordered: 0,
             offers: 0,
-            isActive: true
+            isActive: true,
+            creation_date: Date.parse(userCredential.user.metadata.creationTime)
           };
 
           if (isPlatformBrowser(this._platformId)) {

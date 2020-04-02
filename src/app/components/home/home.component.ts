@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
 import { isNullOrUndefined } from 'util';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
     private title: Title,
     private afs: AngularFirestore,
     private auth: AuthService,
-    private seo: SEOService,
+    private seo: MetaService,
     private cookie: CookieService,
     private router: Router
   ) { }
@@ -42,11 +42,7 @@ export class HomeComponent implements OnInit {
       if (!isNullOrUndefined(res)) {
         this.connected = true;
 
-        console.log(res.providerData)
-
-        if(res.providerData[0].providerId == 'google.com' && res.providerData.length === 1) {
-          this.router.navigate(['additional-information'])
-        }
+        //console.log(res.providerData)
 
         /*if (!this.cookie.check('phoneInvitation')) {
           this.router.navigate(['invite-a-friend']);

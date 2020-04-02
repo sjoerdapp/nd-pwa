@@ -2,7 +2,7 @@ import { Component, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from './services/auth.service';
-import { SEOService } from './services/seo.service';
+import { MetaService } from './services/meta.service';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -24,7 +24,7 @@ export class AppComponent implements AfterViewInit {
   constructor(
     private router: Router,
     private auth: AuthService,
-    private seo: SEOService,
+    private seo: MetaService,
     private http: HttpClient,
     @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
@@ -53,6 +53,10 @@ export class AppComponent implements AfterViewInit {
               user_hash: data.hash
             });
           });
+
+          if (res.providerData[0].providerId == 'google.com' && res.providerData.length === 1) {
+            this.router.navigate(['additional-information'])
+          }
         } else {
           fbq('init', '247312712881625');
           window.Intercom("boot", {

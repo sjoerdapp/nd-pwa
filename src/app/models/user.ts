@@ -6,6 +6,7 @@ export interface User {
     sold: number;
     offers: number;
     isActive: boolean;
+    creation_date: number;
 
     // Optional
     username?: string;
@@ -35,6 +36,6 @@ export interface User {
     }
 
     /* Payment Properties */
-    firstName?: string;
-    lastName?: string;
+    firstName: string;
+    lastName: string;
 }

@@ -3,7 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { debounceTime, take, map } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 import { isUndefined } from 'util';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -48,7 +48,7 @@ export class SignupInformationComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private fb: FormBuilder,
     private title: Title,
-    private seo: SEOService,
+    private meta: MetaService,
     private ngZone: NgZone,
     private route: ActivatedRoute,
     private router: Router
@@ -56,7 +56,7 @@ export class SignupInformationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.title.setTitle(`Sign Up | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.seo.addTags('Sign Up');
+    this.meta.addTags('Sign Up');
 
     this.signupForm = this.fb.group({
       firstName: ['', [

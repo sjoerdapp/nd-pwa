@@ -7,7 +7,7 @@ import { isNullOrUndefined, isBoolean, isUndefined, isNull } from 'util';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { isPlatformBrowser } from '@angular/common';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 import { SlackService } from 'src/app/services/slack.service';
 
 declare const gtag: any;
@@ -63,14 +63,14 @@ export class CheckoutComponent implements OnInit {
     private title: Title,
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private _platformId: Object,
-    private seo: SEOService,
+    private meta: MetaService,
     private slack: SlackService
   ) { }
 
   ngOnInit() {
     this.tID = this.route.snapshot.queryParams.tID;
     this.title.setTitle(`Checkout | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.seo.addTags('Checkout');
+    this.meta.addTags('Checkout');
 
     this.isSelling = this.route.snapshot.queryParams.sell;
 

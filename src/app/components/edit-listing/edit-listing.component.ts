@@ -4,7 +4,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { SellService } from 'src/app/services/sell.service';
 import { isUndefined } from 'util';
 import { Title } from '@angular/platform-browser';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 
 @Component({
   selector: 'app-edit-listing',
@@ -48,12 +48,12 @@ export class EditListingComponent implements OnInit {
     private router: Router,
     private sellService: SellService,
     private title: Title,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.title.setTitle('Edit Listing | NXTDROP: Sell and Buy Authentic Sneakers in Canada');
-    this.seo.addTags('Edit Listing');
+    this.meta.addTags('Edit Listing');
 
     this.listingID = this.route.snapshot.params.id;
     this.source = this.route.snapshot.queryParamMap.get('source');

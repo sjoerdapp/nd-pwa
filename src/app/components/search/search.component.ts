@@ -4,7 +4,7 @@ import * as algoliasearch from 'algoliasearch';
 import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 
 @Component({
   selector: 'app-search',
@@ -31,12 +31,12 @@ export class SearchComponent implements OnInit {
     private router: Router,
     private title: Title,
     @Inject(PLATFORM_ID) private _platformId: Object,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Search | NXTDROP: Sell and Buy Authentic Sneakers in Canada`);
-    this.seo.addTags('Search');
+    this.meta.addTags('Search');
 
     if (isPlatformBrowser(this._platformId)) {
       const element = document.getElementById('search-input');
@@ -67,7 +67,7 @@ export class SearchComponent implements OnInit {
         attributesToRetrieve: ['assetURL', 'model', 'productID'],
         hitsPerPage: 48 * this.nbPages
 
-      }, (err, hits = {}) => {
+      }, (err, hits: any = {}) => {
         if (err) throw err;
 
         this.results = hits.hits;
