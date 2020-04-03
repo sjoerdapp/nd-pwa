@@ -22,6 +22,15 @@
   display: grid;
   align-content: center;
 
+  .loading-page {
+    justify-self: center;
+    align-self: center;
+    fa-icon {
+      font-size: 2rem;
+      color: $white;
+    }
+  }
+
   .checkout-btns {
     justify-self: center;
     margin-top: $spacing-normal;

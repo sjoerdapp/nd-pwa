@@ -22,7 +22,8 @@ export class ProfileComponent implements OnInit {
     isActive: false,
     creation_date: 0,
     firstName: '',
-    lastName: ''
+    lastName: '',
+    username: ''
   };
 
   listings = [];

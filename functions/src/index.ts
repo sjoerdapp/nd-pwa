@@ -1042,7 +1042,7 @@ exports.deliveredForVerification = functions.https.onRequest((req, res) => {
 
 exports.activateAccount = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
-        if (req.method != 'PUT') {
+        if (req.method !== 'PUT') {
             return res.status(403).send(false);
         }
 
@@ -1061,7 +1061,7 @@ exports.activateAccount = functions.https.onRequest((req, res) => {
 
 exports.IntercomData = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
-        if (req.method != 'PUT') {
+        if (req.method !== 'PUT') {
             return res.status(403).send(false);
         }
 
@@ -1092,7 +1092,7 @@ exports.IntercomData = functions.https.onRequest((req, res) => {
 
 exports.addToNewsletter = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
-        if (req.method != 'PUT') {
+        if (req.method !== 'PUT') {
             return res.status(403).send(false);
         }
 
@@ -1122,3 +1122,15 @@ exports.addToNewsletter = functions.https.onRequest((req, res) => {
 
     });
 });
+
+exports.droppedCartReminder = functions.pubsub.schedule('every 5 minutes').timeZone('America/Edmonton').onRun((context) => {
+    const threshold = Date.now() - 3600000;
+    return admin.firestore().collection('users').where('last_item_in_cart.timestamp', '<=', threshold).get().then(data => {
+        data.docs.forEach(doc => {
+            console.log(doc.data().uid)
+            return null;
+        })
+    }).catch(err => {
+        console.error(err)
+    })
+})
