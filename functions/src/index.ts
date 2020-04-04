@@ -1123,14 +1123,47 @@ exports.addToNewsletter = functions.https.onRequest((req, res) => {
     });
 });
 
-exports.droppedCartReminder = functions.pubsub.schedule('every 5 minutes').timeZone('America/Edmonton').onRun((context) => {
-    const threshold = Date.now() - 3600000;
+exports.droppedCartReminder = functions.pubsub.schedule('every 15 minutes from 6:00 to 18:00').timeZone('America/Edmonton').onRun((context) => {
+    const threshold = Date.now() - 172800000;
     return admin.firestore().collection('users').where('last_item_in_cart.timestamp', '<=', threshold).get().then(data => {
         data.docs.forEach(doc => {
-            console.log(doc.data().uid)
-            return null;
+            const user_data = doc.data()
+
+            admin.firestore().collection('products').doc(user_data.last_item_in_cart.product_id).collection('listings').where('condition', '==', 'new').where('size', '==', user_data.last_item_in_cart.size).get().then(res => {
+                if (!res.empty) {
+                    const prod_data = res.docs[0].data()
+
+                    const msg = {
+                        to: user_data.email,
+                        from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                        templateId: 'd-b7580434edad4bd7a66b8350f5ce4ca6',
+                        dynamic_template_data: {
+                            model: prod_data.model,
+                            assetURL: prod_data.assetURL,
+                            product_id: user_data.last_item_in_cart.product_id
+                        }
+                    }
+
+                    sgMail.send(msg).then((content: any) => {
+                        console.log(`dropped cart email sent to ${user_data.uid}`);
+
+                        admin.firestore().collection('users').doc(user_data.uid).update({
+                            last_item_in_cart: admin.firestore.FieldValue.delete()
+                        }).catch(err => {
+                            console.error(`Could delete last_item_in_cart for ${user_data.uid}`)
+                        })
+                    }).catch((err: any) => {
+                        console.error(`Could send dropped cart email ${user_data.uid}: ${err}`);
+                    })
+                }
+            }).catch(err => {
+                console.error(err)
+            })
         })
+
+        return null;
     }).catch(err => {
         console.error(err)
+        return null;
     })
 })
