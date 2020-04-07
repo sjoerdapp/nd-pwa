@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <section class="main-container">
-  <div class="checkout-summary">
+  <div class="checkout-summary" *ngIf="product">
     <h4>Summary</h4>
 
     <app-trustbox></app-trustbox>
@@ -106,7 +106,7 @@
       <button class="btn edit-btn" (click)="editPayment()">Edit</button>
     </div>-->
 
-  <div class="checkout-btns">
+  <div class="checkout-btns" *ngIf="product">
     <h2 *ngIf="!isSelling && !freePair && connected">Select Payment Method</h2>
     <ngx-paypal *ngIf="!isSelling && !freePair && connected" [config]="payPalConfig"></ngx-paypal>
 
@@ -119,6 +119,10 @@
     <button *ngIf="isSelling" (click)="sellNow()" class="btn">Confirm</button>
 
     <button class="btn back-btn" (click)="goBack()">Back</button>
+  </div>
+
+  <div class="loading-page" *ngIf="!product">
+    <fa-icon [icon]="['fas', 'circle-notch']" [spin]="true"></fa-icon>
   </div>
 </section>
 

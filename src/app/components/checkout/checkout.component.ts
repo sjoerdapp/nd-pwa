@@ -9,6 +9,9 @@ import { environment } from 'src/environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { MetaService } from 'src/app/services/meta.service';
 import { SlackService } from 'src/app/services/slack.service';
+import { Bid } from 'src/app/models/bid';
+import { Ask } from 'src/app/models/ask';
+import { Transaction } from 'src/app/models/transaction';
 
 declare const gtag: any;
 
@@ -34,7 +37,7 @@ export class CheckoutComponent implements OnInit {
 
   // cartItems = [];
 
-  product: any = {}
+  product: Ask | Bid | Transaction;
   shippingPrice = 15;
   subtotal = 0;
   total = 0;
@@ -44,7 +47,7 @@ export class CheckoutComponent implements OnInit {
   connected = false;
   isSelling: any;
 
-  user: any;
+  userID: string;
 
   // User Checking out item sold to them
   tID;
@@ -83,13 +86,6 @@ export class CheckoutComponent implements OnInit {
         this.isSelling = true;
         this.getOffer(this.route.snapshot.queryParams.product);
       }
-
-      if (isPlatformBrowser(this._platformId)) {
-        gtag('event', 'begin_checkout', {
-          'event_category': 'ecommerce',
-          'event_label': this.product.model
-        });
-      }
     } else {
       if (isUndefined(this.tID)) {
         this.router.navigate([`..`]);
@@ -97,16 +93,14 @@ export class CheckoutComponent implements OnInit {
     }
 
     this.auth.isConnected().then(res => {
-      if (!isNull(res)) {
+      if (!isNullOrUndefined(res)) {
         this.connected = true;
-        this.user = res;
+        this.userID = res.uid;
 
         if (!isUndefined(this.tID)) {
           this.checkUserAndTransaction(this.tID);
-        } else if (this.user.uid === this.product.sellerID) {
-          this.router.navigate(['page-not-found']);
         } else {
-          if (isNullOrUndefined(res.phoneNumber) && this.route.snapshot.queryParams.product && this.isSelling && this.user.email !== 'momarcisse0@gmail.com') {
+          if (isNullOrUndefined(res.phoneNumber) && this.route.snapshot.queryParams.product && this.isSelling) {
             this.router.navigate(['../phone-verification'], {
               queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
             });
@@ -151,7 +145,7 @@ export class CheckoutComponent implements OnInit {
             }
           },
           items: [{
-            name: this.product.model,
+            name: `${this.product.model}, size ${this.product.size}`,
             quantity: '1',
             category: 'PHYSICAL_GOODS',
             unit_amount: {
@@ -304,7 +298,7 @@ export class CheckoutComponent implements OnInit {
       if (isNullOrUndefined(res.data())) {
         this.router.navigate(['page-not-found']);
       } else {
-        this.product = res.data();
+        this.product = res.data() as Ask;
         this.subtotal = this.product.price;
         this.total = this.subtotal + this.shippingPrice;
 
@@ -331,13 +325,20 @@ export class CheckoutComponent implements OnInit {
       if (isNullOrUndefined(res.data())) {
         this.router.navigate(['page-not-found']);
       } else {
-        this.product = res.data();
+        this.product = res.data() as Bid;
         this.subtotal = this.product.price;
         this.total = this.subtotal + this.shippingPrice;
 
-        if (this.product.buyerID === this.user.uid) {
+        if (this.product.buyerID === this.userID) {
           this.router.navigate(['page-not-found']);
         }
+      }
+
+      if (isPlatformBrowser(this._platformId)) {
+        gtag('event', 'begin_checkout', {
+          'event_category': 'ecommerce',
+          'event_label': this.product.model
+        });
       }
     });
   }
@@ -346,7 +347,7 @@ export class CheckoutComponent implements OnInit {
     this.checkoutService.checkTransaction(transactionID).then(res => {
       if (res) {
         this.checkoutService.getTransaction(transactionID).subscribe(response => {
-          this.product = response;
+          this.product = response as Transaction;
           this.subtotal = this.product.price;
           this.total = this.subtotal + this.shippingPrice;
           this.initConfig();
@@ -438,6 +439,10 @@ export class CheckoutComponent implements OnInit {
         queryParams: { redirectTo: this.router.url }
       });
     }
+  }
+
+  updateLastCartItem(product_id: string, size: string) {
+    this.checkoutService.updateLastCartItem(this.userID, product_id, size);
   }
 
   /*editShipping() {

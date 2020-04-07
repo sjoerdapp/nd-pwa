@@ -43,7 +43,7 @@ export class AppComponent implements AfterViewInit {
           this.auth.updateLastActivity(res.uid);
 
           this.http.put(`${environment.cloud.url}IntercomData`, { uid: res.uid }).subscribe((data: any) => {
-            console.log(data)
+            //console.log(data)
             window.Intercom("boot", {
               app_id: "w1p7ooc8",
               name: `${data.firstName} ${data.lastName}`, // Full name

@@ -7,11 +7,13 @@ export interface User {
     offers: number;
     isActive: boolean;
     creation_date: number;
+    username: string;
 
     // Optional
-    username?: string;
     dob?: string
     freeShipping?: boolean;
+    last_activity?: number;
+    last_item_in_cart?: Object;
     shippingAddress?: {
         selling?: {
             firstName: string,
