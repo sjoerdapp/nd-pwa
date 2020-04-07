@@ -159,18 +159,18 @@ exports.sendShippingLabel = functions.https.onRequest((req, res) => {
                 }
 
                 return sgMail.send(msg).then((content: any) => {
-                    console.log(`email sent to buyer`);
+                    console.log(`email sent to seller`);
                     return res.status(200).send();
                 }).catch((err: any) => {
-                    console.error(`Could send email to buyer: ${err}`);
+                    console.error(`Could send email to seller: ${err}`);
                     return res.status(500).send();
                 })
             } else {
-                console.error(`buyer don't exist`);
+                console.error(`seller don't exist`);
                 return res.status(500).send();
             }
         }).catch(err => {
-            console.error(`error sending buyer email`);
+            console.error(`error sending seller email`);
             return res.status(500).send();
         });
     });
