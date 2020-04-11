@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div class="main-container">
-  <section class="edit-container">
+  <section class="edit-container" *ngIf="offerInfo">
     <h3>{{ offerInfo.model }}</h3>
 
     <img src="{{ offerInfo.assetURL }}" alt="{{ offerInfo.productID }}">
@@ -100,6 +100,10 @@
     </div>
 
     <button id="delete-btn" (click)="deleteOffer()">Delete</button>
+  </section>
+
+  <section class="edit-container" *ngIf="!offerInfo">
+    <fa-icon [icon]="['fas', 'circle-notch']" [spin]="true"></fa-icon>
   </section>
 </div>
 

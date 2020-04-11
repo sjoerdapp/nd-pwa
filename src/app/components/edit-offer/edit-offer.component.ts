@@ -6,6 +6,7 @@ import { SellService } from 'src/app/services/sell.service';
 import { isUndefined } from 'util';
 import { Title } from '@angular/platform-browser';
 import { MetaService } from 'src/app/services/meta.service';
+import { Bid } from 'src/app/models/bid';
 
 @Component({
   selector: 'app-edit-offer',
@@ -16,7 +17,7 @@ export class EditOfferComponent implements OnInit {
 
   listingID: string;
 
-  offerInfo;
+  offerInfo: Bid;
 
   loading = false;
   error = false;
@@ -51,12 +52,12 @@ export class EditOfferComponent implements OnInit {
   ngOnInit() {
     this.listingID = this.route.snapshot.params.id;
     this.source = this.route.snapshot.queryParamMap.get('source');
-    this.offerInfo = this.offerService.getOffer(this.listingID).then(val => {
+    this.offerService.getOffer(this.listingID).then(val => {
       val.subscribe(data => {
         if (isUndefined(data)) {
           this.router.navigate(['page-not-found']);
         } else {
-          this.offerInfo = data.data();
+          this.offerInfo = data as Bid;
           //(document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
           this.curCondition = this.offerInfo.condition;
           this.curPrice = this.offerInfo.price;
@@ -151,7 +152,7 @@ export class EditOfferComponent implements OnInit {
         return;
       }
 
-      this.offerService.updateOffer(this.offerInfo.offerID, this.offerInfo.productID, condition, price, size).then(res => {
+      this.offerService.updateOffer(this.offerInfo.offerID, this.offerInfo.productID, this.offerInfo.price, condition, price, size).then(res => {
         if (res) {
           this.udpateSuccessful();
         } else {
@@ -162,9 +163,8 @@ export class EditOfferComponent implements OnInit {
   }
 
   deleteOffer() {
-    this.offerService.deleteoffer(this.offerInfo.offerID, this.offerInfo.productID)
+    this.offerService.deleteoffer(this.offerInfo.offerID, this.offerInfo.productID, this.offerInfo.price)
       .then((res) => {
-        this.offerInfo = [];
         if (res) {
           return this.ngZone.run(() => {
             return this.router.navigate(['../../profile']);

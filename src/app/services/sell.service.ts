@@ -4,22 +4,28 @@ import { Product } from '../models/product';
 import { AuthService } from './auth.service';
 import * as firebase from 'firebase/app';
 import { isUndefined, isNullOrUndefined } from 'util';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Ask } from '../models/ask';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SellService {
 
-  userListing;
-  productListing;
+  userListing: Ask;
+  productListing: Ask;
 
   constructor(
     private afs: AngularFirestore,
-    private auth: AuthService
+    private auth: AuthService,
+    private http: HttpClient
   ) { }
 
-  async addListing(pair: Product, condition: string, price: number, size: string) {
+  async addListing(pair: Product, condition: string, price: number, size: string, size_lowest_ask: number) {
     let UID: string;
+
     await this.auth.isConnected()
       .then(data => {
         UID = data.uid;
@@ -78,7 +84,21 @@ export class SellService {
 
       return batch.commit()
         .then(() => {
-          console.log('New Listing Added');
+          //console.log('New Listing Added');
+
+          console.log(`size_lowest: ${size_lowest_ask} and price: ${price}`)
+
+          if (!isNullOrUndefined(size_lowest_ask) && price < size_lowest_ask) {
+            this.http.put(`${environment.cloud.url}lowestAskNotification`, {
+              product_id: pair.productID,
+              seller_id: UID,
+              condition,
+              size,
+              listing_id: listingID,
+              price
+            }).subscribe()
+          }
+
           return true;
         })
         .catch((err) => {

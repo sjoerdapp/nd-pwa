@@ -74,7 +74,7 @@ export class ProfileService {
     return offerRef.get();
   }
 
-  public async updateListing(listingID, productID, oldPrice, condition, price, size): Promise<boolean> {
+  public async updateListing(listing_id, product_id, old_price, condition, price, size): Promise<boolean> {
     let UID: string;
     await this.auth.isConnected().then(data => {
       UID = data.uid;
@@ -82,34 +82,35 @@ export class ProfileService {
 
     const batch = this.afs.firestore.batch();
 
-    const listingRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
-    const prodRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
-    const productRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
+    const listingRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listing_id}`);
+    const askRef = this.afs.firestore.collection('products').doc(`${product_id}`).collection('listings').doc(`${listing_id}`);
+    const prodRef = this.afs.firestore.collection(`products`).doc(`${product_id}`);
 
     let prices = [];
 
-    await productRef.collection(`listings`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
-        snap.forEach(ele => {
-          prices.push(ele.data().price);
-        });
+    await prodRef.collection(`listings`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
+      snap.forEach(ele => {
+        prices.push(ele.data().price);
+      });
     });
 
-    await productRef.get().then(snap => {
-        if (isUndefined(prices[1]) || price < snap.data().lowestPrice) {
-          batch.update(productRef, {
-              lowestPrice: price
-          });
-        } else if (oldPrice === snap.data().lowestPrice) {
-            if (oldPrice < prices[1]) {
-              batch.update(productRef, {
-                lowestPrice: price
-              });
-            } else {
-              batch.update(productRef, {
-                lowestPrice: prices[1]
-              });
-            }
+    await prodRef.get().then(snap => {
+      if (isUndefined(prices[1]) || price < snap.data().lowestPrice) {
+        batch.update(prodRef, {
+          lowestPrice: price
+        })
+      } else if (old_price === snap.data().lowestPrice) {
+        //console.log(`${prices[0]} and ${prices[1]}`)
+        if (price < prices[1]) {
+          batch.update(prodRef, {
+            lowestPrice: price
+          })
+        } else {
+          batch.update(prodRef, {
+            lowestPrice: prices[1]
+          })
         }
+      }
     });
 
     batch.update(listingRef, {
@@ -118,7 +119,7 @@ export class ProfileService {
       size: size
     });
 
-    batch.update(prodRef, {
+    batch.update(askRef, {
       condition: condition,
       price: price,
       size: size
@@ -126,11 +127,11 @@ export class ProfileService {
 
     return batch.commit()
       .then(() => {
-        console.log('Listing updated');
+        //console.log('Listing updated');
         return true;
       })
       .catch((err) => {
-        console.error(err);
+        //console.error(err);
         return false;
       });
   }
@@ -165,21 +166,21 @@ export class ProfileService {
     // console.log(prices);
 
     const prodRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
-
-    if (price >= prices[0] && price < prices[1]) {
-      batch.set(prodRef, {
-        lowestPrice: prices[1]
-      }, { merge: true });
-    } else if (prices.length == 1) {
-      console.log('working');
+    
+    if (prices.length === 1) {
+      //console.log('working');
       batch.update(prodRef, {
         lowestPrice: firebase.firestore.FieldValue.delete()
+      });
+    } else if (price === prices[0] && prices[0] != prices[1]) {
+      batch.update(prodRef, {
+        lowestPrice: prices[1]
       });
     }
 
     return batch.commit()
       .then(() => {
-        console.log('listing deleted');
+        //console.log('listing deleted');
         return true;
       })
       .catch((err) => {

@@ -104,7 +104,7 @@ export class SellComponent implements OnInit {
         this.user = res;
 
         // redirect is phone number verification not verified
-        if (isNullOrUndefined(res.phoneNumber) && res.email != "momarcisse0@gmail.com") {
+        if (isNullOrUndefined(res.phoneNumber) && res.email != "momarcisse0@gmail.com" && res.email != "blvckpvblo@gmail.com" && res.email != "momar@nxtdrop.com") {
           if (this.activatedRoute.snapshot.queryParams.sneaker) {
             this.router.navigate(['../phone-verification'], {
               queryParams: { redirectTo: `product/${this.selectedPair.productID}` }
@@ -129,7 +129,7 @@ export class SellComponent implements OnInit {
       return;
     }
 
-    this.sellService.addListing(this.selectedPair, 'new', this.pairPrice, this.pairSize)
+    this.sellService.addListing(this.selectedPair, 'new', this.pairPrice, this.pairSize, this.currentAsk.price)
       .then((res) => {
         if (isPlatformBrowser(this._platformId)) {
           gtag('event', 'ask', {
