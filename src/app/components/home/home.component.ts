@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
       this.duties += prices;
     });
 
-    this.afs.collection(`transactions`).ref.where('soldAt', '>=', 1577854800000).get().then(res => {
+    this.afs.collection(`transactions`).ref.where('purchaseDate', '>=', 1577854800000).get().then(res => {
       let prices = 0;
 
       res.forEach(ele => {

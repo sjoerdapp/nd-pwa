@@ -92,28 +92,6 @@ export class CheckoutComponent implements OnInit {
       }
     }
 
-    this.auth.isConnected().then(res => {
-      if (!isNullOrUndefined(res)) {
-        this.connected = true;
-        this.userID = res.uid;
-
-        if (!isUndefined(this.tID)) {
-          this.checkUserAndTransaction(this.tID);
-        } else {
-          if (isNullOrUndefined(res.phoneNumber) && this.route.snapshot.queryParams.product && this.isSelling) {
-            this.router.navigate(['../phone-verification'], {
-              queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
-            });
-          }
-        }
-      } else {
-        if (!isNullOrUndefined(this.tID)) {
-          this.checkUserAndTransaction(this.tID);
-        }
-      }
-    });
-
-
     // console.log(this.product);
 
     /*this.checkoutService.getCartItems().then(res => {
@@ -302,6 +280,8 @@ export class CheckoutComponent implements OnInit {
         this.subtotal = this.product.price;
         this.total = this.subtotal + this.shippingPrice;
 
+        this.isUserConnected()
+
         if (!isNullOrUndefined(this.userID) && this.product.sellerID === this.userID) {
           this.router.navigate(['page-not-found']);
         } else {
@@ -328,6 +308,8 @@ export class CheckoutComponent implements OnInit {
         this.product = res.data() as Bid;
         this.subtotal = this.product.price;
         this.total = this.subtotal + this.shippingPrice;
+
+        this.isUserConnected()
 
         if (this.product.buyerID === this.userID) {
           this.router.navigate(['page-not-found']);
@@ -426,7 +408,12 @@ export class CheckoutComponent implements OnInit {
 
   goBack() {
     const id = this.product.model.toLowerCase();
-    this.router.navigate([`product/${id.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-')}`]);
+
+    if (isNullOrUndefined(this.route.snapshot.queryParams.redirectTo)) {
+      this.router.navigate([`product/${id.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-')}`]);
+    } else {
+      this.router.navigateByUrl(this.route.snapshot.queryParams.redirectTo)
+    }
   }
 
   connect(mode) {
@@ -443,6 +430,29 @@ export class CheckoutComponent implements OnInit {
 
   updateLastCartItem(product_id: string, size: string) {
     this.checkoutService.updateLastCartItem(this.userID, product_id, size);
+  }
+
+  private isUserConnected() {
+    this.auth.isConnected().then(res => {
+      if (!isNullOrUndefined(res)) {
+        this.connected = true;
+        this.userID = res.uid;
+
+        if (!isUndefined(this.tID)) {
+          this.checkUserAndTransaction(this.tID);
+        } else {
+          if (isNullOrUndefined(res.phoneNumber) && !isNullOrUndefined(this.route.snapshot.queryParams.product) && this.isSelling) {
+            this.router.navigate(['/phone-verification'], {
+              queryParams: { redirectTo: `product/${this.product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase()}` }
+            });
+          }
+        }
+      } else {
+        if (!isNullOrUndefined(this.tID)) {
+          this.checkUserAndTransaction(this.tID);
+        }
+      }
+    });
   }
 
   /*editShipping() {

@@ -2,9 +2,11 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { SellService } from 'src/app/services/sell.service';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 import { Title } from '@angular/platform-browser';
 import { MetaService } from 'src/app/services/meta.service';
+import { Ask } from 'src/app/models/ask';
+import { Bid } from 'src/app/models/bid';
 
 @Component({
   selector: 'app-edit-listing',
@@ -15,7 +17,7 @@ export class EditListingComponent implements OnInit {
 
   listingID: string;
 
-  offerInfo;
+  offerInfo: Ask;
 
   loading = false;
   error = false;
@@ -26,7 +28,8 @@ export class EditListingComponent implements OnInit {
   sizeChanged = false;
   showSaveChanges: boolean = true;
 
-  highestOffer: number;
+  highestOffer: Bid;
+  lowest_ask: number;
 
   curCondition;
   curPrice;
@@ -57,12 +60,12 @@ export class EditListingComponent implements OnInit {
 
     this.listingID = this.route.snapshot.params.id;
     this.source = this.route.snapshot.queryParamMap.get('source');
-    this.offerInfo = this.profileService.getListing(this.listingID).then(val => {
+    this.profileService.getListing(this.listingID).then(val => {
       val.subscribe(data => {
         if (isUndefined(data)) {
           this.router.navigate([`page-not-found`]);
         } else {
-          this.offerInfo = data.data();
+          this.offerInfo = data as Ask;
           //(document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
           this.curCondition = this.offerInfo.condition;
           this.curPrice = this.offerInfo.price;
@@ -73,11 +76,15 @@ export class EditListingComponent implements OnInit {
 
           this.sellService.getHighestOffer(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
             if (data.length > 0) {
-              this.highestOffer = data[0].price
-            } else {
-              this.highestOffer = -1;
+              this.highestOffer = data[0] as Bid
             }
           });
+
+          this.sellService.getLowestListing(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
+            if (data > 0) {
+              this.lowest_ask = data[0].price
+            }
+          })
         }
       });
     });
@@ -175,7 +182,6 @@ export class EditListingComponent implements OnInit {
   deleteListing() {
     this.profileService.deleteListing(this.offerInfo.listingID, this.offerInfo.productID, this.offerInfo.price)
       .then((res) => {
-        this.offerInfo = [];
         if (res) {
           return this.ngZone.run(() => {
             return this.router.navigate(['../../profile']);
@@ -206,19 +212,25 @@ export class EditListingComponent implements OnInit {
   }
 
   showSaveChangesBtn() {
-    if (this.curPrice <= this.highestOffer) {
-      if (this.highestOffer != -1) {
-        this.showSaveChanges = false;
-      } else {
-        this.showSaveChanges = true;
-      }
+    if (isNullOrUndefined(this.highestOffer)) {
+      this.showSaveChanges = true
     } else {
-      if (this.highestOffer != -1) {
-        this.showSaveChanges = true;
+      if (this.curPrice <= this.highestOffer.price) {
+        this.showSaveChanges = false
       } else {
-        this.showSaveChanges = true;
+        this.showSaveChanges = true
       }
     }
+  }
+
+  sellNow() {
+    this.router.navigate(['/checkout'], {
+      queryParams: {
+        product: this.highestOffer.offerID,
+        sell: true,
+        redirectTo: this.router.url
+      }
+    })
   }
 
 }

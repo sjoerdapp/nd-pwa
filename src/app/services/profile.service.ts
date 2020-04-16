@@ -4,7 +4,10 @@ import { AuthService } from './auth.service';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Ask } from '../models/ask';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,8 @@ export class ProfileService {
 
   constructor(
     private afs: AngularFirestore,
-    private auth: AuthService
+    private auth: AuthService,
+    private http: HttpClient
   ) { }
 
   public async getUserData(): Promise<Observable<User>> {
@@ -64,17 +68,16 @@ export class ProfileService {
     return userRef.valueChanges();
   }
 
-  public async getListing(listingID) {
+  public async getListing(listing_id) {
     let UID: string;
     await this.auth.isConnected().then(data => {
       UID = data.uid;
     });
 
-    const offerRef: AngularFirestoreDocument<any> = this.afs.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
-    return offerRef.get();
+    return this.afs.collection('users').doc(`${UID}`).collection('listings').doc(`${listing_id}`).valueChanges();
   }
 
-  public async updateListing(listing_id, product_id, old_price, condition, price, size): Promise<boolean> {
+  public async updateListing(listing_id: string, product_id: string, old_price: number, condition: string, price: number, size: string): Promise<boolean> {
     let UID: string;
     await this.auth.isConnected().then(data => {
       UID = data.uid;
@@ -86,11 +89,18 @@ export class ProfileService {
     const askRef = this.afs.firestore.collection('products').doc(`${product_id}`).collection('listings').doc(`${listing_id}`);
     const prodRef = this.afs.firestore.collection(`products`).doc(`${product_id}`);
 
-    let prices = [];
+    let prices: Ask[] = [];
+    let size_prices: Ask[] = [];
 
     await prodRef.collection(`listings`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
       snap.forEach(ele => {
-        prices.push(ele.data().price);
+        prices.push(ele.data() as Ask);
+      });
+    });
+
+    await prodRef.collection(`listings`).where('size', '==', `${size}`).where('condition', '==', `${condition}`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
+      snap.forEach(ele => {
+        size_prices.push(ele.data() as Ask);
       });
     });
 
@@ -101,13 +111,13 @@ export class ProfileService {
         })
       } else if (old_price === snap.data().lowestPrice) {
         //console.log(`${prices[0]} and ${prices[1]}`)
-        if (price < prices[1]) {
+        if (price < prices[1].price) {
           batch.update(prodRef, {
             lowestPrice: price
           })
         } else {
           batch.update(prodRef, {
-            lowestPrice: prices[1]
+            lowestPrice: prices[1].price
           })
         }
       }
@@ -128,6 +138,7 @@ export class ProfileService {
     return batch.commit()
       .then(() => {
         //console.log('Listing updated');
+        this.sendLowestAskNotification(price, condition, size, UID, product_id, listing_id, size_prices)
         return true;
       })
       .catch((err) => {
@@ -166,7 +177,7 @@ export class ProfileService {
     // console.log(prices);
 
     const prodRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
-    
+
     if (prices.length === 1) {
       //console.log('working');
       batch.update(prodRef, {
@@ -187,5 +198,47 @@ export class ProfileService {
         console.error(err);
         return false;
       });
+  }
+
+  private sendLowestAskNotification(price: number, condition: string, size: string, UID: string, product_id: string, listing_id: string, size_prices: Ask[]) {
+    if (price < size_prices[0].price) {
+      this.http.put(`${environment.cloud.url}lowestAskNotification`, {
+        product_id: product_id,
+        seller_id: UID,
+        condition,
+        size,
+        listing_id: listing_id,
+        price
+      }).subscribe()
+    } else if (!isNullOrUndefined(size_prices[1]) && listing_id === size_prices[0].listingID && price > size_prices[0].price) {
+      if (price >= size_prices[1].price) {
+        this.http.put(`${environment.cloud.url}lowestAskNotification`, {
+          product_id: product_id,
+          seller_id: size_prices[1].sellerID,
+          condition,
+          size,
+          listing_id: size_prices[1].listingID,
+          price: size_prices[1].price
+        }).subscribe()
+      } else if (price < size_prices[1].price) {
+        this.http.put(`${environment.cloud.url}lowestAskNotification`, {
+          product_id: product_id,
+          seller_id: UID,
+          condition,
+          size,
+          listing_id: listing_id,
+          price
+        }).subscribe()
+      }
+    } else {
+      this.http.put(`${environment.cloud.url}lowestAskNotification`, {
+        product_id: product_id,
+        seller_id: UID,
+        condition,
+        size,
+        listing_id: listing_id,
+        price
+      }).subscribe()
+    }
   }
 }

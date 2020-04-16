@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div class="main-container">
-  <section class="edit-container">
+  <section class="edit-container" *ngIf="offerInfo">
     <h3>{{ offerInfo.model }}</h3>
 
     <img src="{{ offerInfo.assetURL }}" alt="{{ offerInfo.productID }}">
@@ -108,7 +108,7 @@
         (click)="updateListing()">Save Changes</button>
 
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && !showSaveChanges" class="btn"
-        (click)="sellNow()">Sell at {{ highestOffer | currency: 'CAD' }}</button>
+        (click)="sellNow()">Sell at {{ highestOffer.price | currency: 'CAD' }}</button>
 
       <button id="save-changes-btn" class="btn" *ngIf="loading">
         <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
