@@ -53,10 +53,6 @@ export class AppComponent implements AfterViewInit {
               user_hash: data.hash
             });
           });
-
-          if (res.providerData[0].providerId == 'google.com' && res.providerData.length === 1) {
-            this.router.navigate(['additional-information'])
-          }
         } else {
           fbq('init', '247312712881625');
           window.Intercom("boot", {
@@ -75,6 +71,14 @@ export class AppComponent implements AfterViewInit {
         });
         fbq('track', 'PageView');
         window.Intercom("update");
+
+        this.auth.isConnected().then(res => {
+          if (res != undefined) {
+            if (res.providerData[0].providerId == 'google.com' && res.providerData.length === 1 && this.router.url != '/additional-information') {
+              this.auth.signOut(false)
+            }
+          }
+        })
       }
       this.seo.createCanonicalLink();
     });

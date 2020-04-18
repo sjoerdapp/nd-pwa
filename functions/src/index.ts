@@ -187,7 +187,7 @@ exports.offerAcceptedReminder = functions.https.onRequest((req, res) => {
             if (data) {
                 const email = data.email;
                 const total = req.body.price + req.body.shippingCost;
-                const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.soldAt}`;
+                const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.purchaseDate}`;
 
                 console.log(`Order Email Buyer to ${email}.`);
 
@@ -495,7 +495,7 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                 }
 
                 if (req.body.type === 'sold') {
-                    const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.soldAt}`;
+                    const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.purchaseDate}`;
                     msg.templateId = 'd-1ea40fbf9ad848638489561243162e97';
                     msg.dynamic_template_data.link = `https://nxtdrop.com/checkout?tID=${transactionID}`;
                 }
@@ -519,7 +519,7 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                 const fee = req.body.price * 0.095;
                 const processing = req.body.price * 0.03;
                 const payout = req.body.price - fee - processing;
-                let transactionID;
+                let transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.purchaseDate}`;
 
                 console.log(`Order Email Seller to ${email}.`);
 
@@ -541,10 +541,8 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                 }
 
                 if (req.body.type === 'sold') {
-                    transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.soldAt}`;
                     msg.templateId = 'd-8650dfd5d93f4b16b594cf02c49e9070';
                 } else {
-                    transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.boughtAt}`;
                     msg.dynamic_template_data.tid = transactionID;
                 }
 
