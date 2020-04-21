@@ -147,17 +147,13 @@ export class ProfileService {
       });
   }
 
-  public async deleteListing(listingID, productID, price): Promise<boolean> {
-    let UID: string;
-    await this.auth.isConnected().then(data => {
-      UID = data.uid;
-    });
-
+  public async deleteListing(ask: Ask): Promise<boolean> {
     const batch = this.afs.firestore.batch();
 
-    const userListingRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listingID}`);
-    const listingRef = this.afs.firestore.collection('products').doc(`${productID}`).collection('listings').doc(`${listingID}`);
-    const userRef = this.afs.firestore.collection('users').doc(`${UID}`);
+    const userListingRef = this.afs.firestore.collection('users').doc(`${ask.sellerID}`).collection('listings').doc(`${ask.listingID}`);
+    const listingRef = this.afs.firestore.collection('products').doc(`${ask.productID}`).collection('listings').doc(`${ask.listingID}`);
+    const userRef = this.afs.firestore.collection('users').doc(`${ask.sellerID}`);
+    const prodRef = this.afs.firestore.collection(`products`).doc(`${ask.productID}`);
 
     batch.delete(userListingRef);
     batch.delete(listingRef);
@@ -165,33 +161,50 @@ export class ProfileService {
       listed: firebase.firestore.FieldValue.increment(-1)
     });
 
-    let prices = [];
+    let prices: Ask[] = []
+    let size_prices: Ask[] = []
 
-    await this.afs.firestore.collection('products').doc(`${productID}`).collection(`listings`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
+    await prodRef.collection(`listings`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
       snap.forEach(data => {
-        prices.push(data.data().price);
+        prices.push(data.data().price as Ask);
+      });
+    });
+
+    await prodRef.collection(`listings`).where('size', '==', `${ask.size}`).where('condition', '==', `${ask.condition}`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
+      snap.forEach(ele => {
+        size_prices.push(ele.data() as Ask);
       });
     });
 
     // console.log(`length: ${prices.length}; price1: ${prices[0]}; price2: ${prices[1]}`);
     // console.log(prices);
 
-    const prodRef = this.afs.firestore.collection(`products`).doc(`${productID}`);
-
     if (prices.length === 1) {
       //console.log('working');
       batch.update(prodRef, {
         lowestPrice: firebase.firestore.FieldValue.delete()
       });
-    } else if (price === prices[0] && prices[0] != prices[1]) {
+    } else if (ask.price === prices[0].price && prices[0].price != prices[1].price) {
       batch.update(prodRef, {
-        lowestPrice: prices[1]
+        lowestPrice: prices[1].price
       });
     }
 
     return batch.commit()
       .then(() => {
         //console.log('listing deleted');
+
+        if (ask.listingID === size_prices[0].listingID && !isNullOrUndefined(size_prices[0])) {
+          this.http.put(`${environment.cloud.url}lowestAskNotification`, {
+            product_id: size_prices[1].productID,
+            seller_id: size_prices[1].sellerID,
+            condition: size_prices[1].condition,
+            size: size_prices[1].size,
+            listing_id: size_prices[1].listingID,
+            price: size_prices[1].price
+          }).subscribe()
+        }
+
         return true;
       })
       .catch((err) => {
@@ -230,7 +243,7 @@ export class ProfileService {
           price
         }).subscribe()
       }
-    } else {
+    } else if (isNullOrUndefined(size_prices[1])) {
       this.http.put(`${environment.cloud.url}lowestAskNotification`, {
         product_id: product_id,
         seller_id: UID,

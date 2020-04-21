@@ -253,7 +253,7 @@ export class MakeAnOfferComponent implements OnInit {
       return;
     }
 
-    this.offerService.addOffer(this.selectedPair, 'new', this.pairPrice, this.pairSize).then(res => {
+    this.offerService.addOffer(this.selectedPair, 'new', this.pairPrice, this.pairSize, this.currentBid.price).then(res => {
       if (res) {
         if (isPlatformBrowser(this._platformId)) {
           gtag('event', 'bid', {

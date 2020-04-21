@@ -57,7 +57,7 @@ export class EditOfferComponent implements OnInit {
         if (isUndefined(data)) {
           this.router.navigate(['page-not-found']);
         } else {
-          this.offerInfo = data as Bid;
+          this.offerInfo = data.data() as Bid;
           //(document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
           this.curCondition = this.offerInfo.condition;
           this.curPrice = this.offerInfo.price;
@@ -163,7 +163,7 @@ export class EditOfferComponent implements OnInit {
   }
 
   deleteOffer() {
-    this.offerService.deleteoffer(this.offerInfo.offerID, this.offerInfo.productID, this.offerInfo.price)
+    this.offerService.deleteoffer(this.offerInfo)
       .then((res) => {
         if (res) {
           return this.ngZone.run(() => {
