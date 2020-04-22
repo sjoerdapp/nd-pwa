@@ -182,7 +182,7 @@ export class CheckoutComponent implements OnInit {
           } else {
             this.ngZone.run(() => {
               this.router.navigate(['transaction'], {
-                queryParams: { transactionID: res }
+                queryParams: { transactionID: res, source: 'checkout' }
               });
             });
           }
@@ -272,6 +272,8 @@ export class CheckoutComponent implements OnInit {
   }*/
 
   getListing(listingID: string) {
+    this.isUserConnected()
+
     this.checkoutService.getListing(listingID).then(res => {
       if (isNullOrUndefined(res.data())) {
         this.router.navigate(['page-not-found']);
@@ -279,8 +281,6 @@ export class CheckoutComponent implements OnInit {
         this.product = res.data() as Ask;
         this.subtotal = this.product.price;
         this.total = this.subtotal + this.shippingPrice;
-
-        this.isUserConnected()
 
         if (!isNullOrUndefined(this.userID) && this.product.sellerID === this.userID) {
           this.router.navigate(['page-not-found']);
@@ -301,6 +301,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   getOffer(offerID: string) {
+    this.isUserConnected()
+
     this.checkoutService.getOffer(offerID).then(res => {
       if (isNullOrUndefined(res.data())) {
         this.router.navigate(['page-not-found']);
@@ -308,8 +310,6 @@ export class CheckoutComponent implements OnInit {
         this.product = res.data() as Bid;
         this.subtotal = this.product.price;
         this.total = this.subtotal + this.shippingPrice;
-
-        this.isUserConnected()
 
         if (this.product.buyerID === this.userID) {
           this.router.navigate(['page-not-found']);
