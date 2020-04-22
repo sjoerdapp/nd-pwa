@@ -180,7 +180,7 @@ export class EditListingComponent implements OnInit {
   }
 
   deleteListing() {
-    this.profileService.deleteListing(this.offerInfo.listingID, this.offerInfo.productID, this.offerInfo.price)
+    this.profileService.deleteListing(this.offerInfo)
       .then((res) => {
         if (res) {
           return this.ngZone.run(() => {
