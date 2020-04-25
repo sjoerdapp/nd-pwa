@@ -52,23 +52,17 @@ export class HomeComponent implements OnInit {
       }
     });
 
-    this.afs.collection(`transactions`).ref.where('boughtAt', '>=', 1577854800000).get().then(res => {
-      let prices = 0;
+    this.afs.collection(`transactions`).get().subscribe(res => {
+      let prices: number = 0;
 
-      res.forEach(ele => {
-        prices += ele.data().total;
+      res.docs.forEach(ele => {
+        if (ele.data().paymentID != '' && !ele.data().status.cancelled) {
+          prices += ele.data().total;
+        }
       });
 
-      this.duties += prices;
-    });
-
-    this.afs.collection(`transactions`).ref.where('purchaseDate', '>=', 1577854800000).get().then(res => {
-      let prices = 0;
-
-      res.forEach(ele => {
-        prices += ele.data().total;
-      });
-
+      prices = prices * .23;
+      
       this.duties += prices;
     });
 
