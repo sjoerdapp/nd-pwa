@@ -89,6 +89,8 @@ export class CheckoutComponent implements OnInit {
     } else {
       if (isUndefined(this.tID)) {
         this.router.navigate([`..`]);
+      } else {
+        this.isUserConnected()
       }
     }
 
