@@ -97,7 +97,7 @@ export class OfferService {
           if (!isNullOrUndefined(size_highest_bid) && price > size_highest_bid) {
             this.http.put(`${environment.cloud.url}highestBidNotification`, {
               product_id: pair.productID,
-              seller_id: UID,
+              buyer_id: UID,
               condition,
               size,
               offer_id: offerID,
