@@ -163,9 +163,9 @@ export class CheckoutComponent implements OnInit {
           }
         } else {
           if (this.promoApplied) {
-            transaction = this.checkoutService.addTransaction(this.product, data.id, this.shippingPrice, this.discount, this.discountCardID);
+            transaction = this.checkoutService.addTransaction(this.product, data.id, this.shippingPrice, this.tID, this.discount, this.discountCardID);
           } else {
-            transaction = this.checkoutService.addTransaction(this.product, data.id, this.shippingPrice);
+            transaction = this.checkoutService.addTransaction(this.product, data.id, this.shippingPrice, this.tID);
           }
         }
         transaction.then(res => {

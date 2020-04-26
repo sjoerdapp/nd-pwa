@@ -14,8 +14,7 @@ import { Router } from '@angular/router';
 })
 export class OfferService {
 
-  userListing: Bid;
-  productListing: Bid;
+  bid_data: Bid;
 
   constructor(
     private auth: AuthService,
@@ -42,7 +41,7 @@ export class OfferService {
     const timestamp = Date.now();
     const offerID = UID + '-' + timestamp;
 
-    this.userListing = {
+    this.bid_data = {
       assetURL: pair.assetURL,
       model: pair.model,
       price,
@@ -51,19 +50,9 @@ export class OfferService {
       productID: pair.productID,
       offerID,
       timestamp,
-      buyerID: UID
-    };
-
-    this.productListing = {
-      assetURL: pair.assetURL,
-      model: pair.model,
-      price,
-      condition,
-      size,
-      offerID,
-      timestamp,
-      productID: pair.productID,
-      buyerID: UID
+      buyerID: UID,
+      last_updated: timestamp,
+      created_at: timestamp
     };
 
     const batch = this.afs.firestore.batch();
@@ -73,9 +62,9 @@ export class OfferService {
     const offersValRef = this.afs.firestore.doc(`users/${UID}`);
     const bidRef = this.afs.firestore.collection(`bids`).doc(`${offerID}`);
 
-    batch.set(userDocRef, this.userListing);
-    batch.set(prodDocRef, this.productListing);
-    batch.set(bidRef, this.userListing); // add offer to offers collection
+    batch.set(userDocRef, this.bid_data);
+    batch.set(prodDocRef, this.bid_data);
+    batch.set(bidRef, this.bid_data); // add offer to offers collection
     batch.set(offersValRef, {
       offers: firebase.firestore.FieldValue.increment(1)
     }, { merge: true })
@@ -132,6 +121,7 @@ export class OfferService {
     });
 
     const batch = this.afs.firestore.batch();
+    const last_updated = Date.now()
 
     const userBidRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('offers').doc(`${offer_id}`);
     const prodBidRef = this.afs.firestore.collection('products').doc(`${product_id}`).collection('offers').doc(`${offer_id}`);
@@ -177,19 +167,22 @@ export class OfferService {
     batch.update(bidRef, {
       condition: condition,
       price: price,
-      size: size
+      size: size,
+      last_updated
     });
 
     batch.update(userBidRef, {
       condition: condition,
       price: price,
-      size: size
+      size: size,
+      last_updated
     });
 
     batch.update(prodBidRef, {
       condition: condition,
       price: price,
-      size: size
+      size: size,
+      last_updated
     });
 
     return batch.commit()

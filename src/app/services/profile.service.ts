@@ -84,6 +84,7 @@ export class ProfileService {
     });
 
     const batch = this.afs.firestore.batch();
+    const last_updated = Date.now()
     
     const userAskRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listing_id}`); //ask in user doc ref
     const prodAskRef = this.afs.firestore.collection('products').doc(`${product_id}`).collection('listings').doc(`${listing_id}`); //ask in prod doc ref
@@ -131,21 +132,24 @@ export class ProfileService {
     batch.update(askRef, {
       condition: condition,
       price: price,
-      size: size
+      size: size,
+      last_updated
     });
 
     // update ask in user doc
     batch.update(userAskRef, {
       condition: condition,
       price: price,
-      size: size
+      size: size,
+      last_updated
     });
 
     // update ask in prod doc
     batch.update(prodAskRef, {
       condition: condition,
       price: price,
-      size: size
+      size: size,
+      last_updated
     });
 
     // commit the updates

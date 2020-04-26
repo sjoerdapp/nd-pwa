@@ -32,12 +32,13 @@ export class CheckoutService {
     const boughtAt = Date.now();
     const transactionID = `${UID}-${product.sellerID}-${boughtAt}`;
 
-    const sellerRef = this.afs.firestore.collection(`users`).doc(`${product.sellerID}`);
-    const buyerRef = this.afs.firestore.collection(`users`).doc(`${UID}`);
-    const prodRef = this.afs.firestore.collection(`products`).doc(`${id}`);
-    const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`);
-    const listingRef = this.afs.firestore.collection(`listings`);
+    const sellerRef = this.afs.firestore.collection(`users`).doc(`${product.sellerID}`); //seller doc ref
+    const buyerRef = this.afs.firestore.collection(`users`).doc(`${UID}`); //buyer doc ref
+    const prodRef = this.afs.firestore.collection(`products`).doc(`${id}`); //prod doc ref
+    const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`); //transaction doc ref
+    const askRef = this.afs.firestore.collection(`asks`); //ask collection ref
 
+    //transaction data
     const transactionData: Transaction = {
       assetURL: product.assetURL,
       condition: product.condition,
@@ -65,6 +66,7 @@ export class CheckoutService {
       type: 'bought'
     };
 
+    //add discount to transaction data
     if (!isNullOrUndefined(discount)) {
       transactionData.discount = discount;
       const discountRef = this.afs.firestore.collection(`nxtcards`).doc(`${discountCardID}`);
@@ -73,31 +75,32 @@ export class CheckoutService {
       });
     }
 
-    let prices = [];
+    let prices = []; //lowest prices
 
+    //get lowest two prices
     await this.afs.firestore.collection('products').doc(`${id}`).collection(`listings`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
       snap.forEach(data => {
         prices.push(data.data().price);
       });
     });
 
-    if (product.price >= prices[0] && product.price < prices[1]) {
-      batch.set(prodRef, {
-        lowestPrice: prices[1]
-      }, { merge: true });
-    } else if (prices.length == 1) {
-      // console.log('working');
+    //delete or update lowest_price
+    if (prices.length === 1) {
       batch.update(prodRef, {
         lowestPrice: firebase.firestore.FieldValue.delete()
       });
+    } else {
+      batch.set(prodRef, {
+        lowestPrice: prices[1]
+      }, { merge: true });
     }
 
     // delete listings
     batch.delete(sellerRef.collection(`listings`).doc(`${product.listingID}`));
     batch.delete(prodRef.collection(`listings`).doc(`${product.listingID}`));
-    batch.delete(listingRef.doc(`${product.listingID}`));
+    batch.delete(askRef.doc(`${product.listingID}`));
 
-    // set ordered and sol fields
+    // update ordered and sold fields
     batch.update(buyerRef, {
       ordered: firebase.firestore.FieldValue.increment(1),
       last_item_in_cart: firebase.firestore.FieldValue.delete()
@@ -110,17 +113,19 @@ export class CheckoutService {
     // add transaction doc to  transactions collection
     batch.set(tranRef, transactionData, { merge: true })
 
+    //commit the transaction
     return batch.commit()
       .then(() => {
         //console.log('Transaction Approved');
-        const msg = `${UID} bought ${product.model}, size ${product.size} at ${product.price} from ${product.sellerID}`;
-        this.slack.sendAlert('sales', msg).catch(err => {
+
+        //send alert to slack
+        this.slack.sendAlert('sales', `${UID} bought ${product.model}, size ${product.size} at ${product.price} from ${product.sellerID}`).catch(err => {
           //console.error(err)
         });
-        this.http.post(`${environment.cloud.url}orderConfirmation`, transactionData).subscribe(res => {
-          //console.log(res);
-        });
-        return transactionID;
+
+        this.http.post(`${environment.cloud.url}orderConfirmation`, transactionData).subscribe(); //send email notification
+
+        return transactionID; //return transaction_id
       })
       .catch(err => {
         console.error(err);
@@ -135,15 +140,17 @@ export class CheckoutService {
     });
     const batch = firebase.firestore().batch();
     const id = product.model.replace(/\s/g, '-').replace(/["'()]/g, '').replace(/\//g, '-').toLowerCase();
-    const soldAt = Date.now();
-    const transactionID = `${product.buyerID}-${UID}-${soldAt}`;
+    const purchaseDate = Date.now();
+    const transactionID = `${product.buyerID}-${UID}-${purchaseDate}`;
+    const shippingCost = 15;
 
-    const buyerRef = this.afs.firestore.collection(`users`).doc(`${product.buyerID}`);
-    const sellerRef = this.afs.firestore.collection(`users`).doc(`${UID}`);
-    const prodRef = this.afs.firestore.collection(`products`).doc(`${id}`);
-    const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`);
-    const offerRef = this.afs.firestore.collection('offers');
+    const buyerRef = this.afs.firestore.collection(`users`).doc(`${product.buyerID}`); //buyer doc ref
+    const sellerRef = this.afs.firestore.collection(`users`).doc(`${UID}`); //seller doc ref
+    const prodRef = this.afs.firestore.collection(`products`).doc(`${id}`); //prod doc ref
+    const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`); //transaction doc ref
+    const bidRef = this.afs.firestore.collection('bids'); //bid collection ref
 
+    //transaction data
     const transactionData: Transaction = {
       assetURL: product.assetURL,
       condition: product.condition,
@@ -151,12 +158,13 @@ export class CheckoutService {
       productID: id,
       model: product.model,
       price: product.price,
-      total: product.price,
+      total: product.price + shippingCost,
+      shippingCost,
       sellerID: UID,
       buyerID: product.buyerID,
       size: product.size,
       listedAt: product.timestamp,
-      purchaseDate: soldAt,
+      purchaseDate,
       status: {
         verified: false,
         shipped: false,
@@ -173,7 +181,7 @@ export class CheckoutService {
     // delete listings
     batch.delete(buyerRef.collection(`offers`).doc(`${product.offerID}`));
     batch.delete(prodRef.collection(`offers`).doc(`${product.offerID}`));
-    batch.delete(offerRef.doc(`${product.offerID}`));
+    batch.delete(bidRef.doc(`${product.offerID}`));
 
     // set ordered and sol fields
     batch.set(buyerRef, {
@@ -187,18 +195,19 @@ export class CheckoutService {
     // add transaction doc to  transactions collection
     batch.set(tranRef, transactionData, { merge: true })
 
+    //commit the transaction
     return batch.commit()
       .then(() => {
         //console.log('Transaction Approved');
-        const msg = `${UID} sold ${product.model}, size ${product.size} at ${product.price} to ${product.buyerID}`;
-        this.slack.sendAlert('sales', msg).catch(err => {
+
+        //send alert to slack
+        this.slack.sendAlert('sales', `${UID} sold ${product.model}, size ${product.size} at ${product.price} to ${product.buyerID}`).catch(err => {
           //console.error(err)
         });
-        this.http.post(`${environment.cloud.url}orderConfirmation`, transactionData).subscribe(res => {
-          //console.log(res);
-        });
 
-        return transactionID;
+        this.http.post(`${environment.cloud.url}orderConfirmation`, transactionData).subscribe(); //send order confirmation email
+
+        return transactionID; //return transaction_id
       })
       .catch(err => {
         //console.error(err);
@@ -206,17 +215,18 @@ export class CheckoutService {
       })
   }
 
-  addTransaction(product, paymentID: string, shippingCost: number, discount?: number, discountCardID?: string) {
-    const transactionID = `${product.buyerID}-${product.sellerID}-${product.soldAt}`;
-    const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`);
+  addTransaction(product, paymentID: string, shippingCost: number, transaction_id: string, discount?: number, discountCardID?: string) {
+    const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transaction_id}`); //transaction doc ref
     const batch = firebase.firestore().batch();
 
+    //update transaction doc
     batch.update(tranRef, {
       paymentID,
       shippingCost,
       total: firebase.firestore.FieldValue.increment(shippingCost)
     });
 
+    //add discount if applicable
     if (!isNullOrUndefined(discount)) {
       batch.update(tranRef, {
         discount,
@@ -229,10 +239,11 @@ export class CheckoutService {
       });
     }
 
+    //commit transaction
     return batch.commit()
       .then(() => {
         //console.log('Transaction Approved');
-        return transactionID;
+        return transaction_id; //return transaction_id
       })
       .catch(err => {
         //console.error(err);

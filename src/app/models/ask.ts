@@ -8,5 +8,6 @@ export class Ask {
     sellerID: string;
     size: string;
     timestamp: number;
-    last_update?: number;
+    last_updated?: number;
+    created_at?: number;
 }

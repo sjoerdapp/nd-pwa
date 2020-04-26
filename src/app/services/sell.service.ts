@@ -14,8 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class SellService {
 
-  userListing: Ask;
-  productListing: Ask;
+  ask_data: Ask;
 
   constructor(
     private afs: AngularFirestore,
@@ -32,10 +31,9 @@ export class SellService {
       });
 
     const timestamp = Date.now();
-
     const listingID = UID + '-' + timestamp;
 
-    this.userListing = {
+    this.ask_data = {
       assetURL: pair.assetURL,
       model: pair.model,
       price,
@@ -44,19 +42,9 @@ export class SellService {
       productID: pair.productID,
       listingID,
       timestamp,
-      sellerID: UID
-    };
-
-    this.productListing = {
-      assetURL: pair.assetURL,
-      model: pair.model,
-      price,
-      condition,
-      size,
-      listingID,
-      timestamp,
       sellerID: UID,
-      productID: pair.productID
+      created_at: timestamp,
+      last_updated: timestamp
     };
 
     const batch = this.afs.firestore.batch();
@@ -67,9 +55,9 @@ export class SellService {
     const listedValRef = this.afs.firestore.doc(`users/${UID}`);
     const askRef = this.afs.firestore.collection(`asks`).doc(`${listingID}`);
 
-    batch.set(userDocRef, this.userListing); // add Listing to User Document
-    batch.set(askRef, this.userListing); // add listing to asks collection
-    batch.set(prodDocRef, this.productListing); // add Listing to Products Document
+    batch.set(userDocRef, this.ask_data); // add Listing to User Document
+    batch.set(askRef, this.ask_data); // add listing to asks collection
+    batch.set(prodDocRef, this.ask_data); // add Listing to Products Document
     batch.set(listedValRef, {
       listed: firebase.firestore.FieldValue.increment(1)
     }, { merge: true }); // increment 'listed' field by one
