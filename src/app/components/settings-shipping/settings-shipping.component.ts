@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsShippingService } from 'src/app/services/settings-shipping.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isUndefined } from 'util';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-settings-shipping',
@@ -34,32 +35,50 @@ export class SettingsShippingComponent implements OnInit {
 
   redirectURI: string;
 
+  UID: string;
+
   constructor(
     private shippingService: SettingsShippingService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
     this.redirectURI = this.route.snapshot.queryParams.redirectURI;
-    this.shippingService.getShippingInfo().then(res => {
-      res.subscribe(data => {
-        this.shippingInfo = data;
 
-        console.log(this.shippingInfo);
+    this.auth.isConnected().then(res => {
+      if (!res) {
+        this.router.navigate(['/login'], {
+          queryParams: { redirectURI: 'settings/shipping' }
+        })
+      } else {
+        this.UID = res.uid;
+        this.getShippingInfo();
+      }
+    });
+  }
 
-        if (this.shippingInfo.shippingAddress) {
-          this.firstName =  this.shippingInfo.shippingAddress.firstName;
-          this.lastName = this.shippingInfo.shippingAddress.lastName;
-          this.street = this.shippingInfo.shippingAddress.street;
-          this.line = this.shippingInfo.shippingAddress.line;
-          this.city = this.shippingInfo.shippingAddress.city;
-          this.province = this.shippingInfo.shippingAddress.province;
-          this.postalCode = this.shippingInfo.shippingAddress.postalCode;
+  getShippingInfo() {
+    this.shippingService.getShippingInfo(this.UID).subscribe(res => {
+      this.shippingInfo = res;
 
-          (document.getElementById('ship-state') as HTMLInputElement).value = this.province;
-        }
-      });
+      //console.log(this.shippingInfo);
+
+      if (this.shippingInfo.shippingAddress.selling) {
+        this.firstName = this.shippingInfo.shippingAddress.selling.firstName;
+        this.lastName = this.shippingInfo.shippingAddress.selling.lastName;
+        this.street = this.shippingInfo.shippingAddress.selling.street;
+        this.line = this.shippingInfo.shippingAddress.selling.line2;
+        this.city = this.shippingInfo.shippingAddress.selling.city;
+        this.province = this.shippingInfo.shippingAddress.selling.province;
+        this.postalCode = this.shippingInfo.shippingAddress.selling.postalCode;
+
+        (document.getElementById('ship-state') as HTMLInputElement).value = this.province;
+      } else {
+        this.firstName = this.shippingInfo.firstName;
+        this.lastName = this.shippingInfo.lastName;
+      }
     });
   }
 
@@ -72,13 +91,14 @@ export class SettingsShippingComponent implements OnInit {
       const city = (document.getElementById('ship-city') as HTMLInputElement).value;
       const province = (document.getElementById('ship-state') as HTMLInputElement).value;
       const postalCode = (document.getElementById('ship-zip') as HTMLInputElement).value;
+      const country = (document.getElementById('ship-country') as HTMLInputElement).value;
 
-      console.log(this.isEmptyOrBlank(firstName));
+      //console.log(this.isEmptyOrBlank(firstName));
 
       if (!this.isEmptyOrBlank(firstName) && !this.isEmptyOrBlank(lastName) && !this.isEmptyOrBlank(street) && !this.isEmptyOrBlank(city) && !this.isEmptyOrBlank(province) && !this.isEmptyOrBlank(postalCode)) {
         this.loading = true;
 
-        this.shippingService.updateShippingInfo(this.shippingInfo.uid, firstName, lastName, street, line, city, province, postalCode, 'CA').then(res => {
+        this.shippingService.updateShippingInfo(this.shippingInfo.uid, firstName, lastName, street, line, city, province, postalCode, country).then(res => {
           if (res) {
             this.loading = false;
             this.updated = true;
@@ -99,7 +119,7 @@ export class SettingsShippingComponent implements OnInit {
             this.postalCodeChanged = false;
 
             if (!isUndefined(this.redirectURI)) {
-              this.router.navigate([`../../${this.redirectURI}`]);
+              this.backBtn();
             }
           }, 2000);
         });
@@ -189,9 +209,9 @@ export class SettingsShippingComponent implements OnInit {
 
   backBtn() {
     if (isUndefined(this.redirectURI)) {
-      this.router.navigate(['..']);
+      this.router.navigate(['/settings']);
     } else {
-      this.router.navigate([`../../${this.redirectURI}`]);
+      this.router.navigateByUrl(this.redirectURI);
     }
   }
 

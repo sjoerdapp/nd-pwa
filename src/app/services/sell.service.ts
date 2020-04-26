@@ -3,23 +3,29 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Product } from '../models/product';
 import { AuthService } from './auth.service';
 import * as firebase from 'firebase/app';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Ask } from '../models/ask';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SellService {
 
-  userListing;
-  productListing;
+  userListing: Ask;
+  productListing: Ask;
 
   constructor(
     private afs: AngularFirestore,
-    private auth: AuthService
+    private auth: AuthService,
+    private http: HttpClient
   ) { }
 
-  async addListing(pair: Product, condition: string, price: number, size: string) {
+  async addListing(pair: Product, condition: string, price: number, size: string, size_lowest_ask: number) {
     let UID: string;
+
     await this.auth.isConnected()
       .then(data => {
         UID = data.uid;
@@ -54,7 +60,7 @@ export class SellService {
     };
 
     const batch = this.afs.firestore.batch();
-    console.log(timestamp);
+    //console.log(timestamp);
 
     const userDocRef = this.afs.firestore.collection(`users/${UID}/listings`).doc(`${listingID}`);
     const prodDocRef = this.afs.firestore.collection(`products/${pair.productID}/listings`).doc(`${listingID}`);
@@ -80,7 +86,21 @@ export class SellService {
 
       return batch.commit()
         .then(() => {
-          console.log('New Listing Added');
+          //console.log('New Listing Added');
+
+          console.log(`size_lowest: ${size_lowest_ask} and price: ${price}`)
+
+          if (!isNullOrUndefined(size_lowest_ask) && price < size_lowest_ask) {
+            this.http.put(`${environment.cloud.url}lowestAskNotification`, {
+              product_id: pair.productID,
+              seller_id: UID,
+              condition,
+              size,
+              listing_id: listingID,
+              price
+            }).subscribe()
+          }
+
           return true;
         })
         .catch((err) => {
@@ -95,14 +115,20 @@ export class SellService {
     return prodRef.get();
   }*/
 
-  getHighestOffer(productID: string, condition: string, size: string) {
-    const offerRef = this.afs.collection(`products`).doc(`${productID}`).collection(`offers`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `desc`).limit(1));
-    return offerRef.get();
+  getHighestOffer(productID: string, condition: string, size?: string) {
+    let offerRef;
+
+    isNullOrUndefined(size) ? offerRef = this.afs.collection(`products`).doc(`${productID}`).collection(`offers`, ref => ref.where(`condition`, `==`, `${condition}`).orderBy(`price`, `desc`).limit(1)) : offerRef = this.afs.collection(`products`).doc(`${productID}`).collection(`offers`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `desc`).limit(1));
+
+    return offerRef.valueChanges();
   }
 
-  getLowestListing(productID: string, condition: string, size: string) {
-    const listingRef = this.afs.collection(`products`).doc(`${productID}`).collection(`listings`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `asc`).limit(1));
-    return listingRef.get();
+  getLowestListing(productID: string, condition: string, size?: string) {
+    let listingRef;
+
+    isNullOrUndefined(size) ? listingRef = this.afs.collection(`products`).doc(`${productID}`).collection(`listings`, ref => ref.where(`condition`, `==`, `${condition}`).orderBy(`price`, `asc`).limit(1)) : listingRef = this.afs.collection(`products`).doc(`${productID}`).collection(`listings`, ref => ref.where(`condition`, `==`, `${condition}`).where(`size`, `==`, `${size}`).orderBy(`price`, `asc`).limit(1));
+
+    return listingRef.valueChanges();
   }
 
 }

@@ -1,67 +1,87 @@
-@import '../../base_styles/base';
+@import "../../base_styles/base";
 
 .main-container {
-    display: grid;
-    align-content: center;
+  display: grid;
+  align-content: center;
 }
 
 .content-container {
-    text-align: center;
+  text-align: center;
 
-    fa-icon {
-        margin: 0 auto; 
-        font-size: $font-large;
-        color: $black;
-        display: block;
-    }
+  fa-icon {
+    margin: 0 auto;
+    font-size: $font-large;
+    color: $black;
+    display: block;
+  }
+
+  a:hover {
+    color: $matteblack;
+  }
 }
 
-@media only screen and (min-width: 400px) and (max-width: 800px) {
-    h3, h6 {
-        font-size: $font-small;
-    }
+@media only screen and (min-width: 0px) and (max-width: 399.5px) {
+  h3,
+  h6 {
+    font-size: 0.9rem;
+  }
 
-    a {
-        font-size: $font-xsmall;
-    }
+  a {
+    font-size: 1.2rem;
+  }
 }
 
-@media only screen and (min-width: 800px) and (max-width: 1200px) {
-    h3, h6 {
-        font-size: $font-normal;
-    }
+@media only screen and (min-width: 400px) and (max-width: 799.5px) {
+  h3,
+  h6 {
+    font-size: 0.9rem;
+  }
 
-    a {
-        font-size: $font-small;
-    }
+  a {
+    font-size: 1.2rem;
+  }
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1800px) {
-    h3, h6 {
-        font-size: $font-large;
-    }
+@media only screen and (min-width: 800px) and (max-width: 1199.5px) {
+  h3,
+  h6 {
+    font-size: 1rem;
+  }
 
-    a {
-        font-size: $font-normal;
-    }
+  a {
+    font-size: 1.4rem;
+  }
 }
 
-@media only screen and (min-width: 1800px) and (max-width: 2000px) {
-    h3, h6 {
-        font-size: $font-xlarge;
-    }
+@media only screen and (min-width: 1200px) and (max-width: 1799.5px) {
+  h3,
+  h6 {
+    font-size: 1.2rem;
+  }
 
-    a {
-        font-size: $font-large;
-    }
+  a {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 1999.5px) {
+  h3,
+  h6 {
+    font-size: 1.2rem;
+  }
+
+  a {
+    font-size: 1.5rem;
+  }
 }
 
 @media only screen and (min-width: 2000px) {
-    h3, h6 {
-        font-size: $font-xxlarge;
-    }
+  h3,
+  h6 {
+    font-size: 1.4rem;
+  }
 
-    a {
-        font-size: $font-xlarge;
-    }
+  a {
+    font-size: 1.6rem;
+  }
 }

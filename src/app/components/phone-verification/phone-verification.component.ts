@@ -3,8 +3,9 @@ import * as firebase from 'firebase/app';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { isUndefined } from 'util';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 import { isPlatformBrowser } from '@angular/common';
+import { SlackService } from 'src/app/services/slack.service';
 
 @Component({
   selector: 'app-phone-verification',
@@ -34,7 +35,8 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private title: Title,
-    private seo: SEOService,
+    private meta: MetaService,
+    private slack: SlackService,
     @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
 
@@ -57,7 +59,7 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.title.setTitle(`Phone Verification | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.seo.addTags('Phone Verification');
+    this.meta.addTags('Phone Verification');
 
     this.verifyAreaCode();
     //console.log(this.route.snapshot.queryParams.redirectTo);
@@ -103,7 +105,7 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
         this.confirmationResult = res;
         this.linkLoading = false;
       }).catch(err => {
-        console.error(err);
+        this.slack.sendAlert('bugreport', `sendCode() err: ${err}`);
         this.linkLoading = false;
         this.isSent = false;
       });
@@ -114,9 +116,9 @@ export class PhoneVerificationComponent implements OnInit, AfterViewInit {
     if (this.isValidCode) {
       this.verificationLoading = true;
       this.confirmationResult.confirm((document.getElementById('authCode') as HTMLInputElement).value).then(() => {
-        this.router.navigate([`../${this.route.snapshot.queryParams.redirectTo}`]);
+        this.back()
       }).catch((err) => {
-        console.error(err);
+        this.slack.sendAlert('bugreport', `verifyCode() err: ${err}`);
         this.verificationLoading = false;
       });
     }

@@ -1,5 +1,6 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, HostListener, PLATFORM_ID, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-carousel',
@@ -8,15 +9,28 @@ import { Router } from '@angular/router';
 })
 export class CarouselComponent implements OnInit {
 
+  isMobile: boolean = false;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (event.target.innerWidth < 768) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
+  }
+
   typingTimer;
   doneTypingInterval = 1000;
 
   constructor(
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
 
   ngOnInit() {
+    this.checkWidth();
   }
 
   search(event) {
@@ -29,6 +43,16 @@ export class CarouselComponent implements OnInit {
           });
         });
       }, this.doneTypingInterval);
+    }
+  }
+
+  checkWidth() {
+    if (isPlatformBrowser(this._platformId)) {
+      if (window.innerWidth < 768) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
     }
   }
 

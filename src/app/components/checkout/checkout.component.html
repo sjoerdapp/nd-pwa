@@ -1,8 +1,10 @@
 <app-navbar></app-navbar>
 
 <section class="main-container">
-  <div class="checkout-summary">
+  <div class="checkout-summary" *ngIf="product">
     <h4>Summary</h4>
+
+    <app-trustbox></app-trustbox>
 
     <div class="summary-items">
       <div class="summary-item">
@@ -13,6 +15,10 @@
         <h6>{{ product.price | currency: 'CAD' }}</h6>
       </div>
     </div>
+
+    <a routerLink="/faq/buying/are-the-items-authentic" class="auth">100% authentic or 100% refund <fa-icon
+        [icon]="['fas', 'check-circle']"></fa-icon>
+    </a>
 
     <div class="summary-numbers" *ngIf="!isSelling">
       <div class="summary-subtotal">
@@ -42,17 +48,6 @@
       </div>
     </div>
 
-    <div class="promo-code" *ngIf="!isSelling">
-      <input type="text" name="promo-code" id="promo-code" placeholder="Enter Promo Code" mask="AAAAAAAAAA">
-      <button class="btn promo-btn" (click)="applyPromo()" *ngIf="!promoError && !promoApplied && !promoLoading">Apply
-        Promo</button>
-      <button class="btn promo-btn" *ngIf="promoLoading">
-        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
-      </button>
-      <button class="btn promo-btn-applied" *ngIf="promoApplied">Promo Applied</button>
-      <button class="btn promo-btn-invalid" *ngIf="promoError">Code Invalid</button>
-    </div>
-
     <div class="summary-numbers" *ngIf="isSelling">
       <div class="summary-subtotal">
         <h5>Transaction Fee (9.5%)</h5>
@@ -74,6 +69,19 @@
         <h5>{{ subtotal - fee() - processing() | currency: 'CAD' }}</h5>
       </div>
     </div>
+
+    <div class="promo-code" *ngIf="!isSelling">
+      <input type="text" name="promo-code" id="promo-code" placeholder="Enter Promo Code" mask="AAAAAAAAAA">
+      <button class="btn promo-btn" (click)="applyPromo()"
+        *ngIf="!promoError && !promoApplied && !promoLoading">Apply</button>
+      <button class="btn promo-btn" *ngIf="promoLoading">
+        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+      </button>
+      <button class="btn promo-btn-applied" *ngIf="promoApplied">Applied</button>
+      <button class="btn promo-btn-invalid" *ngIf="promoError">Invalid</button>
+    </div>
+
+    <a routerLink="/faq/buying/on-what-circumstances-do-i-get-a-refund" class="return">Return Policy</a>
   </div>
 
   <!--<div class="checkout-shipping">
@@ -98,7 +106,7 @@
       <button class="btn edit-btn" (click)="editPayment()">Edit</button>
     </div>-->
 
-  <div class="checkout-btns">
+  <div class="checkout-btns" *ngIf="product">
     <h2 *ngIf="!isSelling && !freePair && connected">Select Payment Method</h2>
     <ngx-paypal *ngIf="!isSelling && !freePair && connected" [config]="payPalConfig"></ngx-paypal>
 
@@ -111,6 +119,10 @@
     <button *ngIf="isSelling" (click)="sellNow()" class="btn">Confirm</button>
 
     <button class="btn back-btn" (click)="goBack()">Back</button>
+  </div>
+
+  <div class="loading-page" *ngIf="!product">
+    <fa-icon [icon]="['fas', 'circle-notch']" [spin]="true"></fa-icon>
   </div>
 </section>
 

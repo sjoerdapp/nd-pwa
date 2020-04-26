@@ -1,7 +1,7 @@
 @import "../../base_styles//base";
 
 .mission-statement {
-  background: $darkblue;
+  background: $matteblack;
   display: grid;
   align-items: center;
   justify-items: center;
@@ -19,7 +19,7 @@
 .buying,
 .selling,
 .mission {
-  background: $navyblue;
+  background: $black;
 
   h1,
   p {
@@ -85,21 +85,21 @@
 }
 
 .cta {
-  background: $black;
+  background: $white;
 
   p {
-    color: $white;
+    color: $black;
     text-align: center;
     margin: $spacing-xsmall auto;
   }
 
   .btn {
-    background: $white;
+    background: $black;
     display: block;
     margin: auto;
     text-align: center;
     padding: $spacing-normal;
-    color: $black;
+    color: $white;
 
     &:hover {
       color: $white;

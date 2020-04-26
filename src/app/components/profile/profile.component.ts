@@ -3,7 +3,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { User } from 'src/app/models/user';
 import { Title } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +19,11 @@ export class ProfileComponent implements OnInit {
     offers: 0,
     uid: '',
     email: '',
-    isActive: false
+    isActive: false,
+    creation_date: 0,
+    firstName: '',
+    lastName: '',
+    username: ''
   };
 
   listings = [];
@@ -33,12 +37,12 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private title: Title,
     @Inject(PLATFORM_ID) private _platoformId: Object,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Your profile | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.seo.addTags('Profile');
+    this.meta.addTags('Profile');
 
     if (isPlatformBrowser(this._platoformId)) {
       this.profileService.getUserData().then(val => {

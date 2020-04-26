@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 
 @Component({
   selector: 'app-settings',
@@ -11,12 +11,12 @@ export class SettingsComponent implements OnInit {
 
   constructor(
     private title: Title,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Settings | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.seo.addTags('Settings');
+    this.meta.addTags('Settings');
   }
 
 }

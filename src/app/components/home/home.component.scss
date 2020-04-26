@@ -72,7 +72,7 @@
     .authRate {
       padding: $spacing-xsmall;
       border-radius: 110px;
-      background: $green;
+      background: $white;
       display: grid;
       grid-template-rows: 1fr 1fr;
       justify-items: center;
@@ -96,7 +96,7 @@
 
 .big-margin {
   margin: 0 auto !important;
-  margin-top: $spacing-xxlarge !important;
+  margin-top: $spacing-large !important;
 }
 
 .last-sale-banner {
@@ -133,6 +133,14 @@
     h3 {
       color: #07ac07;
     }
+  }
+}
+
+// MEDIA QUERIES
+
+@media only screen and (max-width: 767px) {
+  .last-sale-banner {
+    margin: $spacing-xsmall auto $spacing-normal auto !important;
   }
 }
 

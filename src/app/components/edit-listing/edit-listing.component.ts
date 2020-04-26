@@ -2,9 +2,11 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { SellService } from 'src/app/services/sell.service';
-import { isUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
 import { Title } from '@angular/platform-browser';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
+import { Ask } from 'src/app/models/ask';
+import { Bid } from 'src/app/models/bid';
 
 @Component({
   selector: 'app-edit-listing',
@@ -15,17 +17,19 @@ export class EditListingComponent implements OnInit {
 
   listingID: string;
 
-  offerInfo;
+  offerInfo: Ask;
 
   loading = false;
   error = false;
   updated = false;
 
-  conditionChanged = false;
+  //conditionChanged = false;
   priceChanged = false;
   sizeChanged = false;
+  showSaveChanges: boolean = true;
 
-  highestOffer: number;
+  highestOffer: Bid;
+  lowest_ask: number;
 
   curCondition;
   curPrice;
@@ -35,7 +39,7 @@ export class EditListingComponent implements OnInit {
   isGS = false;
 
   consignmentFee = 0;
-  paymentProcessingFee =  0;
+  paymentProcessingFee = 0;
   payout = 0;
 
   source: string = '../../';
@@ -47,22 +51,22 @@ export class EditListingComponent implements OnInit {
     private router: Router,
     private sellService: SellService,
     private title: Title,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.title.setTitle('Edit Listing | NXTDROP: Sell and Buy Authentic Sneakers in Canada');
-    this.seo.addTags('Edit Listing');
-    
+    this.meta.addTags('Edit Listing');
+
     this.listingID = this.route.snapshot.params.id;
     this.source = this.route.snapshot.queryParamMap.get('source');
-    this.offerInfo = this.profileService.getListing(this.listingID).then(val => {
+    this.profileService.getListing(this.listingID).then(val => {
       val.subscribe(data => {
         if (isUndefined(data)) {
           this.router.navigate([`page-not-found`]);
         } else {
-          this.offerInfo = data.data();
-          (document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
+          this.offerInfo = data as Ask;
+          //(document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
           this.curCondition = this.offerInfo.condition;
           this.curPrice = this.offerInfo.price;
           this.curSize = this.offerInfo.size;
@@ -71,14 +75,16 @@ export class EditListingComponent implements OnInit {
           this.calculateSellerFees();
 
           this.sellService.getHighestOffer(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
-            if (!data.empty) {
-              data.forEach(val => {
-                this.highestOffer = val.data().price;
-              });
-            } else {
-              this.highestOffer = 0;
+            if (data.length > 0) {
+              this.highestOffer = data[0] as Bid
             }
           });
+
+          this.sellService.getLowestListing(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
+            if (data > 0) {
+              this.lowest_ask = data[0].price
+            }
+          })
         }
       });
     });
@@ -107,7 +113,7 @@ export class EditListingComponent implements OnInit {
     }, 500);
   }
 
-  conditionChanges($event) {
+  /*conditionChanges($event) {
     if (this.offerInfo.condition != $event.target.value && this.conditionChanged == false) {
       this.conditionChanged = true;
     } else if (this.offerInfo.condition == $event.target.value && this.conditionChanged == true) {
@@ -115,17 +121,23 @@ export class EditListingComponent implements OnInit {
     }
 
     this.curCondition = $event.target.value;
-  }
+  }*/
 
   priceChanges($event) {
-    if (this.offerInfo.price != $event.target.value && this.priceChanged == false) {
-      this.priceChanged = true;
-    } else if ((this.offerInfo.price == $event.target.value || $event.target.value == '') && this.priceChanged == true) {
+    if ($event.target.value != '' && +$event.target.value >= 40) {
+      if (this.offerInfo.price != $event.target.value && this.priceChanged == false) {
+        this.priceChanged = true;
+      } else if ((this.offerInfo.price == $event.target.value) && this.priceChanged == true) {
+        this.priceChanged = false;
+      }
+    } else {
       this.priceChanged = false;
     }
 
     this.curPrice = +$event.target.value;
+    
     this.calculateSellerFees();
+    this.showSaveChangesBtn();
   }
 
   sizeChanges($event) {
@@ -145,11 +157,11 @@ export class EditListingComponent implements OnInit {
   }
 
   updateListing() {
-    const condition = this.curCondition;
+    const condition = 'new';
     const price = this.curPrice;
     const size = this.curSize;
 
-    if (this.conditionChanged || this.priceChanged || this.sizeChanged) {
+    if (this.priceChanged || this.sizeChanged) {
       this.loading = true;
 
       if (isNaN(price)) {
@@ -168,9 +180,8 @@ export class EditListingComponent implements OnInit {
   }
 
   deleteListing() {
-    this.profileService.deleteListing(this.offerInfo.listingID, this.offerInfo.productID, this.offerInfo.price)
+    this.profileService.deleteListing(this.offerInfo)
       .then((res) => {
-        this.offerInfo = [];
         if (res) {
           return this.ngZone.run(() => {
             return this.router.navigate(['../../profile']);
@@ -194,10 +205,32 @@ export class EditListingComponent implements OnInit {
 
     setTimeout(() => {
       this.updated = false;
-      this.conditionChanged = false;
+      //this.conditionChanged = false;
       this.priceChanged = false;
       this.sizeChanged = false;
     }, 2500);
+  }
+
+  showSaveChangesBtn() {
+    if (isNullOrUndefined(this.highestOffer)) {
+      this.showSaveChanges = true
+    } else {
+      if (this.curPrice <= this.highestOffer.price) {
+        this.showSaveChanges = false
+      } else {
+        this.showSaveChanges = true
+      }
+    }
+  }
+
+  sellNow() {
+    this.router.navigate(['/checkout'], {
+      queryParams: {
+        product: this.highestOffer.offerID,
+        sell: true,
+        redirectTo: this.router.url
+      }
+    })
   }
 
 }

@@ -5,7 +5,8 @@ import { OfferService } from 'src/app/services/offer.service';
 import { SellService } from 'src/app/services/sell.service';
 import { isUndefined } from 'util';
 import { Title } from '@angular/platform-browser';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
+import { Bid } from 'src/app/models/bid';
 
 @Component({
   selector: 'app-edit-offer',
@@ -16,13 +17,13 @@ export class EditOfferComponent implements OnInit {
 
   listingID: string;
 
-  offerInfo;
+  offerInfo: Bid;
 
   loading = false;
   error = false;
   updated = false;
 
-  conditionChanged = false;
+  //conditionChanged = false;
   priceChanged = false;
   sizeChanged = false;
 
@@ -45,19 +46,19 @@ export class EditOfferComponent implements OnInit {
     private router: Router,
     private sellService: SellService,
     private title: Title,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.listingID = this.route.snapshot.params.id;
     this.source = this.route.snapshot.queryParamMap.get('source');
-    this.offerInfo = this.offerService.getOffer(this.listingID).then(val => {
+    this.offerService.getOffer(this.listingID).then(val => {
       val.subscribe(data => {
         if (isUndefined(data)) {
           this.router.navigate(['page-not-found']);
         } else {
-          this.offerInfo = data.data();
-          (document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
+          this.offerInfo = data.data() as Bid;
+          //(document.getElementById('radio-' + this.offerInfo.condition) as HTMLInputElement).checked = true;
           this.curCondition = this.offerInfo.condition;
           this.curPrice = this.offerInfo.price;
           this.curSize = this.offerInfo.size;
@@ -65,17 +66,15 @@ export class EditOfferComponent implements OnInit {
           this.shoeSizes();
 
           this.sellService.getLowestListing(this.offerInfo.productID, this.offerInfo.condition, this.offerInfo.size).subscribe(data => {
-            if (!data.empty) {
-              data.forEach(val => {
-                this.lowestListing = val.data().price;
-              });
+            if (data.length > 0) {
+              this.lowestListing = data[0].price
             } else {
               this.lowestListing = -1;
             }
           });
 
           this.title.setTitle(`Edit Offer | NXTDROP: Buy and Sell Authentic Sneakers in Canada`);
-          this.seo.addTags('Edit Offer');
+          this.meta.addTags('Edit Offer');
         }
       });
     });
@@ -104,7 +103,7 @@ export class EditOfferComponent implements OnInit {
     }, 500);
   }
 
-  conditionChanges($event) {
+  /*conditionChanges($event) {
     if (this.offerInfo.condition != $event.target.value && this.conditionChanged == false) {
       this.conditionChanged = true;
     } else if (this.offerInfo.condition == $event.target.value && this.conditionChanged == true) {
@@ -112,12 +111,16 @@ export class EditOfferComponent implements OnInit {
     }
 
     this.curCondition = $event.target.value;
-  }
+  }*/
 
   priceChanges($event) {
-    if (this.offerInfo.price != $event.target.value && this.priceChanged == false) {
-      this.priceChanged = true;
-    } else if ((this.offerInfo.price == $event.target.value || $event.target.value == '') && this.priceChanged == true) {
+    if ($event.target.value != '' && +$event.target.value >= 40) {
+      if (this.offerInfo.price != $event.target.value && this.priceChanged == false) {
+        this.priceChanged = true;
+      } else if ((this.offerInfo.price == $event.target.value) && this.priceChanged == true) {
+        this.priceChanged = false;
+      }
+    } else {
       this.priceChanged = false;
     }
 
@@ -137,11 +140,11 @@ export class EditOfferComponent implements OnInit {
   }
 
   updateOffer() {
-    const condition = this.curCondition;
+    const condition = 'new';
     const price = this.curPrice;
     const size = this.curSize;
 
-    if (this.conditionChanged || this.priceChanged || this.sizeChanged) {
+    if (this.priceChanged || this.sizeChanged) {
       this.loading = true;
 
       if (isNaN(price)) {
@@ -149,7 +152,7 @@ export class EditOfferComponent implements OnInit {
         return;
       }
 
-      this.offerService.updateOffer(this.offerInfo.offerID, this.offerInfo.productID, condition, price, size).then(res => {
+      this.offerService.updateOffer(this.offerInfo.offerID, this.offerInfo.productID, this.offerInfo.price, condition, price, size).then(res => {
         if (res) {
           this.udpateSuccessful();
         } else {
@@ -160,9 +163,8 @@ export class EditOfferComponent implements OnInit {
   }
 
   deleteOffer() {
-    this.offerService.deleteoffer(this.offerInfo.offerID, this.offerInfo.productID)
+    this.offerService.deleteoffer(this.offerInfo)
       .then((res) => {
-        this.offerInfo = [];
         if (res) {
           return this.ngZone.run(() => {
             return this.router.navigate(['../../profile']);
@@ -186,7 +188,7 @@ export class EditOfferComponent implements OnInit {
 
     setTimeout(() => {
       this.updated = false;
-      this.conditionChanged = false;
+      //this.conditionChanged = false;
       this.priceChanged = false;
       this.sizeChanged = false;
     }, 2500);

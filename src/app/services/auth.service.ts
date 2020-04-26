@@ -19,6 +19,9 @@ import * as firebase from 'firebase/app';
 import { EmailService } from './email.service';
 import { isUndefined, isNullOrUndefined } from 'util';
 import { isPlatformBrowser } from '@angular/common';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 declare const gtag: any;
 
@@ -36,6 +39,7 @@ export class AuthService {
     private route: ActivatedRoute,
     private ngZone: NgZone,
     private emailService: EmailService,
+    private http: HttpClient,
     @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
 
@@ -43,6 +47,10 @@ export class AuthService {
     await this.afAuth.auth.signOut()
       .then(() => {
         console.log('Signed Out');
+        window.Intercom('shutdown')
+        window.Intercom("boot", {
+          app_id: "w1p7ooc8"
+        });
         if (redirect) {
           return this.ngZone.run(() => {
             return this.router.navigate(['/bye']);
@@ -78,7 +86,8 @@ export class AuthService {
             sold: 0,
             ordered: 0,
             offers: 0,
-            isActive: false
+            isActive: false,
+            creation_date: Date.parse(user.user.metadata.creationTime)
           };
 
           if (!isUndefined(inviteCode)) {
@@ -113,6 +122,22 @@ export class AuthService {
   async emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
+        this.isConnected().then(res => {
+          if (!isNullOrUndefined(res)) {
+            this.updateLastActivity(res.uid);
+
+            this.http.put(`${environment.cloud.url}IntercomData`, { uid: res.uid }).subscribe((data: any) => {
+              window.Intercom("update", {
+                "name": `${data.firstName} ${data.lastName}`, // Full name
+                "email": res.email, // Email address
+                "created_at": res.metadata.creationTime, // Signup date as a Unix timestamp
+                "user_id": res.uid,
+                "user_hash": data.hash
+              });
+            });
+          }
+        })
+
         return true;
       })
       .catch(error => {
@@ -124,14 +149,6 @@ export class AuthService {
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
-
-        if (isPlatformBrowser(this._platformId)) {
-          gtag('event', 'sign_up', {
-            'event_category': 'engagement',
-            'event_label': 'Social_Media_SignUp'
-          });
-        }
-
         if (this.handleAuthToken(credential.user)) {
           console.log('does exist');
           // console.log(this.handleAuthToken(credential.user));
@@ -147,6 +164,22 @@ export class AuthService {
   private handleAuthToken(user) {
     return this.checkEmail(user.email).get().subscribe((snapshot) => {
       const redirect = this.route.snapshot.queryParams.redirectTo;
+
+      this.isConnected().then(res => {
+        if (!isNullOrUndefined(res)) {
+          this.updateLastActivity(res.uid);
+
+          this.http.put(`${environment.cloud.url}IntercomData`, { uid: res.uid }).subscribe((data: any) => {
+            window.Intercom("update", {
+              "name": `${data.firstName} ${data.lastName}`, // Full name
+              "email": user.email, // Email address
+              "created_at": res.metadata.creationTime, // Signup date as a Unix timestamp
+              "user_id": res.uid,
+              "user_hash": data.hash
+            });
+          });
+        }
+      })
 
       if (snapshot.empty) {
         if (!isUndefined(redirect)) {
@@ -175,24 +208,34 @@ export class AuthService {
   }
 
   private createUserData(user: User, userCred: auth.UserCredential) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-    const redirect = this.route.snapshot.queryParams.redirectTo;
+    const userRef = this.afs.firestore.doc(`users/${user.uid}`);
+    const userVerificationRef = this.afs.firestore.doc(`userVerification/${user.uid}`);
 
-    return userRef.set(user, { merge: true })
+    const batch = this.afs.firestore.batch();
+
+    batch.set(userRef, user, { merge: true });
+    batch.set(userVerificationRef, {
+      uid: user.uid,
+      username: user.username,
+      email: user.email
+    }, { merge: true });
+
+    return batch.commit()
       .then(() => {
         console.log('User information updated');
-        this.signOut(false);
         this.emailService.activateAccount();
 
-        if (!isUndefined(redirect)) {
-          return this.ngZone.run(() => {
-            return this.router.navigateByUrl(`${redirect}`);
+        this.http.put(`${environment.cloud.url}IntercomData`, { uid: user.uid }).subscribe((data: any) => {
+          window.Intercom("update", {
+            "name": `${user.firstName} ${user.lastName}`, // Full name
+            "email": user.email, // Email address
+            "created_at": userCred.user.metadata.creationTime, // Signup date as a Unix timestamp
+            "user_id": user.uid,
+            "user_hash": data.hash
           });
-        } else {
-          return this.ngZone.run(() => {
-            return this.router.navigate(['/home']);
-          });
-        }
+        });
+
+        return true;
       })
       .catch((error) => {
         console.error('Error: ', error);
@@ -233,26 +276,45 @@ export class AuthService {
             sold: 0,
             ordered: 0,
             offers: 0,
-            isActive: true
+            isActive: true,
+            creation_date: Date.parse(userCredential.user.metadata.creationTime)
           };
+
+          if (isPlatformBrowser(this._platformId)) {
+            gtag('event', 'sign_up', {
+              'event_category': 'engagement',
+              'event_label': 'Social_Media_SignUp'
+            });
+          }
 
           return this.createUserData(userData, userCredential);
         })
         .catch((error) => {
           console.error('Account linking error', error);
+          return false;
         });
     } else {
       return Promise.resolve(false);
     }
   }
 
-  checkUsername(username) {
-    console.log('checkUsername() called');
-    return this.afs.collection('users', ref => ref.where('username', '==', username));
+  checkUsername(username: string) {
+    //console.log('checkUsername() called');
+    return this.afs.collection('userVerification', ref => ref.where('username', '==', username));
   }
 
-  checkEmail(email) {
-    console.log('checkEmail() called');
-    return this.afs.collection('users', ref => ref.where('email', '==', email));
+  checkEmail(email: string) {
+    //console.log('checkEmail() called');
+    return this.afs.collection('userVerification', ref => ref.where('email', '==', email));
+  }
+
+  getUserData(uid: string) {
+    return this.afs.collection(`users`).doc(`${uid}`).valueChanges() as Observable<User>;
+  }
+
+  updateLastActivity(userID: string) {
+    this.afs.collection('users').doc(`${userID}`).set({
+      lastActivity: Date.now()
+    }, { merge: true });
   }
 }

@@ -1,22 +1,12 @@
 <app-navbar></app-navbar>
 
 <div class="main-container">
-  <section class="edit-container">
+  <section class="edit-container" *ngIf="offerInfo">
     <h3>{{ offerInfo.model }}</h3>
 
     <img src="{{ offerInfo.assetURL }}" alt="{{ offerInfo.productID }}">
 
-    <div class="edit-radios">
-      <div>
-        <input type="radio" name="edit-offer" id="radio-new" (change)="conditionChanges($event)" value="new">
-        <label for="edit-offer">New</label>
-      </div>
-
-      <div>
-        <input type="radio" name="edit-offer" id="radio-used" (change)="conditionChanges($event)" value="used">
-        <label for="edit-offer">Used</label>
-      </div>
-    </div>
+    <p class="condition">Condition: New & 100% Authentic</p>
 
     <select *ngIf="!isWomen && !isGS" name="men-size" id="item-size" (change)="sizeChanges($event)">
       <option value="none" selected>Select Size</option>
@@ -68,16 +58,6 @@
       <option value="US11W">US 11W</option>
       <option value="US11.5W">US 11.5W</option>
       <option value="US12W">US 12W</option>
-      <option value="US12.5W">US 12.5W</option>
-      <option value="US13W">US 13W</option>
-      <option value="US13.5W">US 13.5W</option>
-      <option value="US14W">US 14W</option>
-      <option value="US14.5W">US 14.5W</option>
-      <option value="US15W">US 15W</option>
-      <option value="US15.5W">US 15.5W</option>
-      <option value="US16W">US 16W</option>
-      <option value="US16.5W">US 16.5W</option>
-      <option value="US17W">US 17W</option>
     </select>
 
     <select *ngIf="isGS" name="gs-size" id="item-size-gs" (change)="sizeChanges($event)">
@@ -97,6 +77,8 @@
       <input type="text" value="{{ offerInfo.price }}" (keyup)="priceChanges($event)" id="priceInput" mask="0{10}">
       <button>.00</button>
     </div>
+
+    <p class="min">The minimum bid is CA$40</p>
 
     <div class="seller-fees">
       <div class="consignment">
@@ -120,16 +102,21 @@
 
     <div class="edit-btns">
       <button class="btn" routerLink="/{{ source }}">Back</button>
-      <button id="save-changes-btn" *ngIf="!loading && !error && !updated && curPrice > highestOffer"
-        [className]="conditionChanged || priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'"
+
+      <button id="save-changes-btn" *ngIf="!loading && !error && !updated && showSaveChanges"
+        [className]="priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'"
         (click)="updateListing()">Save Changes</button>
-      <button id="save-changes-btn" *ngIf="!loading && !error && !updated && curPrice <= highestOffer" class="btn"
-        (click)="sellNow()">Sell at {{ highestOffer | currency: 'CAD' }}</button>
+
+      <button id="save-changes-btn" *ngIf="!loading && !error && !updated && !showSaveChanges" class="btn"
+        (click)="sellNow()">Sell at {{ highestOffer.price | currency: 'CAD' }}</button>
+
       <button id="save-changes-btn" class="btn" *ngIf="loading">
         <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
       </button>
+
       <button id="save-changes-btn" class="btn error-btn" *ngIf="error">Error</button>
-      <button id="save-changes-btn" class="btn updated-btn" *ngIf="updated">Updated</button>
+
+      <button id="save-changes-btn" class="btn updated-btn" *ngIf="updated"><fa-icon [icon]="['fas', 'check']"></fa-icon></button>
     </div>
 
     <button id="delete-btn" (click)="deleteListing()">Delete</button>

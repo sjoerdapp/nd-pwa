@@ -50,14 +50,15 @@ export class CheckoutService {
       buyerID: UID,
       size: product.size,
       listedAt: product.timestamp,
-      boughtAt,
+      purchaseDate: boughtAt,
       status: {
         verified: false,
         shipped: false,
         delivered: false,
         cancelled: false,
         shippedForVerification: false,
-        deliveredForAuthentication: false
+        deliveredForAuthentication: false,
+        sellerConfirmation: false
       },
       paymentID,
       shippingCost,
@@ -97,13 +98,14 @@ export class CheckoutService {
     batch.delete(listingRef.doc(`${product.listingID}`));
 
     // set ordered and sol fields
-    batch.set(buyerRef, {
-      ordered: firebase.firestore.FieldValue.increment(1)
-    }, { merge: true });
-    batch.set(sellerRef, {
+    batch.update(buyerRef, {
+      ordered: firebase.firestore.FieldValue.increment(1),
+      last_item_in_cart: firebase.firestore.FieldValue.delete()
+    });
+    batch.update(sellerRef, {
       listed: firebase.firestore.FieldValue.increment(-1),
-      sold: firebase.firestore.FieldValue.increment(1)
-    }, { merge: true });
+      sold: firebase.firestore.FieldValue.increment(1),
+    });
 
     // add transaction doc to  transactions collection
     batch.set(tranRef, transactionData, { merge: true })
@@ -121,7 +123,7 @@ export class CheckoutService {
         return transactionID;
       })
       .catch(err => {
-        //console.error(err);
+        console.error(err);
         return false;
       })
   }
@@ -154,14 +156,15 @@ export class CheckoutService {
       buyerID: product.buyerID,
       size: product.size,
       listedAt: product.timestamp,
-      soldAt,
+      purchaseDate: soldAt,
       status: {
         verified: false,
         shipped: false,
         delivered: false,
         cancelled: false,
         shippedForVerification: false,
-        deliveredForAuthentication: false
+        deliveredForAuthentication: false,
+        sellerConfirmation: true
       },
       paymentID: '',
       type: 'sold'
@@ -285,5 +288,15 @@ export class CheckoutService {
   getOffer(offerID: string) {
     const userID = offerID.split(`-`)[0];
     return this.afs.collection(`users`).doc(`${userID}`).collection(`offers`).doc(`${offerID}`).ref.get();
+  }
+
+  updateLastCartItem(userID: string, product_id: string, size: string) {
+    this.afs.collection(`users`).doc(userID).set({
+      last_item_in_cart: {
+        product_id,
+        size,
+        timestamp: Date.now()
+      }
+    }, { merge: true })
   }
 }

@@ -9,19 +9,15 @@
   <section class="menu-content">
     <ul class="main-menus" *ngIf="connected; else altMenu">
       <li>
-        <a routerLink="/">Home</a>
+        <a routerLink="/">Browse</a>
+      </li>
+
+      <li>
+        <a [routerLink]="['/search']" [queryParams]="{ q: '' }">Search</a>
       </li>
 
       <li>
         <a routerLink="/sell">Sell</a>
-      </li>
-
-      <!--<li>
-          <a routerLink="/dashboard">Dashboard</a>
-      </li>-->
-
-      <li>
-        <a [routerLink]="['/search']" [queryParams]="{ q: '' }">Search</a>
       </li>
 
       <li>
@@ -33,15 +29,15 @@
       </li>
 
       <li>
-        <a routerLink="/news">News</a>
+        <a routerLink="/how-it-works">How It Works</a>
       </li>
 
       <li>
-        <a routerLink="/invite-a-friend">Invite A Friend</a>
+        <a routerLink="/faq">FAQ</a>
       </li>
 
       <!--<li>
-        <a routerLink="/snkrs">Name The SNKRS Contest</a>
+          <a routerLink="/dashboard">Dashboard</a>
       </li>-->
 
       <li>
@@ -52,15 +48,15 @@
     <ng-template #altMenu>
       <ul class="main-menus">
         <li>
-          <a routerLink="/">Home</a>
+          <a routerLink="/">Browse</a>
         </li>
 
         <li>
-          <a routerLink="/news">News</a>
+          <a routerLink="/how-it-works">How It Works</a>
         </li>
 
         <li>
-          <a routerLink="/invite-a-friend">Invite A Friend</a>
+          <a routerLink="/faq">FAQ</a>
         </li>
 
         <li>
@@ -75,7 +71,7 @@
       </li>
 
       <li>
-        <a routerLink="/how-it-works">How It Works</a>
+        <a routerLink="/invite-a-friend">Invite A Friend</a>
       </li>
 
       <li>
@@ -87,7 +83,7 @@
       </li>
 
       <li>
-        <a routerLink="/faq">FAQ</a>
+        <a routerLink="/news">News</a>
       </li>
 
       <li>

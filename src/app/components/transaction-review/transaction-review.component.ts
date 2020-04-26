@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { Transaction } from 'src/app/models/transaction';
 import { Title } from '@angular/platform-browser';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-transaction-review',
@@ -14,57 +16,101 @@ import { SEOService } from 'src/app/services/seo.service';
 export class TransactionReviewComponent implements OnInit {
 
   transactionID: string;
-  transaction: Transaction = {
-    assetURL: '',
-    boughtAt: 0,
-    buyerID: '',
-    condition: '',
-    listedAt: 0,
-    listingID: '',
-    model: '',
-    paymentID: '',
-    price: 0,
-    productID: '',
-    sellerID: '',
-    shippingCost: 0,
-    size: '',
-    status: {},
-    type: '',
-    total: 0
-  };
+  transaction: Transaction;
   error = false;
+
+  user: User;
+
+  // boolean
+  confLoading: boolean = false;
+  cancelLoading: boolean = false;
+  confError: boolean = false;
+  cancelError: boolean = false;
+
+  redirectTo: string;
 
   constructor(
     private route: ActivatedRoute,
     private TranService: TransactionService,
     private title: Title,
-    private seo: SEOService
+    private meta: MetaService,
+    private auth: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Transaction Review | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.seo.addTags('Transaction Review');
+    this.meta.addTags('Transaction Review');
 
-    this.transactionID = this.route.snapshot.queryParams.transactionID;
-
-    if (isNullOrUndefined(this.transactionID)) {
-      this.error = true;
-    } else {
-      this.TranService.getTransaction(this.transactionID).subscribe(data => {
-        this.transaction = data;
-
-        if (this.transaction.type !== 'bought' && this.transaction.type !== 'sold') {
-          this.error = true;
-        }
-        // console.log(this.transaction);
-      })
-    }
+    this.auth.isConnected().then(res => {
+      if (isNullOrUndefined(res) || isNullOrUndefined(this.route.snapshot.queryParams.transactionID)) {
+        this.error = true;
+      } else {
+        this.transactionID = this.route.snapshot.queryParams.transactionID;
+        this.redirectTo = this.route.snapshot.queryParams.redirectTo;
+        this.getData();
+        this.getUserData(res.uid);
+      }
+    });
 
     this.removeFreeShipping();
   }
 
+  getData() {
+    this.TranService.getTransaction(this.transactionID).subscribe(data => {
+      this.transaction = data;
+
+      if (this.transaction.type !== 'bought' && this.transaction.type !== 'sold') {
+        this.error = true;
+      }
+      console.log(this.transaction);
+    })
+  }
+
+  getUserData(UID: string) {
+    console.log(UID)
+    this.auth.getUserData(UID).subscribe(userData => {
+      this.user = userData;
+      console.log(this.user)
+    });
+  }
+
   removeFreeShipping() {
     this.TranService.removeFreeShipping();
+  }
+
+  confirmCancel() {
+    if (!this.redirectTo) {
+      this.router.navigate([`confirmation/${this.transactionID}/${this.user.uid}`], {
+        queryParams: { redirectTo: 'transaction?transactionID=' + this.transactionID }
+      })
+    } else {
+      this.router.navigate([`confirmation/${this.transactionID}/${this.user.uid}`], {
+        queryParams: { redirectTo: 'transaction?transactionID=' + this.transactionID + '&redirectTo=' + this.redirectTo }
+      })
+    }
+  }
+
+  cancelOrder() {
+    let cancellation;
+    this.cancelLoading = true;
+
+    if (this.user.uid === this.transaction.buyerID) {
+      cancellation = this.TranService.cancelOrder(this.transactionID, this.transaction, false);
+    } else {
+      cancellation = this.TranService.cancelOrder(this.transactionID, this.transaction, true);
+    }
+
+    cancellation.then(res => {
+      this.cancelLoading = false;
+      if (!res) {
+        this.cancelError = true;
+      }
+
+      setTimeout(() => {
+        this.cancelError = false;
+      }, 1500)
+    })
   }
 
 }

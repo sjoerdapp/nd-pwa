@@ -2,7 +2,7 @@
 
 <div class="main-container">
 
-  <section class="sell-container" id="sell-page-1">
+  <section class="sell-container" id="sell-page-1" *ngIf="showHowItWorks">
     <h3>How It Works</h3>
 
     <div id="how-it-works-content">
@@ -13,7 +13,8 @@
 
       <div>
         <fa-icon [icon]="['fas', 'box']"></fa-icon>
-        <h6>Ship the item within 2 business days. We'll authenticate it and ship it to the buyer.</h6>
+        <h6>When your item sells. Confirm then ship within 2 business days. We'll authenticate it and ship it to the
+          buyer.</h6>
       </div>
 
       <div>
@@ -23,12 +24,13 @@
     </div>
 
     <div class="sell-btns">
-      <button class="btn" routerLink="..">Back</button>
-      <button class="btn" (click)="goToPage2(true)">Next</button>
+      <button class="btn" *ngIf="selectedPair" routerLink="/product/{{ selectedPair.productID }}">Back</button>
+      <button class="btn" *ngIf="!selectedPair" routerLink="..">Back</button>
+      <button class="btn" (click)="nextPage()">Next</button>
     </div>
   </section>
 
-  <section class="sell-container" id="sell-page-2">
+  <section class="sell-container" id="sell-page-2" *ngIf="showSearch">
     <h3>Select a product</h3>
     <input autofocus type="text" (keyup)="searchChanged($event)" placeholder="Search for product" class="prod-search">
 
@@ -36,7 +38,7 @@
       <div class="search-results">
         <div *ngFor="let hit of results">
 
-          <div class="hit" (click)="selectPair(hit)">
+          <div class="hit" (click)="selectPair(hit, true)">
             <img src="{{ hit.assetURL }}">
 
             <div class="hit-info">
@@ -50,157 +52,101 @@
     </div>
   </section>
 
-  <section class="sell-container" id="sell-page-3">
-    <h3>Condition and size?</h3>
+  <section id="sell-page-3" *ngIf="showItem">
+    <div class="product-info">
+      <h1>{{ selectedPair.model }}</h1>
 
-    <div class="sell-radios">
-      <div>
-        <input type="radio" name="condition" value="new" (change)="radioHandler($event)">
-        <label for="condition">New</label>
+      <div class="product-stats">
+        <h4 *ngIf="currentBid">Highest Bid: {{ currentBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h4>
+        <h4 *ngIf="!currentBid">Highest Bid: --</h4>
+        <h4 *ngIf="currentAsk">Lowest Ask: {{ currentAsk.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</h4>
+        <h4 *ngIf="!currentAsk">Lowest Ask: --</h4>
       </div>
 
-      <div>
-        <input type="radio" name="condition" value="used" (change)="radioHandler($event)">
-        <label for="condition">Used</label>
-      </div>
+      <img src="{{ selectedPair.assetURL }}" alt="{{ selectedPair.model }}">
     </div>
 
-    <select *ngIf="!isWomen && !isGS" name="size" id="item-size" (change)="sizeChanges($event)">
-      <option value="none" selected>Select Size</option>
-      <option value="US4">US 4</option>
-      <option value="US4.5">US 4.5</option>
-      <option value="US5">US 5</option>
-      <option value="US5.5">US 5.5</option>
-      <option value="US6">US 6</option>
-      <option value="US6.5">US 6.5</option>
-      <option value="US7">US 7</option>
-      <option value="US7.5">US 7.5</option>
-      <option value="US8">US 8</option>
-      <option value="US8.5">US 8.5</option>
-      <option value="US9">US 9</option>
-      <option value="US9.5">US 9.5</option>
-      <option value="US10">US 10</option>
-      <option value="US10.5">US 10.5</option>
-      <option value="US11">US 11</option>
-      <option value="US11.5">US 11.5</option>
-      <option value="US12">US 12</option>
-      <option value="US12.5">US 12.5</option>
-      <option value="US13">US 13</option>
-      <option value="US13.5">US 13.5</option>
-      <option value="US14">US 14</option>
-      <option value="US14.5">US 14.5</option>
-      <option value="US15">US 15</option>
-      <option value="US15.5">US 15.5</option>
-      <option value="US16">US 16</option>
-      <option value="US16.5">US 16.5</option>
-      <option value="US17">US 17</option>
-    </select>
-
-    <select *ngIf="isWomen" name="size" id="item-size" (change)="sizeChanges($event)">
-      <option value="none" selected>Select Size</option>
-      <option value="US4W">US 4W</option>
-      <option value="US4.5W">US 4.5W</option>
-      <option value="US5W">US 5W</option>
-      <option value="US5.5W">US 5.5W</option>
-      <option value="US6W">US 6W</option>
-      <option value="US6.5W">US 6.5W</option>
-      <option value="US7W">US 7W</option>
-      <option value="US7.5W">US 7.5W</option>
-      <option value="US8W">US 8W</option>
-      <option value="US8.5W">US 8.5W</option>
-      <option value="US9W">US 9W</option>
-      <option value="US9.5W">US 9.5W</option>
-      <option value="US10W">US 10W</option>
-      <option value="US10.5W">US 10.5W</option>
-      <option value="US11W">US 11W</option>
-      <option value="US11.5W">US 11.5W</option>
-      <option value="US12W">US 12W</option>
-      <option value="US12.5W">US 12.5W</option>
-      <option value="US13W">US 13W</option>
-      <option value="US13.5W">US 13.5W</option>
-      <option value="US14W">US 14W</option>
-      <option value="US14.5W">US 14.5W</option>
-      <option value="US15W">US 15W</option>
-      <option value="US15.5W">US 15.5W</option>
-      <option value="US16W">US 16W</option>
-      <option value="US16.5W">US 16.5W</option>
-      <option value="US17W">US 17W</option>
-    </select>
-
-    <select *ngIf="isGS" name="size" id="item-size" (change)="sizeChanges($event)">
-      <option value="none" selected>Select Size</option>
-      <option value="US3.5Y">US 3.5Y</option>
-      <option value="US4Y">US 4Y</option>
-      <option value="US4.5Y">US 4.5Y</option>
-      <option value="US5Y">US 5Y</option>
-      <option value="US5.5Y">US 5.5Y</option>
-      <option value="US6Y">US 6Y</option>
-      <option value="US6.5Y">US 6.5Y</option>
-      <option value="US7Y">US 7Y</option>
-    </select>
-
-    <div class="sell-btns">
-      <button class="btn" id="page-2-back-btn" (click)="goToPage2(false)">Back</button>
-      <button class="btn" id="page-2-back-btn-alt" routerLink="../">Cancel</button>
-      <button class="btn" (click)="goToPage4()" id="add-btn" *ngIf="nextToPage4">Next</button>
-      <button class="btn disabled" id="add-btn" *ngIf="!nextToPage4">Next</button>
-    </div>
-  </section>
-
-  <section class="sell-container" id="sell-page-4">
-    <h3>Almost Done...</h3>
-
-    <!--<ol>
-      <li>If your item does not pass our verification process, we will charge you 15% of the item price.</li>
-      <li>We take a 12.5% consignment fee on all sales.</li>
-    </ol>-->
-
-    <div class="pairStats">
-      <p *ngIf="highestOfferPrice == 0">Highest Offer: --</p>
-      <p *ngIf="highestOfferPrice > 0">Highest Offer: {{ highestOfferPrice | currency: 'CAD' }}</p>
-      <p *ngIf="lowestListing == 0">Lowest Price: --</p>
-      <p *ngIf="lowestListing > 0">Lowest Price: {{ lowestListing | currency: 'CAD' }}</p>
-    </div>
-
-    <div class="sell-price-input">
-      <button>CA<fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
-      <input type="text" placeholder="Enter Price" id="sell-price-input" (keyup)="priceChanges($event)" mask="0{10}">
-      <button>.00</button>
-    </div>
-
-    <div class="seller-fees">
-      <div class="consignment">
-        <p>Consignment Fee (9.5%)</p>
-        <p *ngIf="consignmentFee > 0">- {{ consignmentFee | currency: 'CAD' }}</p>
-        <p *ngIf="consignmentFee == 0">CA$ --</p>
+    <div class="sizes" *ngIf="!selectedSize">
+      <div class="accessibility">
+        <h2>Select Size</h2>
+        <h3>U.S. Men Size | Highest Bid</h3>
       </div>
 
-      <div class="payment-processing">
-        <p>Payment Processing Fee (3%)</p>
-        <p *ngIf="paymentProcessingFee > 0">- {{ paymentProcessingFee | currency: 'CAD' }}</p>
-        <p *ngIf="paymentProcessingFee == 0">CA$ --</p>
-      </div>
-
-      <div class="total-payout">
-        <p>Total Payout</p>
-        <p *ngIf="payout > 0">{{ payout | currency: 'CAD' }}</p>
-        <p *ngIf="payout == 0">CA$ --</p>
+      <div class="size" id="{{ offer.size }}" *ngFor="let offer of offers" (click)="selectSize(offer.size)">
+        <button id="size">{{ offer.size }}</button>
+        <button id="highestBid"
+          *ngIf="offer.HighestBid">{{ offer.HighestBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</button>
+        <button id="highestBid" *ngIf="!offer.HighestBid">--</button>
       </div>
     </div>
 
-    <div class="sell-btns">
-      <button class="btn" (click)="goToPage3()">Back</button>
-      <button class="btn disabled" id="add-btn" *ngIf="!error && !listed && !loading && !priceAdded">Finish</button>
-      <button class="btn" id="add-btn" (click)="submitListing()"
-        *ngIf="!error && !listed && !loading && priceAdded && pairPrice > highestOfferPrice">Finish</button>
-      <button class="btn" id="add-btn" (click)="sellNow()"
-        *ngIf="!error && !listed && !loading && priceAdded && pairPrice <= highestOfferPrice">Sell at
-        {{ highestOfferPrice | currency: 'CAD' }}</button>
-      <button class="btn error-btn" *ngIf="error">Error</button>
-      <button class="btn listed-btn" *ngIf="listed">Listed</button>
-      <button class="btn" *ngIf="loading">
-        <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
-      </button>
+    <div class="selling-form" *ngIf="selectedSize">
+      <div class="offer-display">
+        <div class="sell-now-container">
+          <div>
+            <h4>Highest Bid</h4>
+            <p *ngIf="currentBid">{{ currentBid.price | currency: 'CAD' : 'symbol' : '1.0-0' }}</p>
+            <p *ngIf="!currentBid">--</p>
+          </div>
+
+          <button class="btn" *ngIf="currentBid" (click)="sellNow()">Sell Now</button>
+          <button class="btn disabled" *ngIf="!currentBid">Sell Now</button>
+        </div>
+
+        <div class="place-ask-container">
+          <div class="seller-input">
+            <button>CA$</button>
+            <input type="text" name="input" id="input" placeholder="Enter Price" mask="0000000"
+              (keyup)="priceChanges($event)">
+          </div>
+
+          <div class="fee-calculator">
+            <div class="fee">
+              <p>Transaction Fee (9.5%)</p>
+              <p *ngIf="consignmentFee > 0">-{{ consignmentFee | currency: 'CAD' : 'symbol' : '1.2-2' }}</p>
+              <p *ngIf="consignmentFee === 0">--</p>
+            </div>
+
+            <div class="processing">
+              <p>Payment Processing (3%)</p>
+              <p *ngIf="paymentProcessingFee > 0">-{{ paymentProcessingFee | currency: 'CAD' : 'symbol' : '1.2-2' }}</p>
+              <p *ngIf="paymentProcessingFee === 0">--</p>
+            </div>
+
+            <div class="shipping">
+              <p>Shipping</p>
+              <p *ngIf="paymentProcessingFee > 0">{{ 0 | currency: 'CAD' : 'symbol' : '1.2-2' }}</p>
+              <p *ngIf="paymentProcessingFee === 0">--</p>
+            </div>
+
+            <div class="payout">
+              <p>Total Payout</p>
+              <p *ngIf="payout > 0">{{  payout | currency: 'CAD' : 'symbol' : '1.2-2' }}</p>
+              <p *ngIf="payout === 0">--</p>
+            </div>
+          </div>
+
+          <button class="btn ripple place-ask-btn"
+            *ngIf="priceAdded && (pairPrice > currentBid.price || !currentBid) && !loading && !listed"
+            (click)="submitListing()">Place Ask</button>
+
+          <button class="btn place-ask-btn disabled" *ngIf="!priceAdded">Place Ask</button>
+
+          <button class="btn ripple place-ask-btn" *ngIf="loading">
+            <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
+          </button>
+
+          <button class="btn ripple place-ask-btn" *ngIf="listed">Listed</button>
+
+          <button class="btn ripple sell-now-btn" *ngIf="priceAdded && currentBid && pairPrice <= currentBid.price"
+            (click)="sellNow()">Sell Now</button>
+        </div>
+      </div>
+
+      <div class="size-display">
+        <h4>{{ selectedSize }}</h4>
+        <button class="btn ripple" (click)="changeSize()">Change Size</button>
+      </div>
     </div>
   </section>
 </div>

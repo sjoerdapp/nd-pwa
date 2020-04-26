@@ -59,6 +59,14 @@ app.get('/blog/nxtdrop-the-canadian-stockx-is-finally-here', (req, res) => {
   res.redirect(301, '/news/nxtdrop-the-canadian-stockx-is-finally-here');
 });
 
+app.get('/blog/tag/*', (req, res) => {
+  res.redirect(301, '/news');
+});
+
+app.get('/blog/streetwear/*', (req, res) => {
+  res.redirect(301, '/news');
+})
+
 app.get('/blog', (req, res) => {
   res.redirect(301, '/news');
 });

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -11,12 +11,12 @@ export class ContactUsComponent implements OnInit {
 
   constructor(
     private title: Title,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Contact Us | NXTDROP: Buy and Sell Sneakers in Canada`);
-    this.seo.addTags('Contacts Us');
+    this.meta.addTags('Contacts Us');
   }
 
 }

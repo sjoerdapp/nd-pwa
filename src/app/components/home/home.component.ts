@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
 import { isNullOrUndefined } from 'util';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
     private title: Title,
     private afs: AngularFirestore,
     private auth: AuthService,
-    private seo: SEOService,
+    private seo: MetaService,
     private cookie: CookieService,
     private router: Router
   ) { }
@@ -42,31 +42,27 @@ export class HomeComponent implements OnInit {
       if (!isNullOrUndefined(res)) {
         this.connected = true;
 
-        if (!this.cookie.check('phoneInvitation')) {
+        //console.log(res.providerData)
+
+        /*if (!this.cookie.check('phoneInvitation')) {
           this.router.navigate(['invite-a-friend']);
-        }
+        }*/
       } else {
         this.connected = false;
       }
     });
 
-    this.afs.collection(`transactions`).ref.where('boughtAt', '>=', 1577854800000).get().then(res => {
-      let prices = 0;
+    this.afs.collection(`transactions`).get().subscribe(res => {
+      let prices: number = 0;
 
-      res.forEach(ele => {
-        prices += ele.data().total;
+      res.docs.forEach(ele => {
+        if (ele.data().paymentID != '' && !ele.data().status.cancelled) {
+          prices += ele.data().total;
+        }
       });
 
-      this.duties += prices;
-    });
-
-    this.afs.collection(`transactions`).ref.where('soldAt', '>=', 1577854800000).get().then(res => {
-      let prices = 0;
-
-      res.forEach(ele => {
-        prices += ele.data().total;
-      });
-
+      prices = prices * .23;
+      
       this.duties += prices;
     });
 

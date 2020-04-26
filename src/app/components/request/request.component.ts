@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from 'src/app/services/auth.service';
 import { SlackService } from 'src/app/services/slack.service';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 import { isNullOrUndefined } from 'util';
 
 @Component({
@@ -22,12 +22,12 @@ export class RequestComponent implements OnInit {
     private title: Title,
     private auth: AuthService,
     private slack: SlackService,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Request Product | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.seo.addTags('Request Product');
+    this.meta.addTags('Request Product');
 
     this.auth.isConnected().then(res => {
       if (!isNullOrUndefined(res)) {

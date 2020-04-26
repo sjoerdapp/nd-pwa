@@ -5,6 +5,7 @@ import * as algoliasearch from 'algoliasearch';
 import * as cryptoString from 'crypto-random-string';
 import * as twilio from 'twilio';
 import { isUndefined, isNullOrUndefined } from 'util';
+import * as crypto from 'crypto';
 
 // initalizations
 admin.initializeApp();
@@ -30,13 +31,8 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 const sgClient = require('@sendgrid/client');
 sgClient.setApiKey(SENDGRID_API_KEY);
 
-// Server-Side Rendering
-const universal = require(`${process.cwd()}/dist/server`).app;
-
 // Twilio Init
 const twClient = twilio(env.twilio.sid, env.twilio.token);
-
-exports.ssr = functions.https.onRequest(universal);
 
 exports.orderCancellation = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
@@ -163,18 +159,18 @@ exports.sendShippingLabel = functions.https.onRequest((req, res) => {
                 }
 
                 return sgMail.send(msg).then((content: any) => {
-                    console.log(`email sent to buyer`);
+                    console.log(`email sent to seller`);
                     return res.status(200).send();
                 }).catch((err: any) => {
-                    console.error(`Could send email to buyer: ${err}`);
+                    console.error(`Could send email to seller: ${err}`);
                     return res.status(500).send();
                 })
             } else {
-                console.error(`buyer don't exist`);
+                console.error(`seller don't exist`);
                 return res.status(500).send();
             }
         }).catch(err => {
-            console.error(`error sending buyer email`);
+            console.error(`error sending seller email`);
             return res.status(500).send();
         });
     });
@@ -191,7 +187,7 @@ exports.offerAcceptedReminder = functions.https.onRequest((req, res) => {
             if (data) {
                 const email = data.email;
                 const total = req.body.price + req.body.shippingCost;
-                const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.soldAt}`;
+                const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.purchaseDate}`;
 
                 console.log(`Order Email Buyer to ${email}.`);
 
@@ -248,6 +244,7 @@ exports.orderDelivered = functions.https.onRequest((req, res) => {
                 const msg = {
                     to: email,
                     from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                    bcc: { email: 'nxtdrop.com+e17f9774a6@invite.trustpilot.com' },
                     templateId: 'd-2544c5b2779547ee9d5915e0c111e3f6',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -347,6 +344,7 @@ exports.verifiedShipped = functions.https.onRequest((req, res) => {
                 const msg = {
                     to: email,
                     from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                    bcc: { email: 'nxtdrop.com+e17f9774a6@invite.trustpilot.com' },
                     templateId: 'd-41bb9f19ad2344f8b585ce6c1948a820',
                     dynamic_template_data: {
                         model: req.body.model,
@@ -497,7 +495,7 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                 }
 
                 if (req.body.type === 'sold') {
-                    const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.soldAt}`;
+                    const transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.purchaseDate}`;
                     msg.templateId = 'd-1ea40fbf9ad848638489561243162e97';
                     msg.dynamic_template_data.link = `https://nxtdrop.com/checkout?tID=${transactionID}`;
                 }
@@ -514,13 +512,14 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
             console.error(`error sending buyer email`);
         });
 
-        admin.firestore().collection(`users`).doc(`${req.body.sellerID}`).get().then(response => {
+        return admin.firestore().collection(`users`).doc(`${req.body.sellerID}`).get().then(response => {
             const data = response.data();
             if (data) {
                 const email = data.email;
                 const fee = req.body.price * 0.095;
                 const processing = req.body.price * 0.03;
                 const payout = req.body.price - fee - processing;
+                let transactionID = `${req.body.buyerID}-${req.body.sellerID}-${req.body.purchaseDate}`;
 
                 console.log(`Order Email Seller to ${email}.`);
 
@@ -535,8 +534,16 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                         assetURL: req.body.assetURL,
                         fee: fee,
                         processing: processing,
-                        payout: payout
+                        payout: payout,
+                        sellerID: req.body.sellerID,
+                        tid: ''
                     }
+                }
+
+                if (req.body.type === 'sold') {
+                    msg.templateId = 'd-8650dfd5d93f4b16b594cf02c49e9070';
+                } else {
+                    msg.dynamic_template_data.tid = transactionID;
                 }
 
                 sgMail.send(msg).then((content: any) => {
@@ -545,13 +552,13 @@ exports.orderConfirmation = functions.https.onRequest((req, res) => {
                     console.error(`Could send email to seller: ${err}`);
                 })
             } else {
-                console.error(`buyer don't exist`);
+                console.error(`Seller don't exist`);
             }
+
+            return res.status(200);
         }).catch(err => {
             console.error(`error sending seller email`);
         })
-
-        return res.status(200);
     });
 });
 
@@ -623,6 +630,29 @@ exports.inviteFriend = functions.https.onRequest((req, res) => {
         });
     });
 });
+
+exports.smsNotifications = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'POST') {
+            return res.status(403).send(false);
+        }
+
+        const phoneNumber = req.body.phoneNumber;
+        const msg = req.body.msg;
+
+        return twClient.messages.create({
+            body: `${msg}`,
+            from: '+15873273010',
+            to: `${phoneNumber}`,
+        }).then(message => {
+            console.log(message);
+            return res.status(200).send(true);
+        }).catch(err => {
+            console.error(err);
+            return res.send(false);
+        });
+    });
+})
 
 // Email when password is changed
 exports.changedPassword = functions.https.onRequest((req, res) => {
@@ -868,7 +898,9 @@ exports.sendGiftCard = functions.https.onRequest((req, res) => {
             }
         }
 
-        if (req.body.giftCard20) {
+        if (req.body.giftCard15) {
+            msg.dynamic_template_data.giftCard15 = true;
+        } else if (req.body.giftCard20) {
             msg.dynamic_template_data.giftCard20 = true;
         } else if (req.body.giftCard25) {
             msg.dynamic_template_data.giftCard25 = true;
@@ -1008,7 +1040,7 @@ exports.deliveredForVerification = functions.https.onRequest((req, res) => {
 
 exports.activateAccount = functions.https.onRequest((req, res) => {
     return cors(req, res, () => {
-        if (req.method != 'PUT') {
+        if (req.method !== 'PUT') {
             return res.status(403).send(false);
         }
 
@@ -1024,3 +1056,321 @@ exports.activateAccount = functions.https.onRequest((req, res) => {
         });
     });
 });
+
+exports.IntercomData = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'PUT') {
+            return res.status(403).send(false);
+        }
+
+        const uid = req.body.uid;
+
+        return admin.firestore().collection('users').doc(`${uid}`).get().then(userData => {
+            const hash = crypto.createHmac('sha256', env.intercom.hmackey).update(uid).digest('hex');
+
+            const uData = userData.data();
+
+            if (isUndefined(uData)) {
+                return res.status(200).send(false);
+            } else {
+                const data = {
+                    firstName: uData.firstName,
+                    lastName: uData.lastName,
+                    hash: hash
+                }
+
+                return res.status(200).send(data);
+            }
+        }).catch(err => {
+            console.error(err)
+            return res.status(200).send(false);
+        })
+    });
+});
+
+exports.addToNewsletter = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'PUT') {
+            return res.status(403).send(false);
+        }
+
+        const firstRequest = {
+            method: 'POST',
+            url: '/v3/contactdb/recipients',
+            body: [{
+                "email": req.body.email
+            }]
+        };
+
+        return sgClient.request(firstRequest).then(([firstResponse, firstBody]: any) => {
+            console.log(firstBody.persisted_recipients[0])
+            const r = {
+                method: 'POST',
+                url: `/v3/contactdb/lists/11551126/recipients/${firstBody.persisted_recipients[0]}`,
+            }
+
+            return sgClient.request(r).then(([secondResponse, secondBody]: any) => {
+                console.log(`Added to Newsletter list: ${secondResponse.statusCode}`);
+                return res.status(200).send(true)
+            });
+        }).catch((err: any) => {
+            console.error(err);
+            return res.status(200).send(false)
+        })
+
+    });
+});
+
+exports.droppedCartReminder = functions.pubsub.schedule('every 15 minutes from 6:00 to 18:00').timeZone('America/Edmonton').onRun((context) => {
+    const threshold = Date.now() - 172800000;
+    return admin.firestore().collection('users').where('last_item_in_cart.timestamp', '<=', threshold).get().then(data => {
+        data.docs.forEach(doc => {
+            const user_data = doc.data()
+
+            admin.firestore().collection('products').doc(user_data.last_item_in_cart.product_id).collection('listings').where('condition', '==', 'new').where('size', '==', user_data.last_item_in_cart.size).get().then(res => {
+                if (!res.empty) {
+                    const prod_data = res.docs[0].data()
+
+                    const msg = {
+                        to: user_data.email,
+                        from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                        templateId: 'd-b7580434edad4bd7a66b8350f5ce4ca6',
+                        dynamic_template_data: {
+                            model: prod_data.model,
+                            assetURL: prod_data.assetURL,
+                            product_id: user_data.last_item_in_cart.product_id
+                        }
+                    }
+
+                    sgMail.send(msg).then((content: any) => {
+                        console.log(`dropped cart email sent to ${user_data.uid}`);
+
+                        admin.firestore().collection('users').doc(user_data.uid).update({
+                            last_item_in_cart: admin.firestore.FieldValue.delete()
+                        }).catch(err => {
+                            console.error(`Could delete last_item_in_cart for ${user_data.uid}`)
+                        })
+                    }).catch((err: any) => {
+                        console.error(`Could send dropped cart email ${user_data.uid}: ${err}`);
+                    })
+                }
+            }).catch(err => {
+                console.error(err)
+            })
+        })
+
+        return null;
+    }).catch(err => {
+        console.error(err)
+        return null;
+    })
+})
+
+exports.lowestAskNotification = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'PUT') {
+            return res.status(403).send(false);
+        }
+
+        const buyer_list: any[] = []
+        const seller_list: any[] = []
+
+        admin.firestore().collection(`products`).doc(`${req.body.product_id}`).collection(`offers`).where('condition', '==', `${req.body.condition}`).where('size', '==', `${req.body.size}`).get()
+            .then(bids => {
+                console.log('getting bids...')
+                bids.docs.forEach(bid => {
+                    console.log(`getting buyer ${bid.data().buyerID}`)
+                    admin.firestore().collection(`users`).doc(`${bid.data().buyerID}`).get().then(user_data => {
+                        const data = user_data.data();
+
+                        if (!isNullOrUndefined(data) && req.body.seller_id !== data.uid && !buyer_list.includes(data.email)) {
+                            buyer_list.push(data.email)
+
+                            const msg: any = {
+                                to: data.email,
+                                from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                                templateId: 'd-c5ca84af85994118bb5cfdd2608c3095',
+                                dynamic_template_data: {
+                                    model: bid.data().model,
+                                    size: bid.data().size,
+                                    condition: bid.data().condition,
+                                    bid_amount: bid.data().price,
+                                    shipping: 15,
+                                    total: bid.data().price + 15,
+                                    assetURL: bid.data().assetURL,
+                                    lowest_ask: req.body.price,
+                                    update_bid: `https://nxtdrop.com/edit-offer/${bid.data().offerID}`,
+                                    buy_now: `https://nxtdrop.com/checkout?product=${req.body.listing_id}&sell=false`
+                                }
+                            }
+
+                            sgMail.send(msg).then((content: any) => {
+                                console.log(`email sent to buyer ${data.username}`)
+                            }).catch((err: any) => {
+                                console.error(err)
+                                buyer_list.pop()
+                            })
+                        }
+                    }).catch(err => {
+                        console.error(err)
+                    })
+                })
+            }).catch(err => {
+                console.error(err)
+            })
+
+        return admin.firestore().collection(`products`).doc(`${req.body.product_id}`).collection(`listings`).where('size', '==', `${req.body.size}`).where('condition', '==', `${req.body.condition}`).get()
+            .then(asks => {
+                console.log('getting asks...')
+                asks.docs.forEach(ask => {
+                    console.log(`getting seller ${ask.data().sellerID}`)
+                    admin.firestore().collection(`users`).doc(`${ask.data().sellerID}`).get().then(user_data => {
+                        const data = user_data.data()
+                        console.log(seller_list)
+
+                        if (!isNullOrUndefined(data) && req.body.seller_id !== data.uid && !seller_list.includes(data.email)) {
+                            seller_list.push(data.email)
+
+                            const msg: any = {
+                                to: data.email,
+                                from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                                templateId: 'd-d56fddb8b3544fd4b9359530518eeff2',
+                                dynamic_template_data: {
+                                    model: ask.data().model,
+                                    size: ask.data().size,
+                                    condition: ask.data().condition,
+                                    ask_amount: ask.data().price,
+                                    payment_processing: ask.data().price * .03,
+                                    seller_fee: ask.data().price * .095,
+                                    payout: ask.data().price * .875,
+                                    assetURL: ask.data().assetURL,
+                                    lowest_ask: req.body.price,
+                                    update_ask: `https://nxtdrop.com/edit-listing/${ask.data().listingID}`,
+                                    sell_now: `https://nxtdrop.com/product/${req.body.product_id}`
+                                }
+                            }
+
+                            sgMail.send(msg).then((content: any) => {
+                                console.log(`email sent to seller ${data.username}`)
+                            }).catch((err: any) => {
+                                console.error(err)
+                                seller_list.pop()
+                            })
+                        }
+                    }).catch(err => {
+                        console.error(err)
+                    })
+                })
+
+                return res.status(200).send()
+            }).catch(err => {
+                console.error(err)
+            })
+    })
+})
+
+exports.highestBidNotification = functions.https.onRequest((req, res) => {
+    return cors(req, res, () => {
+        if (req.method !== 'PUT') {
+            return res.status(403).send(false);
+        }
+
+        const buyer_list: any[] = []
+        const seller_list: any[] = []
+        const prodRef = admin.firestore().collection(`products`).doc(`${req.body.product_id}`)
+
+        prodRef.collection(`listings`).where('size', '==', `${req.body.size}`).where('condition', '==', `${req.body.condition}`).get()
+            .then(asks => {
+                console.log('getting asks...')
+
+                asks.docs.forEach(ask => {
+                    console.log(`getting seller ${ask.data().sellerID}`)
+                    admin.firestore().collection(`users`).doc(`${ask.data().sellerID}`).get().then(user_data => {
+                        const data = user_data.data()
+                        console.log(seller_list)
+
+                        if (!isNullOrUndefined(data) && req.body.buyer_id !== data.uid && !seller_list.includes(data.email)) {
+                            seller_list.push(data.email)
+
+                            const msg: any = {
+                                to: data.email,
+                                from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                                templateId: 'd-152610f1330b43399eb86d1d222b3c92',
+                                dynamic_template_data: {
+                                    model: ask.data().model,
+                                    size: ask.data().size,
+                                    condition: ask.data().condition,
+                                    ask_amount: ask.data().price,
+                                    payment_processing: ask.data().price * .03,
+                                    seller_fee: ask.data().price * .095,
+                                    payout: ask.data().price * .875,
+                                    assetURL: ask.data().assetURL,
+                                    highest_bid: req.body.price,
+                                    update_ask: `https://nxtdrop.com/edit-listing/${ask.data().listingID}`,
+                                    sell_now: `https://nxtdrop.com/checkout?product=${req.body.offer_id}&sell=true`
+                                }
+                            }
+
+                            sgMail.send(msg).then((content: any) => {
+                                console.log(`email sent to seller ${data.username}`)
+                            }).catch((err: any) => {
+                                console.error(err)
+                                seller_list.pop()
+                            })
+                        }
+                    }).catch(err => {
+                        console.error(err)
+                    })
+                })
+            }).catch(err => {
+                console.error(err)
+            })
+
+
+        return prodRef.collection(`offers`).where(`size`, `==`, `${req.body.size}`).where(`condition`, `==`, `${req.body.condition}`).get()
+            .then(bids => {
+                console.log(`getting bids...`)
+
+                bids.docs.forEach(bid => {
+                    console.log(`getting buyer ${bid.data().buyerID}`)
+                    admin.firestore().collection(`users`).doc(`${bid.data().buyerID}`).get().then(user_data => {
+                        const data = user_data.data()
+                        console.log(buyer_list)
+
+                        if (!isNullOrUndefined(data) && req.body.buyer_id !== data.uid && !buyer_list.includes(data.email)) {
+                            buyer_list.push(data.email)
+
+                            const msg: any = {
+                                to: data.email,
+                                from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                                templateId: 'd-1a41c84bde3f4908b5c9478a8d2827fa',
+                                dynamic_template_data: {
+                                    model: bid.data().model,
+                                    size: bid.data().size,
+                                    condition: bid.data().condition,
+                                    bid_amount: bid.data().price,
+                                    shipping: 15,
+                                    total: bid.data().price + 15,
+                                    assetURL: bid.data().assetURL,
+                                    highest_bid: req.body.price,
+                                    update_bid: `https://nxtdrop.com/edit-offer/${bid.data().offerID}`,
+                                    buy_now: `https://nxtdrop.com/product/${req.body.product_id}`
+                                }
+                            }
+
+                            sgMail.send(msg).then((content: any) => {
+                                console.log(`email sent to buyer ${data.username}`)
+                            }).catch((err: any) => {
+                                console.error(err)
+                                buyer_list.pop()
+                            })
+                        }
+                    }).catch(err => {
+                        console.error(err)
+                    })
+                })
+            }).catch(err => {
+                console.error(err)
+            })
+    })
+})

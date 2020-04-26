@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { isNullOrUndefined } from 'util';
 import { Title } from '@angular/platform-browser';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 
 @Component({
   selector: 'app-sold',
@@ -14,36 +14,19 @@ import { SEOService } from 'src/app/services/seo.service';
 export class SoldComponent implements OnInit {
 
   transactionID: string;
-  transaction: Transaction = {
-    assetURL: '',
-    soldAt: 0,
-    buyerID: '',
-    condition: '',
-    listedAt: 0,
-    offerID: '',
-    model: '',
-    paymentID: '',
-    price: 0,
-    productID: '',
-    sellerID: '',
-    shippingCost: 0,
-    size: '',
-    status: {},
-    type: '',
-    total: 0
-  };
+  transaction: Transaction;
   error = false;
 
   constructor(
     private route: ActivatedRoute,
     private TranService: TransactionService,
     private title: Title,
-    private seo: SEOService
+    private meta: MetaService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Item Sold | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.seo.addTags('Item Sold');
+    this.meta.addTags('Item Sold');
 
     this.transactionID = this.route.snapshot.queryParams.transactionID;
 
@@ -64,7 +47,7 @@ export class SoldComponent implements OnInit {
   fee() {
     let subtotal = this.transaction.price;
 
-    return subtotal * 0.095;
+    return subtotal * 0.085;
   }
 
   processing() {

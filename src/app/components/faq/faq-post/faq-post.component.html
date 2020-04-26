@@ -6,7 +6,7 @@
     <div class="post-container">
         <h2>{{ content.Q }}</h2>
 
-        <p>{{ content.A }}</p>
+        <div [innerHTML]="content.A | safeHtml"></div>
     </div>
 
     <button class="btn" routerLink="..">Back</button>

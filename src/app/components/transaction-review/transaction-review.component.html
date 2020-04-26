@@ -1,10 +1,9 @@
 <app-navbar></app-navbar>
 
 <div class="main-container">
-  <section class="review-container" *ngIf="!error">
+  <section class="review-container" *ngIf="!error && transaction && user">
     <h2>Transaction ID:</h2>
-    <h6 *ngIf="transaction.boughtAt">{{ transaction.buyerID + '-' + transaction.sellerID + '-' + transaction.boughtAt }}</h6>
-    <h6 *ngIf="transaction.soldAt">{{ transaction.buyerID + '-' + transaction.sellerID + '-' + transaction.soldAt }}</h6>
+    <h6>{{ transactionID }}</h6>
 
     <div class="review-items">
       <div class="review-item">
@@ -28,7 +27,8 @@
 
         <div class="shipping">
           <h5>Shipping</h5>
-          <h5>{{ transaction.shippingCost | currency: 'CAD' }}</h5>
+          <h5 *ngIf="transaction.shippingCost">{{ transaction.shippingCost | currency: 'CAD' }}</h5>
+          <h5 *ngIf="!transaction.shippingCost">{{ 0 | currency: 'CAD' }}</h5>
         </div>
 
         <div class="tax" *ngIf="transaction.discount">
@@ -42,19 +42,45 @@
         </div>
       </div>
 
-      <div class="review-shipment">
-        <h5></h5>
-        <h5></h5>
-        <h5></h5>
-        <h5></h5>
-        <h5></h5>
+      <div class="review-action" *ngIf="!transaction.status.sellerConfirmation && transaction.sellerID == user.uid && !transaction.status.cancelled">
+        <h3>Seller Confirmation</h3>
+
+        <button class="btn" (click)="confirmCancel()" *ngIf="!confLoading && !confError">Confirm Order</button>
+
+        <button class="btn" *ngIf="confLoading">
+          <fa-icon [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+        </button>
+
+        <button class="btn error" *ngIf="confError">Error</button>
+
+        <button class="btn" (click)="confirmCancel()" *ngIf="!cancelLoading && !cancelError">Cancel Order</button>
+
+        <button class="btn" *ngIf="cancelLoading">
+          <fa-icon [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+        </button>
+
+        <button class="btn error" *ngIf="cancelError">Error</button>
+      </div>
+
+      <div class="review-action"
+        *ngIf="!transaction.status.sellerConfirmation && transaction.buyerID == user.uid && !transaction.status.cancelled">
+        <h3>Want a Refund?</h3>
+        <button class="btn" (click)="cancelOrder()" *ngIf="!cancelLoading && !cancelError">Cancel Order</button>
+
+        <button class="btn" *ngIf="cancelLoading">
+          <fa-icon [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
+        </button>
+
+        <button class="btn error-btn" *ngIf="cancelError">Error</button>
       </div>
     </div>
 
-    <button class="btn" routerLink="..">Back</button>
+    <button class="btn" routerLink=".." *ngIf="!redirectTo">Back</button>
+    <button class="btn" routerLink="../{{ redirectTo }}" *ngIf="redirectTo">Back</button>
   </section>
 
-  <fa-icon style="text-align: center;" *ngIf="error" class="error-icon" [icon]="['fas', 'exclamation-circle']"></fa-icon>
+  <fa-icon style="text-align: center;" *ngIf="error" class="error-icon" [icon]="['fas', 'exclamation-circle']">
+  </fa-icon>
 
   <h3 *ngIf="error" style="text-align: center;">Error</h3>
 

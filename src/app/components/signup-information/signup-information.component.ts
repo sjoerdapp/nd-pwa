@@ -1,9 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { debounceTime, take, map } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
+import { isUndefined } from 'util';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export class CustomValidators {
 
@@ -46,12 +48,15 @@ export class SignupInformationComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private fb: FormBuilder,
     private title: Title,
-    private seo: SEOService
+    private meta: MetaService,
+    private ngZone: NgZone,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`Sign Up | NXTDROP: Sell and Buy Sneakers in Canada`);
-    this.seo.addTags('Sign Up');
+    this.meta.addTags('Sign Up');
 
     this.signupForm = this.fb.group({
       firstName: ['', [
@@ -86,6 +91,7 @@ export class SignupInformationComponent implements OnInit, OnDestroy {
   createUser() {
     //console.log('createUser() called');
     this.loading = true;
+    const redirect = this.route.snapshot.queryParams.redirectTo;
 
     this.auth.addInformationUser(this.firstName.value, this.lastName.value, this.username.value, this.password.value).then((res) => {
       if (!res) {
@@ -93,6 +99,16 @@ export class SignupInformationComponent implements OnInit, OnDestroy {
         this.error = true;
       } else {
         this.accountCreated = true;
+
+        if (!isUndefined(redirect)) {
+          return this.ngZone.run(() => {
+            return this.router.navigateByUrl(`${redirect}`);
+          });
+        } else {
+          return this.ngZone.run(() => {
+            return this.router.navigate(['/home']);
+          });
+        }
       }
 
       setTimeout(() => {

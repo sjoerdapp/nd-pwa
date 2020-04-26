@@ -3,83 +3,103 @@
 //
 
 // General
-body, * {
-    font-family: 'Poppins', sans-serif;
+body,
+* {
+  font-family: "Poppins", sans-serif;
+  outline: none;
+  -moz-outline: none;
+
+  button {
     outline: none;
     -moz-outline: none;
 
-    button {
-        outline: none;
-        -moz-outline: none;
-
-        &:hover, &:active, &:focus {
-            outline: none;
-            -moz-outline: none;
-        }
+    &:hover,
+    &:active,
+    &:focus {
+      outline: none;
+      -moz-outline: none;
     }
+  }
 }
 
 // Light mode theme
 html {
-    background: $white;
+  background: $white;
 
-    p {
-        color: $black;
+  p {
+    color: $black;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $black;
+  }
+
+  a {
+    color: $navyblue;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      color: $blueivy;
     }
+  }
 
-    h1, h2, h3, h4, h5, h6 {
-        color: $black;
-    }
+  .btn {
+    background: $navyblue;
+    border: none;
+    color: $white;
+    border-radius: $spacing-xxsmall;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: $font-xsmall;
+    font-weight: $weight-black;
+    letter-spacing: 2px;
+    padding: $spacing-xxsmall;
+    @include vendor(transition, 0.25s ease-in-out);
+    outline: none;
+  }
 
-    a {
-        color: $navyblue;
-        text-decoration: none;
-
-        &:hover, &:focus {
-            color: $blueivy;
-        }
-    }
-
-    .btn {
-        background: $navyblue;
-        border: none;
-        color: $white;
-        border-radius: $spacing-xxsmall;
-        cursor: pointer;
-        text-transform: uppercase;
-        font-size: $font-xsmall;
-        font-weight: $weight-black;
-        letter-spacing: 2px;
-        padding: $spacing-xxsmall;
-        @include vendor(transition, 0.25s ease-in-out);
-        outline: none;
-    }
+  .error-btn {
+    @extend .btn;
+    background: $googleRed !important;
+    color: $white !important;
+  }
 }
 
 // Dark mode theme
-html[theme='dark'] {
-    background: $black;
+html[theme="dark"] {
+  background: $black;
 
-    p {
-        color: $white;
-    }
+  p {
+    color: $white;
+  }
 
-    h1, h2, h3, h4, h5, h6 {
-        color: $white;
-    }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $white;
+  }
 
-    .btn {
-        background: $white;
-        color: $darkblue;
-        border: none;
-        border-radius: $spacing-xxsmall;
-        cursor: pointer;
-        text-transform: uppercase;
-        font-size: $font-xsmall;
-        font-weight: $weight-black;
-        letter-spacing: 2px;
-        padding: $spacing-xxsmall;
-        @include vendor(transition, 0.25s ease-in-out);
-        outline: none;
-    }
+  .btn {
+    background: $white;
+    color: $darkblue;
+    border: none;
+    border-radius: $spacing-xxsmall;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: $font-xsmall;
+    font-weight: $weight-black;
+    letter-spacing: 2px;
+    padding: $spacing-xxsmall;
+    @include vendor(transition, 0.25s ease-in-out);
+    outline: none;
+  }
 }

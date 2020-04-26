@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsService } from 'src/app/services/news.service';
-import { SEOService } from 'src/app/services/seo.service';
+import { MetaService } from 'src/app/services/meta.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -14,13 +14,13 @@ export class BlogHomeComponent implements OnInit {
 
   constructor(
     private news: NewsService,
-    private seo: SEOService,
+    private meta: MetaService,
     private title: Title
   ) { }
 
   ngOnInit() {
     this.title.setTitle(`News | NXTDROP: Buy and Sell Authentic Sneakers - Sneaker and Fashion News`)
-    this.seo.addTags('News');
+    this.meta.addTags('News');
 
     this.news.getAllNews().subscribe((json: any) => {
       json.forEach(element => {
