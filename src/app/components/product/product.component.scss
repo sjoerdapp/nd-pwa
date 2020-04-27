@@ -69,8 +69,10 @@
         background: $prodBtnPrimary;
 
         div:last-child {
-          button {
+          a {
             background: $prodBtnPrimary;
+            display: grid;
+            align-content: center;
 
             &:hover {
               &:first-child {
@@ -105,8 +107,10 @@
         background: $prodBtnPrimary2;
 
         div:last-child {
-          button {
+          a {
             background: $prodBtnPrimary2;
+            display: grid;
+            align-content: center;
 
             &:hover {
               &:first-child {
@@ -176,7 +180,7 @@
           display: grid;
           grid-template-rows: 1fr 1fr;
 
-          button {
+          a {
             height: 100%;
             border: none;
             color: $white;
@@ -270,7 +274,7 @@
       }
 
       div {
-        button {
+        a {
           font-size: 0.6rem;
 
           &:hover {
@@ -282,7 +286,7 @@
     }
 
     .sell-ask {
-      div > button {
+      div > a {
         &:last-child {
           &:hover {
             border-top: 1px solid $prodBtnSecondary2 !important;
@@ -292,7 +296,7 @@
     }
 
     .buy-bid {
-      div > button {
+      div > a {
         &:last-child {
           &:hover {
             border-top: 1px solid $prodBtnSecondary !important;
@@ -390,7 +394,7 @@
       }
 
       div {
-        button {
+        a {
           font-size: $font-xsmall;
 
           &:hover {
@@ -402,7 +406,7 @@
     }
 
     .sell-ask {
-      div > button {
+      div > a {
         &:last-child {
           &:hover {
             border-top: 1px solid $prodBtnSecondary2 !important;
@@ -412,7 +416,7 @@
     }
 
     .buy-bid {
-      div > button {
+      div > a {
         &:last-child {
           &:hover {
             border-top: 1px solid $prodBtnSecondary !important;
@@ -520,7 +524,7 @@
       }
 
       div {
-        button {
+        a {
           font-size: $font-xsmall;
 
           &:hover {
@@ -532,7 +536,7 @@
     }
 
     .sell-ask {
-      div > button {
+      div > a {
         &:last-child {
           &:hover {
             border-top: 1px solid $prodBtnSecondary2 !important;
@@ -542,7 +546,7 @@
     }
 
     .buy-bid {
-      div > button {
+      div > a {
         &:last-child {
           &:hover {
             border-top: 1px solid $prodBtnSecondary !important;
@@ -643,7 +647,7 @@
       }
 
       div {
-        button {
+        a {
           font-size: $font-small;
         }
       }
@@ -760,7 +764,7 @@
       }
 
       div {
-        button {
+        a {
           font-size: $font-large;
         }
       }
@@ -877,7 +881,7 @@
       }
 
       div {
-        button {
+        a {
           font-size: $font-large;
         }
       }

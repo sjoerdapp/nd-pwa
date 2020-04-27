@@ -88,7 +88,7 @@ export class ProfileService {
     
     const userAskRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listing_id}`); //ask in user doc ref
     const prodAskRef = this.afs.firestore.collection('products').doc(`${product_id}`).collection('listings').doc(`${listing_id}`); //ask in prod doc ref
-    const askRef = this.afs.firestore.collection(`asks`).doc(`${product_id}`); //ask in asks collection ref
+    const askRef = this.afs.firestore.collection(`asks`).doc(`${listing_id}`); //ask in asks collection ref
 
     const prodRef = this.afs.firestore.collection(`products`).doc(`${product_id}`); //prod ref in prod document
     let prices: Ask[] = []; //lowest prices
