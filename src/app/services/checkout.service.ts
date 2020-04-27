@@ -203,7 +203,7 @@ export class CheckoutService {
   }
 
   addTransaction(product, paymentID: string, shippingCost: number, discount?: number, discountCardID?: string) {
-    const transactionID = `${product.buyerID}-${product.sellerID}-${product.soldAt}`;
+    const transactionID = `${product.buyerID}-${product.sellerID}-${product.purchaseDate}`;
     const tranRef = this.afs.firestore.collection(`transactions`).doc(`${transactionID}`);
     const batch = firebase.firestore().batch();
 

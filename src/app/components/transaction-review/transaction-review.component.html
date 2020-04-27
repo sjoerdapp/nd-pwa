@@ -53,7 +53,7 @@
 
         <button class="btn error" *ngIf="confError">Error</button>
 
-        <button class="btn" (click)="confirmCancel()" *ngIf="!cancelLoading && !cancelError">Cancel Order</button>
+        <!--<button class="btn" (click)="confirmCancel()" *ngIf="!cancelLoading && !cancelError">Cancel Order</button>-->
 
         <button class="btn" *ngIf="cancelLoading">
           <fa-icon [icon]="['fas', 'spinner']" [spin]=true></fa-icon>
@@ -62,7 +62,7 @@
         <button class="btn error" *ngIf="cancelError">Error</button>
       </div>
 
-      <div class="review-action"
+      <!--<div class="review-action"
         *ngIf="!transaction.status.sellerConfirmation && transaction.buyerID == user.uid && !transaction.status.cancelled">
         <h3>Want a Refund?</h3>
         <button class="btn" (click)="cancelOrder()" *ngIf="!cancelLoading && !cancelError">Cancel Order</button>
@@ -72,7 +72,7 @@
         </button>
 
         <button class="btn error-btn" *ngIf="cancelError">Error</button>
-      </div>
+      </div>-->
     </div>
 
     <button class="btn" routerLink=".." *ngIf="!redirectTo">Back</button>

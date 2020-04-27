@@ -22,7 +22,6 @@
       .product-info {
         img {
           margin: auto;
-          background: $lightgrey;
         }
 
         #price {
@@ -81,7 +80,7 @@
 
     .confirmation-btns {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       column-gap: $spacing-small;
       margin: $spacing-large auto;
 

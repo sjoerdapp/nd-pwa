@@ -58,11 +58,11 @@
 
         <div class="confirmation-btns"
             *ngIf="!transactionData.status.cancelled && !transactionData.status.sellerConfirmation">
-            <button class="btn" (click)="cancelOrder()" *ngIf="!cancelLoading && !cancelError">Cancel Order</button>
+            <!--<button class="btn" (click)="cancelOrder()" *ngIf="!cancelLoading && !cancelError">Cancel Order</button>
             <button class="btn" *ngIf="cancelLoading">
                 <fa-icon [icon]="['fas', 'spinner']" [spin]="true"></fa-icon>
             </button>
-            <button class="btn error-btn" *ngIf="cancelError">Error</button>
+            <button class="btn error-btn" *ngIf="cancelError">Error</button>-->
 
             <button class="btn"
                 *ngIf="addressExist() && !confLoading && !confError"
@@ -83,6 +83,8 @@
         <p *ngIf="transactionData.status.sellerConfirmation" id="confirmed">
             Order Confirmed
         </p>
+
+        <p>Having troubles? Contact us at support@nxtdrop.com</p>
     </div>
 
     <div class="confirmation-container" *ngIf="!user && !transactionData">
