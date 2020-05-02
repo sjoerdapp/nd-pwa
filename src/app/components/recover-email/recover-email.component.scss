@@ -1,0 +1,21 @@
+@import '../../base_styles/base';
+
+.main-container {
+    display: grid;
+    align-content: center;
+}
+
+.content-container {
+    text-align: center;
+
+    fa-icon {
+        font-size: $font-large;
+        color: $prodBtnPrimary2;
+        display: block;
+        margin: $spacing-large auto;
+    }
+
+    a {
+        color: $prodBtnPrimary;
+    }
+}

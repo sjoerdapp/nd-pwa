@@ -47,6 +47,8 @@ import { FaqHomeComponent } from './components/faq/faq-home/faq-home.component';
 import { FaqPostComponent } from './components/faq/faq-post/faq-post.component';
 import { FaqCategoryComponent } from './components/faq/faq-category/faq-category.component';
 import { SaleConfirmationComponent } from './components/sale-confirmation/sale-confirmation.component';
+import { SettingsEmailComponent } from './components/settings-email/settings-email.component';
+import { RecoverEmailComponent } from './components/recover-email/recover-email.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -95,6 +97,8 @@ const routes: Routes = [
   { path: 'faq/:category', component: FaqCategoryComponent },
   { path: 'faq/:category/:post', component: FaqPostComponent },
   { path: 'confirmation/:id/:seller', component: SaleConfirmationComponent },
+  { path: 'settings/email', component: SettingsEmailComponent },
+  { path: 'recover-email', component: RecoverEmailComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -92,6 +92,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { SafeHtmlPipe } from './pipes/safeHtml.pipes';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
+import { SettingsEmailComponent } from './components/settings-email/settings-email.component';
+import { RecoverEmailComponent } from './components/recover-email/recover-email.component';
 
 @NgModule({
   declarations: [
@@ -153,7 +155,9 @@ import { NewsletterComponent } from './components/newsletter/newsletter.componen
     FaqCategoryComponent,
     SaleConfirmationComponent,
     TrustboxComponent,
-    NewsletterComponent
+    NewsletterComponent,
+    SettingsEmailComponent,
+    RecoverEmailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

@@ -24,6 +24,8 @@ export class AuthComponent implements OnInit {
       this.router.navigate(['../reset-password'], { queryParams: { code: this.code, uid: this.route.snapshot.queryParams.uid, email: this.route.snapshot.queryParams.email } });
     } else if (this.mode === 'verifyEmail') {
       this.router.navigate(['../activate-account'], { queryParams: { code: this.code } });
+    } else if (this.mode === 'recoverEmail') {
+      this.router.navigate(['../recover-email'])
     }
   }
 
