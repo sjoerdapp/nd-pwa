@@ -10,4 +10,5 @@ export class Ask {
     timestamp: number;
     last_updated?: number;
     created_at?: number;
+    last_reminder?: number;
 }
