@@ -56,6 +56,8 @@ import { BlogHomeComponent } from './components/blog/blog-home/blog-home.compone
 import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
 import { DropComponent } from './components/special-drop/drop/drop.component';
 import { SnkrsComponent } from './components/snkrs/snkrs.component';
+import { ListingsComponent } from './components/listings/listings.component';
+import { OffersComponent } from './components/offers/offers.component';
 import { Dec182019Component } from './components/landing-pages/dec182019//dec182019.component';
 import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { ReferralComponent } from './components/referral/referral.component';
@@ -147,6 +149,8 @@ import { RecoverEmailComponent } from './components/recover-email/recover-email.
     BlogPostComponent,
     SnkrsComponent,
     SafeHtmlPipe,
+    ListingsComponent,
+    OffersComponent,
     Dec182019Component,
     HowItWorksComponent,
     ReferralComponent,

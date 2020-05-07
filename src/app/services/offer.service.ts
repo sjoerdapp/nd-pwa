@@ -14,8 +14,7 @@ import { Router } from '@angular/router';
 })
 export class OfferService {
 
-  userListing: Bid;
-  productListing: Bid;
+  bid_data: Bid;
 
   constructor(
     private auth: AuthService,
@@ -42,7 +41,7 @@ export class OfferService {
     const timestamp = Date.now();
     const offerID = UID + '-' + timestamp;
 
-    this.userListing = {
+    this.bid_data = {
       assetURL: pair.assetURL,
       model: pair.model,
       price,
@@ -51,19 +50,9 @@ export class OfferService {
       productID: pair.productID,
       offerID,
       timestamp,
-      buyerID: UID
-    };
-
-    this.productListing = {
-      assetURL: pair.assetURL,
-      model: pair.model,
-      price,
-      condition,
-      size,
-      offerID,
-      timestamp,
-      productID: pair.productID,
-      buyerID: UID
+      buyerID: UID,
+      last_updated: timestamp,
+      created_at: timestamp
     };
 
     const batch = this.afs.firestore.batch();
@@ -71,9 +60,11 @@ export class OfferService {
     const userDocRef = this.afs.firestore.collection(`users/${UID}/offers`).doc(`${offerID}`);
     const prodDocRef = this.afs.firestore.collection(`products/${pair.productID}/offers`).doc(`${offerID}`);
     const offersValRef = this.afs.firestore.doc(`users/${UID}`);
+    const bidRef = this.afs.firestore.collection(`bids`).doc(`${offerID}`);
 
-    batch.set(userDocRef, this.userListing);
-    batch.set(prodDocRef, this.productListing);
+    batch.set(userDocRef, this.bid_data);
+    batch.set(prodDocRef, this.bid_data);
+    batch.set(bidRef, this.bid_data); // add offer to offers collection
     batch.set(offersValRef, {
       offers: firebase.firestore.FieldValue.increment(1)
     }, { merge: true })
@@ -130,11 +121,13 @@ export class OfferService {
     });
 
     const batch = this.afs.firestore.batch();
+    const last_updated = Date.now()
 
-    const offerRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('offers').doc(`${offer_id}`);
-    const bidRef = this.afs.firestore.collection('products').doc(`${product_id}`).collection('offers').doc(`${offer_id}`);
+    const userBidRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('offers').doc(`${offer_id}`);
+    const prodBidRef = this.afs.firestore.collection('products').doc(`${product_id}`).collection('offers').doc(`${offer_id}`);
+    const bidRef = this.afs.firestore.collection(`bids`).doc(`${offer_id}`);
+
     const prodRef = this.afs.firestore.collection(`products`).doc(`${product_id}`);
-
     let prices: Bid[] = []
     let size_prices: Bid[] = []
 
@@ -171,16 +164,25 @@ export class OfferService {
       }
     }
 
-    batch.update(offerRef, {
-      condition: condition,
-      price: price,
-      size: size
-    });
-
     batch.update(bidRef, {
       condition: condition,
       price: price,
-      size: size
+      size: size,
+      last_updated
+    });
+
+    batch.update(userBidRef, {
+      condition: condition,
+      price: price,
+      size: size,
+      last_updated
+    });
+
+    batch.update(prodBidRef, {
+      condition: condition,
+      price: price,
+      size: size,
+      last_updated
     });
 
     return batch.commit()
@@ -198,17 +200,19 @@ export class OfferService {
   public async deleteoffer(bid: Bid) {
     const batch = this.afs.firestore.batch();
 
-    const offerRef = this.afs.firestore.collection('users').doc(`${bid.buyerID}`).collection('offers').doc(`${bid.offerID}`);
-    const bidRef = this.afs.firestore.collection('products').doc(`${bid.productID}`).collection('offers').doc(`${bid.offerID}`);
+    const userBidRef = this.afs.firestore.collection('users').doc(`${bid.buyerID}`).collection('offers').doc(`${bid.offerID}`);
+    const prodBidRef = this.afs.firestore.collection('products').doc(`${bid.productID}`).collection('offers').doc(`${bid.offerID}`);
     const userRef = this.afs.firestore.collection('users').doc(`${bid.buyerID}`);
-    const prodRef = this.afs.firestore.collection('products').doc(`${bid.productID}`)
+    const bidRef = this.afs.firestore.collection(`bids`).doc(`${bid.offerID}`);
 
-    batch.delete(offerRef);
-    batch.delete(bidRef);
+    batch.delete(userBidRef); //remove bid in user document
+    batch.delete(prodBidRef); //remove bid in prod document
+    batch.delete(bidRef); //remove bid bid collection
     batch.update(userRef, {
       offers: firebase.firestore.FieldValue.increment(-1)
     });
 
+    const prodRef = this.afs.firestore.collection('products').doc(`${bid.productID}`);
     let prices: Bid[] = []
     let size_prices: Bid[] = []
 

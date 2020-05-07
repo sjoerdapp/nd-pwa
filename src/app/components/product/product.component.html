@@ -26,13 +26,13 @@
           </div>
 
           <div>
-            <button *ngIf="currentOffer.LowestAsk" [routerLink]="['/checkout']"
-              [queryParams]="{ product: currentOffer.LowestAsk.listingID, sell: false }">Buy Now</button>
-            <button *ngIf="!currentOffer.LowestAsk" class="disabled">Buy Now</button>
-            <button *ngIf="!sizeSelected" [routerLink]="['/make-an-offer']"
-              [queryParams]="{ sneaker: productInfo | json }">Place Bid</button>
-            <button *ngIf=sizeSelected [routerLink]="['/make-an-offer']"
-              [queryParams]="{ sneaker: productInfo | json, size: sizeSelected }">Place Bid</button>
+            <a *ngIf="currentOffer.LowestAsk" [routerLink]="['/checkout']"
+              [queryParams]="{ product: currentOffer.LowestAsk.listingID, sell: false }">Buy Now</a>
+            <a *ngIf="!currentOffer.LowestAsk" class="disabled">Buy Now</a>
+            <a *ngIf="!sizeSelected" [routerLink]="['/make-an-offer']"
+              [queryParams]="{ sneaker: productInfo | json }">Place Bid</a>
+            <a *ngIf=sizeSelected [routerLink]="['/make-an-offer']"
+              [queryParams]="{ sneaker: productInfo | json, size: sizeSelected }">Place Bid</a>
           </div>
         </div>
 
@@ -58,13 +58,13 @@
           </div>
 
           <div>
-            <button *ngIf="currentOffer.HighestBid" [routerLink]="['/checkout']"
-              [queryParams]="{ product: currentOffer.HighestBid.offerID, sell: true }">Sell Now</button>
-            <button *ngIf="!currentOffer.HighestBid" class="disabled">Sell Now</button>
-            <button *ngIf="!sizeSelected" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json }">Place
-              Ask</button>
-            <button *ngIf="sizeSelected" [routerLink]="['/sell']"
-              [queryParams]="{ sneaker: productInfo | json, size: sizeSelected }">Place Ask</button>
+            <a *ngIf="currentOffer.HighestBid" [routerLink]="['/checkout']"
+              [queryParams]="{ product: currentOffer.HighestBid.offerID, sell: true }">Sell Now</a>
+            <a *ngIf="!currentOffer.HighestBid" class="disabled">Sell Now</a>
+            <a *ngIf="!sizeSelected" [routerLink]="['/sell']" [queryParams]="{ sneaker: productInfo | json }">Place
+              Ask</a>
+            <a *ngIf="sizeSelected" [routerLink]="['/sell']"
+              [queryParams]="{ sneaker: productInfo | json, size: sizeSelected }">Place Ask</a>
           </div>
         </div>
       </div>

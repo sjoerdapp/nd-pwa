@@ -1,0 +1,15 @@
+@import "../../base_styles/base";
+
+.price-size {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  h6:first-child {
+    justify-self: start;
+  }
+
+  h6:last-child {
+    justify-self: end;
+  }
+}

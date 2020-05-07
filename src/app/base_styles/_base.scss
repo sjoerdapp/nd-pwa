@@ -209,10 +209,6 @@ $productContainerHeight: calc(100vh - #{$navHeight});
           }
         }
 
-        #window-price {
-          font-size: $font-xsmall;
-        }
-
         #window-model {
           font-size: $header-size-7;
           font-weight: $weight-bold;
@@ -380,6 +376,11 @@ $productContainerHeight: calc(100vh - #{$navHeight});
             width: 75px;
           }
         }
+
+        #window-price,
+        #window-size {
+          font-size: $font-xsmall;
+        }
       }
     }
   }
@@ -396,6 +397,11 @@ $productContainerHeight: calc(100vh - #{$navHeight});
             height: 100px;
             width: 100px;
           }
+        }
+
+        #window-price,
+        #window-size {
+          font-size: $font-xsmall;
         }
       }
     }
@@ -415,6 +421,11 @@ $productContainerHeight: calc(100vh - #{$navHeight});
             width: 125px;
           }
         }
+
+        #window-price,
+        #window-size {
+          font-size: $font-small;
+        }
       }
     }
   }
@@ -433,6 +444,11 @@ $productContainerHeight: calc(100vh - #{$navHeight});
             width: 150px;
           }
         }
+
+        #window-price,
+        #window-size {
+          font-size: $font-small;
+        }
       }
     }
   }
@@ -450,6 +466,11 @@ $productContainerHeight: calc(100vh - #{$navHeight});
             height: 150px;
             width: 150px;
           }
+        }
+
+        #window-price,
+        #window-size {
+          font-size: $font-normal;
         }
       }
     }

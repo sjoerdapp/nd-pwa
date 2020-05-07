@@ -84,26 +84,31 @@ export class ProfileService {
     });
 
     const batch = this.afs.firestore.batch();
+    const last_updated = Date.now()
+    
+    const userAskRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listing_id}`); //ask in user doc ref
+    const prodAskRef = this.afs.firestore.collection('products').doc(`${product_id}`).collection('listings').doc(`${listing_id}`); //ask in prod doc ref
+    const askRef = this.afs.firestore.collection(`asks`).doc(`${listing_id}`); //ask in asks collection ref
 
-    const listingRef = this.afs.firestore.collection('users').doc(`${UID}`).collection('listings').doc(`${listing_id}`);
-    const askRef = this.afs.firestore.collection('products').doc(`${product_id}`).collection('listings').doc(`${listing_id}`);
-    const prodRef = this.afs.firestore.collection(`products`).doc(`${product_id}`);
+    const prodRef = this.afs.firestore.collection(`products`).doc(`${product_id}`); //prod ref in prod document
+    let prices: Ask[] = []; //lowest prices
+    let size_prices: Ask[] = []; //size lowest prices
 
-    let prices: Ask[] = [];
-    let size_prices: Ask[] = [];
-
+    //get the two lowest prices
     await prodRef.collection(`listings`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
       snap.forEach(ele => {
         prices.push(ele.data() as Ask);
       });
     });
 
+    //get the two lowest prices in specific size
     await prodRef.collection(`listings`).where('size', '==', `${size}`).where('condition', '==', `${condition}`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
       snap.forEach(ele => {
         size_prices.push(ele.data() as Ask);
       });
     });
 
+    //get prod info and compare current ask price w lowest ask. update if necessary.
     await prodRef.get().then(snap => {
       if (isUndefined(prices[1]) || price < snap.data().lowestPrice) {
         batch.update(prodRef, {
@@ -123,22 +128,35 @@ export class ProfileService {
       }
     });
 
-    batch.update(listingRef, {
-      condition: condition,
-      price: price,
-      size: size
-    });
-
+    // update ask in asks collection
     batch.update(askRef, {
       condition: condition,
       price: price,
-      size: size
+      size: size,
+      last_updated
     });
 
+    // update ask in user doc
+    batch.update(userAskRef, {
+      condition: condition,
+      price: price,
+      size: size,
+      last_updated
+    });
+
+    // update ask in prod doc
+    batch.update(prodAskRef, {
+      condition: condition,
+      price: price,
+      size: size,
+      last_updated
+    });
+
+    // commit the updates
     return batch.commit()
       .then(() => {
         //console.log('Listing updated');
-        this.sendLowestAskNotification(price, condition, size, UID, product_id, listing_id, size_prices)
+        this.sendLowestAskNotification(price, condition, size, UID, product_id, listing_id, size_prices) //send new lowest ask notification if necessary
         return true;
       })
       .catch((err) => {
@@ -149,27 +167,33 @@ export class ProfileService {
 
   public async deleteListing(ask: Ask): Promise<boolean> {
     const batch = this.afs.firestore.batch();
+    
+    const userAskRef = this.afs.firestore.collection('users').doc(`${ask.sellerID}`).collection('listings').doc(`${ask.listingID}`); //ask in user doc ref
+    const prodAskRef = this.afs.firestore.collection('products').doc(`${ask.productID}`).collection('listings').doc(`${ask.listingID}`); //ask in prod doc ref
+    const userRef = this.afs.firestore.collection('users').doc(`${ask.sellerID}`); //user doc ref
+    const askRef = this.afs.firestore.collection(`asks`).doc(`${ask.listingID}`); //ask in asks collection ref
 
-    const userListingRef = this.afs.firestore.collection('users').doc(`${ask.sellerID}`).collection('listings').doc(`${ask.listingID}`);
-    const listingRef = this.afs.firestore.collection('products').doc(`${ask.productID}`).collection('listings').doc(`${ask.listingID}`);
-    const userRef = this.afs.firestore.collection('users').doc(`${ask.sellerID}`);
-    const prodRef = this.afs.firestore.collection(`products`).doc(`${ask.productID}`);
+    batch.delete(userAskRef); //remove ask in user doc
+    batch.delete(prodAskRef); //remove ask in prod doc
+    batch.delete(askRef); //remove ask in asks collection
 
-    batch.delete(userListingRef);
-    batch.delete(listingRef);
+    //udpate ask number in user doc
     batch.update(userRef, {
       listed: firebase.firestore.FieldValue.increment(-1)
     });
 
-    let prices: Ask[] = []
-    let size_prices: Ask[] = []
+    const prodRef = this.afs.firestore.collection(`products`).doc(`${ask.productID}`); //prod ref in prod document
+    let prices: Ask[] = [] //lowest prices
+    let size_prices: Ask[] = [] //size lowest prices
 
+    //get two lowest prices
     await prodRef.collection(`listings`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
       snap.forEach(data => {
         prices.push(data.data().price as Ask);
       });
     });
 
+    //get two lowest prices in specific size
     await prodRef.collection(`listings`).where('size', '==', `${ask.size}`).where('condition', '==', `${ask.condition}`).orderBy(`price`, `asc`).limit(2).get().then(snap => {
       snap.forEach(ele => {
         size_prices.push(ele.data() as Ask);
@@ -179,8 +203,8 @@ export class ProfileService {
     // console.log(`length: ${prices.length}; price1: ${prices[0]}; price2: ${prices[1]}`);
     // console.log(prices);
 
+    //udpate new lowest price
     if (prices.length === 1) {
-      //console.log('working');
       batch.update(prodRef, {
         lowestPrice: firebase.firestore.FieldValue.delete()
       });
@@ -190,6 +214,7 @@ export class ProfileService {
       });
     }
 
+    //commit the updates
     return batch.commit()
       .then(() => {
         //console.log('listing deleted');

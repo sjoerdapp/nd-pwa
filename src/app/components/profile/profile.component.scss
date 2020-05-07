@@ -105,9 +105,10 @@ h2 {
 
     .profile-item {
         text-align: center;
-        padding: $spacing-xxsmall;
+        padding: $spacing-xsmall;
         margin-bottom: $spacing-normal;
         @include vendor(transition, 0.25s ease-in-out);
+        border-right: 1px solid $lightgrey;
 
         &:hover {
             cursor: pointer;
@@ -117,8 +118,8 @@ h2 {
             }
         }
 
-        &:nth-child(odd) {
-            border-right: 1px solid $lightgrey;
+        &:nth-child(4) {
+            border-right: none;
         }
 
         .item-specs {
