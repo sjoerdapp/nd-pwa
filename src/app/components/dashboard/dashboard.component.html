@@ -33,12 +33,8 @@
       <td>{{ purchase.model + ', ' + purchase.size }}</td>
       <td>{{ purchase.purchaseDate | date:'medium' }}</td>
       <td>{{ printOrderStatus(purchase.status) }}</td>
-
-      <td *ngIf="printOrderStatus(purchase.status) === 'awaiting seller confirmation'" [routerLink]="['/transaction']"
-        [queryParams]="{ transactionID: purchase.id, redirectTo: 'dashboard/purchases' }">More
-        Details/Cancel</td>
-
-      <td *ngIf="printOrderStatus(purchase.status) != 'awaiting seller confirmation'" [routerLink]="['/transaction']"
+      
+      <td [routerLink]="['/transaction']"
         [queryParams]="{ transactionID: purchase.id, redirectTo: 'dashboard/purchases' }">More
         Details
       </td>
@@ -59,7 +55,7 @@
       <td>{{ printOrderStatus(sale.status) }}</td>
 
       <td *ngIf="printOrderStatus(sale.status) === 'awaiting seller confirmation'" [routerLink]="['/transaction']"
-        [queryParams]="{ transactionID: sale.id, redirectTo: 'dashboard/sales' }">Confirm/Cancel
+        [queryParams]="{ transactionID: sale.id, redirectTo: 'dashboard/sales' }">Confirm
       </td>
 
       <td *ngIf="printOrderStatus(sale.status) != 'awaiting seller confirmation'" [routerLink]="['/transaction']"
