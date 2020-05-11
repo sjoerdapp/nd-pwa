@@ -81,7 +81,7 @@
     </select>
 
     <div class="edit-btns">
-      <button class="btn" routerLink="/{{ source }}">Back</button>
+      <button class="btn" (click)="back()">Back</button>
 
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && showSaveChanges"
         [className]="priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'"
@@ -102,7 +102,7 @@
     <button id="delete-btn" (click)="deleteOffer()">Delete</button>
   </section>
 
-  <section class="edit-container" *ngIf="!offerInfo">
+  <section class="edit-container loading" *ngIf="!offerInfo">
     <fa-icon [icon]="['fas', 'circle-notch']" [spin]="true"></fa-icon>
   </section>
 </div>

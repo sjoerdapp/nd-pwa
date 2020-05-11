@@ -7,6 +7,16 @@
   max-width: 100%;
 }
 
+.loading {
+  display: grid;
+
+  fa-icon {
+    font-size: 2rem;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
 .edit-container {
   width: 95vw;
   justify-self: center;
@@ -67,7 +77,7 @@
 
   .min {
     margin-top: $spacing-small;
-    font-size: .8rem;
+    font-size: 0.8rem;
     text-align: center;
     color: $coolgrey;
   }

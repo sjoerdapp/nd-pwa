@@ -107,17 +107,32 @@
     </div>-->
 
   <div class="checkout-btns" *ngIf="product">
-    <h2 *ngIf="!isSelling && !freePair && connected">Select Payment Method</h2>
-    <ngx-paypal *ngIf="!isSelling && !freePair && connected" [config]="payPalConfig"></ngx-paypal>
+    <!--user viewing an ask-->
+    <div *ngIf="!isSelling && !freePair && connected && userID != product.sellerID">
+      <h2>Select Payment Method</h2>
+      <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    </div>
 
+    <button *ngIf="!isSelling && !freePair && connected && userID === product.sellerID" class="btn" [routerLink]="['/edit-ask', product.listingID]" [queryParams]="{ source: 'checkout?product=' + product.listingID + '&sell=false'}">Edit Ask</button>
+    <!--user viewing an ask end-->
+
+    <!--user not logged in-->
     <div class="connect-btns" *ngIf="!connected">
       <button class="btn" (click)="connect('login')">Login</button>
       <button class="btn" (click)="connect('signup')">Sign Up</button>
     </div>
+    <!--user not logged in end-->
 
+    <!--user buying pair for free (when using a promo covering all expenses)-->
     <button *ngIf="freePair" (click)="buyNow()" class="btn">Confirm</button>
-    <button *ngIf="isSelling" (click)="sellNow()" class="btn">Confirm</button>
 
+    <!--User viewing a bid-->
+    <button *ngIf="isSelling && userID === product.buyerID" class="btn"  [routerLink]="['/edit-bid', product.offerID]" [queryParams]="{ source: 'checkout?product=' + product.offerID + '&sell=true'}">Edit Bid</button>
+    <button *ngIf="isSelling && userID != product.buyerID" (click)="sellNow()" class="btn">Confirm</button>
+    <!--User viewing a bid end-->
+
+
+    <!--back button-->
     <button class="btn back-btn" (click)="goBack()">Back</button>
   </div>
 

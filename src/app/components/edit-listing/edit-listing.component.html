@@ -101,11 +101,11 @@
     </div>
 
     <div class="edit-btns">
-      <button class="btn" routerLink="/{{ source }}">Back</button>
+      <button class="btn" (click)="back()">Back</button>
 
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && showSaveChanges"
-        [className]="priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'"
-        (click)="updateListing()">Save Changes</button>
+        [className]="priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'" (click)="updateListing()">Save
+        Changes</button>
 
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && !showSaveChanges" class="btn"
         (click)="sellNow()">Sell at {{ highestOffer.price | currency: 'CAD' }}</button>
@@ -116,10 +116,16 @@
 
       <button id="save-changes-btn" class="btn error-btn" *ngIf="error">Error</button>
 
-      <button id="save-changes-btn" class="btn updated-btn" *ngIf="updated"><fa-icon [icon]="['fas', 'check']"></fa-icon></button>
+      <button id="save-changes-btn" class="btn updated-btn" *ngIf="updated">
+        <fa-icon [icon]="['fas', 'check']"></fa-icon>
+      </button>
     </div>
 
     <button id="delete-btn" (click)="deleteListing()">Delete</button>
+  </section>
+
+  <section class="edit-container loading" *ngIf="!offerInfo">
+    <fa-icon [icon]="['fas', 'circle-notch']" [spin]="true"></fa-icon>
   </section>
 </div>
 

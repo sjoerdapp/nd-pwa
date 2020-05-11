@@ -7,6 +7,16 @@
   max-width: 100%;
 }
 
+.loading {
+  display: grid;
+
+  fa-icon {
+    font-size: 2rem;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
 .edit-container {
   width: 95vw;
   justify-self: center;
@@ -415,7 +425,7 @@
 @media only screen and (min-width: 2000px) {
   .edit-container {
     width: 50vw;
-    
+
     img {
       width: 275px;
       height: 275px;
