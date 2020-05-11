@@ -20,8 +20,8 @@ export class ProductComponent implements OnInit {
 
   productID: string;
 
-  sizes: {[key: string]: number[]} = {
-    'M': [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17],
+  default_sizes: { [key: string]: number[] } = {
+    'M': [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 18],
     'Y': [3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7],
     'W': [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5]
   };
@@ -74,18 +74,7 @@ export class ProductComponent implements OnInit {
       }
     });
 
-    this.productService.getProductInfo(this.productID).subscribe(data => {
-      if (isNullOrUndefined(data)) {
-        this.router.navigate([`page-not-found`]);
-      } else {
-        this.seo.addTags('Product', data);
-        this.productInfo = data;
-        this.title.setTitle(`${this.productInfo.model} - ${this.productInfo.brand} | NXTDROP`);
-      }
-    });
-
-    this.getOffers();
-    this.countView();
+    this.getItemInformation();
   }
 
   /*addToCart(listing) {
@@ -97,6 +86,22 @@ export class ProductComponent implements OnInit {
       }
     });
   }*/
+
+  async getItemInformation() {
+    await this.productService.getProductInfo(this.productID).subscribe(data => {
+      if (!data.exists) {
+        this.router.navigate([`page-not-found`]);
+      } else {
+        this.seo.addTags('Product', data.data() as Product);
+        this.productInfo = data.data() as Product;
+        this.title.setTitle(`${this.productInfo.model} - ${this.productInfo.brand} | NXTDROP`);
+
+        this.getOffers();
+      }
+    });
+
+    this.countView();
+  }
 
   getSizeSuffix() {
     const patternW = new RegExp(/.+\-W$/);
@@ -192,7 +197,8 @@ export class ProductComponent implements OnInit {
   }
 
   getOffers() {
-    let suffix;
+    let suffix: string;
+    let shoeSizes: Array<number>;
 
     if (this.sizeSuffix === 'W') {
       suffix = this.sizeSuffix;
@@ -202,9 +208,15 @@ export class ProductComponent implements OnInit {
       suffix = 'M';
     }
 
-    console.log(this.sizes[suffix]);
+    //console.log(this.sizes[suffix]);
+    //console.log(this.productInfo.sizes)
+    if (!isNullOrUndefined(this.productInfo.sizes)) {
+      shoeSizes = this.productInfo.sizes
+    } else {
+      shoeSizes = this.default_sizes[suffix]
+    }
 
-    this.sizes[suffix].forEach(ele => {
+    shoeSizes.forEach(ele => {
       let ask: any;
       let bid: any;
 
@@ -240,7 +252,7 @@ export class ProductComponent implements OnInit {
             }
           }
 
-          if (this.sizes[suffix].length === this.offers.length) {
+          if (shoeSizes.length === this.offers.length) {
             this.currentOffer.LowestAsk = this.lowestAsk;
             this.currentOffer.HighestBid = this.highestBid;
           }

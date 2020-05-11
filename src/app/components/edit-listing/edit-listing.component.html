@@ -6,9 +6,10 @@
 
     <img src="{{ offerInfo.assetURL }}" alt="{{ offerInfo.productID }}">
 
+    <p class="size">Size: {{ offerInfo.size }}</p>
     <p class="condition">Condition: New & 100% Authentic</p>
 
-    <select *ngIf="!isWomen && !isGS" name="men-size" id="item-size" (change)="sizeChanges($event)">
+    <!--<select *ngIf="!isWomen && !isGS" name="men-size" id="item-size" (change)="sizeChanges($event)">
       <option value="none" selected>Select Size</option>
       <option value="US4">US 4</option>
       <option value="US4.5">US 4.5</option>
@@ -70,7 +71,7 @@
       <option value="US6Y">US 6Y</option>
       <option value="US6.5Y">US 6.5Y</option>
       <option value="US7Y">US 7Y</option>
-    </select>
+    </select>-->
 
     <div class="edit-price-input">
       <button>CA<fa-icon [icon]="['fas', 'dollar-sign']"></fa-icon></button>
