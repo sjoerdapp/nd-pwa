@@ -115,8 +115,8 @@
       <button class="btn" (click)="connect('signup')">Sign Up</button>
     </div>
 
-    <button *ngIf="freePair" (click)="buyNow()" class="btn">Confirm</button>
-    <button *ngIf="isSelling" (click)="sellNow()" class="btn">Confirm</button>
+    <button *ngIf="freePair" (click)="buyNow()" class="btn">Confirm Purchase</button>
+    <button *ngIf="isSelling" (click)="sellNow()" class="btn">Confirm Sale</button>
 
     <button class="btn back-btn" (click)="goBack()">Back</button>
   </div>
