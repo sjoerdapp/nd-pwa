@@ -31,8 +31,8 @@ export class SellComponent implements OnInit {
   showSearch: boolean = false;
   showItem: boolean = false;
 
-  sizes: {[keys: string]: number[]} = {
-    "M": [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17],
+  default_sizes: { [keys: string]: number[] } = {
+    "M": [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 18],
     "W": [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5],
     "GS": [3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7]
   };
@@ -176,16 +176,7 @@ export class SellComponent implements OnInit {
   }
 
   selectPair(pair: Product, updateURL: boolean) {
-    this.selectedPair = {
-      productID: pair.productID,
-      brand: pair.brand,
-      line: pair.line,
-      model: pair.model,
-      assetURL: pair.assetURL,
-      colorway: pair.colorway,
-      yearMade: pair.yearMade,
-      type: pair.type
-    };
+    this.selectedPair = pair
 
     const patternW = new RegExp(/.\(W\)/);
     const patternGS = new RegExp(/.\(GS\)/);
@@ -230,27 +221,34 @@ export class SellComponent implements OnInit {
   }
 
   getOffers() {
-    if (this.offers.length < 1) {
-      this.sizes[`${this.sizeType}`].forEach(ele => {
-        let bid: any;
-        const size = `US${ele}${this.sizeSuffix}`;
+    let shoeSizes: Array<number>;
+    //console.log(this.selectedPair.sizes)
 
-        this.sellService.getHighestOffer(this.selectedPair.productID, 'new', size).subscribe(bidData => {
-          bid = bidData[0];
-
-          const data = {
-            HighestBid: bid,
-            size: size
-          }
-
-          this.offers.push(data);
-
-          if (this.sizes[`${this.sizeType}`].length === this.offers.length) {
-            this.getProductStats();
-          }
-        });
-      });
+    if (!isNullOrUndefined(this.selectedPair.sizes)) {
+      shoeSizes = this.selectedPair.sizes
+    } else {
+      shoeSizes = this.default_sizes[this.sizeType]
     }
+
+    shoeSizes.forEach(ele => {
+      let bid: any;
+      const size = `US${ele}${this.sizeSuffix}`;
+
+      this.sellService.getHighestOffer(this.selectedPair.productID, 'new', size).subscribe(bidData => {
+        bid = bidData[0];
+
+        const data = {
+          HighestBid: bid,
+          size: size
+        }
+
+        this.offers.push(data);
+
+        if (shoeSizes.length === this.offers.length) {
+          this.getProductStats();
+        }
+      });
+    });
   }
 
   getProductStats() {

@@ -284,18 +284,14 @@ export class CheckoutComponent implements OnInit {
         this.subtotal = this.product.price;
         this.total = this.subtotal + this.shippingPrice;
 
-        if (!isNullOrUndefined(this.userID) && this.product.sellerID === this.userID) {
-          this.router.navigate(['page-not-found']);
-        } else {
-          if (isPlatformBrowser(this._platformId)) {
-            gtag('event', 'begin_checkout', {
-              'event_category': 'ecommerce',
-              'event_label': this.product.model
-            });
+        if (isPlatformBrowser(this._platformId)) {
+          gtag('event', 'begin_checkout', {
+            'event_category': 'ecommerce',
+            'event_label': this.product.model
+          });
 
-            if (!isNullOrUndefined(this.userID)) {
-              this.updateLastCartItem(this.product.productID, this.product.size)
-            }
+          if (!isNullOrUndefined(this.userID)) {
+            this.updateLastCartItem(this.product.productID, this.product.size)
           }
         }
       }
@@ -312,10 +308,6 @@ export class CheckoutComponent implements OnInit {
         this.product = res.data() as Bid;
         this.subtotal = this.product.price;
         this.total = this.subtotal + this.shippingPrice;
-
-        if (this.product.buyerID === this.userID) {
-          this.router.navigate(['page-not-found']);
-        }
       }
 
       if (isPlatformBrowser(this._platformId)) {

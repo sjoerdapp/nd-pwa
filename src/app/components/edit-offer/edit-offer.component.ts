@@ -210,4 +210,8 @@ export class EditOfferComponent implements OnInit {
     }
   }
 
+  back() {
+    this.router.navigateByUrl(this.source)
+  }
+
 }

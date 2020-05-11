@@ -233,4 +233,8 @@ export class EditListingComponent implements OnInit {
     })
   }
 
+  back() {
+    this.router.navigateByUrl(this.source)
+  }
+
 }
