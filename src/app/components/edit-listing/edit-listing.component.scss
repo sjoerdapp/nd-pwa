@@ -162,7 +162,8 @@
 
     .consignment,
     .payment-processing,
-    .total-payout {
+    .total-payout,
+    .shipping {
       display: grid;
       grid-template-columns: 1fr 1fr;
       padding: $spacing-small;
@@ -225,6 +226,7 @@
 
   .consignment,
   .payment-processing,
+  .shipping,
   .total-payout {
     p {
       font-size: $font-xsmall;
@@ -271,6 +273,7 @@
 
   .consignment,
   .payment-processing,
+  .shipping,
   .total-payout {
     p {
       font-size: $font-xsmall;
@@ -318,7 +321,9 @@
   }
 
   .consignment,
+  .shipping,
   .payment-processing,
+  .shipping,
   .total-payout {
     p {
       font-size: $font-small;
@@ -367,6 +372,7 @@
 
   .consignment,
   .payment-processing,
+  .shipping,
   .total-payout {
     p {
       font-size: $font-normal;
@@ -415,6 +421,7 @@
 
   .consignment,
   .payment-processing,
+  .shipping,
   .total-payout {
     p {
       font-size: $font-normal;
@@ -463,6 +470,7 @@
 
   .consignment,
   .payment-processing,
+  .shipping,
   .total-payout {
     p {
       font-size: $font-normal;

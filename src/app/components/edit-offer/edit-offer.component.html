@@ -86,7 +86,7 @@
 
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && showSaveChanges"
         [className]="priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'"
-        (click)="updateOffer()">Save Changes</button>
+        (click)="updateOffer()">Update Bid</button>
 
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && !showSaveChanges" class="btn"
         (click)="buyNow()">Buy at {{ lowestListing | currency: 'CAD' }}</button>

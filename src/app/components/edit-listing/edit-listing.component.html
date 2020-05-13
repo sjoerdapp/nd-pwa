@@ -79,7 +79,7 @@
       <button>.00</button>
     </div>
 
-    <p class="min">The minimum bid is CA$40</p>
+    <p class="min">The minimum ask is CA$40</p>
 
     <div class="seller-fees">
       <div class="consignment">
@@ -94,6 +94,12 @@
         <p *ngIf="paymentProcessingFee == 0">CA$ --</p>
       </div>
 
+      <div class="shipping">
+        <p>Shipping</p>
+        <p *ngIf="paymentProcessingFee > 0">- {{ 0 | currency: 'CAD' }}</p>
+        <p *ngIf="paymentProcessingFee == 0">CA$ --</p>
+      </div>
+
       <div class="total-payout">
         <p>Total Payout</p>
         <p *ngIf="payout > 0">{{ payout | currency: 'CAD' }}</p>
@@ -105,8 +111,7 @@
       <button class="btn" (click)="back()">Back</button>
 
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && showSaveChanges"
-        [className]="priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'" (click)="updateListing()">Save
-        Changes</button>
+        [className]="priceChanged || sizeChanged ? 'btn' : 'disabled-btn btn'" (click)="updateListing()">Update Ask</button>
 
       <button id="save-changes-btn" *ngIf="!loading && !error && !updated && !showSaveChanges" class="btn"
         (click)="sellNow()">Sell at {{ highestOffer.price | currency: 'CAD' }}</button>
