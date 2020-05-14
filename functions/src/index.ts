@@ -1170,7 +1170,7 @@ exports.droppedCartReminder = functions.pubsub.schedule('every 15 minutes from 6
 })
 
 exports.lowestAskNotification = functions.https.onRequest((req, res) => {
-    return cors(req, res, () => {
+    return cors(req, res, async () => {
         if (req.method !== 'PUT') {
             return res.status(403).send(false);
         }
@@ -1178,102 +1178,110 @@ exports.lowestAskNotification = functions.https.onRequest((req, res) => {
         const buyer_list: any[] = []
         const seller_list: any[] = []
 
-        admin.firestore().collection(`products`).doc(`${req.body.product_id}`).collection(`offers`).where('condition', '==', `${req.body.condition}`).where('size', '==', `${req.body.size}`).get()
-            .then(bids => {
-                console.log('getting bids...')
-                bids.docs.forEach(bid => {
-                    console.log(`getting buyer ${bid.data().buyerID}`)
-                    admin.firestore().collection(`users`).doc(`${bid.data().buyerID}`).get().then(user_data => {
-                        const data = user_data.data();
+        await notifyBuyers()
 
-                        if (!isNullOrUndefined(data) && req.body.seller_id !== data.uid && !buyer_list.includes(data.email)) {
-                            buyer_list.push(data.email)
-
-                            const msg: any = {
-                                to: data.email,
-                                from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
-                                templateId: 'd-c5ca84af85994118bb5cfdd2608c3095',
-                                dynamic_template_data: {
-                                    model: bid.data().model,
-                                    size: bid.data().size,
-                                    condition: bid.data().condition,
-                                    bid_amount: bid.data().price,
-                                    shipping: 15,
-                                    total: bid.data().price + 15,
-                                    assetURL: bid.data().assetURL,
-                                    lowest_ask: req.body.price,
-                                    update_bid: `https://nxtdrop.com/edit-offer/${bid.data().offerID}`,
-                                    buy_now: `https://nxtdrop.com/checkout?product=${req.body.listing_id}&sell=false`
-                                }
-                            }
-
-                            sgMail.send(msg).then((content: any) => {
-                                console.log(`email sent to buyer ${data.username}`)
-                            }).catch((err: any) => {
-                                console.error(err)
-                                buyer_list.pop()
-                            })
-                        }
-                    }).catch(err => {
-                        console.error(err)
-                    })
-                })
-            }).catch(err => {
-                console.error(err)
-            })
-
-        admin.firestore().collection(`products`).doc(`${req.body.product_id}`).collection(`listings`).where('size', '==', `${req.body.size}`).where('condition', '==', `${req.body.condition}`).get()
-            .then(asks => {
-                console.log('getting asks...')
-                asks.docs.forEach(ask => {
-                    console.log(`getting seller ${ask.data().sellerID}`)
-                    admin.firestore().collection(`users`).doc(`${ask.data().sellerID}`).get().then(user_data => {
-                        const data = user_data.data()
-                        console.log(seller_list)
-
-                        if (!isNullOrUndefined(data) && req.body.seller_id !== data.uid && !seller_list.includes(data.email)) {
-                            seller_list.push(data.email)
-
-                            const msg: any = {
-                                to: data.email,
-                                from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
-                                templateId: 'd-d56fddb8b3544fd4b9359530518eeff2',
-                                dynamic_template_data: {
-                                    model: ask.data().model,
-                                    size: ask.data().size,
-                                    condition: ask.data().condition,
-                                    ask_amount: ask.data().price,
-                                    payment_processing: ask.data().price * .03,
-                                    seller_fee: ask.data().price * .095,
-                                    payout: ask.data().price * .875,
-                                    assetURL: ask.data().assetURL,
-                                    lowest_ask: req.body.price,
-                                    update_ask: `https://nxtdrop.com/edit-listing/${ask.data().listingID}`,
-                                    sell_now: `https://nxtdrop.com/product/${req.body.product_id}`
-                                }
-                            }
-
-                            sgMail.send(msg).then((content: any) => {
-                                console.log(`email sent to seller ${data.username}`)
-                            }).catch((err: any) => {
-                                console.error(err)
-                                seller_list.pop()
-                            })
-                        }
-                    }).catch(err => {
-                        console.error(err)
-                    })
-                })
-            }).catch(err => {
-                console.error(err)
-            })
+        await notifySellers()
 
         return res.status(200).send()
+
+        function notifyBuyers() {
+            admin.firestore().collection(`products`).doc(`${req.body.product_id}`).collection(`offers`).where('condition', '==', `${req.body.condition}`).where('size', '==', `${req.body.size}`).get()
+                .then(bids => {
+                    console.log('getting bids...')
+                    bids.docs.forEach(bid => {
+                        console.log(`getting buyer ${bid.data().buyerID}`)
+                        admin.firestore().collection(`users`).doc(`${bid.data().buyerID}`).get().then(user_data => {
+                            const data = user_data.data();
+
+                            if (!isNullOrUndefined(data) && req.body.seller_id !== data.uid && !buyer_list.includes(data.email)) {
+                                buyer_list.push(data.email)
+
+                                const msg: any = {
+                                    to: data.email,
+                                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                                    templateId: 'd-c5ca84af85994118bb5cfdd2608c3095',
+                                    dynamic_template_data: {
+                                        model: bid.data().model,
+                                        size: bid.data().size,
+                                        condition: bid.data().condition,
+                                        bid_amount: bid.data().price,
+                                        shipping: 15,
+                                        total: bid.data().price + 15,
+                                        assetURL: bid.data().assetURL,
+                                        lowest_ask: req.body.price,
+                                        update_bid: `https://nxtdrop.com/edit-offer/${bid.data().offerID}`,
+                                        buy_now: `https://nxtdrop.com/checkout?product=${req.body.listing_id}&sell=false`
+                                    }
+                                }
+
+                                sgMail.send(msg).then((content: any) => {
+                                    console.log(`email sent to buyer ${data.username}`)
+                                }).catch((err: any) => {
+                                    console.error(err)
+                                    buyer_list.pop()
+                                })
+                            }
+                        }).catch(err => {
+                            console.error(err)
+                        })
+                    })
+                }).catch(err => {
+                    console.error(err)
+                })
+        }
+
+        function notifySellers() {
+            admin.firestore().collection(`products`).doc(`${req.body.product_id}`).collection(`listings`).where('size', '==', `${req.body.size}`).where('condition', '==', `${req.body.condition}`).get()
+                .then(asks => {
+                    console.log('getting asks...')
+                    asks.docs.forEach(ask => {
+                        console.log(`getting seller ${ask.data().sellerID}`)
+                        admin.firestore().collection(`users`).doc(`${ask.data().sellerID}`).get().then(user_data => {
+                            const data = user_data.data()
+                            console.log(seller_list)
+
+                            if (!isNullOrUndefined(data) && req.body.seller_id !== data.uid && !seller_list.includes(data.email)) {
+                                seller_list.push(data.email)
+
+                                const msg: any = {
+                                    to: data.email,
+                                    from: { email: 'do-not-reply@nxtdrop.com', name: 'NXTDROP' },
+                                    templateId: 'd-d56fddb8b3544fd4b9359530518eeff2',
+                                    dynamic_template_data: {
+                                        model: ask.data().model,
+                                        size: ask.data().size,
+                                        condition: ask.data().condition,
+                                        ask_amount: ask.data().price,
+                                        payment_processing: ask.data().price * .03,
+                                        seller_fee: ask.data().price * .095,
+                                        payout: ask.data().price * .875,
+                                        assetURL: ask.data().assetURL,
+                                        lowest_ask: req.body.price,
+                                        update_ask: `https://nxtdrop.com/edit-listing/${ask.data().listingID}`,
+                                        sell_now: `https://nxtdrop.com/product/${req.body.product_id}`
+                                    }
+                                }
+
+                                sgMail.send(msg).then((content: any) => {
+                                    console.log(`email sent to seller ${data.username}`)
+                                }).catch((err: any) => {
+                                    console.error(err)
+                                    seller_list.pop()
+                                })
+                            }
+                        }).catch(err => {
+                            console.error(err)
+                        })
+                    })
+                }).catch(err => {
+                    console.error(err)
+                })
+        }
     })
 })
 
 exports.highestBidNotification = functions.https.onRequest((req, res) => {
-    return cors(req, res, () => {
+    return cors(req, res, async () => {
         if (req.method !== 'PUT') {
             return res.status(403).send(false);
         }
@@ -1282,26 +1290,19 @@ exports.highestBidNotification = functions.https.onRequest((req, res) => {
         const seller_list: any[] = []
         const prodRef = admin.firestore().collection(`products`).doc(`${req.body.product_id}`)
 
-        notifyBuyers().then(() => {
-            console.log('notify buyers done')
-        }).catch(err => {
-            console.error(err)
-        })
-        notifySellers().then(() => {
-            console.log('notify sellers done')
-        }).catch(err => {
-            console.error(err)
-        })
+        await notifySellers()
+
+        await notifyBuyers()
 
         return res.status(200).send()
 
-        async function notifySellers() {
-            await prodRef.collection(`listings`).where('size', '==', `${req.body.size}`).where('condition', '==', `${req.body.condition}`).get()
+        function notifySellers() {
+            prodRef.collection(`listings`).where('size', '==', `${req.body.size}`).where('condition', '==', `${req.body.condition}`).get()
                 .then(asks => {
-                    console.log('getting asks...')
+                    //console.log('getting asks...')
 
                     asks.docs.forEach(ask => {
-                        console.log(`getting seller ${ask.data().sellerID}`)
+                        //console.log(`getting seller ${ask.data().sellerID}`)
                         admin.firestore().collection(`users`).doc(`${ask.data().sellerID}`).get().then(user_data => {
                             const data = user_data.data()
                             console.log(seller_list)
@@ -1345,13 +1346,13 @@ exports.highestBidNotification = functions.https.onRequest((req, res) => {
         }
 
 
-        async function notifyBuyers() {
-            await prodRef.collection(`offers`).where(`size`, `==`, `${req.body.size}`).where(`condition`, `==`, `${req.body.condition}`).get()
+        function notifyBuyers() {
+            prodRef.collection(`offers`).where(`size`, `==`, `${req.body.size}`).where(`condition`, `==`, `${req.body.condition}`).get()
                 .then(bids => {
-                    console.log(`getting bids...`)
+                    //console.log(`getting bids...`)
 
                     bids.docs.forEach(bid => {
-                        console.log(`getting buyer ${bid.data().buyerID}`)
+                        //console.log(`getting buyer ${bid.data().buyerID}`)
                         admin.firestore().collection(`users`).doc(`${bid.data().buyerID}`).get().then(user_data => {
                             const data = user_data.data()
                             console.log(buyer_list)
